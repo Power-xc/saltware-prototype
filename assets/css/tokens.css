@@ -1,0 +1,129 @@
+/* 디자인 토큰 — 단일 출처.
+   근거: service/ai/guardian/tokens (Figma 내보내기, W3C Design Tokens) +
+        현행 CSS 실측 브랜드 오렌지 #f49f20 (31회 사용) +
+        메인·서브 v0.2 와이어프레임의 표면·타입 스케일.
+   컴포넌트는 primitive 가 아니라 시맨틱 토큰만 쓴다. */
+
+:root {
+  /* primitive */
+  --c-white: #ffffff;
+  --c-neutral-50: #fbfbfd;
+  --c-neutral-100: #f5f5f7;
+  --c-neutral-200: #e8e8ed;
+  --c-neutral-300: #d2d2d7;
+  --c-neutral-400: #c7c7cc;
+  --c-neutral-500: #86868b;
+  --c-neutral-600: #6e6e73;
+  --c-neutral-700: #424245;
+  --c-neutral-900: #1d1d1f;
+  --c-brand-500: #f49f20;
+  --c-brand-700: #8a5605;
+  --c-brand-50: #fdf4e4;
+  --c-danger-600: #b1362e;
+  --c-danger-50: #fbeceb;
+  --c-success-600: #1c7a53;
+
+  /* 시맨틱 — surface */
+  --bg-page: var(--c-neutral-50);
+  --bg-band: var(--c-neutral-100);
+  --bg-card: var(--c-white);
+  --bg-inverse: var(--c-neutral-900);
+
+  /* 시맨틱 — text */
+  --text-primary: var(--c-neutral-900);
+  --text-secondary: var(--c-neutral-700);
+  --text-muted: var(--c-neutral-600);
+  --text-faint: var(--c-neutral-500);
+  --text-on-inverse: var(--c-neutral-100);
+  --text-brand: var(--c-brand-700);
+
+  /* 시맨틱 — border */
+  --border-hair: rgba(0, 0, 0, 0.09);
+  --border-soft: rgba(0, 0, 0, 0.055);
+  --border-strong: var(--c-neutral-400);
+  --border-inverse: rgba(255, 255, 255, 0.18);
+
+  /* 상태 */
+  --state-danger: var(--c-danger-600);
+  --state-danger-bg: var(--c-danger-50);
+  --state-success: var(--c-success-600);
+
+  /* 타이포 — 본문 Pretendard, 없으면 시스템 한글 */
+  --font-base: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Apple SD Gothic Neo", system-ui, "Noto Sans KR", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+  --tracking-tight: -0.032em;
+  --tracking-base: -0.01em;
+  --tracking-label: 0.1em;
+
+  --fs-display: clamp(30px, 4.2vw, 46px);
+  --fs-h2: 31px;
+  --fs-h3: 20px;
+  --fs-body: 15px;
+  --fs-sm: 13.5px;
+  --fs-xs: 12.5px;
+  --fs-label: 11px;
+
+  /* 간격 — 4의 배수. 현행 27종 브레이크포인트 같은 임의값을 만들지 않는다. */
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 22px; --sp-6: 32px; --sp-7: 44px; --sp-8: 64px; --sp-9: 96px;
+
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 18px;
+  --radius-pill: 980px;
+
+  --container: 1240px;
+  --header-h: 56px;
+  --shadow-mega: 0 12px 28px rgba(0, 0, 0, 0.08);
+
+  /* 반응형 브레이크포인트 — 4종으로 고정 */
+  --bp-sm: 640px;
+  --bp-md: 860px;
+  --bp-lg: 1080px;
+  --bp-xl: 1280px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg-page: #0d0d0f;
+    --bg-band: #151517;
+    --bg-card: #1b1b1e;
+    --bg-inverse: #000000;
+    --text-primary: #f5f5f7;
+    --text-secondary: #d2d2d7;
+    --text-muted: #a1a1a6;
+    --text-faint: #86868b;
+    --text-brand: #f5c887;
+    --border-hair: rgba(255, 255, 255, 0.14);
+    --border-soft: rgba(255, 255, 255, 0.08);
+    --border-strong: #48484d;
+    --state-danger: #e8837a;
+    --state-danger-bg: #2a1614;
+    --state-success: #5cbf98;
+    --c-neutral-200: #26262a;
+    --c-neutral-400: #48484d;
+    --shadow-mega: 0 12px 28px rgba(0, 0, 0, 0.5);
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg-page: #0d0d0f;
+  --bg-band: #151517;
+  --bg-card: #1b1b1e;
+  --bg-inverse: #000000;
+  --text-primary: #f5f5f7;
+  --text-secondary: #d2d2d7;
+  --text-muted: #a1a1a6;
+  --text-faint: #86868b;
+  --text-brand: #f5c887;
+  --border-hair: rgba(255, 255, 255, 0.14);
+  --border-soft: rgba(255, 255, 255, 0.08);
+  --border-strong: #48484d;
+  --state-danger: #e8837a;
+  --state-danger-bg: #2a1614;
+  --state-success: #5cbf98;
+  --c-neutral-200: #26262a;
+  --c-neutral-400: #48484d;
+  --shadow-mega: 0 12px 28px rgba(0, 0, 0, 0.5);
+}
