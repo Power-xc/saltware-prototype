@@ -246,6 +246,22 @@
 .section__head p {
   color: var(--text-muted);
 }
+/* 제목 좌 · 표 우 — 기획의 PARTNERSHIP 패턴. */
+.section__aside {
+  display: grid;
+  gap: var(--sp-6);
+}
+.section__aside .section__head {
+  margin-bottom: 0;
+}
+@media (min-width: 860px) {
+  .section__aside {
+    grid-template-columns: 0.8fr 1.4fr;
+    gap: var(--sp-7);
+    align-items: start;
+  }
+}
+
 /* 제목이 두 줄로 끊기면 설명을 오른쪽에 붙인다 — 기획의 CAPABILITIES 패턴. */
 .section__head--split {
   max-width: none;
@@ -436,21 +452,21 @@
   grid-template-columns: repeat(4, 1fr);
   gap: var(--sp-4);
 }
+/* 기획의 단계는 상자가 아니다. 라벨·제목·설명만 열로 세운다. */
 .step {
-  border: 1px solid var(--border-hair);
-  border-radius: var(--radius-md);
-  padding: var(--sp-4);
   display: grid;
   gap: var(--sp-2);
-}
-.step--first {
-  border-top: 2px solid var(--text-primary);
+  align-content: start;
 }
 .step__no {
   font-size: var(--fs-label);
   font-weight: 600;
   letter-spacing: var(--tracking-label);
-  color: var(--text-faint);
+  color: var(--text-accent);
+}
+/* 첫 단계만 시작점을 표시한다 — 기획이 여기만 진하게 둔다. */
+.step--first .step__no {
+  color: var(--text-primary);
 }
 
 /* 이름 왼쪽 · 설명 오른쪽의 한 장짜리 표. 기획의 "보유 기반" 패턴이다. */
@@ -462,7 +478,7 @@
 }
 .proof__row {
   display: grid;
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 0.8fr 1.4fr;
   gap: var(--sp-5);
   align-items: baseline;
   padding: var(--sp-4) 24px;
@@ -875,6 +891,46 @@ html.js-reveal .reveal.is-in {
 .slider__dot[aria-pressed="true"],
 .slider__dot.is-active {
   background: var(--text-primary);
+}
+
+.flows {
+  display: grid;
+  gap: var(--sp-4);
+}
+.flow {
+  border: 1px solid var(--border-hair);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  padding: var(--sp-4) 24px var(--sp-5);
+}
+.flow__label {
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-accent);
+  margin-bottom: var(--sp-3);
+}
+.flow__chain {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-2);
+}
+.flow__step {
+  border-radius: var(--radius-pill);
+  background: var(--bg-band);
+  padding: 9px 16px;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+}
+/* 마지막 단계가 결과다 — 기획이 여기만 채워서 강조한다. */
+.flow__step--last {
+  background: var(--text-primary);
+  color: var(--c-white);
+}
+.flow__arrow {
+  color: var(--text-faint);
+  font-size: var(--fs-xs);
 }
 
 /* ── 목록 ────────────────────────────────────────────── */
