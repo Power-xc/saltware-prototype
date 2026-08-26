@@ -153,37 +153,52 @@
   align-items: center;
   justify-content: center;
   gap: var(--sp-2);
-  border: 1px solid var(--border-hair);
-  background: var(--bg-card);
+  border: 1px solid var(--border-accent);
+  background: transparent;
   border-radius: var(--radius-pill);
-  padding: 7px 15px;
-  font-size: var(--fs-xs);
-  color: var(--text-secondary);
+  padding: 12px 25px;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-accent);
   white-space: nowrap;
   transition:
     border-color 0.15s ease,
+    background-color 0.15s ease,
     opacity 0.15s ease;
 }
 .btn:hover {
-  border-color: var(--border-strong);
+  border-color: var(--c-accent-500);
+  background: var(--bg-accent);
 }
 .btn--solid {
-  background: var(--text-primary);
-  color: var(--bg-page);
-  border-color: var(--text-primary);
-  font-weight: 600;
+  background: var(--c-accent-500);
+  color: var(--c-white);
+  border-color: var(--c-accent-500);
+  padding: 13px 26px;
 }
 .btn--solid:hover {
-  opacity: 0.86;
-  border-color: var(--text-primary);
+  background: var(--c-accent-600);
+  border-color: var(--c-accent-600);
 }
 .btn--lg {
-  padding: 10px 20px;
+  padding: 13px 26px;
   font-size: var(--fs-sm);
 }
 .btn--sm {
   padding: 5px 11px;
   font-size: 11.5px;
+}
+/* 헤더·드로어의 문의 버튼. 기획은 여기만 검정으로 두어 본문 CTA 와 구분한다. */
+.btn--dark {
+  background: var(--text-primary);
+  color: var(--c-white);
+  border-color: var(--text-primary);
+  padding: 8px 17px;
+  font-size: var(--fs-xs);
+}
+.btn--dark:hover {
+  background: var(--text-secondary);
+  border-color: var(--text-secondary);
 }
 .btn--block {
   width: 100%;
@@ -194,27 +209,33 @@
 }
 
 /* ── 섹션 ─────────────────────────────────────────────── */
+/* 기획은 배경을 갈아 끼우지 않는다. 같은 바탕 위에 구분선 하나로 나눈다.
+   --band 와 --card 는 페이지 모듈이 쓰는 이름이라 남기되 시각은 통일한다. */
 .section {
-  padding-block: var(--sp-8);
+  padding-bottom: var(--section-py);
 }
-.section--band {
-  background: var(--bg-band);
-  border-block: 1px solid var(--border-hair);
+.section > .container {
+  border-top: 1px solid var(--border-section);
+  padding-top: var(--section-py);
 }
+.section--inverse > .container {
+  border-top: 0;
+}
+.section--band,
 .section--card {
-  background: var(--bg-card);
-  border-block: 1px solid var(--border-hair);
+  background: transparent;
 }
 .section--inverse {
   background: var(--bg-inverse);
   color: var(--text-on-inverse);
+  border-top: 0;
 }
 
 .eyebrow {
   font-size: var(--fs-label);
   font-weight: 600;
   letter-spacing: var(--tracking-label);
-  color: var(--text-faint);
+  color: var(--text-accent);
 }
 .section__head {
   display: grid;
@@ -224,6 +245,30 @@
 }
 .section__head p {
   color: var(--text-muted);
+}
+/* 제목이 두 줄로 끊기면 설명을 오른쪽에 붙인다 — 기획의 CAPABILITIES 패턴. */
+.section__head--split {
+  max-width: none;
+  grid-template-columns: 1fr 1fr;
+  align-items: end;
+  column-gap: var(--sp-8);
+}
+.section__head--split .eyebrow,
+.section__head--split h2 {
+  grid-column: 1;
+}
+.section__head--split p:not(.eyebrow) {
+  grid-column: 2;
+  grid-row: 2;
+}
+@media (max-width: 860px) {
+  .section__head--split {
+    grid-template-columns: 1fr;
+  }
+  .section__head--split p:not(.eyebrow) {
+    grid-column: 1;
+    grid-row: auto;
+  }
 }
 .section__headrow {
   display: flex;
@@ -237,7 +282,7 @@
 /* ── 그리드 · 카드 ────────────────────────────────────── */
 .grid {
   display: grid;
-  gap: var(--sp-4);
+  gap: var(--gap-grid);
 }
 .grid--2 {
   grid-template-columns: repeat(2, 1fr);
@@ -256,21 +301,23 @@
   border: 1px solid var(--border-hair);
   border-radius: var(--radius-lg);
   background: var(--bg-card);
-  padding: var(--sp-5);
+  padding: 26px 24px;
   display: grid;
   gap: var(--sp-3);
   align-content: start;
 }
+/* 기획의 카드는 전부 흰색이다. 회색 카드를 따로 두지 않는다. */
 .card--band {
-  background: var(--bg-band);
+  background: var(--bg-card);
 }
 .card__title {
-  font-size: 16px;
+  font-size: var(--fs-h4);
   font-weight: 600;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.025em;
+  line-height: 1.4;
 }
 .card__desc {
-  font-size: var(--fs-sm);
+  font-size: var(--fs-body);
   color: var(--text-muted);
 }
 .card__more {
@@ -279,9 +326,9 @@
 }
 
 .media {
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-hair);
-  background: var(--bg-band);
+  border-radius: var(--radius-hero);
+  border: 0;
+  background: var(--c-neutral-150);
   aspect-ratio: 4 / 3;
   display: grid;
   place-items: center;
@@ -292,13 +339,14 @@
 
 /* ── 히어로 · 사업 상세 ───────────────────────────────── */
 .hero {
-  background: var(--bg-band);
-  padding-block: var(--sp-8);
+  background: transparent;
+  padding-top: var(--hero-pt);
+  padding-bottom: var(--hero-pb);
 }
 .hero__grid {
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: var(--sp-7);
+  grid-template-columns: 1.1fr 1fr;
+  gap: var(--sp-8);
   align-items: center;
 }
 .hero__body {
@@ -307,9 +355,72 @@
   justify-items: start;
 }
 .hero__lede {
-  color: var(--text-muted);
+  font-size: var(--fs-lede);
+  line-height: var(--lh-lede);
+  color: var(--text-secondary);
   max-width: 46ch;
 }
+/* 메인 히어로 — 가운데 정렬, 배경에 큰 흐린 글자. 기획 실측 62px / 210px. */
+.hero--home {
+  position: relative;
+  overflow: hidden;
+  padding-top: 104px;
+  padding-bottom: var(--sp-8);
+  text-align: center;
+}
+.hero__ghost {
+  position: absolute;
+  inset-inline: 0;
+  top: 30%;
+  font-size: var(--fs-ghost);
+  font-weight: 700;
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+  color: rgba(0, 0, 0, 0.035);
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+.hero__center {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: var(--sp-4);
+  justify-items: center;
+}
+.hero--home h1 {
+  font-size: var(--fs-hero);
+  line-height: 1.18;
+  letter-spacing: -0.04em;
+}
+.hero--home .hero__lede {
+  max-width: 58ch;
+}
+.hero__feature {
+  position: relative;
+  z-index: 1;
+  margin-top: var(--sp-8);
+  /* 히어로는 가운데 정렬이지만 카드 안 내용은 기획대로 왼쪽 정렬이다. */
+  text-align: left;
+}
+.eyebrow--muted {
+  color: var(--text-faint);
+  font-size: var(--fs-label-caps);
+  letter-spacing: 0.14em;
+}
+
+/* 메인 캐러셀은 큰 카드 한 장씩이다 (기획 실측 880×400). */
+.slider--feature .slider__card {
+  width: min(880px, 100%);
+  min-height: 400px;
+  padding: 44px 48px;
+  border: 0;
+  border-radius: 24px;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.07);
+  scroll-snap-align: center;
+  align-content: start;
+}
+
 .hero__meta {
   font-size: var(--fs-xs);
   color: var(--text-faint);
@@ -342,16 +453,32 @@
   color: var(--text-faint);
 }
 
+/* 이름 왼쪽 · 설명 오른쪽의 한 장짜리 표. 기획의 "보유 기반" 패턴이다. */
 .proof {
-  display: grid;
-  gap: var(--sp-3);
+  background: var(--bg-card);
+  border: 1px solid var(--border-hair);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
 }
 .proof__row {
   display: grid;
-  grid-template-columns: 1fr 1.3fr;
+  grid-template-columns: 1fr 2fr;
   gap: var(--sp-5);
-  padding: var(--sp-4) 0;
-  border-top: 1px solid var(--border-soft);
+  align-items: baseline;
+  padding: var(--sp-4) 24px;
+  border-top: 1px solid var(--border-hair);
+}
+.proof__row:first-child {
+  border-top: 0;
+}
+.proof__row .card__title {
+  font-size: var(--fs-body);
+}
+@media (max-width: 640px) {
+  .proof__row {
+    grid-template-columns: 1fr;
+    gap: var(--sp-2);
+  }
 }
 .footnote {
   font-size: var(--fs-xs);
@@ -552,23 +679,27 @@ html.js-reveal .reveal.is-in {
   justify-items: end;
 }
 .floating__cta {
-  background: var(--text-primary);
-  color: var(--bg-page);
+  background: var(--c-accent-500);
+  color: var(--c-white);
   border-radius: var(--radius-pill);
-  padding: 11px 18px;
-  font-size: var(--fs-sm);
+  padding: 13px 19px;
+  font-size: var(--fs-xs);
   font-weight: 600;
   box-shadow: var(--shadow-mega);
 }
+.floating__cta:hover {
+  background: var(--c-accent-600);
+  color: var(--c-white);
+}
 .floating__top {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   display: grid;
   place-items: center;
   background: var(--bg-card);
   border: 1px solid var(--border-hair);
-  color: var(--text-secondary);
+  color: var(--text-primary);
   box-shadow: var(--shadow-mega);
 }
 
@@ -894,4 +1025,10 @@ html.js-reveal .reveal.is-in {
   .slider__card {
     width: 200px;
   }
+}
+
+/* 컴포넌트가 display 를 선언하면 hidden 속성이 무시된다.
+   파일 맨 끝에 두어 같은 특정도에서 이 규칙이 이긴다. */
+[hidden] {
+  display: none;
 }

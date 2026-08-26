@@ -37,6 +37,8 @@ h4 {
 }
 h1 {
   font-size: var(--fs-display);
+  line-height: var(--lh-display);
+  letter-spacing: var(--tracking-display);
 }
 h2 {
   font-size: var(--fs-h2);
@@ -69,6 +71,10 @@ video {
 
 ::selection {
   background: var(--c-neutral-200);
+}
+
+a:hover {
+  color: var(--text-muted);
 }
 
 :focus-visible {

@@ -39,7 +39,9 @@
   --text-accent: var(--c-accent-500);
 
   /* 시맨틱 — border */
-  --border-hair: rgba(0, 0, 0, 0.08);
+  --border-hair: rgba(0, 0, 0, 0.07);
+  --border-section: rgba(0, 0, 0, 0.08);
+  --border-accent: rgba(0, 113, 227, 0.3);
   --border-soft: rgba(0, 0, 0, 0.055);
   --border-strong: var(--c-neutral-400);
   --border-inverse: rgba(255, 255, 255, 0.18);
@@ -54,20 +56,23 @@
     "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
     "Apple SD Gothic Neo", system-ui, "Noto Sans KR", sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
-  --tracking-tight: -0.032em;
+  --tracking-tight: -0.03em;
+  --tracking-display: -0.035em;
   --tracking-base: -0.01em;
-  --tracking-label: 0.1em;
+  --tracking-label: 0.06em;
 
-  --fs-display: clamp(30px, 4.2vw, 42px);
+  --fs-display: clamp(30px, 4vw, 45px);
+  --fs-hero: clamp(34px, 5.2vw, 62px);
+  --fs-ghost: clamp(90px, 15vw, 210px);
   --fs-h2: 29px;
   --fs-h3: 22px;
   --fs-h4: 17px;
-  --fs-lede: 16.5px;
+  --fs-lede: 17px;
   --fs-body: 15px;
-  --fs-sm: 14px;
+  --fs-sm: 14.5px;
   --fs-xs: 13.5px;
   --fs-2xs: 12.5px;
-  --fs-label: 11.5px;
+  --fs-label: 12.5px;
   --fs-label-caps: 11px;
 
   /* 간격 — 4의 배수. 현행 27종 브레이크포인트 같은 임의값을 만들지 않는다. */
@@ -86,6 +91,15 @@
   --radius-md: 14px;
   --radius-lg: 18px;
   --radius-pill: 980px;
+  --radius-hero: 22px;
+
+  /* 기획 실측 — 섹션 여백과 격자 간격은 스케일에 없는 값이다. */
+  --section-py: 58px;
+  --hero-pt: 72px;
+  --hero-pb: 64px;
+  --gap-grid: 14px;
+  --lh-display: 1.24;
+  --lh-lede: 1.68;
 
   --container: 1240px;
   --header-h: 56px;
@@ -98,56 +112,9 @@
   --bp-xl: 1280px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg-page: #0d0d0f;
-    --bg-band: #151517;
-    --bg-card: #1b1b1e;
-    --bg-inverse: #000000;
-    --bg-accent: #0d2847;
-    --text-primary: #f5f5f7;
-    --text-secondary: #d2d2d7;
-    --text-muted: #a1a1a6;
-    --text-faint: #86868b;
-    --text-accent: #4da3ff;
-    --border-hair: rgba(255, 255, 255, 0.14);
-    --border-soft: rgba(255, 255, 255, 0.08);
-    --border-strong: #48484d;
-    --state-danger: #e8837a;
-    --state-danger-bg: #2a1614;
-    --state-success: #5cbf98;
-    --c-neutral-150: #26262a;
-    --c-neutral-200: #26262a;
-    --c-neutral-400: #48484d;
-    --c-accent-50: #0d2847;
-    --c-accent-500: #4da3ff;
-    --c-accent-600: #3a7ec2;
-    --shadow-mega: 0 12px 28px rgba(0, 0, 0, 0.5);
-  }
-}
-
-:root[data-theme="dark"] {
-  --bg-page: #0d0d0f;
-  --bg-band: #151517;
-  --bg-card: #1b1b1e;
-  --bg-inverse: #000000;
-  --bg-accent: #0d2847;
-  --text-primary: #f5f5f7;
-  --text-secondary: #d2d2d7;
-  --text-muted: #a1a1a6;
-  --text-faint: #86868b;
-  --text-accent: #4da3ff;
-  --border-hair: rgba(255, 255, 255, 0.14);
-  --border-soft: rgba(255, 255, 255, 0.08);
-  --border-strong: #48484d;
-  --state-danger: #e8837a;
-  --state-danger-bg: #2a1614;
-  --state-success: #5cbf98;
-  --c-neutral-150: #26262a;
-  --c-neutral-200: #26262a;
-  --c-neutral-400: #48484d;
-  --c-accent-50: #0d2847;
-  --c-accent-500: #4da3ff;
-  --c-accent-600: #3a7ec2;
-  --shadow-mega: 0 12px 28px rgba(0, 0, 0, 0.5);
+/* 다크 테마를 두지 않는다. 기획 v0.1 은 라이트 한 벌뿐이고
+   (#fbfbfd 바탕 · #ffffff 카드 · #1d1d1f 본문), 그것이 정본이다.
+   color-scheme 을 고정해 폼 컨트롤·스크롤바까지 라이트로 그린다. */
+:root {
+  color-scheme: light;
 }
