@@ -1,7 +1,6 @@
 /* 디자인 토큰 — 단일 출처.
-   근거: service/ai/guardian/tokens (Figma 내보내기, W3C Design Tokens) +
-        현행 CSS 실측 브랜드 오렌지 #f49f20 (31회 사용) +
-        메인·서브 v0.2 와이어프레임의 표면·타입 스케일.
+   근거: 기획 v0.1 아트보드 (13,408 인라인 스타일) →
+        색 20종 / font-size 27종 / radius 9종을 토큰으로 접음.
    컴포넌트는 primitive 가 아니라 시맨틱 토큰만 쓴다. */
 
 :root {
@@ -9,6 +8,7 @@
   --c-white: #ffffff;
   --c-neutral-50: #fbfbfd;
   --c-neutral-100: #f5f5f7;
+  --c-neutral-150: #ececed;
   --c-neutral-200: #e8e8ed;
   --c-neutral-300: #d2d2d7;
   --c-neutral-400: #c7c7cc;
@@ -16,9 +16,9 @@
   --c-neutral-600: #6e6e73;
   --c-neutral-700: #424245;
   --c-neutral-900: #1d1d1f;
-  --c-brand-500: #f49f20;
-  --c-brand-700: #8a5605;
-  --c-brand-50: #fdf4e4;
+  --c-accent-50: #e8f4ff;
+  --c-accent-500: #0071e3;
+  --c-accent-600: #0055b4;
   --c-danger-600: #b1362e;
   --c-danger-50: #fbeceb;
   --c-success-600: #1c7a53;
@@ -28,6 +28,7 @@
   --bg-band: var(--c-neutral-100);
   --bg-card: var(--c-white);
   --bg-inverse: var(--c-neutral-900);
+  --bg-accent: var(--c-accent-50);
 
   /* 시맨틱 — text */
   --text-primary: var(--c-neutral-900);
@@ -35,10 +36,10 @@
   --text-muted: var(--c-neutral-600);
   --text-faint: var(--c-neutral-500);
   --text-on-inverse: var(--c-neutral-100);
-  --text-brand: var(--c-brand-700);
+  --text-accent: var(--c-accent-500);
 
   /* 시맨틱 — border */
-  --border-hair: rgba(0, 0, 0, 0.09);
+  --border-hair: rgba(0, 0, 0, 0.08);
   --border-soft: rgba(0, 0, 0, 0.055);
   --border-strong: var(--c-neutral-400);
   --border-inverse: rgba(255, 255, 255, 0.18);
@@ -49,25 +50,38 @@
   --state-success: var(--c-success-600);
 
   /* 타이포 — 본문 Pretendard, 없으면 시스템 한글 */
-  --font-base: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+  --font-base:
+    "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
     "Apple SD Gothic Neo", system-ui, "Noto Sans KR", sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
   --tracking-tight: -0.032em;
   --tracking-base: -0.01em;
   --tracking-label: 0.1em;
 
-  --fs-display: clamp(30px, 4.2vw, 46px);
-  --fs-h2: 31px;
-  --fs-h3: 20px;
+  --fs-display: clamp(30px, 4.2vw, 42px);
+  --fs-h2: 29px;
+  --fs-h3: 22px;
+  --fs-h4: 17px;
+  --fs-lede: 16.5px;
   --fs-body: 15px;
-  --fs-sm: 13.5px;
-  --fs-xs: 12.5px;
-  --fs-label: 11px;
+  --fs-sm: 14px;
+  --fs-xs: 13.5px;
+  --fs-2xs: 12.5px;
+  --fs-label: 11.5px;
+  --fs-label-caps: 11px;
 
   /* 간격 — 4의 배수. 현행 27종 브레이크포인트 같은 임의값을 만들지 않는다. */
-  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
-  --sp-5: 22px; --sp-6: 32px; --sp-7: 44px; --sp-8: 64px; --sp-9: 96px;
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 22px;
+  --sp-6: 32px;
+  --sp-7: 44px;
+  --sp-8: 64px;
+  --sp-9: 96px;
 
+  --radius-xs: 6px;
   --radius-sm: 10px;
   --radius-md: 14px;
   --radius-lg: 18px;
@@ -90,19 +104,24 @@
     --bg-band: #151517;
     --bg-card: #1b1b1e;
     --bg-inverse: #000000;
+    --bg-accent: #0d2847;
     --text-primary: #f5f5f7;
     --text-secondary: #d2d2d7;
     --text-muted: #a1a1a6;
     --text-faint: #86868b;
-    --text-brand: #f5c887;
+    --text-accent: #4da3ff;
     --border-hair: rgba(255, 255, 255, 0.14);
     --border-soft: rgba(255, 255, 255, 0.08);
     --border-strong: #48484d;
     --state-danger: #e8837a;
     --state-danger-bg: #2a1614;
     --state-success: #5cbf98;
+    --c-neutral-150: #26262a;
     --c-neutral-200: #26262a;
     --c-neutral-400: #48484d;
+    --c-accent-50: #0d2847;
+    --c-accent-500: #4da3ff;
+    --c-accent-600: #3a7ec2;
     --shadow-mega: 0 12px 28px rgba(0, 0, 0, 0.5);
   }
 }
@@ -112,18 +131,23 @@
   --bg-band: #151517;
   --bg-card: #1b1b1e;
   --bg-inverse: #000000;
+  --bg-accent: #0d2847;
   --text-primary: #f5f5f7;
   --text-secondary: #d2d2d7;
   --text-muted: #a1a1a6;
   --text-faint: #86868b;
-  --text-brand: #f5c887;
+  --text-accent: #4da3ff;
   --border-hair: rgba(255, 255, 255, 0.14);
   --border-soft: rgba(255, 255, 255, 0.08);
   --border-strong: #48484d;
   --state-danger: #e8837a;
   --state-danger-bg: #2a1614;
   --state-success: #5cbf98;
+  --c-neutral-150: #26262a;
   --c-neutral-200: #26262a;
   --c-neutral-400: #48484d;
+  --c-accent-50: #0d2847;
+  --c-accent-500: #4da3ff;
+  --c-accent-600: #3a7ec2;
   --shadow-mega: 0 12px 28px rgba(0, 0, 0, 0.5);
 }

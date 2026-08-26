@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Cloud + Hybrid 통합안 — 솔트웨어</title>
-    <meta name="description" content="퍼블릭과 폐쇄망을 한 페이지로 — 비교용" />
-    <meta property="og:title" content="Cloud + Hybrid 통합안 — 솔트웨어" />
-    <meta property="og:description" content="퍼블릭과 폐쇄망을 한 페이지로 — 비교용" />
+    <title>Cloud + Hybrid · 통합안 — 솔트웨어</title>
+    <meta name="description" content="AWS로 옮길 수 있는 것은 옮기고, 못 옮기는 것은 Red Hat 기반으로 그 자리에서 현대화합니다." />
+    <meta property="og:title" content="Cloud + Hybrid · 통합안 — 솔트웨어" />
+    <meta property="og:description" content="AWS로 옮길 수 있는 것은 옮기고, 못 옮기는 것은 Red Hat 기반으로 그 자리에서 현대화합니다." />
     <meta property="og:type" content="website" />
     <link rel="stylesheet" href="/saltware-prototype/assets/css/tokens.css" />
     <link rel="stylesheet" href="/saltware-prototype/assets/css/base.css" />
@@ -17,127 +17,39 @@
 <header class="site-header" data-header>
   <div class="container site-header__bar">
     <a class="site-header__logo" href="/saltware-prototype/">SALTWARE</a>
-    <nav class="gnb" aria-label="주 메뉴"><button type="button" class="gnb__item" data-mega="business" aria-expanded="false" aria-current="true">Business</button><button type="button" class="gnb__item" data-mega="industries" aria-expanded="false">Industries</button><button type="button" class="gnb__item" data-mega="insights" aria-expanded="false">Insights</button><button type="button" class="gnb__item" data-mega="company" aria-expanded="false">Company</button></nav>
+    <nav class="gnb" aria-label="주 메뉴"><button type="button" class="gnb__item" data-mega="business" aria-expanded="false" aria-current="page">Business</button><button type="button" class="gnb__item" data-mega="industries" aria-expanded="false">Industries</button><button type="button" class="gnb__item" data-mega="insights" aria-expanded="false">Insights</button><button type="button" class="gnb__item" data-mega="company" aria-expanded="false">Company</button></nav>
     <div class="site-header__right">
       <button type="button" class="site-header__search" data-ga-event="search_open">검색</button>
       <span class="site-header__lang" aria-disabled="true" title="영문 사이트는 i18n 통합 후 연다">KR / EN</span>
-      <a class="btn btn--solid" href="/saltware-prototype/contact" data-ga-event="header_contact_click">문의하기</a>
+      <a href="/saltware-prototype/contact" class="btn btn--solid" data-ga-event="header_contact_click">문의하기</a>
       <button type="button" class="site-header__burger" data-drawer-open aria-expanded="false" aria-controls="drawer">
         <span class="sr-only">메뉴 열기</span><span aria-hidden="true">☰</span>
       </button>
     </div>
   </div>
   <div class="mega" data-mega-panel="business" hidden>
-        <div class="container mega__grid">
-      <div class="mega__col">
-        <p class="mega__label">BUSINESS</p>
-        <div class="mega__list"><a class="mega__item" href="/saltware-prototype/business/cloud">
-      <span class="mega__item-name">Cloud · AWS MSP</span>
-      <span class="mega__item-desc">AWS 도입·이전·24시간 운영·비용 관리</span>
-    </a><a class="mega__item" href="/saltware-prototype/business/data-ai">
-      <span class="mega__item-name">AI Data Platform</span>
-      <span class="mega__item-desc">데이터를 모으고 그 위에 업무 AI를</span>
-    </a><a class="mega__item" href="/saltware-prototype/business/databricks">
-      <span class="mega__item-name">Databricks</span>
-      <span class="mega__item-desc">레이크하우스 기반 데이터 통합 구축</span>
-    </a><a class="mega__item" href="/saltware-prototype/business/identity">
-      <span class="mega__item-name">Identity · SailPoint</span>
-      <span class="mega__item-desc">계정과 권한을 하나의 정책으로</span>
-    </a><a class="mega__item" href="/saltware-prototype/business/hybrid">
-      <span class="mega__item-name">Hybrid · Red Hat</span>
-      <span class="mega__item-desc">폐쇄망·레거시를 유지하며 단계로 현대화</span>
-    </a><a class="mega__item" href="/saltware-prototype/business/smart-farm">
-      <span class="mega__item-name">Smart Farm</span>
-      <span class="mega__item-desc">하우스 환경 자동 측정과 원격 제어</span>
-    </a></div>
-      </div>
-      <div class="mega__col">
-        <p class="mega__label">SERVICE</p>
-        <div class="mega__list"><a class="mega__item" href="https://www.fitcloud.co.kr/" data-ga-event="fitcloud_outbound" target="_blank" rel="noopener noreferrer">
-      <span class="mega__item-name">FitCloud<span class="ext-mark" aria-label="외부 링크">↗</span></span>
-      <span class="mega__item-desc">AWS 운영·비용 관리 서비스 브랜드</span>
-    </a><a class="mega__item" href="/saltware-prototype/business/fitsapie">
-      <span class="mega__item-name">FitSapie</span>
-      <span class="mega__item-desc">사내 자료를 근거로 답하는 업무 AI</span>
-    </a><a class="mega__item" href="/saltware-prototype/business/sapie-guardian">
-      <span class="mega__item-name">Sapie-Guardian</span>
-      <span class="mega__item-desc">외부 AI로 나가는 사내 정보 통제</span>
-    </a><a class="mega__item" href="/saltware-prototype/business/newway-farm">
-      <span class="mega__item-name">NewWay Farm</span>
-      <span class="mega__item-desc">하우스 환경 측정과 원격 제어 시스템</span>
-    </a><a class="mega__item" href="/saltware-prototype/business/cloud-hybrid">
-      <span class="mega__item-name">Cloud + Hybrid 통합안</span>
-      <span class="mega__item-desc">퍼블릭과 폐쇄망을 한 페이지로 — 비교용</span>
-    </a></div>
-      </div>
-      <div class="mega__col mega__col--foot">
-        <a href="/saltware-prototype/business" class="mega__all">All Business →</a>
-        <span class="mega__item-desc">전체 사업·서비스 보기</span>
-      </div></div>
-      </div><div class="mega" data-mega-panel="industries" hidden>
-        <div class="container mega__grid mega__grid--list"><div class="mega__col mega__col--wide">
-      <p class="mega__label">INDUSTRIES</p>
-      <div class="mega__list mega__list--two"><a class="mega__item" href="/saltware-prototype/industries/public" data-ga-event="industry_click">
-      <span class="mega__item-name">공공 · 교육</span>
-      <span class="mega__item-desc">공공 · 대학 포털에서 폐쇄망 현대화까지</span>
-    </a><a class="mega__item" href="/saltware-prototype/industries/finance" data-ga-event="industry_click">
-      <span class="mega__item-name">금융</span>
-      <span class="mega__item-desc">국내 최초 AWS 금융 클라우드 적용 사례를 보유하고 있습니다</span>
-    </a><a class="mega__item" href="/saltware-prototype/industries/manufacturing" data-ga-event="industry_click">
-      <span class="mega__item-name">제조</span>
-      <span class="mega__item-desc">반도체 제조 공정에 AI 에이전트를 넣고 있습니다</span>
-    </a><a class="mega__item" href="/saltware-prototype/industries/education" data-ga-event="industry_click">
-      <span class="mega__item-name">교육</span>
-      <span class="mega__item-desc">대학 포털에서 업무 AI까지</span>
-    </a><a class="mega__item" href="/saltware-prototype/industries/agriculture" data-ga-event="industry_click">
-      <span class="mega__item-name">농업</span>
-      <span class="mega__item-desc">뉴웨이팜</span>
-    </a></div>
-    </div></div>
-      </div><div class="mega" data-mega-panel="insights" hidden>
-        <div class="container mega__grid mega__grid--list"><div class="mega__col mega__col--wide">
-      <p class="mega__label">INSIGHTS</p>
-      <div class="mega__list mega__list--two"><a class="mega__item" href="/saltware-prototype/insights/industry">
-      <span class="mega__item-name">Industry Insights</span>
-      <span class="mega__item-desc">산업별로 무엇을 먼저 확인해야 하나</span>
-    </a><a class="mega__item" href="/saltware-prototype/insights/technology">
-      <span class="mega__item-name">Technology Insights</span>
-      <span class="mega__item-desc">발표 당일, 한국어 실무 분석</span>
-    </a><a class="mega__item" href="/saltware-prototype/insights/resources">
-      <span class="mega__item-name">Guides · Resources</span>
-      <span class="mega__item-desc">제품 소개서와 기술 자료</span>
-    </a><a class="mega__item" href="/saltware-prototype/insights/news">
-      <span class="mega__item-name">News</span>
-      <span class="mega__item-desc">솔트웨어의 소식</span>
-    </a></div>
-    </div></div>
-      </div><div class="mega" data-mega-panel="company" hidden>
-        <div class="container mega__grid mega__grid--list"><div class="mega__col mega__col--wide">
-    <p class="mega__label">COMPANY</p>
-    <div class="mega__list mega__list--two"><a class="mega__item" href="/saltware-prototype/company/about">
-      <span class="mega__item-name">About Saltware</span>
-      <span class="mega__item-desc">기술을 파는 회사가 아니라 일하는 방식을 바꾸는 회사</span>
-    </a><a class="mega__item" href="/saltware-prototype/company/capabilities">
-      <span class="mega__item-name">Capabilities</span>
-      <span class="mega__item-desc">자격이 아니라 자격이 증명하는 것을 봅니다</span>
-    </a><a class="mega__item" href="/saltware-prototype/company/history">
-      <span class="mega__item-name">History</span>
-      <span class="mega__item-desc">2003년부터 지금까지</span>
-    </a><a class="mega__item" href="/saltware-prototype/company/newsroom">
-      <span class="mega__item-name">Newsroom</span>
-      <span class="mega__item-desc">무엇이 움직이고 있는가</span>
-    </a><a class="mega__item" href="/saltware-prototype/company/ir">
-      <span class="mega__item-name">IR</span>
-      <span class="mega__item-desc">주주와 투자자를 위한 공시 정보</span>
-    </a><a class="mega__item" href="/saltware-prototype/company/careers">
-      <span class="mega__item-name">Careers</span>
-      <span class="mega__item-desc">오래 걸리는 일을 끝까지 하는 사람</span>
-    </a><a class="mega__item" href="/saltware-prototype/company/location">
-      <span class="mega__item-name">Location</span>
-      <span class="mega__item-desc">찾아오시는 길</span>
-    </a></div>
+      <div class="container mega__grid"><div class="mega__col">
+    <p class="mega__label">BUSINESS</p>
+    <div class="mega__list"><a class="mega__item" href="/saltware-prototype/business/cloud"><span class="mega__item-name">Cloud · AWS MSP</span><span class="mega__item-desc">AWS 도입·이전·24시간 운영·비용 관리</span></a><a class="mega__item" href="/saltware-prototype/business/data-ai"><span class="mega__item-name">AI Data Platform</span><span class="mega__item-desc">데이터를 모으고 그 위에 업무 AI를</span></a><a class="mega__item" href="/saltware-prototype/business/databricks"><span class="mega__item-name">Databricks</span><span class="mega__item-desc">레이크하우스 기반 데이터 통합 구축</span></a><a class="mega__item" href="/saltware-prototype/business/identity"><span class="mega__item-name">Identity · SailPoint</span><span class="mega__item-desc">계정과 권한을 하나의 정책으로</span></a><a class="mega__item" href="/saltware-prototype/business/hybrid"><span class="mega__item-name">Hybrid · Red Hat</span><span class="mega__item-desc">폐쇄망·레거시를 유지하며 단계로 현대화</span></a><a class="mega__item" href="/saltware-prototype/business/smart-farm"><span class="mega__item-name">Smart Farm</span><span class="mega__item-desc">하우스 환경 자동 측정과 원격 제어</span></a></div>
+  </div><div class="mega__col">
+    <p class="mega__label">SERVICE</p>
+    <div class="mega__list"><a class="mega__item" href="https://www.fitcloud.co.kr/" target="_blank" rel="noopener noreferrer"><span class="mega__item-name">FitCloud<span class="ext-mark" aria-hidden="true">↗</span></span><span class="mega__item-desc">AWS 운영·비용 관리 서비스 브랜드</span></a><a class="mega__item" href="/saltware-prototype/business/data-ai"><span class="mega__item-name">Sapie-Guardian</span><span class="mega__item-desc">외부 AI로 나가는 사내 정보 통제</span></a><a class="mega__item" href="https://gafatec.co.kr/" target="_blank" rel="noopener noreferrer"><span class="mega__item-name">가화텍<span class="ext-mark" aria-hidden="true">↗</span></span><span class="mega__item-desc">스마트팜 구축 · 수경재배 설비 계열사</span></a></div>
+  </div><div class="mega__col mega__col--foot">
+    <a href="/saltware-prototype/business" class="mega__all">All Business →</a>
   </div></div>
-      </div>
+    </div><div class="mega" data-mega-panel="industries" hidden>
+      <div class="container mega__grid mega__grid--list"><div class="mega__col mega__col--wide">
+    <div class="mega__list mega__list--horizontal"><a class="mega__item" href="/saltware-prototype/industries/public" data-ga-event="industry_click"><span class="mega__item-name">Public</span></a><a class="mega__item" href="/saltware-prototype/industries/finance" data-ga-event="industry_click"><span class="mega__item-name">Finance</span></a><a class="mega__item" href="/saltware-prototype/industries/manufacturing" data-ga-event="industry_click"><span class="mega__item-name">Manufacturing</span></a><a class="mega__item" href="/saltware-prototype/industries/education" data-ga-event="industry_click"><span class="mega__item-name">Education</span></a><a class="mega__item" href="/saltware-prototype/industries/agriculture" data-ga-event="industry_click"><span class="mega__item-name">Agriculture</span></a></div>
+  </div></div>
+    </div><div class="mega" data-mega-panel="insights" hidden>
+      <div class="container mega__grid mega__grid--list"><div class="mega__col mega__col--wide">
+    <div class="mega__list mega__list--horizontal"><a class="mega__item" href="/saltware-prototype/insights/industry"><span class="mega__item-name">Industry Insights</span></a><a class="mega__item" href="/saltware-prototype/insights/technology"><span class="mega__item-name">Technology Insights</span></a><a class="mega__item" href="/saltware-prototype/insights/resources"><span class="mega__item-name">Guides · Resources</span></a><a class="mega__item" href="/saltware-prototype/insights/news"><span class="mega__item-name">News</span></a></div>
+  </div></div>
+    </div><div class="mega" data-mega-panel="company" hidden>
+      <div class="container mega__grid mega__grid--list"><div class="mega__col mega__col--wide">
+    <div class="mega__list mega__list--horizontal"><a class="mega__item" href="/saltware-prototype/company"><span class="mega__item-name">About Saltware</span></a><a class="mega__item" href="/saltware-prototype/company/capabilities"><span class="mega__item-name">Capabilities</span></a><a class="mega__item" href="/saltware-prototype/company/history"><span class="mega__item-name">History</span></a><a class="mega__item" href="/saltware-prototype/company/newsroom"><span class="mega__item-name">Newsroom</span></a><a class="mega__item" href="/saltware-prototype/company/ir"><span class="mega__item-name">IR</span></a><a class="mega__item" href="/saltware-prototype/company/careers"><span class="mega__item-name">Careers</span></a><a class="mega__item" href="/saltware-prototype/company/location"><span class="mega__item-name">Location</span></a></div>
+  </div></div>
+    </div>
 </header>
 <div class="drawer" id="drawer" hidden>
   <div class="container drawer__inner">
@@ -146,79 +58,111 @@
       <button type="button" class="btn btn--sm" data-drawer-close>닫기</button>
     </div>
     <div class="drawer__group">
-        <button type="button" class="drawer__toggle" aria-expanded="false">Business<span aria-hidden="true">+</span></button>
-        <div class="drawer__panel" hidden><a href="/saltware-prototype/business/cloud">Cloud · AWS MSP</a><a href="/saltware-prototype/business/data-ai">AI Data Platform</a><a href="/saltware-prototype/business/databricks">Databricks</a><a href="/saltware-prototype/business/identity">Identity · SailPoint</a><a href="/saltware-prototype/business/hybrid">Hybrid · Red Hat</a><a href="/saltware-prototype/business/smart-farm">Smart Farm</a><a href="https://www.fitcloud.co.kr/" data-ga-event="fitcloud_outbound" target="_blank" rel="noopener noreferrer">FitCloud<span class="ext-mark" aria-label="외부 링크">↗</span></a><a href="/saltware-prototype/business/fitsapie">FitSapie</a><a href="/saltware-prototype/business/sapie-guardian">Sapie-Guardian</a><a href="/saltware-prototype/business/newway-farm">NewWay Farm</a><a href="/saltware-prototype/business/cloud-hybrid">Cloud + Hybrid 통합안</a></div>
-      </div><div class="drawer__group">
-        <button type="button" class="drawer__toggle" aria-expanded="false">Industries<span aria-hidden="true">+</span></button>
-        <div class="drawer__panel" hidden><a href="/saltware-prototype/industries/public">Public</a><a href="/saltware-prototype/industries/finance">Finance</a><a href="/saltware-prototype/industries/manufacturing">Manufacturing</a><a href="/saltware-prototype/industries/education">Education</a><a href="/saltware-prototype/industries/agriculture">Agriculture</a></div>
-      </div><div class="drawer__group">
-        <button type="button" class="drawer__toggle" aria-expanded="false">Insights<span aria-hidden="true">+</span></button>
-        <div class="drawer__panel" hidden><a href="/saltware-prototype/insights/industry">Industry Insights</a><a href="/saltware-prototype/insights/technology">Technology Insights</a><a href="/saltware-prototype/insights/resources">Guides · Resources</a><a href="/saltware-prototype/insights/news">News</a></div>
-      </div><div class="drawer__group">
-        <button type="button" class="drawer__toggle" aria-expanded="false">Company<span aria-hidden="true">+</span></button>
-        <div class="drawer__panel" hidden><a href="/saltware-prototype/company/about">About Saltware</a><a href="/saltware-prototype/company/capabilities">Capabilities</a><a href="/saltware-prototype/company/history">History</a><a href="/saltware-prototype/company/newsroom">Newsroom</a><a href="/saltware-prototype/company/ir">IR</a><a href="/saltware-prototype/company/careers">Careers</a><a href="/saltware-prototype/company/location">Location</a></div>
-      </div>
-    <a class="btn btn--solid btn--block" href="/saltware-prototype/contact" data-ga-event="header_contact_click">문의하기</a>
+      <button type="button" class="drawer__toggle" aria-expanded="false">Business<span aria-hidden="true">+</span></button>
+      <div class="drawer__panel" hidden><a href="/saltware-prototype/business/cloud">Cloud · AWS MSP</a><a href="/saltware-prototype/business/data-ai">AI Data Platform</a><a href="/saltware-prototype/business/databricks">Databricks</a><a href="/saltware-prototype/business/identity">Identity · SailPoint</a><a href="/saltware-prototype/business/hybrid">Hybrid · Red Hat</a><a href="/saltware-prototype/business/smart-farm">Smart Farm</a><a href="https://www.fitcloud.co.kr/" target="_blank" rel="noopener noreferrer">FitCloud<span class="ext-mark" aria-hidden="true">↗</span></a><a href="/saltware-prototype/business/data-ai">Sapie-Guardian</a><a href="https://gafatec.co.kr/" target="_blank" rel="noopener noreferrer">가화텍<span class="ext-mark" aria-hidden="true">↗</span></a></div>
+    </div><div class="drawer__group">
+      <button type="button" class="drawer__toggle" aria-expanded="false">Industries<span aria-hidden="true">+</span></button>
+      <div class="drawer__panel" hidden><a href="/saltware-prototype/industries/public" data-ga-event="industry_click">Public</a><a href="/saltware-prototype/industries/finance" data-ga-event="industry_click">Finance</a><a href="/saltware-prototype/industries/manufacturing" data-ga-event="industry_click">Manufacturing</a><a href="/saltware-prototype/industries/education" data-ga-event="industry_click">Education</a><a href="/saltware-prototype/industries/agriculture" data-ga-event="industry_click">Agriculture</a></div>
+    </div><div class="drawer__group">
+      <button type="button" class="drawer__toggle" aria-expanded="false">Insights<span aria-hidden="true">+</span></button>
+      <div class="drawer__panel" hidden><a href="/saltware-prototype/insights/industry">Industry Insights</a><a href="/saltware-prototype/insights/technology">Technology Insights</a><a href="/saltware-prototype/insights/resources">Guides · Resources</a><a href="/saltware-prototype/insights/news">News</a></div>
+    </div><div class="drawer__group">
+      <button type="button" class="drawer__toggle" aria-expanded="false">Company<span aria-hidden="true">+</span></button>
+      <div class="drawer__panel" hidden><a href="/saltware-prototype/company">About Saltware</a><a href="/saltware-prototype/company/capabilities">Capabilities</a><a href="/saltware-prototype/company/history">History</a><a href="/saltware-prototype/company/newsroom">Newsroom</a><a href="/saltware-prototype/company/ir">IR</a><a href="/saltware-prototype/company/careers">Careers</a><a href="/saltware-prototype/company/location">Location</a></div>
+    </div>
+    <a href="/saltware-prototype/contact" class="btn btn--solid btn--block" data-ga-event="header_contact_click">문의하기</a>
   </div>
 </div>
-    <main id="main"><section class="hero"><div class="container hero__grid">
-  <div class="hero__body">
-    <p class="eyebrow">SERVICE</p>
-    <h1>Cloud + Hybrid 통합안</h1>
-    <p class="hero__lede">퍼블릭과 폐쇄망을 한 페이지로 — 비교용</p>
-    <div class="cta-row">
-      <a class="btn btn--solid btn--lg" href="/saltware-prototype/contact" data-ga-event="bu_primary_cta">도입 문의</a>
-      <a class="btn btn--lg" href="/saltware-prototype/insights/resources" data-ga-event="bu_tech_asset_click">제품 소개서</a>
+    <main id="main"><section class="hero">
+  <div class="container hero__grid">
+    <div class="hero__body"><p class="eyebrow">CLOUD + HYBRID · 통합안</p><h1>퍼블릭이든 폐쇄망이든<br />운영은 한 팀이 합니다</h1><p class="lede">AWS로 옮길 수 있는 것은 옮기고, 못 옮기는 것은 Red Hat 기반으로 그 자리에서 현대화합니다. 두 환경을 나눠 맡기지 않아도 됩니다.</p><div class="cta-row"><a href="/saltware-prototype/contact" class="btn btn--solid btn--lg" data-ga-event="bu_primary_cta">환경 진단 신청</a><a href="/saltware-prototype/contact" class="btn btn--lg" data-ga-event="bu_secondary_cta">아키텍처 검토 문의</a></div><p class="hero__meta">AWS Competency 3개 · Red Hat Premier Partner (2026.03)</p><div class="media" role="img" aria-label="HERO VISUAL">HERO VISUAL</div></div>
+  </div>
+</section>
+<section class="section">
+  <div class="container"><div class="section__head"><p class="eyebrow">WHY ONE PARTNER</p><h2>이런 상황이라면</h2><p class="lede">환경이 둘로 나뉜 조직에서 반복되는 상황입니다.</p></div><div class="grid grid--3"><article class="card card--band reveal"><p class="eyebrow">과제 1</p><h3 class="card__title">환경마다 업체가 다릅니다</h3><p class="card__desc">퍼블릭은 A사, 온프레미스는 B사. 장애가 나면 서로 자기 쪽이 아니라고 합니다.</p></article><article class="card card--band reveal"><p class="eyebrow">과제 2</p><h3 class="card__title">다 옮길 수 없습니다</h3><p class="card__desc">망분리 요건이나 레거시 때문에 남겨야 하는 시스템이 반드시 있습니다.</p></article><article class="card card--band reveal"><p class="eyebrow">과제 3</p><h3 class="card__title">운영 방식이 두 개입니다</h3><p class="card__desc">같은 조직이 서로 다른 절차로 두 환경을 관리하고 있습니다.</p></article></div></div>
+</section>
+<section class="section section--card">
+  <div class="container"><div class="section__head"><p class="eyebrow">CAPABILITIES</p><h2>어디까지<br />맡길 수 있나</h2><p class="lede">옮기는 일과 남기는 일을 같은 팀이 함께 설계합니다. 환경이 달라도 운영 절차는 하나로 맞춥니다.</p></div><div class="grid grid--4"><article class="card card--band reveal"><p class="eyebrow">범위 1</p><h3 class="card__title">진단과 분류</h3><ul class="list"><li class="list__item">현재 환경 진단</li><li class="list__item">옮길 것과 남길 것 분류</li><li class="list__item">이전 순서 설계</li><li class="list__item">비용 시뮬레이션</li></ul></article><article class="card card--band reveal"><p class="eyebrow">범위 2</p><h3 class="card__title">퍼블릭 구축</h3><ul class="list"><li class="list__item">AWS 마이그레이션</li><li class="list__item">컨테이너·서버리스 전환</li><li class="list__item">CI/CD 구성</li><li class="list__item">보안 기준 적용</li></ul></article><article class="card card--band reveal"><p class="eyebrow">범위 3</p><h3 class="card__title">폐쇄망 현대화</h3><ul class="list"><li class="list__item">프라이빗·하이브리드 설계</li><li class="list__item">RHEL·OpenShift 구축</li><li class="list__item">VM·컨테이너 통합</li><li class="list__item">DR 구성</li></ul></article><article class="card card--band reveal"><p class="eyebrow">범위 4</p><h3 class="card__title">통합 운영</h3><ul class="list"><li class="list__item">24시간 관제</li><li class="list__item">Ansible 운영 자동화</li><li class="list__item">패치·업그레이드</li><li class="list__item">비용·성능 리포트</li></ul></article></div><p class="footnote">두 환경 중 한쪽만 맡기셔도 됩니다. 범위는 진단 후 확정합니다.</p></div>
+</section>
+<section class="section">
+  <div class="container"><div class="section__head"><p class="eyebrow">SOLUTION</p><h2>무엇으로 구축하나</h2><p class="lede">환경에 따라 쓰는 기술이 다릅니다. 그 위의 운영은 솔트웨어가 이어서 합니다.</p></div><div class="grid grid--2"><article class="card reveal"><p class="eyebrow">파트너 솔루션</p><h3 class="card__title">Red Hat</h3><p class="card__desc">2026년 3월 레드햇 Premier Partner로 선정됐습니다. RHEL, OpenShift, Ansible로 폐쇄망과 레거시 환경을 표준 플랫폼으로 바꿉니다.</p></article><article class="card reveal"><p class="eyebrow">자체 서비스</p><h3 class="card__title">AWS · FitCloud</h3><p class="card__desc">2014년부터 AWS 파트너로 사업해 왔습니다. 금융·DevOps·마이그레이션 Competency를 보유하고, 운영과 비용 관리는 자체 브랜드 FitCloud로 제공합니다.</p><ul class="list"><li class="list__item">금융권 보안 아키텍처</li><li class="list__item">대규모 마이그레이션</li><li class="list__item">MSP 운영과 비용 최적화</li></ul></article></div><p class="footnote">한 프로젝트 안에서 두 환경을 함께 설계합니다. 담당 창구는 하나입니다.</p></div>
+</section>
+<section class="section section--band">
+  <div class="container"><div class="section__head"><p class="eyebrow">HOW WE WORK</p><h2>진행 방식</h2></div><div class="steps"><article class="step step--first reveal"><p class="step__no">STEP 1</p><h3 class="card__title">진단과 분류</h3><p class="card__desc">무엇을 옮기고 무엇을 남길지부터 정합니다.</p></article><article class="step reveal"><p class="step__no">STEP 2</p><h3 class="card__title">설계</h3><p class="card__desc">두 환경을 잇는 구조와 전환 순서를 세웁니다.</p></article><article class="step reveal"><p class="step__no">STEP 3</p><h3 class="card__title">구축과 전환</h3><p class="card__desc">업무를 멈추지 않는 순서로 나눠 옮깁니다.</p></article><article class="step reveal"><p class="step__no">STEP 4</p><h3 class="card__title">통합 운영</h3><p class="card__desc">두 환경을 한 절차로 관제하고 개선합니다.</p></article></div></div>
+</section>
+<section class="section section--card">
+  <div class="container"><div class="section__head"><p class="eyebrow">PARTNERSHIP</p><h2>자격이<br />무엇을 증명하는가</h2><p class="lede">퍼블릭과 온프레미스 양쪽에서 최상위 파트너 자격을 가진 곳은 많지 않습니다.</p></div><div class="proof"><div class="proof__row"><p class="card__title">Red Hat Premier Partner</p><p class="card__desc">레드햇 최고 등급. RHEL·OpenShift·Ansible (2026.03)</p></div><div class="proof__row"><p class="card__title">AWS Financial Services Competency</p><p class="card__desc">규제 환경 클라우드 설계·운영 실적 (2018)</p></div><div class="proof__row"><p class="card__title">AWS DevOps · Migration Competency</p><p class="card__desc">배포 자동화(2020)와 대규모 이전(2024) 실적</p></div><div class="proof__row"><p class="card__title">KCSP</p><p class="card__desc">쿠버네티스 인증 서비스 제공사 (2022) — 양쪽 환경의 컨테이너 운영 근거</p></div></div><p class="footnote">기준일 2026.08 · 출처 파트너 공식 디렉터리 및 보도자료</p></div>
+</section>
+<section class="section section--card">
+  <div class="container"><div class="section__head"><p class="eyebrow">CASES</p><h2>프로젝트 사례</h2><p class="lede">환경이 섞인 프로젝트를 중심으로 씁니다.</p></div><div class="chips" data-case-filter><button type="button" class="chip" aria-pressed="true">전체</button><button type="button" class="chip" aria-pressed="false">공공</button><button type="button" class="chip" aria-pressed="false">금융</button><button type="button" class="chip" aria-pressed="false">에너지</button><button type="button" class="chip" aria-pressed="false">커머스</button></div><div class="grid grid--3"><article class="card card--band reveal"><p class="eyebrow">공공 · 대규모</p><h3 class="card__title">폐쇄망 유지하며 일부 업무만 퍼블릭 전환</h3><p class="card__desc">수행 범위와 결과 한 줄</p></article><article class="card card--band reveal"><p class="eyebrow">금융 · 대기업</p><h3 class="card__title">규제 요건에 맞춘 환경 분리 설계</h3><p class="card__desc">수행 범위와 결과 한 줄</p></article><article class="card card--band reveal"><p class="eyebrow">에너지 · 공기업</p><h3 class="card__title">레거시 현대화와 컨테이너 플랫폼 구축</h3><p class="card__desc">수행 범위와 결과 한 줄</p></article></div><p class="footnote">기관·고객사명 공개 범위는 승인 후 확정합니다. 미승인 건은 분야·규모만 표기합니다.</p></div>
+</section>
+<section class="section">
+  <div class="container"><div class="grid grid--2 faq__grid">
+    <div class="section__head">
+      <p class="eyebrow">FAQ</p>
+      <h2>기술 검토와<br />자주 묻는 질문</h2>
+      <p class="lede">두 환경을 함께 검토할 때 나오는 질문입니다.</p>
+      <div class="faq__cta"><a href="/saltware-prototype/contact" class="btn btn--md" data-ga-event="bu_tech_asset_click">기술 자료 요청하기</a></div>
     </div>
-  </div>
-  <div class="media">PRODUCT VISUAL</div>
-</div></section>
-
-<section class="section"><div class="container">
-  <div class="section__head"><p class="eyebrow">WHAT IT SOLVES</p><h2>제품이 해결하는 문제</h2></div>
-  <div class="grid grid--3"><article class="card card--band reveal">
-      <h3 class="card__title">문제 요약 한 줄</h3><p class="card__desc">현장에서 어떻게 드러나는지 한 문장.</p>
-    </article><article class="card card--band reveal">
-      <h3 class="card__title">문제 요약 한 줄</h3><p class="card__desc">현장에서 어떻게 드러나는지 한 문장.</p>
-    </article><article class="card card--band reveal">
-      <h3 class="card__title">문제 요약 한 줄</h3><p class="card__desc">현장에서 어떻게 드러나는지 한 문장.</p>
-    </article></div>
-</div></section>
-
-<section class="section section--card"><div class="container">
-  <div class="section__head"><p class="eyebrow">SCOPE</p><h2>어디까지 맡길 수 있나</h2></div>
-  <div class="grid grid--4"><article class="card card--band reveal">
-      <p class="eyebrow">범위 1</p><h3 class="card__title">묶음 제목</h3>
-    </article><article class="card card--band reveal">
-      <p class="eyebrow">범위 2</p><h3 class="card__title">묶음 제목</h3>
-    </article><article class="card card--band reveal">
-      <p class="eyebrow">범위 3</p><h3 class="card__title">묶음 제목</h3>
-    </article><article class="card card--band reveal">
-      <p class="eyebrow">범위 4</p><h3 class="card__title">묶음 제목</h3>
-    </article></div>
-</div></section>
-
-<section class="section section--inverse"><div class="container">
-  <h2>Cloud + Hybrid 통합안 도입을 검토 중이시면</h2>
-  <div class="cta-row" style="margin-top:var(--sp-5)">
-    <a class="btn btn--solid btn--lg" href="/saltware-prototype/contact" data-ga-event="bu_primary_cta">도입 문의</a>
-  </div>
-</div></section></main>
+    <div class="faq" data-faq><div class="faq__item">
+      <button type="button" class="faq__q" aria-expanded="true">두 환경을 한 곳에 맡기면 뭐가 다릅니까?<span class="faq__icon" aria-hidden="true">+</span></button>
+      <div class="faq__a">장애 원인이 어디에 있든 창구가 하나입니다. 전환 순서도 한 번에 설계하기 때문에 &quot;옮기고 보니 연계가 안 되는&quot; 상황이 줄어듭니다.</div>
+    </div><div class="faq__item">
+      <button type="button" class="faq__q" aria-expanded="false">무엇을 옮기고 무엇을 남길지는 어떻게 정합니까?<span class="faq__icon" aria-hidden="true">+</span></button>
+      <div class="faq__a" hidden>망분리 요건, 레거시 의존도, 트래픽 특성, 비용 세 가지를 함께 봅니다.</div>
+    </div><div class="faq__item">
+      <button type="button" class="faq__q" aria-expanded="false">폐쇄망에서도 운영 자동화가 됩니까?<span class="faq__icon" aria-hidden="true">+</span></button>
+      <div class="faq__a" hidden>Ansible 기반으로 구성합니다.</div>
+    </div><div class="faq__item">
+      <button type="button" class="faq__q" aria-expanded="false">비용은 어떻게 나뉩니까?<span class="faq__icon" aria-hidden="true">+</span></button>
+      <div class="faq__a" hidden>AWS 사용료, Red Hat 구독, 구축비, 운영 대행료가 각각 분리됩니다.</div>
+    </div><div class="faq__item">
+      <button type="button" class="faq__q" aria-expanded="false">한쪽만 먼저 시작해도 됩니까?<span class="faq__icon" aria-hidden="true">+</span></button>
+      <div class="faq__a" hidden>가능합니다. 진단 결과에 따라 우선순위를 나눠 단계로 진행합니다.</div>
+    </div></div>
+  </div></div>
+</section>
+<section class="section section--band">
+  <div class="container"><div class="grid grid--2">
+      <article class="card"><p class="eyebrow">RELATED BUSINESS</p><a href="/saltware-prototype/business/cloud" class="card__more" data-ga-event="related_business_click">Cloud · AWS MSP</a><a href="/saltware-prototype/business/data-ai" class="card__more" data-ga-event="related_business_click">AI 데이터 플랫폼</a><a href="/saltware-prototype/business/databricks" class="card__more" data-ga-event="related_business_click">Databricks</a></article>
+      <article class="card"><p class="eyebrow">INDUSTRIES</p><a href="/saltware-prototype/industries/public" class="card__more" data-ga-event="industry_click">Public 사례 보기</a><a href="/saltware-prototype/industries/finance" class="card__more" data-ga-event="industry_click">Finance 사례 보기</a><a href="/saltware-prototype/industries/manufacturing" class="card__more" data-ga-event="industry_click">Manufacturing 사례 보기</a></article>
+    </div></div>
+</section>
+<section class="section section--inverse">
+  <div class="container"><h2>옮길 것과 남길 것부터<br />정리해 드립니다</h2><p class="lede">현재 환경과 제약 조건을 알려주시면 무엇부터 손댈지 순서를 잡아 드립니다.</p><div class="cta-row"><a href="/saltware-prototype/contact" class="btn btn--solid btn--lg" data-ga-event="bu_primary_cta">환경 진단 신청</a><a href="/saltware-prototype/contact" class="btn btn--lg" data-ga-event="bu_secondary_cta">아키텍처 검토 문의</a></div></div>
+</section></main>
     <footer class="site-footer">
   <div class="container footer__grid">
     <div class="footer__brand">
       <p class="site-header__logo">SALTWARE</p>
+      <p class="footer__tagline">Cloud, Data, AI, Security를 기업의 실제 변화로 연결합니다.</p>
       <p class="footer__addr">경기도 과천시 과천대로12길 117, 과천펜타원 G동 7층</p>
-      <p class="footer__addr">TEL 02-6249-6111 · FAX 02-6249-6121</p>
+      <p class="footer__addr">02-6249-6111 · 02-6249-6121</p>
     </div>
-    <div class="footer__col"><p class="footer__label">Business</p><a href="/saltware-prototype/business/cloud">Cloud · AWS MSP</a><a href="/saltware-prototype/business/data-ai">AI Data Platform</a><a href="/saltware-prototype/business/databricks">Databricks</a><a href="/saltware-prototype/business/identity">Identity · SailPoint</a><a href="/saltware-prototype/business/hybrid">Hybrid · Red Hat</a><a href="/saltware-prototype/business/smart-farm">Smart Farm</a></div>
-    <div class="footer__col"><p class="footer__label">Industries</p><a href="/saltware-prototype/industries/public">Public</a><a href="/saltware-prototype/industries/finance">Finance</a><a href="/saltware-prototype/industries/manufacturing">Manufacturing</a><a href="/saltware-prototype/industries/education">Education</a><a href="/saltware-prototype/industries/agriculture">Agriculture</a></div>
-    <div class="footer__col"><p class="footer__label">Company</p><a href="/saltware-prototype/company/about">About Saltware</a><a href="/saltware-prototype/company/capabilities">Capabilities</a><a href="/saltware-prototype/company/history">History</a><a href="/saltware-prototype/company/newsroom">Newsroom</a><a href="/saltware-prototype/company/ir">IR</a><a href="/saltware-prototype/company/careers">Careers</a><a href="/saltware-prototype/company/location">Location</a></div>
+    <div class="footer__col">
+      <p class="footer__label">BUSINESS</p>
+      <a href="/saltware-prototype/business/cloud">Cloud · AWS MSP</a><a href="/saltware-prototype/business/data-ai">AI Data Platform</a><a href="/saltware-prototype/business/databricks">Databricks</a><a href="/saltware-prototype/business/identity">Identity · SailPoint</a><a href="/saltware-prototype/business/hybrid">Hybrid · Red Hat</a><a href="/saltware-prototype/business/smart-farm">Smart Farm</a>
+    </div><div class="footer__col">
+      <p class="footer__label">SERVICE</p>
+      <a href="https://www.fitcloud.co.kr/" data-ga-event="fitcloud_outbound" target="_blank" rel="noopener noreferrer">FitCloud<span class="ext-mark" aria-hidden="true">↗</span></a><a href="/saltware-prototype/business/data-ai">FitSapie</a><a href="/saltware-prototype/business/data-ai">Sapie-Guardian</a><a href="https://gafatec.co.kr/" target="_blank" rel="noopener noreferrer">NewWay Farm ↗<span class="ext-mark" aria-hidden="true">↗</span></a>
+    </div><div class="footer__col">
+      <p class="footer__label">COMPANY</p>
+      <a href="/saltware-prototype/company">Company</a><a href="/saltware-prototype/company/newsroom">News</a><a href="/saltware-prototype/company/ir">IR</a><a href="/saltware-prototype/company/careers">Careers</a><a href="/saltware-prototype/contact">Contact</a>
+    </div><div class="footer__col">
+      <p class="footer__label">FAMILY &amp; LEGAL</p>
+      <a href="https://www.fitcloud.co.kr/" data-ga-event="fitcloud_outbound" target="_blank" rel="noopener noreferrer">FitCloud<span class="ext-mark" aria-hidden="true">↗</span></a><a href="https://gafatec.co.kr/" data-ga-event="gahwatech_outbound" target="_blank" rel="noopener noreferrer">가화텍<span class="ext-mark" aria-hidden="true">↗</span></a>
+    </div>
   </div>
   <div class="container footer__bottom">
-    <div class="footer__social"><a href="https://www.youtube.com/@saltware_youtube" class="footer__sns" target="_blank" rel="noopener noreferrer">YouTube<span class="ext-mark" aria-label="외부 링크">↗</span></a><a href="https://www.instagram.com/saltware_official" class="footer__sns" target="_blank" rel="noopener noreferrer">Instagram<span class="ext-mark" aria-label="외부 링크">↗</span></a><a href="https://www.facebook.com/Saltware.co.kr" class="footer__sns" target="_blank" rel="noopener noreferrer">Facebook<span class="ext-mark" aria-label="외부 링크">↗</span></a></div>
-    <div class="footer__family"><div class="footer__col"><p class="footer__label">Family Site</p><a href="https://www.fitcloud.co.kr/" target="_blank" rel="noopener noreferrer">FitCloud<span class="ext-mark" aria-label="외부 링크">↗</span></a><a href="https://enview.kr/" target="_blank" rel="noopener noreferrer">EnView<span class="ext-mark" aria-label="외부 링크">↗</span></a><a href="https://www.saltware.co.kr/insight" target="_blank" rel="noopener noreferrer">AWS AI Insight<span class="ext-mark" aria-label="외부 링크">↗</span></a></div></div>
-    <p class="footer__copy">© 2003–2026 솔트웨어㈜. All rights reserved.</p>
+    <div class="footer__social"><a href="https://www.youtube.com/@saltware_youtube" class="footer__sns" target="_blank" rel="noopener noreferrer">YouTube<span class="ext-mark" aria-hidden="true">↗</span></a><a href="https://www.instagram.com/saltware_official" class="footer__sns" target="_blank" rel="noopener noreferrer">Instagram<span class="ext-mark" aria-hidden="true">↗</span></a><a href="https://www.facebook.com/Saltware.co.kr" class="footer__sns" target="_blank" rel="noopener noreferrer">Facebook<span class="ext-mark" aria-hidden="true">↗</span></a></div>
+    <div class="footer__meta">
+      <p class="footer__copy">© 2003–2026 솔트웨어㈜. All rights reserved.</p>
+      <p class="footer__contact">TEL 02-6249-6111</p>
+      <span class="footer__divider">·</span>
+      <a class="footer__link" href="/saltware-prototype/company/location">오시는 길</a>
+      <span class="footer__divider">·</span>
+      <p class="footer__updated">최종 업데이트 2026.08.24</p>
+    </div>
   </div>
 </footer> <div class="floating">
   <a class="floating__cta" href="/saltware-prototype/contact" data-ga-event="floating_contact_click">문의하기</a>
