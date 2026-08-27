@@ -116,6 +116,11 @@
 
   --container: 1240px;
   --header-h: 56px;
+  /* 헤더 표면 — 검정 헤더로 바꾸려면 이 네 값과 로고 변형만 바꾼다. */
+  --header-bg: #000000;
+  --header-ink: rgba(255, 255, 255, 0.72);
+  --header-ink-strong: #ffffff;
+  --header-line: rgba(255, 255, 255, 0.14);
   --shadow-mega: 0 12px 28px rgba(0, 0, 0, 0.08);
   --shadow-lift: 0 10px 24px rgba(16, 20, 28, 0.07);
 

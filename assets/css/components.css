@@ -6,9 +6,10 @@
   position: sticky;
   top: 0;
   z-index: 50;
-  background: color-mix(in srgb, var(--bg-page) 92%, transparent);
+  background: var(--header-bg);
   backdrop-filter: saturate(180%) blur(20px);
-  border-bottom: 1px solid var(--border-hair);
+  border-bottom: 1px solid var(--header-line);
+  color: var(--header-ink);
 }
 .site-header__bar {
   height: var(--header-h);
@@ -40,7 +41,8 @@
 }
 .site-header__lang {
   font-size: var(--fs-xs);
-  color: var(--text-muted);
+  color: var(--header-ink);
+  opacity: 0.62;
 }
 .site-header__burger {
   display: none;
@@ -54,7 +56,7 @@
 }
 .gnb__item {
   font-size: var(--fs-sm);
-  color: var(--text-secondary);
+  color: var(--header-ink);
   padding: 18px 0;
   position: relative;
 }
@@ -201,15 +203,17 @@
 }
 /* 헤더·드로어의 문의 버튼. 기획은 여기만 검정으로 두어 본문 CTA 와 구분한다. */
 .btn--dark {
-  background: var(--text-primary);
-  color: var(--c-white);
-  border-color: var(--text-primary);
+  background: var(--header-ink-strong);
+  color: var(--header-bg);
+  border-color: var(--header-ink-strong);
   padding: 8px 17px;
   font-size: var(--fs-xs);
 }
 .btn--dark:hover {
-  background: var(--text-secondary);
-  border-color: var(--text-secondary);
+  opacity: 0.86;
+}
+.site-header__burger {
+  color: var(--header-ink-strong);
 }
 .btn--block {
   width: 100%;
