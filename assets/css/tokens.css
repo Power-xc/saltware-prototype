@@ -72,7 +72,7 @@
   --tracking-label: 0.06em;
 
   --fs-display: clamp(30px, 4vw, 45px);
-  --fs-hero: clamp(34px, 5.2vw, 62px);
+  --fs-hero: clamp(36px, 6vw, 76px);
   --fs-ghost: clamp(90px, 15vw, 210px);
   --fs-h2: 29px;
   --fs-h3: 22px;
@@ -104,6 +104,13 @@
   --radius-hero: 22px;
   --radius-tile: 12px;
 
+  /* 메인 히어로 표면 — 레퍼런스(bx-main-01) 실측 지배색.
+     헤더와 같은 값이라 경계가 생기지 않는다. */
+  --hero-bg: #0d1111;
+  --hero-ink: #ffffff;
+  --hero-ink-soft: rgba(255, 255, 255, 0.72);
+  --hero-ghost: rgba(255, 255, 255, 0.032);
+
   /* 기획 실측 — 섹션 여백과 격자 간격은 스케일에 없는 값이다. */
   --section-py: clamp(64px, 8vw, 104px);
   --section-py-lg: clamp(88px, 11vw, 152px);
@@ -117,7 +124,7 @@
   --container: 1240px;
   --header-h: 56px;
   /* 헤더 표면 — 검정 헤더로 바꾸려면 이 네 값과 로고 변형만 바꾼다. */
-  --header-bg: #000000;
+  --header-bg: #0d1111;
   --header-ink: rgba(255, 255, 255, 0.72);
   --header-ink-strong: #ffffff;
   --header-line: rgba(255, 255, 255, 0.14);

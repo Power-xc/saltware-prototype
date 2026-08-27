@@ -412,22 +412,56 @@
   max-width: 46ch;
 }
 /* 메인 히어로 — 가운데 정렬, 배경에 큰 흐린 글자. 기획 실측 62px / 210px. */
+/* 첫 화면은 뷰포트를 꽉 채우고, 내리면 일반 스크롤로 넘어간다.
+   svh 를 쓰는 이유는 모바일 브라우저 UI 가 접혔다 펴져도 높이가 튀지 않게 하기 위해서다.
+   min-height 라 내용이 길어지면 화면보다 커진다 — 잘리지 않는다. */
 .hero--home {
   position: relative;
   overflow: hidden;
-  padding-top: 104px;
-  padding-bottom: var(--sp-8);
+  min-height: 100svh;
+  background: var(--hero-bg);
+  color: var(--hero-ink);
+  display: grid;
+  grid-template-rows: 1fr auto;
+  align-content: center;
+  padding-top: calc(var(--header-h) + var(--sp-8));
+  padding-bottom: var(--sp-7);
   text-align: center;
+}
+.hero--home h1 {
+  font-size: var(--fs-hero);
+  line-height: 1.12;
+  letter-spacing: -0.042em;
+}
+/* 다음 화면이 있다는 표시. 명세 §9 가 상시 애니메이션을 금지하므로 움직이지 않는다. */
+.hero__cue {
+  position: relative;
+  z-index: 1;
+  justify-self: center;
+  margin-top: var(--sp-6);
+  font-size: var(--fs-label);
+  letter-spacing: var(--tracking-label);
+  color: var(--hero-ink-soft);
+  opacity: 0.55;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+}
+.hero__cue::after {
+  content: "";
+  width: 1px;
+  height: 28px;
+  background: linear-gradient(currentColor, transparent);
 }
 .hero__ghost {
   position: absolute;
   inset-inline: 0;
-  top: 30%;
+  top: 26%;
   font-size: var(--fs-ghost);
   font-weight: 700;
   line-height: 0.92;
   letter-spacing: -0.05em;
-  color: rgba(0, 0, 0, 0.035);
+  color: var(--hero-ghost);
   pointer-events: none;
   user-select: none;
   z-index: 0;
@@ -446,11 +480,16 @@
 }
 .hero--home .hero__lede {
   max-width: 58ch;
+  color: var(--hero-ink-soft);
+}
+.hero--home .eyebrow--muted {
+  color: var(--hero-ink-soft);
+  opacity: 0.66;
 }
 .hero__feature {
   position: relative;
   z-index: 1;
-  margin-top: var(--sp-8);
+  margin-top: var(--sp-7);
   /* 히어로는 가운데 정렬이지만 카드 안 내용은 기획대로 왼쪽 정렬이다. */
   text-align: left;
 }
@@ -462,9 +501,9 @@
 
 /* 메인 캐러셀은 큰 카드 한 장씩이다 (기획 실측 880×400). */
 .slider--feature .slider__card {
-  width: min(880px, 100%);
-  min-height: 400px;
-  padding: 44px 48px;
+  width: min(380px, 78%);
+  min-height: clamp(200px, 26svh, 300px);
+  padding: 28px 30px;
   border: 0;
   border-radius: 24px;
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.07);
@@ -912,6 +951,32 @@ html.js-reveal .reveal.is-in {
   display: flex;
   gap: var(--sp-2);
   justify-content: center;
+}
+/* 어두운 히어로 안의 흰 카드는 글자색을 되돌린다.
+   상속된 흰색이 흰 배경 위에 놓이면 제목과 링크가 사라진다. */
+.hero--home .card,
+.hero--home .slider__card {
+  color: var(--text-primary);
+}
+.hero--home .card__desc {
+  color: var(--text-muted);
+}
+.hero--home .slider__dot {
+  background: rgba(255, 255, 255, 0.28);
+}
+.hero--home .slider__dot[aria-pressed="true"],
+.hero--home .slider__dot.is-active {
+  background: var(--hero-ink);
+}
+.hero--home .slider__pause {
+  color: var(--hero-ink-soft);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+.hero--home .slider__track::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.08);
+}
+.hero--home .slider__track::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.24);
 }
 .slider__dot {
   width: 8px;
