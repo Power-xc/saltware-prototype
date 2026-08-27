@@ -526,22 +526,27 @@
 .hero--home {
   position: relative;
   overflow: hidden;
-  min-height: 100svh;
+  /* 헤더는 흐름 안에 있다(sticky). 히어로에 100svh 를 주면 헤더 높이만큼
+     아래로 밀려 첫 화면이 한 화면을 넘긴다 — 헤더를 뺀 만큼만 채운다.
+     헤더와 히어로는 같은 색이라 둘이 이어져 한 면으로 읽힌다. */
+  min-height: calc(100svh - var(--header-h));
   background: var(--hero-bg);
   color: var(--hero-ink);
   display: grid;
   grid-template-rows: 1fr auto;
   align-content: center;
-  padding-top: calc(var(--header-h) + var(--sp-8));
+  padding-top: var(--sp-8);
   padding-bottom: var(--sp-7);
   text-align: center;
 }
 /* 다음 화면이 있다는 표시. 명세 §9 가 상시 애니메이션을 금지하므로 움직이지 않는다. */
+/* 다음 화면이 있다는 표시. 흐름 안에 둔다 — 절대 배치하면
+   일시정지 버튼과 같은 자리에 겹쳐 앉는다. */
 .hero__cue {
   position: relative;
   z-index: 1;
   justify-self: center;
-  margin-top: var(--sp-6);
+  margin-top: var(--sp-4);
   font-size: var(--fs-label);
   letter-spacing: var(--tracking-label);
   color: var(--hero-ink-soft);
@@ -628,8 +633,10 @@
   width: var(--banner-w);
   /* 레퍼런스 배너는 2:1 이지만 오른쪽을 브랜드 이미지가 채운다.
      실제 이미지가 없는 동안은 조금 낮춰 빈 면을 줄인다 —
-     자산이 들어오면 2/1 로 되돌린다. */
-  aspect-ratio: 2.7 / 1;
+     자산이 들어오면 2/1 로 되돌린다.
+     비율은 최소 높이로만 건다. aspect-ratio 로 못 박으면 좁은 화면에서
+     카드 안 다섯 줄이 잘린다 — 실제로 390·430px 에서 잘리고 있었다. */
+  min-height: calc(var(--banner-w) / 2.7);
   min-height: 0;
   padding: clamp(24px, 3.4vw, 52px);
   border: 0;
@@ -669,7 +676,7 @@
     --banner-w: 84%;
   }
   .slider--feature .slider__card {
-    aspect-ratio: 4 / 3;
+    min-height: calc(var(--banner-w) * 3 / 4);
   }
 }
 
@@ -2380,4 +2387,6 @@ a.post:hover .post__cover { transform: translateY(-3px); }
 }
 @media (max-width: 640px) {
   .onward { grid-template-columns: minmax(0, 1fr); }
+}
+
 }
