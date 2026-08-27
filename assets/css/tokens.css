@@ -19,6 +19,16 @@
   --c-accent-50: #e8f4ff;
   --c-accent-500: #0071e3;
   --c-accent-600: #0055b4;
+  /* 사업별 로컬 액센트 — 명세 §7. 파트너 색이 화면을 지배하지 않게 절제한다.
+     eyebrow·아이콘·얇은 강조선에만 쓰고 넓은 면적에 칠하지 않는다. */
+  --accent-cloud: #0071e3;
+  --accent-data-ai: #1b4fd8;
+  --accent-databricks: #14508f;
+  --accent-identity: #2a5caa;
+  --accent-redhat: #b0372d;
+  --accent-enview: #4a5568;
+  --accent-smart-farm: #2f7d51;
+
   --c-danger-600: #b1362e;
   --c-danger-50: #fbeceb;
   --c-success-600: #1c7a53;
@@ -92,9 +102,12 @@
   --radius-lg: 18px;
   --radius-pill: 980px;
   --radius-hero: 22px;
+  --radius-tile: 12px;
 
   /* 기획 실측 — 섹션 여백과 격자 간격은 스케일에 없는 값이다. */
-  --section-py: 58px;
+  --section-py: clamp(64px, 8vw, 104px);
+  --section-py-lg: clamp(88px, 11vw, 152px);
+  --section-py-sm: 58px;
   --hero-pt: 72px;
   --hero-pb: 64px;
   --gap-grid: 14px;
@@ -104,6 +117,12 @@
   --container: 1240px;
   --header-h: 56px;
   --shadow-mega: 0 12px 28px rgba(0, 0, 0, 0.08);
+  --shadow-lift: 0 10px 24px rgba(16, 20, 28, 0.07);
+
+  /* 모션 — 명세 §9. hover 는 짧게, 콘텐츠 전환은 길게. */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-hover: 180ms;
+  --dur-content: 420ms;
 
   /* 반응형 브레이크포인트 — 4종으로 고정 */
   --bp-sm: 640px;

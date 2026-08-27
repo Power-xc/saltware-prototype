@@ -225,6 +225,12 @@
 .section {
   padding-bottom: var(--section-py);
 }
+.section--wide {
+  padding-bottom: var(--section-py-lg);
+}
+.section--wide > .container {
+  padding-top: var(--section-py-lg);
+}
 .section > .container {
   border-top: 1px solid var(--border-section);
   padding-top: var(--section-py);
@@ -1118,6 +1124,260 @@ html.js-reveal .reveal.is-in {
   .slider__card {
     width: 200px;
   }
+}
+
+/* ── 카드가 아닌 구성 — 명세 §4.2 ─────────────────────── */
+
+/* 빠른 탐색용 타일. 설명 카드로 키우지 않는다(§11.4). */
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--sp-2);
+}
+@media (min-width: 640px) {
+  .tiles {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 1080px) {
+  .tiles {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+.tile {
+  display: grid;
+  gap: 4px;
+  align-content: start;
+  padding: var(--sp-4) var(--sp-4) var(--sp-5);
+  border: 1px solid var(--border-hair);
+  border-radius: var(--radius-tile);
+  background: var(--bg-card);
+  transition:
+    border-color var(--dur-hover) var(--ease),
+    background-color var(--dur-hover) var(--ease);
+}
+a.tile:hover {
+  border-color: var(--c-accent-500);
+  background: var(--bg-accent);
+  color: var(--text-primary);
+}
+.tile__name {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.tile__desc {
+  font-size: var(--fs-2xs);
+  color: var(--text-faint);
+  line-height: 1.5;
+}
+
+/* 문제 기준 탐색(§11.5). 카드 벽이 아니라 고르는 목록이다. */
+.intents {
+  display: grid;
+  border-top: 1px solid var(--border-hair);
+}
+.intent {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2px;
+  padding: var(--sp-4) 0;
+  border-bottom: 1px solid var(--border-hair);
+  position: relative;
+  transition: padding-left var(--dur-hover) var(--ease);
+}
+@media (min-width: 780px) {
+  .intent {
+    grid-template-columns: 0.9fr 1.5fr auto;
+    align-items: baseline;
+    gap: var(--sp-5);
+  }
+}
+a.intent:hover {
+  padding-left: var(--sp-3);
+  color: var(--text-primary);
+}
+.intent__q {
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+.intent__a {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+.arrow {
+  color: var(--text-accent);
+  font-size: var(--fs-sm);
+  transition: transform var(--dur-hover) var(--ease);
+}
+a.intent:hover .arrow {
+  transform: translateX(4px);
+}
+
+/* 대표 1 + 보조 n(§11.7·11.8). 같은 크기로 늘어놓지 않는다. */
+.editorial {
+  display: grid;
+  gap: var(--sp-6);
+}
+@media (min-width: 900px) {
+  .editorial {
+    grid-template-columns: 1.15fr 1fr;
+    gap: var(--sp-7);
+    align-items: start;
+  }
+}
+.lead {
+  display: grid;
+  gap: var(--sp-4);
+}
+.lead .media {
+  aspect-ratio: 16 / 10;
+}
+.lead__title {
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.32;
+}
+.lead__desc {
+  color: var(--text-muted);
+}
+.supporting {
+  display: grid;
+  border-top: 1px solid var(--border-hair);
+}
+.support {
+  display: grid;
+  gap: 6px;
+  padding: var(--sp-4) 0;
+  border-bottom: 1px solid var(--border-hair);
+  align-content: start;
+}
+.support__title {
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.4;
+}
+.support__desc {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+/* 진행 순서(§11.11). 데스크톱 가로, 모바일 세로. */
+.tl {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--sp-5);
+  counter-reset: none;
+}
+@media (min-width: 900px) {
+  .tl {
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    gap: var(--sp-5);
+    position: relative;
+  }
+  /* 단계를 잇는 가는 선. 장식이 아니라 순서를 읽게 하는 장치다. */
+  .tl::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    top: 9px;
+    height: 1px;
+    background: var(--border-hair);
+  }
+}
+.tl__step {
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  position: relative;
+  padding-top: var(--sp-5);
+}
+.tl__no {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-family: var(--font-mono);
+  font-size: var(--fs-label);
+  font-weight: 600;
+  color: var(--text-accent);
+  background: var(--bg-page);
+  padding-right: var(--sp-3);
+}
+.tl__title {
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+.tl__desc {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+/* 자격 → 뜻 → 우리가 하는 것(§11.12). 설명 없는 배지를 만들지 않는다. */
+.pfs {
+  display: grid;
+  border-top: 1px solid var(--border-hair);
+}
+.pf {
+  display: grid;
+  gap: 4px;
+  padding: var(--sp-4) 0;
+  border-bottom: 1px solid var(--border-hair);
+}
+@media (min-width: 900px) {
+  .pf {
+    grid-template-columns: 0.8fr 1.1fr 1.3fr;
+    gap: var(--sp-5);
+    align-items: baseline;
+  }
+}
+.pf__name {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.pf__means {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+}
+.pf__does {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+/* 카드 hover — 명세 §9. 들리는 정도만. */
+.card,
+.slider__card {
+  transition:
+    border-color var(--dur-hover) var(--ease),
+    box-shadow var(--dur-hover) var(--ease);
+}
+
+/* ── 사업별 로컬 액센트 — 명세 §7 ────────────────────── */
+/* 파트너 색이 Saltware 브랜드를 침범하지 않게, eyebrow·화살표·얇은 강조선에만 쓴다.
+   버튼과 링크는 Corporate Blue 를 유지한다. */
+.bu--cloud { --accent-local: var(--accent-cloud); }
+.bu--data-ai { --accent-local: var(--accent-data-ai); }
+.bu--databricks { --accent-local: var(--accent-databricks); }
+.bu--identity { --accent-local: var(--accent-identity); }
+.bu--redhat { --accent-local: var(--accent-redhat); }
+.bu--enview { --accent-local: var(--accent-enview); }
+.bu--smart-farm { --accent-local: var(--accent-smart-farm); }
+
+.bu .eyebrow,
+.bu .step__no,
+.bu .flow__label,
+.bu .tl__no {
+  color: var(--accent-local, var(--text-accent));
+}
+.bu .section--inverse .eyebrow {
+  color: var(--text-on-inverse);
 }
 
 /* 컴포넌트가 display 를 선언하면 hidden 속성이 무시된다.
