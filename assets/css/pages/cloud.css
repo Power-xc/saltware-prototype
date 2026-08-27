@@ -1,0 +1,116 @@
+/* Cloud · AWS MSP 전용.
+   .bu--cloud 아래로만 건다 — 여기서 만든 것이 메인이나 다른 사업 페이지에
+   새어 나가지 않게 하기 위해서다. 공용 컴포넌트를 고쳐야 할 일이 생기면
+   components.css 로 올리되, 그때는 다른 페이지를 함께 확인한다. */
+
+/* 문의 유형 — 환경 → 막히는 지점 → 맞물리는 범위. 고객 사례가 아니다. */
+.bu--cloud .ucs {
+  display: grid;
+  gap: 0;
+}
+.bu--cloud .uc {
+  display: grid;
+  grid-template-columns: minmax(0, 13rem) minmax(0, 1fr) minmax(0, 15rem);
+  gap: var(--sp-3) var(--sp-7);
+  align-items: baseline;
+  padding-block: var(--sp-6);
+  border-top: 1px solid var(--border-hair);
+}
+.bu--cloud .uc:last-child {
+  border-bottom: 1px solid var(--border-hair);
+}
+.bu--cloud .uc__name {
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+.bu--cloud .uc__body {
+  display: grid;
+  gap: var(--sp-2);
+}
+.bu--cloud .uc__env {
+  font-size: var(--fs-body);
+  color: var(--text-primary);
+}
+.bu--cloud .uc__need {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+/* 맞물리는 범위. 위 Capabilities 의 이름을 그대로 되짚는 라벨이라 조용히 둔다. */
+.bu--cloud .uc__scope {
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  padding-left: var(--sp-4);
+  border-left: 2px solid var(--accent-local, var(--text-accent));
+  line-height: 1.6;
+}
+
+/* 인사이트 — 분류·날짜·제목만. 없는 썸네일과 발췌를 만들지 않는다. */
+.bu--cloud .ils {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--sp-6);
+}
+.bu--cloud .il {
+  display: grid;
+  gap: var(--sp-3);
+  align-content: start;
+  padding-top: var(--sp-5);
+  border-top: 2px solid var(--text-primary);
+  color: inherit;
+}
+.bu--cloud .il__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+.bu--cloud .il__tag {
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  color: var(--accent-local, var(--text-accent));
+}
+.bu--cloud .il__date {
+  font-size: var(--fs-xs);
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+.bu--cloud .il__title {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  line-height: 1.55;
+  letter-spacing: -0.02em;
+}
+.bu--cloud a.il:hover .il__title {
+  color: var(--text-accent);
+}
+
+/* 마무리 — Cloud 에서 가장 강한 면. 메인 히어로를 흉내 내지 않는다:
+   고스트 글자도 그라디언트 제목도 쓰지 않고 색면 하나로만 끊는다. */
+.bu--cloud .section--inverse {
+  background: var(--cloud-deep);
+}
+
+@media (max-width: 1080px) {
+  .bu--cloud .uc {
+    grid-template-columns: minmax(0, 12rem) minmax(0, 1fr);
+  }
+  .bu--cloud .uc__scope {
+    grid-column: 2;
+  }
+  .bu--cloud .ils {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 640px) {
+  .bu--cloud .uc {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .bu--cloud .uc__scope {
+    grid-column: 1;
+  }
+  .bu--cloud .ils {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

@@ -930,6 +930,56 @@ html.js-reveal .reveal.is-in {
   color: var(--c-accent-500);
   font-size: 1.05em;
 }
+
+/* 문의 진입 패널. 대화형이 아니다 — 사실 한 문단과 실제 창구로 가는 링크뿐이다.
+   화면을 덮지 않는 작은 패널이라 배경 상호작용을 막지 않는다(aria-modal=false). */
+.assistant {
+  width: min(320px, calc(100vw - var(--sp-6) * 2));
+  background: var(--bg-card);
+  border: 1px solid var(--border-hair);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-mega);
+  padding: var(--sp-5);
+  display: grid;
+  gap: var(--sp-4);
+  text-align: left;
+}
+.assistant__head {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}
+.assistant__title {
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.assistant__close {
+  min-width: 32px;
+  min-height: 32px;
+  display: grid;
+  place-items: center;
+  color: var(--text-muted);
+  border-radius: var(--radius-xs);
+}
+.assistant__close:hover {
+  color: var(--text-primary);
+  background: var(--bg-band);
+}
+.assistant__body {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+.assistant__alt {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  text-align: center;
+}
+.assistant__alt:hover {
+  color: var(--text-accent);
+}
 .floating__top {
   width: 44px;
   height: 44px;

@@ -27,6 +27,8 @@
   /* 사업별 로컬 액센트 — 명세 §7. 파트너 색이 화면을 지배하지 않게 절제한다.
      eyebrow·아이콘·얇은 강조선에만 쓰고 넓은 면적에 칠하지 않는다. */
   --accent-cloud: #0071e3;
+  /* Cloud 마무리 면. 브랜드 파랑 계열의 짙은 남색이라 검정과 구분된다. */
+  --cloud-deep: #0b2545;
   --accent-data-ai: #1b4fd8;
   --accent-databricks: #14508f;
   --accent-identity: #2a5caa;

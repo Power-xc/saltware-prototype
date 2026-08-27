@@ -8,9 +8,9 @@
     <meta property="og:title" content="산업 — 솔트웨어" />
     <meta property="og:description" content="솔트웨어가 다루는 5개 산업 분야." />
     <meta property="og:type" content="website" />
-    <link rel="stylesheet" href="/saltware-prototype/assets/css/tokens.css?v=51f97ce9cbec" />
-    <link rel="stylesheet" href="/saltware-prototype/assets/css/base.css?v=51f97ce9cbec" />
-    <link rel="stylesheet" href="/saltware-prototype/assets/css/components.css?v=51f97ce9cbec" />
+    <link rel="stylesheet" href="/saltware-prototype/assets/css/tokens.css?v=6ca0d3d0a9f6" />
+    <link rel="stylesheet" href="/saltware-prototype/assets/css/base.css?v=6ca0d3d0a9f6" />
+    <link rel="stylesheet" href="/saltware-prototype/assets/css/components.css?v=6ca0d3d0a9f6" />
   </head>
   <body class="" data-route="/industries">
     <a class="skip-link" href="#main">본문으로 건너뛰기</a>
@@ -20,7 +20,7 @@
     <nav class="gnb" aria-label="주 메뉴"><button type="button" class="gnb__item" data-mega="business" aria-expanded="false">사업부</button><button type="button" class="gnb__item" data-mega="industries" aria-expanded="false" aria-current="page">산업</button><button type="button" class="gnb__item" data-mega="insights" aria-expanded="false">인사이트</button><button type="button" class="gnb__item" data-mega="company" aria-expanded="false">회사소개</button></nav>
     <div class="site-header__right">
       <a href="/saltware-prototype/contact" class="btn btn--dark" data-ga-event="header_contact_click">문의하기</a>
-      <button type="button" class="site-header__burger" data-drawer-open aria-expanded="false" aria-controls="drawer">
+      <button type="button" class="site-header__burger" data-drawer-open aria-expanded="false" aria-controls="drawer" aria-haspopup="dialog">
         <span class="sr-only">메뉴 열기</span><span aria-hidden="true">☰</span>
       </button>
     </div>
@@ -30,7 +30,7 @@
     <p class="mega__label">사업</p>
     <div class="mega__groups"><div class="mega__group">
       <p class="mega__group-label">Cloud &amp; Infrastructure</p>
-      <div class="mega__list"><a class="mega__item" href="/saltware-prototype/business/cloud"><span class="mega__item-name">Cloud · AWS MSP</span><span class="mega__item-desc">AWS 도입·이전·24시간 운영·비용 관리</span></a><a class="mega__item" href="/saltware-prototype/business/redhat"><span class="mega__item-name">Red Hat</span><span class="mega__item-desc">엔터프라이즈 오픈소스 구독과 기술지원</span></a></div>
+      <div class="mega__list"><a class="mega__item" href="/saltware-prototype/business/cloud"><span class="mega__item-name">Cloud · AWS MSP</span><span class="mega__item-desc">AWS 도입·이전·운영·비용 관리</span></a><a class="mega__item" href="/saltware-prototype/business/redhat"><span class="mega__item-name">Red Hat</span><span class="mega__item-desc">엔터프라이즈 오픈소스 구독과 기술지원</span></a></div>
     </div><div class="mega__group">
       <p class="mega__group-label">Data &amp; AI</p>
       <div class="mega__list"><a class="mega__item" href="/saltware-prototype/business/data-ai"><span class="mega__item-name">AI Data Platform</span><span class="mega__item-desc">데이터를 모으고 그 위에 업무 AI를</span></a><a class="mega__item" href="/saltware-prototype/business/databricks"><span class="mega__item-name">Databricks · Starburst</span><span class="mega__item-desc">레이크하우스 기반 데이터 통합 구축</span></a></div>
@@ -61,7 +61,7 @@
   </div></div>
     </div>
 </header>
-<div class="drawer" id="drawer" hidden>
+<div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="주 메뉴" hidden>
   <div class="container drawer__inner">
     <div class="drawer__top">
       <a class="site-header__logo" href="/saltware-prototype/"><img class="wordmark" src="/saltware-prototype/brand/saltware-logo-dark.png" width="170" height="28" alt="솔트웨어" /></a>
@@ -121,19 +121,33 @@
     </div>
     <div class="footer__social"><a href="https://www.youtube.com/@saltware_youtube" class="footer__sns" target="_blank" rel="noopener noreferrer">YouTube<span class="ext-mark" aria-hidden="true">↗</span></a><a href="https://www.instagram.com/saltware_official" class="footer__sns" target="_blank" rel="noopener noreferrer">Instagram<span class="ext-mark" aria-hidden="true">↗</span></a><a href="https://www.facebook.com/Saltware.co.kr" class="footer__sns" target="_blank" rel="noopener noreferrer">Facebook<span class="ext-mark" aria-hidden="true">↗</span></a></div>
   </div>
-</footer> <!-- 떠 있는 진입점. 헤더에 이미 문의하기가 있으므로 여기는 "무엇이든 물어보세요" 가 맡는다.
-     어시스턴트 백엔드가 없다. 그래서 가짜 챗 UI 를 띄우지 않고 실제로 동작하는
-     문의 창구로 보낸다 — 질문을 받는 곳이 거기다. 대화형 진입이 생기면
-     href 만 그 셸로 바꾸면 되고, 그때까지 이 링크는 죽은 링크가 아니다. -->
-<div class="floating">
-  <a class="floating__ask" href="/saltware-prototype/contact" data-ga-event="floating_assistant_click">
+</footer> <!-- 떠 있는 진입점. 헤더에 이미 문의하기가 있으므로 여기는 문의 CTA 를 복제하지 않는다.
+     대화형 어시스턴트 백엔드가 없다 — 가짜 대화를 만들지 않고, 사실만 적은 작은
+     패널을 열어 실제로 동작하는 문의 창구로 보낸다. 승인된 위젯이 생기면
+     이 패널을 그 위젯으로 바꾸면 되고, 그때까지 죽은 링크가 아니다. -->
+<div class="floating" data-assistant>
+  <div class="assistant" id="assistant-panel" role="dialog" aria-modal="false" aria-labelledby="assistant-title" data-assistant-panel hidden>
+    <div class="assistant__head">
+      <p class="assistant__title" id="assistant-title">무엇이든 물어보세요</p>
+      <button type="button" class="assistant__close" data-assistant-close>
+        <span class="sr-only">닫기</span><span aria-hidden="true">✕</span>
+      </button>
+    </div>
+    <p class="assistant__body">
+      온라인 AI 상담은 준비 중입니다. 궁금한 점을 남겨 주시면 담당자가 확인하고
+      영업일 기준 1일 내 회신드립니다.
+    </p>
+    <a class="btn btn--solid btn--block" href="/saltware-prototype/contact" data-ga-event="floating_assistant_fallback_click">문의 남기기</a>
+    <a class="assistant__alt" href="/saltware-prototype/contact" data-ga-event="floating_contact_click">문의 창구 전체 보기</a>
+  </div>
+  <button type="button" class="floating__ask" data-assistant-open aria-expanded="false" aria-haspopup="dialog" aria-controls="assistant-panel" data-ga-event="floating_assistant_click">
     <span class="floating__spark" aria-hidden="true">✦</span>무엇이든 물어보세요
-  </a>
+  </button>
   <button type="button" class="floating__top" data-to-top data-ga-event="back_to_top_click">
     <span class="sr-only">맨 위로</span><span aria-hidden="true">↑</span>
   </button>
 </div>
 
-    <script type="module" src="/saltware-prototype/assets/js/main.mjs?v=51f97ce9cbec"></script>
+    <script type="module" src="/saltware-prototype/assets/js/main.mjs?v=6ca0d3d0a9f6"></script>
   </body>
 </html>
