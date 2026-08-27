@@ -13,11 +13,16 @@
   --c-neutral-300: #d2d2d7;
   --c-neutral-400: #c7c7cc;
   --c-neutral-500: #86868b;
+  /* 본문에 쓰기엔 #86868b 가 너무 옅다 — 흰 바탕에서 3.62:1 로 기준(4.5)에 못 미친다.
+     라벨·각주용으로 한 단계 진한 회색을 둔다. */
+  --c-neutral-550: #707075;
   --c-neutral-600: #6e6e73;
   --c-neutral-700: #424245;
   --c-neutral-900: #1d1d1f;
   --c-accent-50: #e8f4ff;
   --c-accent-500: #0071e3;
+  /* 글자용 파랑. #0071e3 는 회색 밴드 위에서 4.31:1 로 모자란다. */
+  --c-accent-550: #0064cc;
   --c-accent-600: #0055b4;
   /* 사업별 로컬 액센트 — 명세 §7. 파트너 색이 화면을 지배하지 않게 절제한다.
      eyebrow·아이콘·얇은 강조선에만 쓰고 넓은 면적에 칠하지 않는다. */
@@ -44,9 +49,13 @@
   --text-primary: var(--c-neutral-900);
   --text-secondary: var(--c-neutral-700);
   --text-muted: var(--c-neutral-600);
-  --text-faint: var(--c-neutral-500);
+  --text-faint: var(--c-neutral-550);
   --text-on-inverse: var(--c-neutral-100);
-  --text-accent: var(--c-accent-500);
+  /* 어두운 면 위에서는 라이트용 회색·파랑이 그대로 가라앉는다.
+     --text-muted 를 #1d1d1f 에 올리면 3.32:1 이라 사실상 안 읽힌다. */
+  --text-on-inverse-muted: #b8b8bd;
+  --text-accent-on-inverse: #6cb6ff;
+  --text-accent: var(--c-accent-550);
 
   /* 시맨틱 — border */
   --border-hair: rgba(0, 0, 0, 0.07);
@@ -140,6 +149,9 @@
   --header-ink: rgba(255, 255, 255, 0.72);
   --header-ink-strong: #ffffff;
   --header-line: rgba(255, 255, 255, 0.14);
+  /* 색면·사진 위에 글자를 얹을 때 아래쪽에 까는 그늘.
+     자산이 사진으로 바뀌어도 글자가 살아남게 한다. */
+  --scrim-bottom: rgba(0, 0, 0, 0.45);
   --shadow-mega: 0 12px 28px rgba(0, 0, 0, 0.08);
   --shadow-lift: 0 10px 24px rgba(16, 20, 28, 0.07);
 

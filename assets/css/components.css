@@ -41,8 +41,8 @@
 }
 .site-header__lang {
   font-size: var(--fs-xs);
+  /* --header-ink 가 이미 72% 다. 여기서 opacity 를 또 곱하면 4.47:1 로 떨어진다. */
   color: var(--header-ink);
-  opacity: 0.62;
 }
 .site-header__burger {
   display: none;
@@ -60,24 +60,36 @@
   padding: 18px 0;
   position: relative;
 }
+/* 헤더가 검정이다. 여기에 --text-primary(#1d1d1f)를 쓰면 눌린 항목이 사라진다.
+   그리고 마크업이 내보내는 값은 aria-current="page" 다 — "true" 로 적으면 규칙이 죽는다. */
 .gnb__item:hover,
 .gnb__item[aria-expanded="true"],
-.gnb__item[aria-current="true"] {
-  color: var(--text-primary);
+.gnb__item[aria-current="page"] {
+  color: var(--header-ink-strong);
 }
-.gnb__item[aria-current="true"]::after {
+.gnb__item[aria-current="page"]::after {
   content: "";
   position: absolute;
   inset-inline: 0;
   bottom: 0;
   height: 2px;
-  background: var(--text-primary);
+  background: var(--header-ink-strong);
 }
 
 .mega {
   border-top: 1px solid var(--border-hair);
   background: var(--bg-card);
   box-shadow: var(--shadow-mega);
+  /* 헤더가 검정이라 color 로 흰색을 내려보낸다. 메가 패널은 흰 바탕이므로
+     여기서 되돌리지 않으면 글자가 통째로 사라진다 — 실제로 그랬다. */
+  color: var(--text-primary);
+}
+.mega__item-name {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+.mega__item-desc {
+  color: var(--text-muted);
 }
 .mega__grid {
   display: grid;
@@ -101,8 +113,11 @@
   grid-template-columns: 1fr 1fr;
   gap: var(--sp-3) var(--sp-5);
 }
+.mega__list a {
+  color: var(--text-primary);
+}
 .mega__list a:hover {
-  color: var(--text-muted);
+  color: var(--text-accent);
 }
 
 .badge {
@@ -379,7 +394,7 @@
 .media {
   border-radius: var(--radius-hero);
   border: 0;
-  background: var(--c-neutral-150);
+  background: var(--bg-band);
   aspect-ratio: 4 / 3;
   display: grid;
   place-items: center;
@@ -744,35 +759,6 @@
   color: var(--bg-page);
   border-color: var(--text-primary);
   font-weight: 600;
-}
-
-.stepbar {
-  display: flex;
-  align-items: center;
-  gap: 0;
-}
-.stepbar__dot {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  font-size: var(--fs-xs);
-  font-weight: 600;
-  flex: none;
-  border: 1px solid var(--border-hair);
-  background: var(--bg-card);
-  color: var(--text-muted);
-}
-.stepbar__dot[aria-current="step"] {
-  background: var(--text-primary);
-  color: var(--bg-page);
-  border-color: var(--text-primary);
-}
-.stepbar__line {
-  flex: 1;
-  height: 2px;
-  background: var(--border-strong);
 }
 
 /* ── 상태 화면 — 현행에 없던 것 ───────────────────────── */
@@ -1522,6 +1508,12 @@ a.intent:hover .arrow {
 .slider__pause:hover {
   color: var(--text-primary);
 }
+/* 캐러셀은 어두운 히어로에만 있다. 위 hover 규칙과 특정도가 같아 뒤에 와야 이긴다 —
+   그대로 두면 hover 순간 버튼이 검정 위 검정이 된다. */
+.hero--home .slider__pause:hover {
+  color: var(--hero-ink);
+  border-color: var(--hero-ink);
+}
 .slider__track:focus-visible {
   outline: 2px solid var(--c-accent-500);
   outline-offset: 4px;
@@ -1531,7 +1523,9 @@ a.intent:hover .arrow {
 /* ── 사업별 로컬 액센트 — 명세 §7 ────────────────────── */
 /* 파트너 색이 Saltware 브랜드를 침범하지 않게, eyebrow·화살표·얇은 강조선에만 쓴다.
    버튼과 링크는 Corporate Blue 를 유지한다. */
-.bu--cloud { --accent-local: var(--accent-cloud); }
+/* --accent-local 은 글자에만 쓴다. Cloud 액센트(#0071e3)는 회색 밴드 위에서
+   4.31:1 이라 글자로는 모자란다 — 색면용 값은 그대로 두고 글자만 한 단계 진하게. */
+.bu--cloud { --accent-local: var(--c-accent-550); }
 .bu--data-ai { --accent-local: var(--accent-data-ai); }
 .bu--databricks { --accent-local: var(--accent-databricks); }
 .bu--identity { --accent-local: var(--accent-identity); }
@@ -1695,16 +1689,42 @@ a.quiet:hover { background: var(--c-neutral-150); }
   text-decoration: none;
   /* 사진이 없다. 빈 액자를 만들지 않으려고 색면으로 둔다 —
      자산이 들어오면 이 자리에 그대로 들어간다(§25.1). */
-  background: linear-gradient(150deg, var(--bg-inverse), var(--accent-cloud));
+  background:
+    linear-gradient(to top, var(--scrim-bottom), transparent 62%),
+    linear-gradient(150deg, var(--bg-inverse), var(--accent-cloud));
   transition: transform var(--dur-hover) var(--ease);
 }
 a.mo:hover { transform: translateY(-3px); }
-.mo--data-ai { background: linear-gradient(150deg, var(--bg-inverse), var(--accent-data-ai)); }
-.mo--databricks { background: linear-gradient(150deg, var(--bg-inverse), var(--accent-databricks)); }
-.mo--identity { background: linear-gradient(150deg, var(--bg-inverse), var(--accent-identity)); }
-.mo--redhat { background: linear-gradient(150deg, var(--bg-inverse), var(--accent-redhat)); }
-.mo--enview { background: linear-gradient(150deg, var(--bg-inverse), var(--accent-enview)); }
-.mo--smart-farm { background: linear-gradient(150deg, var(--bg-inverse), var(--accent-smart-farm)); }
+.mo--data-ai {
+  background:
+    linear-gradient(to top, var(--scrim-bottom), transparent 62%),
+    linear-gradient(150deg, var(--bg-inverse), var(--accent-data-ai));
+}
+.mo--databricks {
+  background:
+    linear-gradient(to top, var(--scrim-bottom), transparent 62%),
+    linear-gradient(150deg, var(--bg-inverse), var(--accent-databricks));
+}
+.mo--identity {
+  background:
+    linear-gradient(to top, var(--scrim-bottom), transparent 62%),
+    linear-gradient(150deg, var(--bg-inverse), var(--accent-identity));
+}
+.mo--redhat {
+  background:
+    linear-gradient(to top, var(--scrim-bottom), transparent 62%),
+    linear-gradient(150deg, var(--bg-inverse), var(--accent-redhat));
+}
+.mo--enview {
+  background:
+    linear-gradient(to top, var(--scrim-bottom), transparent 62%),
+    linear-gradient(150deg, var(--bg-inverse), var(--accent-enview));
+}
+.mo--smart-farm {
+  background:
+    linear-gradient(to top, var(--scrim-bottom), transparent 62%),
+    linear-gradient(150deg, var(--bg-inverse), var(--accent-smart-farm));
+}
 .mo__title {
   font-size: var(--fs-h3);
   font-weight: 600;
@@ -1852,4 +1872,39 @@ a.post:hover .post__cover { transform: translateY(-3px); }
   background: linear-gradient(140deg, var(--bg-inverse), var(--accent-databricks));
   color: var(--text-on-inverse);
   opacity: 0.92;
+}
+
+/* ── 어두운 면 위의 글자 ────────────────────────────────
+   라이트 한 벌만 두기 때문에 --text-muted·--text-accent 가
+   #1d1d1f 위에 그대로 얹히면 3.3:1 로 가라앉는다. 표면이 뒤집히는
+   곳에서만 글자색도 함께 뒤집는다. */
+.section--inverse .lede,
+.section--inverse p,
+.section--inverse .card__desc,
+.section--inverse .footnote {
+  color: var(--text-on-inverse-muted);
+}
+.section--inverse .eyebrow,
+.section--inverse .step__no {
+  color: var(--text-accent-on-inverse);
+}
+.section--inverse .btn {
+  color: var(--text-accent-on-inverse);
+  border-color: var(--border-inverse);
+}
+.section--inverse .btn:hover {
+  border-color: var(--text-accent-on-inverse);
+  /* .btn:hover 가 --bg-accent(#e8f4ff)를 깐다. 글자도 연한 파랑이라 그대로 두면
+     hover 하는 순간 읽히지 않는다. 어두운 면에서는 배경을 건드리지 않는다. */
+  background: transparent;
+}
+/* 채운 버튼은 어두운 면 위에서 흰 바탕으로 뒤집는다 — 파란 채움은 3.6:1 이다. */
+.section--inverse .btn--solid {
+  background: var(--c-white);
+  border-color: var(--c-white);
+  color: var(--text-primary);
+}
+.section--inverse .btn--solid:hover {
+  background: var(--c-neutral-200);
+  border-color: var(--c-neutral-200);
 }
