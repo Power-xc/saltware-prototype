@@ -143,15 +143,22 @@
   /* 레퍼런스 콘텐츠 폭은 뷰포트의 92% 다(1670 / 1814 실측).
      1240 은 그보다 좁아 6열 타일이 서지 않았다. */
   --container: 1400px;
-  --header-h: 56px;
-  /* 헤더 표면 — 검정 헤더로 바꾸려면 이 네 값과 로고 변형만 바꾼다. */
-  --header-bg: #0d1111;
-  --header-ink: rgba(255, 255, 255, 0.72);
-  --header-ink-strong: #ffffff;
-  --header-line: rgba(255, 255, 255, 0.14);
+  --header-h: 64px;
+  /* 헤더 표면. 기본은 라이트다 — 사이트의 대부분이 하위 페이지이고,
+     거기서 헤더의 역할은 브랜드 표현이 아니라 콘텐츠 탐색이다.
+     메인만 .home 에서 다크로 뒤집는다(아래). */
+  --header-bg: rgba(255, 255, 255, 0.82);
+  --header-ink: var(--c-neutral-700);
+  --header-ink-strong: var(--c-neutral-900);
+  --header-line: rgba(0, 0, 0, 0.08);
+  --header-cta-bg: var(--c-neutral-900);
+  --header-cta-ink: var(--c-white);
   /* 색면·사진 위에 글자를 얹을 때 아래쪽에 까는 그늘.
      자산이 사진으로 바뀌어도 글자가 살아남게 한다. */
   --scrim-bottom: rgba(0, 0, 0, 0.45);
+  /* 부동 UI(문의 진입 + 맨 위로)가 차지하는 오른쪽 아래 높이.
+     페이지 맨 끝까지 내리면 이만큼이 가려지므로 푸터가 미리 비워 둔다. */
+  --floating-clear: 104px;
   --shadow-mega: 0 12px 28px rgba(0, 0, 0, 0.08);
   --shadow-lift: 0 10px 24px rgba(16, 20, 28, 0.07);
 
@@ -165,6 +172,18 @@
   --bp-md: 860px;
   --bp-lg: 1080px;
   --bp-xl: 1280px;
+}
+
+/* 메인 첫 화면만 다크다. 헤더와 히어로가 같은 면으로 이어져야 경계가 생기지 않는다
+   (requests/2026-08-27-dark-header-hero.md). 값 네 개와 CTA 두 개만 뒤집는다 —
+   .btn--dark·버거·로고가 전부 이 토큰을 보고 있어 따로 손댈 곳이 없다. */
+.home {
+  --header-bg: #0d1111;
+  --header-ink: rgba(255, 255, 255, 0.72);
+  --header-ink-strong: #ffffff;
+  --header-line: rgba(255, 255, 255, 0.14);
+  --header-cta-bg: var(--c-white);
+  --header-cta-ink: var(--c-neutral-900);
 }
 
 /* 다크 테마를 두지 않는다. 기획 v0.1 은 라이트 한 벌뿐이고

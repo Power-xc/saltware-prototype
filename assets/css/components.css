@@ -5,6 +5,8 @@
 .site-header {
   position: sticky;
   top: 0;
+  /* 메가 패널의 기준면. 이게 없으면 패널이 흐름에 남아 열릴 때 본문을 밀어낸다. */
+  isolation: isolate;
   z-index: 50;
   background: var(--header-bg);
   backdrop-filter: saturate(180%) blur(20px);
@@ -15,7 +17,7 @@
   height: var(--header-h);
   display: flex;
   align-items: center;
-  gap: var(--sp-6);
+  gap: var(--sp-7);
 }
 .site-header__logo {
   display: inline-flex;
@@ -54,11 +56,23 @@
   display: flex;
   gap: var(--sp-5);
 }
+.gnb {
+  display: flex;
+  gap: var(--sp-6);
+  height: 100%;
+  align-items: stretch;
+}
+/* 항목 전체 높이를 버튼이 차지해야 hover 로 메가가 열릴 때 커서가 빠지지 않는다. */
 .gnb__item {
-  font-size: var(--fs-sm);
+  font-size: var(--fs-body);
+  font-weight: 500;
+  letter-spacing: -0.01em;
   color: var(--header-ink);
-  padding: 18px 0;
+  padding: 0;
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  transition: color var(--dur-hover) var(--ease);
 }
 /* 헤더가 검정이다. 여기에 --text-primary(#1d1d1f)를 쓰면 눌린 항목이 사라진다.
    그리고 마크업이 내보내는 값은 aria-current="page" 다 — "true" 로 적으면 규칙이 죽는다. */
@@ -67,17 +81,43 @@
 .gnb__item[aria-current="page"] {
   color: var(--header-ink-strong);
 }
+/* 세 상태를 구분한다 — 지금 페이지는 밑줄, 열린 메뉴는 점, hover 는 색만.
+   밑줄을 셋 다 쓰면 무엇이 현재 위치인지 알 수 없다. */
 .gnb__item[aria-current="page"]::after {
   content: "";
   position: absolute;
   inset-inline: 0;
-  bottom: 0;
+  bottom: calc(50% - 0.95em);
   height: 2px;
+  border-radius: 2px;
   background: var(--header-ink-strong);
+}
+.gnb__item[aria-expanded="true"]::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  translate: -50% 0;
+  bottom: calc(50% - 0.95em);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--header-ink-strong);
+}
+.gnb__item[aria-current="page"][aria-expanded="true"]::after {
+  inset-inline: 0;
+  left: auto;
+  translate: none;
+  width: auto;
+  height: 2px;
+  border-radius: 2px;
 }
 
 .mega {
-  border-top: 1px solid var(--border-hair);
+  /* 헤더 아래로 겹쳐 내려온다. 흐름에 두면 열 때마다 본문이 아래로 튄다. */
+  position: absolute;
+  top: 100%;
+  inset-inline: 0;
+  border-top: 1px solid var(--header-line);
   background: var(--bg-card);
   box-shadow: var(--shadow-mega);
   /* 헤더가 검정이라 color 로 흰색을 내려보낸다. 메가 패널은 흰 바탕이므로
@@ -91,33 +131,75 @@
 .mega__item-desc {
   color: var(--text-muted);
 }
+/* 사업 열이 넓고 브랜드·전체보기가 뒤따른다. 열마다 상자를 두르지 않는다 —
+   카드 벽이 되면 훑는 속도가 떨어진다. 구분은 여백과 라벨이 맡는다. */
 .mega__grid {
   display: grid;
-  grid-template-columns: 1.1fr 1fr 1fr;
-  gap: var(--sp-7);
-  padding-block: var(--sp-6);
+  grid-template-columns: minmax(0, 2.6fr) minmax(0, 1fr) minmax(0, 0.7fr);
+  gap: var(--sp-8);
+  padding-block: var(--sp-7) var(--sp-8);
+  align-items: start;
+}
+.mega__grid--list {
+  grid-template-columns: minmax(0, 1fr) auto;
 }
 .mega__label {
   font-size: var(--fs-label);
   font-weight: 600;
   letter-spacing: var(--tracking-label);
   color: var(--text-faint);
-  margin-bottom: var(--sp-4);
+  margin-bottom: var(--sp-5);
+}
+.mega__groups {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sp-6) var(--sp-7);
+}
+.mega__group-label {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding-bottom: var(--sp-2);
+  margin-bottom: var(--sp-3);
+  border-bottom: 1px solid var(--border-hair);
 }
 .mega__list {
   display: grid;
-  gap: var(--sp-3);
-  font-size: 14px;
+  gap: var(--sp-4);
+  font-size: var(--fs-sm);
 }
 .mega__list--two {
   grid-template-columns: 1fr 1fr;
   gap: var(--sp-3) var(--sp-5);
 }
-.mega__list a {
-  color: var(--text-primary);
+.mega__list--horizontal {
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  gap: var(--sp-7);
+  align-items: center;
 }
-.mega__list a:hover {
+.mega__item {
+  display: grid;
+  gap: 3px;
+  color: var(--text-primary);
+  /* hover 는 글자와 화살표만 움직인다. 배경을 깔면 칸이 카드가 된다. */
+  transition: color var(--dur-hover) var(--ease);
+}
+.mega__item:hover .mega__item-name {
   color: var(--text-accent);
+}
+.mega__item-desc {
+  color: var(--text-muted);
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+}
+.mega__all {
+  font-weight: 600;
+  font-size: var(--fs-sm);
+}
+.mega__col--foot {
+  justify-self: end;
+  align-self: start;
 }
 
 .badge {
@@ -156,8 +238,10 @@
 .drawer__group {
   border-top: 1px solid var(--border-hair);
 }
+/* 손가락으로 누르는 자리다. 44px 아래로 내려가지 않게 최소 높이를 준다. */
 .drawer__toggle {
   width: 100%;
+  min-height: 52px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -171,8 +255,14 @@
   padding-bottom: var(--sp-4);
 }
 .drawer__panel a {
-  font-size: 14px;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: var(--fs-sm);
   color: var(--text-secondary);
+}
+.drawer__top .btn {
+  min-height: 44px;
 }
 
 /* ── 버튼 ─────────────────────────────────────────────── */
@@ -217,12 +307,15 @@
   font-size: 11.5px;
 }
 /* 헤더·드로어의 문의 버튼. 기획은 여기만 검정으로 두어 본문 CTA 와 구분한다. */
+/* 헤더 CTA. 면이 뒤집혀도 토큰만 따라가면 되도록 전용 토큰을 쓴다 —
+   --header-bg 를 글자색으로 쓰면 라이트 헤더에서 반투명 글자가 된다. */
 .btn--dark {
-  background: var(--header-ink-strong);
-  color: var(--header-bg);
-  border-color: var(--header-ink-strong);
-  padding: 8px 17px;
-  font-size: var(--fs-xs);
+  background: var(--header-cta-bg);
+  color: var(--header-cta-ink);
+  border-color: var(--header-cta-bg);
+  padding: 9px 18px;
+  font-size: var(--fs-sm);
+  font-weight: 600;
 }
 .btn--dark:hover {
   opacity: 0.86;
@@ -525,7 +618,9 @@
    트랙 좌우에 여백을 줘야 첫 장과 마지막 장도 가운데에 설 수 있다. */
 .slider--feature .slider__track {
   --banner-w: min(820px, 54vw);
-  padding-inline: calc((100vw - var(--banner-w)) / 2);
+  /* 100vw 는 세로 스크롤바 폭까지 포함한다. 그 값으로 여백을 잡으면
+     트랙이 뷰포트보다 스크롤바만큼 넓어져 문서 전체가 가로로 넘친다. */
+  padding-inline: calc((100% - var(--banner-w)) / 2);
   gap: var(--sp-5);
   scroll-snap-type: x mandatory;
 }
@@ -571,7 +666,7 @@
 }
 @media (max-width: 640px) {
   .slider--feature .slider__track {
-    --banner-w: 84vw;
+    --banner-w: 84%;
   }
   .slider--feature .slider__card {
     aspect-ratio: 4 / 3;
@@ -799,25 +894,34 @@ html.js-reveal .reveal.is-in {
 /* ── 플로팅 ───────────────────────────────────────────── */
 .floating {
   position: fixed;
-  right: var(--sp-5);
-  bottom: var(--sp-5);
+  /* 모바일 홈 인디케이터·주소창에 가리지 않게 안전 영역을 더한다. */
+  right: max(var(--sp-5), env(safe-area-inset-right));
+  bottom: calc(var(--sp-5) + env(safe-area-inset-bottom));
   z-index: 45;
   display: grid;
   gap: var(--sp-2);
   justify-items: end;
 }
-.floating__cta {
-  background: var(--c-accent-500);
-  color: var(--c-white);
+.floating__ask {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  background: var(--bg-inverse);
+  color: var(--text-on-inverse);
   border-radius: var(--radius-pill);
-  padding: 13px 19px;
-  font-size: var(--fs-xs);
+  padding: 13px 20px;
+  font-size: var(--fs-sm);
   font-weight: 600;
   box-shadow: var(--shadow-mega);
+  transition: background var(--dur-hover) var(--ease);
 }
-.floating__cta:hover {
-  background: var(--c-accent-600);
-  color: var(--c-white);
+.floating__ask:hover {
+  background: var(--c-neutral-700);
+  color: var(--text-on-inverse);
+}
+.floating__spark {
+  color: var(--c-accent-500);
+  font-size: 1.05em;
 }
 .floating__top {
   width: 44px;
@@ -835,16 +939,32 @@ html.js-reveal .reveal.is-in {
 .site-footer {
   background: var(--bg-band);
   border-top: 1px solid var(--border-hair);
-  margin-top: var(--sp-8);
+  margin-top: var(--sp-9);
+  /* 마지막 줄이 부동 UI 밑에 깔리지 않게 아래를 비워 둔다. */
+  padding-bottom: calc(var(--floating-clear) + env(safe-area-inset-bottom));
 }
+/* 서술 한 문단. 푸터에 큰 제목을 두지 않는 대신 이 줄이 회사를 설명한다. */
+.footer__intro {
+  padding-top: var(--sp-8);
+}
+.footer__intro p {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  max-width: 76ch;
+  line-height: 1.7;
+}
+/* 정보군이 여섯이다. 4열로 두면 뒤 둘이 다음 줄로 접혀 1·2열 아래에 붙는다 —
+   실제로 그렇게 나가고 있었다. 열 수를 데이터에 맞춘다. */
 .footer__grid {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1fr;
-  gap: var(--sp-6);
-  padding-block: var(--sp-7);
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--sp-7) var(--sp-6);
+  padding-block: var(--sp-8);
+  align-items: start;
 }
 .footer__label {
-  font-size: var(--fs-label);
+  font-size: var(--fs-2xs);
+  letter-spacing: var(--tracking-label);
   font-weight: 600;
   letter-spacing: var(--tracking-label);
   color: var(--text-faint);
@@ -854,20 +974,48 @@ html.js-reveal .reveal.is-in {
   display: block;
   font-size: var(--fs-sm);
   color: var(--text-secondary);
-  margin-bottom: var(--sp-2);
+  margin-bottom: var(--sp-3);
+  transition: color var(--dur-hover) var(--ease);
+}
+.footer__col a:hover {
+  color: var(--text-primary);
 }
 .footer__addr {
   font-size: var(--fs-xs);
   color: var(--text-muted);
   margin-top: var(--sp-2);
 }
+/* 아래 바는 조용하게. 로고 · 회사 정보 한 줄 · SNS 세 덩어리로만 나눈다. */
 .footer__bottom {
   border-top: 1px solid var(--border-hair);
-  padding-block: var(--sp-5);
+  padding-block: var(--sp-6);
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: var(--sp-4) var(--sp-6);
+  align-items: start;
+}
+.footer__social {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.footer__bottom .wordmark {
+  width: 128px;
+  height: 21px;
+  opacity: 0.72;
+}
+.footer__meta {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--sp-4);
-  align-items: center;
+  gap: 4px var(--sp-4);
+  align-items: baseline;
+  font-size: var(--fs-xs);
+  color: var(--text-faint);
+}
+.footer__meta .footer__link {
+  color: var(--text-muted);
+}
+.footer__meta .footer__link:hover {
+  color: var(--text-primary);
 }
 .footer__social {
   display: flex;
@@ -1201,7 +1349,7 @@ html.js-reveal .reveal.is-in {
     grid-template-columns: repeat(3, 1fr);
   }
   .footer__grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
   .split {
     grid-template-columns: 1fr;
@@ -1251,7 +1399,12 @@ html.js-reveal .reveal.is-in {
     grid-template-columns: 1fr;
   }
   .footer__grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--sp-6) var(--sp-5);
+  }
+  .footer__bottom {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-4);
   }
   .footer__copy {
     margin-left: 0;
@@ -1673,7 +1826,14 @@ a.quiet:hover { background: var(--c-neutral-150); }
   margin-bottom: var(--sp-4);
 }
 .mos__lede { font-size: var(--fs-body); color: var(--text-muted); max-width: 30ch; }
-.mos__col { display: grid; gap: var(--gap-tile); }
+/* 그리드 아이템 기본값은 min-width: auto 다. 그대로 두면 카드 안 긴 문장이
+   트랙보다 넓어지면서 열을 밀어내고 문서가 가로로 넘친다. */
+.mos__col {
+  display: grid;
+  gap: var(--gap-tile);
+  min-width: 0;
+}
+.mo { min-width: 0; }
 .mos__col--lift { margin-top: calc(var(--mosaic-offset) * -1); }
 .mo {
   aspect-ratio: var(--mosaic-ratio);
@@ -1907,4 +2067,317 @@ a.post:hover .post__cover { transform: translateY(-3px); }
 .section--inverse .btn--solid:hover {
   background: var(--c-neutral-200);
   border-color: var(--c-neutral-200);
+}
+
+/* ── 사업 상세 — 히어로 비주얼 ──────────────────────────
+   사진도 제품 화면도 없다. 그릴 수 있는 것은 이 페이지가 이미 말하는
+   서비스 구조뿐이라 그것만 그린다. 자산이 들어오면 이 자리를 그대로 내준다. */
+.hero__grid--solo {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 62ch;
+}
+.hv {
+  margin: 0;
+  display: grid;
+  gap: var(--sp-5);
+}
+.hv__flow {
+  display: grid;
+  gap: var(--sp-3);
+  list-style: none;
+  counter-reset: none;
+}
+.hv__node {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: var(--sp-4);
+  align-items: baseline;
+  padding: var(--sp-4) var(--sp-5);
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border-hair);
+}
+/* 단계 사이를 잇는 선. 마지막 마디에는 긋지 않는다. */
+.hv__node::after {
+  content: "";
+  position: absolute;
+  left: calc(var(--sp-5) + 0.9em);
+  top: 100%;
+  height: var(--sp-3);
+  width: 1px;
+  background: var(--border-strong);
+}
+.hv__node:last-child::after {
+  display: none;
+}
+.hv__seq {
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  color: var(--accent-local, var(--text-accent));
+  font-variant-numeric: tabular-nums;
+}
+.hv__name {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.hv__hint {
+  grid-column: 2;
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+.hv__caption {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  padding-left: var(--sp-5);
+}
+
+/* ── 사업 상세 어휘 — Cloud 에서 먼저 쓴다 ───────────────
+   layout 값으로 사업이 골라 쓰므로 다른 사업 화면은 그대로다.
+   카드가 아닌 구성을 섞어 흰 사각형이 반복되지 않게 한다. */
+
+/* 고객 과제 — 큰 번호와 가로선. 상자를 두르지 않는다. */
+.pbs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--sp-7);
+}
+.pb {
+  display: grid;
+  gap: var(--sp-4);
+  padding-top: var(--sp-5);
+  border-top: 2px solid var(--text-primary);
+}
+.pb__no {
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: var(--tracking-tight);
+  color: var(--accent-local, var(--text-accent));
+  font-variant-numeric: tabular-nums;
+}
+.pb__title {
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.4;
+}
+.pb__desc {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* 수행 범위 — 네 칸을 진행 순서로 잇는다. */
+.stages {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--sp-5);
+  list-style: none;
+  counter-reset: none;
+}
+.stage {
+  position: relative;
+  display: grid;
+  gap: var(--sp-4);
+  align-content: start;
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--border-strong);
+}
+/* 단계 사이의 진행 표시. 마지막 칸에는 두지 않는다. */
+.stage::before {
+  content: "";
+  position: absolute;
+  top: -4px;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-local, var(--text-accent));
+}
+.stage__head {
+  display: grid;
+  gap: var(--sp-2);
+}
+.stage__no {
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+.stage__name {
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+.stage__list {
+  display: grid;
+  gap: var(--sp-2);
+  list-style: none;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+.stage__list li {
+  padding-left: var(--sp-4);
+  position: relative;
+}
+.stage__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 5px;
+  height: 1px;
+  background: var(--border-strong);
+}
+
+/* 기술 파트너 → 자사 브랜드. 로고를 크게 붙이지 않고 역할을 적는다. */
+.ps {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: var(--sp-6);
+  align-items: stretch;
+}
+.ps__panel {
+  display: grid;
+  gap: var(--sp-3);
+  align-content: start;
+  padding: var(--sp-7) var(--sp-6);
+  border-radius: var(--radius-lg);
+  background: var(--bg-band);
+}
+/* 자사 쪽이 주체다. 파트너 면보다 한 단계 또렷하게 둔다. */
+.ps__panel--own {
+  background: var(--bg-card);
+  border: 1px solid var(--border-hair);
+  box-shadow: var(--shadow-lift);
+}
+.ps__role {
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-faint);
+}
+.ps__name {
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+}
+.ps__desc {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  line-height: 1.75;
+}
+.ps__list {
+  display: grid;
+  gap: var(--sp-2);
+  list-style: none;
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  margin-top: var(--sp-2);
+}
+.ps__list li::before {
+  content: "· ";
+  color: var(--text-faint);
+}
+.ps__link {
+  align-self: center;
+  font-size: var(--fs-h4);
+  color: var(--text-faint);
+}
+
+/* 사례 — 고객사 공개 전에도 구조가 선다. 가짜 카드를 세우지 않는다. */
+.css {
+  display: grid;
+  gap: 0;
+}
+.cs {
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  gap: var(--sp-2) var(--sp-6);
+  align-items: baseline;
+  padding-block: var(--sp-5);
+  border-top: 1px solid var(--border-hair);
+  color: inherit;
+}
+.cs:last-child {
+  border-bottom: 1px solid var(--border-hair);
+}
+.cs__tag {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.cs__title {
+  font-size: var(--fs-body);
+  font-weight: 600;
+}
+.cs__pending {
+  font-size: var(--fs-sm);
+  color: var(--text-faint);
+}
+.cs__desc {
+  grid-column: 2;
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+@media (max-width: 1080px) {
+  .pbs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stages { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ps { grid-template-columns: minmax(0, 1fr); }
+  .ps__link { justify-self: center; rotate: 90deg; }
+}
+@media (max-width: 640px) {
+  .pbs,
+  .stages { grid-template-columns: minmax(0, 1fr); }
+  .cs { grid-template-columns: minmax(0, 1fr); }
+  .cs__desc { grid-column: 1; }
+}
+
+/* 푸터 직전 이어보기. 마무리 CTA 와 무게가 겹치지 않게 조용히 둔다. */
+.section--onward > .container {
+  border-top: 0;
+}
+.onward {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--sp-6) var(--sp-8);
+  padding-top: var(--sp-6);
+  border-top: 1px solid var(--border-hair);
+}
+.onward__label {
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-faint);
+  margin-bottom: var(--sp-4);
+}
+.onward__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3) var(--sp-6);
+}
+.onward__links .card__more {
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+.onward__links .card__more:hover {
+  color: var(--text-accent);
+}
+
+/* 사업 상세의 마무리. 제목과 설명이 붙어 있어 한 덩어리로 읽히던 것을 띄운다. */
+.section--inverse .container > h2 + .lede {
+  margin-top: var(--sp-4);
+}
+.section--inverse .cta-row {
+  margin-top: var(--sp-7);
+}
+@media (max-width: 640px) {
+  .onward { grid-template-columns: minmax(0, 1fr); }
 }
