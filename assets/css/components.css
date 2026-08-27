@@ -428,11 +428,6 @@
   padding-bottom: var(--sp-7);
   text-align: center;
 }
-.hero--home h1 {
-  font-size: var(--fs-hero);
-  line-height: 1.12;
-  letter-spacing: -0.042em;
-}
 /* 다음 화면이 있다는 표시. 명세 §9 가 상시 애니메이션을 금지하므로 움직이지 않는다. */
 .hero__cue {
   position: relative;
@@ -453,10 +448,13 @@
   height: 28px;
   background: linear-gradient(currentColor, transparent);
 }
+/* 레퍼런스는 고스트가 화면 밖으로 잘려 나갈 만큼 크다. 잘리는 것이 의도다. */
 .hero__ghost {
   position: absolute;
   inset-inline: 0;
-  top: 26%;
+  top: 18%;
+  text-align: center;
+  white-space: nowrap;
   font-size: var(--fs-ghost);
   font-weight: 700;
   line-height: 0.92;
@@ -475,8 +473,16 @@
 }
 .hero--home h1 {
   font-size: var(--fs-hero);
-  line-height: 1.18;
+  line-height: 1.12;
   letter-spacing: -0.04em;
+  font-weight: 700;
+}
+/* 첫 줄만 분홍→보라. 둘째 줄은 흰색으로 남는다(레퍼런스 실측). */
+.hero__accent {
+  background: linear-gradient(90deg, var(--hero-accent-from), var(--hero-accent-to));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 .hero--home .hero__lede {
   max-width: 58ch;
@@ -503,7 +509,7 @@
 /* 배너는 한 번에 한 장이다. 가운데 것이 크고 양옆이 작게 비친다(레퍼런스 실측).
    트랙 좌우에 여백을 줘야 첫 장과 마지막 장도 가운데에 설 수 있다. */
 .slider--feature .slider__track {
-  --banner-w: min(1060px, 62vw);
+  --banner-w: min(820px, 54vw);
   padding-inline: calc((100vw - var(--banner-w)) / 2);
   gap: var(--sp-5);
   scroll-snap-type: x mandatory;
@@ -1018,11 +1024,13 @@ html.js-reveal .reveal.is-in {
   color: var(--hero-ink-soft);
   border-color: rgba(255, 255, 255, 0.22);
 }
-.hero--home .slider__track::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.08);
+/* 배너에는 점과 일시정지 버튼이 있다. 스크롤바까지 보이면 조작 표시가 셋이 된다 —
+   레퍼런스에는 없다. 키보드·휠 스크롤은 그대로 동작한다. */
+.hero--home .slider__track {
+  scrollbar-width: none;
 }
-.hero--home .slider__track::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.24);
+.hero--home .slider__track::-webkit-scrollbar {
+  display: none;
 }
 .slider__dot {
   width: 8px;
@@ -1545,4 +1553,303 @@ a.intent:hover .arrow {
    파일 맨 끝에 두어 같은 특정도에서 이 규칙이 이긴다. */
 [hidden] {
   display: none;
+}
+
+/* ── 레퍼런스 레이아웃 (layout-main-01 실측) ─────────────
+   메인만 이 어휘를 쓴다. 하위 페이지의 hairline 구분은 그대로 둔다.
+   명세 §4-3 배경 밴드 예외는 requests/2026-08-27-reference-layout-match.md 에 기록했다. */
+
+/* 제목이 격자 한 칸을 차지한다. 레퍼런스는 6열에 제목이 3열을 먹는다 —
+   우리는 산업이 6개라 4열에 제목 2열로 같은 비율을 유지하면서 빈 칸이 남지 않는다. */
+.marks {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--gap-tile);
+}
+/* 레퍼런스는 6열 중 3열을 제목이 먹는다. 우리는 산업이 6개라 제목이 두 행을 걸치면
+   오른쪽 3열 × 2행이 정확히 채워진다 — 빈 칸이 남지 않는다. */
+.marks__head {
+  grid-column: span 3;
+  grid-row: span 2;
+  align-self: start;
+  padding-right: var(--sp-7);
+  padding-top: var(--sp-4);
+}
+.marks__title {
+  font-size: var(--fs-h2);
+  letter-spacing: var(--tracking-display);
+  margin-bottom: var(--sp-4);
+}
+.marks__lede {
+  font-size: var(--fs-body);
+  color: var(--text-muted);
+  max-width: 32ch;
+}
+.mark {
+  background: var(--bg-band);
+  border-radius: var(--radius-xl);
+  aspect-ratio: var(--tile-ratio);
+  padding: var(--sp-5);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  color: inherit;
+  text-decoration: none;
+  transition: background var(--dur-hover) var(--ease), transform var(--dur-hover) var(--ease);
+}
+a.mark:hover {
+  background: var(--c-neutral-150);
+  transform: translateY(-2px);
+}
+.mark__name {
+  font-size: var(--fs-h4);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+/* 도형은 순수 CSS 다. 아이콘 세트를 섞어 쓰지 않는다(§11). */
+.mark__sign {
+  align-self: end;
+  justify-self: end;
+  width: 46px;
+  height: 46px;
+  background: currentColor;
+}
+.mark__sign--circle { color: var(--accent-cloud); border-radius: 50%; }
+.mark__sign--cross {
+  color: var(--accent-smart-farm);
+  clip-path: polygon(35% 0, 65% 0, 65% 35%, 100% 35%, 100% 65%, 65% 65%, 65% 100%, 35% 100%, 35% 65%, 0 65%, 0 35%, 35% 35%);
+}
+.mark__sign--hex {
+  color: var(--accent-identity);
+  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+}
+.mark__sign--diamond { color: var(--text-primary); clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
+.mark__sign--play { color: var(--accent-databricks); clip-path: polygon(0 0, 100% 50%, 0 100%); }
+.mark__sign--bars {
+  color: var(--accent-smart-farm);
+  clip-path: polygon(0 66%, 33% 66%, 33% 33%, 66% 33%, 66% 0, 100% 0, 100% 100%, 0 100%);
+}
+.mark__sign--square { color: var(--accent-data-ai); border-radius: var(--radius-xs); }
+.mark__sign--quarter { color: var(--text-primary); border-radius: 0 0 100% 0; }
+
+/* 가운데 정렬 제목 아래 균등한 칸. 레퍼런스의 Trusted Enterprise Partner. */
+.section--center .section__head {
+  text-align: center;
+  max-width: 62ch;
+  margin-inline: auto;
+}
+.quiets {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--sp-2);
+}
+.quiet {
+  background: var(--bg-band);
+  border-radius: var(--radius-md);
+  padding: var(--sp-6) var(--sp-4);
+  text-align: center;
+  display: grid;
+  gap: var(--sp-2);
+  align-content: center;
+  color: inherit;
+  text-decoration: none;
+  transition: background var(--dur-hover) var(--ease);
+}
+a.quiet:hover { background: var(--c-neutral-150); }
+.quiet__name {
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.quiet__desc {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+
+/* 왼쪽 제목 + 오른쪽 두 열. 오른쪽 열이 위로 올라가 격자로 보이지 않는다. */
+.mos {
+  display: grid;
+  grid-template-columns: minmax(0, 0.66fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--gap-tile);
+  align-items: start;
+}
+.mos__head { padding-right: var(--sp-6); align-self: start; padding-top: var(--sp-6); }
+.mos__title {
+  font-size: var(--fs-h2);
+  letter-spacing: var(--tracking-display);
+  margin-bottom: var(--sp-4);
+}
+.mos__lede { font-size: var(--fs-body); color: var(--text-muted); max-width: 30ch; }
+.mos__col { display: grid; gap: var(--gap-tile); }
+.mos__col--lift { margin-top: calc(var(--mosaic-offset) * -1); }
+.mo {
+  aspect-ratio: var(--mosaic-ratio);
+  border-radius: var(--radius-xl);
+  padding: var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  text-align: center;
+  gap: var(--sp-2);
+  color: var(--text-on-inverse);
+  text-decoration: none;
+  /* 사진이 없다. 빈 액자를 만들지 않으려고 색면으로 둔다 —
+     자산이 들어오면 이 자리에 그대로 들어간다(§25.1). */
+  background: linear-gradient(150deg, var(--bg-inverse), var(--accent-cloud));
+  transition: transform var(--dur-hover) var(--ease);
+}
+a.mo:hover { transform: translateY(-3px); }
+.mo--data-ai { background: linear-gradient(150deg, var(--bg-inverse), var(--accent-data-ai)); }
+.mo--databricks { background: linear-gradient(150deg, var(--bg-inverse), var(--accent-databricks)); }
+.mo--identity { background: linear-gradient(150deg, var(--bg-inverse), var(--accent-identity)); }
+.mo--redhat { background: linear-gradient(150deg, var(--bg-inverse), var(--accent-redhat)); }
+.mo--enview { background: linear-gradient(150deg, var(--bg-inverse), var(--accent-enview)); }
+.mo--smart-farm { background: linear-gradient(150deg, var(--bg-inverse), var(--accent-smart-farm)); }
+.mo__title {
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.mo__desc { font-size: var(--fs-sm); opacity: 0.82; max-width: 30ch; }
+
+/* 표지 · 분류 · 제목 · 설명. 글 목록의 생김새. */
+.posts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--sp-6);
+}
+.post {
+  display: grid;
+  gap: var(--sp-3);
+  align-content: start;
+  color: inherit;
+  text-decoration: none;
+}
+.post__cover {
+  aspect-ratio: var(--cover-ratio);
+  border-radius: var(--radius-md);
+  background: linear-gradient(140deg, var(--bg-inverse), var(--accent-cloud));
+  transition: transform var(--dur-hover) var(--ease);
+}
+.post__cover--1 { background: linear-gradient(140deg, var(--bg-inverse), var(--accent-data-ai)); }
+.post__cover--2 { background: linear-gradient(140deg, var(--bg-inverse), var(--accent-identity)); }
+a.post:hover .post__cover { transform: translateY(-3px); }
+.post__meta { display: flex; align-items: center; justify-content: space-between; }
+.post__tag {
+  background: var(--bg-band);
+  border-radius: var(--radius-xs);
+  padding: 4px 10px;
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+}
+.post__title {
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.4;
+}
+.post__desc { font-size: var(--fs-sm); color: var(--text-muted); }
+
+/* 칸마다 크기가 다른 격자. 대표 숫자가 두 칸을 먹는다. */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-areas:
+    "lead lead a a"
+    "lead lead b b";
+  gap: var(--gap-tile);
+}
+.bento__cell {
+  background: var(--bg-band);
+  border-radius: var(--radius-xl);
+  padding: var(--sp-6);
+  display: grid;
+  gap: var(--sp-2);
+  align-content: start;
+}
+.bento__cell--0 { grid-area: lead; }
+.bento__cell--1 { grid-area: a; }
+.bento__cell--2 { grid-area: b; }
+.bento__num {
+  font-size: var(--fs-display);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+  line-height: 1;
+}
+.bento__cell--0 .bento__num { font-size: var(--fs-hero); }
+.bento__label { font-size: var(--fs-h4); font-weight: 600; }
+.bento__desc { font-size: var(--fs-sm); color: var(--text-muted); }
+
+/* 왼쪽 제목 + 오른쪽 본체. 벤토와 모자이크가 함께 쓴다. */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.5fr) minmax(0, 1fr);
+  gap: var(--sp-8);
+  align-items: start;
+}
+.split__head { align-self: center; }
+
+@media (max-width: 1080px) {
+  .marks { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .marks__head { grid-column: span 3; grid-row: auto; padding-right: 0; }
+  .quiets { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mos { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .mos__head { grid-column: span 2; padding-right: 0; }
+  .mos__col--lift { margin-top: 0; }
+  .posts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .split { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 640px) {
+  /* 타일은 두 열로 남긴다. 한 열이면 정사각 비율이 화면 폭만큼 커져 한 칸이 한 화면이 된다. */
+  .marks,
+  .quiets { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .marks__head { grid-column: span 2; grid-row: auto; }
+  .mark { padding: var(--sp-4); }
+  .mark__sign { width: 34px; height: 34px; }
+  .mos,
+  .posts { grid-template-columns: minmax(0, 1fr); }
+  .mos__head { grid-column: span 1; }
+  .bento {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "lead" "a" "b";
+  }
+}
+
+/* 레퍼런스는 섹션을 선으로 자르지 않는다. 배경과 여백이 구분을 맡는다.
+   메인에만 적용한다 — 하위 페이지는 지금의 hairline 구분을 유지한다. */
+.home .section > .container {
+  border-top: 0;
+  padding-top: var(--section-py);
+}
+.home .section--band {
+  padding-block: var(--section-py-lg);
+}
+/* 마무리는 가운데로 모은다. 레퍼런스의 밴드가 그렇게 생겼다. */
+.section--focus > .container {
+  text-align: center;
+}
+.section--focus .section__head {
+  max-width: 60ch;
+  margin-inline: auto;
+}
+.section--focus .cta-row {
+  justify-content: center;
+  margin-bottom: var(--sp-7);
+}
+/* 마지막 줄이 두 칸만 남아도 가운데로 모인다. 격자로 두면 왼쪽에 붙는다. */
+.section--focus .tiles {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.section--focus .tile {
+  flex: 0 1 clamp(180px, 15vw, 220px);
+}
+
+/* 메인의 대표 사례 자리도 같은 색면으로 둔다. 회색 빈 액자 하나만 다른 언어로
+   남으면 페이지가 두 벌로 보인다. 하위 페이지의 media 는 그대로다. */
+.home .media {
+  background: linear-gradient(140deg, var(--bg-inverse), var(--accent-databricks));
+  color: var(--text-on-inverse);
+  opacity: 0.92;
 }

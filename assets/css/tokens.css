@@ -72,8 +72,8 @@
   --tracking-label: 0.06em;
 
   --fs-display: clamp(30px, 4vw, 45px);
-  --fs-hero: clamp(36px, 6vw, 76px);
-  --fs-ghost: clamp(90px, 15vw, 210px);
+  --fs-hero: clamp(38px, 6.4vw, 88px);
+  --fs-ghost: clamp(96px, 17vw, 280px);
   --fs-h2: 29px;
   --fs-h3: 22px;
   --fs-h4: 17px;
@@ -103,13 +103,17 @@
   --radius-pill: 980px;
   --radius-hero: 22px;
   --radius-tile: 12px;
+  --radius-xl: 24px;
 
   /* 메인 히어로 표면 — 레퍼런스(bx-main-01) 실측 지배색.
      헤더와 같은 값이라 경계가 생기지 않는다. */
   --hero-bg: #0d1111;
   --hero-ink: #ffffff;
   --hero-ink-soft: rgba(255, 255, 255, 0.72);
-  --hero-ghost: rgba(255, 255, 255, 0.032);
+  --hero-ghost: rgba(255, 255, 255, 0.055);
+  /* 히어로 제목 첫 줄. 레퍼런스(layout-main-01) 좌우 실측 — 분홍에서 보라로 간다. */
+  --hero-accent-from: #d779e8;
+  --hero-accent-to: #957cfd;
 
   /* 기획 실측 — 섹션 여백과 격자 간격은 스케일에 없는 값이다. */
   --section-py: clamp(64px, 8vw, 104px);
@@ -118,10 +122,18 @@
   --hero-pt: 72px;
   --hero-pb: 64px;
   --gap-grid: 14px;
+  /* 레퍼런스 격자 — 타일·모자이크·벤토가 공유한다. 값이 흩어지면 리듬이 깨진다. */
+  --gap-tile: 16px;
+  --tile-ratio: 1 / 1.05;
+  --mosaic-ratio: 16 / 10;
+  --mosaic-offset: clamp(40px, 7vw, 116px);
+  --cover-ratio: 16 / 9;
   --lh-display: 1.24;
   --lh-lede: 1.68;
 
-  --container: 1240px;
+  /* 레퍼런스 콘텐츠 폭은 뷰포트의 92% 다(1670 / 1814 실측).
+     1240 은 그보다 좁아 6열 타일이 서지 않았다. */
+  --container: 1400px;
   --header-h: 56px;
   /* 헤더 표면 — 검정 헤더로 바꾸려면 이 네 값과 로고 변형만 바꾼다. */
   --header-bg: #0d1111;
