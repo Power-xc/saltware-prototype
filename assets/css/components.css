@@ -933,6 +933,32 @@ html.js-reveal .reveal.is-in {
   font-size: var(--fs-xs);
 }
 
+.stats {
+  display: grid;
+  gap: var(--gap-grid);
+  grid-template-columns: repeat(2, 1fr);
+}
+@media (min-width: 860px) {
+  .stats {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.stat {
+  display: grid;
+  gap: var(--sp-2);
+  align-content: start;
+}
+.stat__num {
+  font-size: var(--fs-h2);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+}
+.stat__label {
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
 /* ── 목록 ────────────────────────────────────────────── */
 .list {
   display: grid;
