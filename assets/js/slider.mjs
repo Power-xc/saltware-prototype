@@ -40,6 +40,8 @@ export function initSlider() {
         b.setAttribute("aria-pressed", String(n === i));
         b.classList.toggle("is-active", n === i);
       });
+      // 가운데 배너만 크게 보이게 하는 고리. CSS 가 나머지를 줄인다.
+      cards.forEach((c, n) => c.classList.toggle("is-active", n === i));
     };
 
     const goTo = (i) => {

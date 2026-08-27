@@ -500,15 +500,61 @@
 }
 
 /* 메인 캐러셀은 큰 카드 한 장씩이다 (기획 실측 880×400). */
+/* 배너는 한 번에 한 장이다. 가운데 것이 크고 양옆이 작게 비친다(레퍼런스 실측).
+   트랙 좌우에 여백을 줘야 첫 장과 마지막 장도 가운데에 설 수 있다. */
+.slider--feature .slider__track {
+  --banner-w: min(1060px, 62vw);
+  padding-inline: calc((100vw - var(--banner-w)) / 2);
+  gap: var(--sp-5);
+  scroll-snap-type: x mandatory;
+}
 .slider--feature .slider__card {
-  width: min(380px, 78%);
-  min-height: clamp(200px, 26svh, 300px);
-  padding: 28px 30px;
+  width: var(--banner-w);
+  /* 레퍼런스 배너는 2:1 이지만 오른쪽을 브랜드 이미지가 채운다.
+     실제 이미지가 없는 동안은 조금 낮춰 빈 면을 줄인다 —
+     자산이 들어오면 2/1 로 되돌린다. */
+  aspect-ratio: 2.7 / 1;
+  min-height: 0;
+  padding: clamp(24px, 3.4vw, 52px);
   border: 0;
   border-radius: 24px;
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.07);
   scroll-snap-align: center;
-  align-content: start;
+  /* 제목은 위, 행동은 아래. 가운데는 비워 둔다 — 레퍼런스 배너의 배치다. */
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  transform: scale(0.86);
+  opacity: 0.42;
+  transition:
+    transform var(--dur-content) var(--ease),
+    opacity var(--dur-content) var(--ease);
+}
+.slider--feature .slider__card .card__more {
+  margin-top: auto;
+  padding-top: var(--sp-5);
+}
+.slider--feature .slider__card .card__title {
+  font-size: clamp(22px, 2.3vw, 38px);
+  line-height: 1.24;
+  letter-spacing: -0.032em;
+  max-width: 18ch;
+}
+.slider--feature .slider__card .card__desc {
+  font-size: var(--fs-lede);
+  max-width: 42ch;
+}
+.slider--feature .slider__card.is-active {
+  transform: none;
+  opacity: 1;
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.28);
+}
+@media (max-width: 640px) {
+  .slider--feature .slider__track {
+    --banner-w: 84vw;
+  }
+  .slider--feature .slider__card {
+    aspect-ratio: 4 / 3;
+  }
 }
 
 .hero__meta {
@@ -991,6 +1037,8 @@ html.js-reveal .reveal.is-in {
 .slider__dot[aria-pressed="true"],
 .slider__dot.is-active {
   background: var(--text-primary);
+  width: 10px;
+  height: 10px;
 }
 
 .flows {
