@@ -3,49 +3,6 @@
    새어 나가지 않게 하기 위해서다. 공용 컴포넌트를 고쳐야 할 일이 생기면
    components.css 로 올리되, 그때는 다른 페이지를 함께 확인한다. */
 
-/* 문의 유형 — 환경 → 막히는 지점 → 맞물리는 범위. 고객 사례가 아니다. */
-.bu--cloud .ucs {
-  display: grid;
-  gap: 0;
-}
-.bu--cloud .uc {
-  display: grid;
-  grid-template-columns: minmax(0, 13rem) minmax(0, 1fr) minmax(0, 15rem);
-  gap: var(--sp-3) var(--sp-7);
-  align-items: baseline;
-  padding-block: var(--sp-6);
-  border-top: 1px solid var(--border-hair);
-}
-.bu--cloud .uc:last-child {
-  border-bottom: 1px solid var(--border-hair);
-}
-.bu--cloud .uc__name {
-  font-size: var(--fs-h4);
-  font-weight: 600;
-  letter-spacing: -0.025em;
-}
-.bu--cloud .uc__body {
-  display: grid;
-  gap: var(--sp-2);
-}
-.bu--cloud .uc__env {
-  font-size: var(--fs-body);
-  color: var(--text-primary);
-}
-.bu--cloud .uc__need {
-  font-size: var(--fs-sm);
-  color: var(--text-muted);
-  line-height: 1.7;
-}
-/* 맞물리는 범위. 위 Capabilities 의 이름을 그대로 되짚는 라벨이라 조용히 둔다. */
-.bu--cloud .uc__scope {
-  font-size: var(--fs-xs);
-  color: var(--text-secondary);
-  padding-left: var(--sp-4);
-  border-left: 2px solid var(--accent-local, var(--text-accent));
-  line-height: 1.6;
-}
-
 /* 인사이트 — 분류·날짜·제목만. 없는 썸네일과 발췌를 만들지 않는다. */
 .bu--cloud .ils {
   display: grid;
@@ -93,24 +50,46 @@
 }
 
 @media (max-width: 1080px) {
-  .bu--cloud .uc {
-    grid-template-columns: minmax(0, 12rem) minmax(0, 1fr);
-  }
-  .bu--cloud .uc__scope {
-    grid-column: 2;
-  }
   .bu--cloud .ils {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 @media (max-width: 640px) {
-  .bu--cloud .uc {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .bu--cloud .uc__scope {
-    grid-column: 1;
-  }
   .bu--cloud .ils {
     grid-template-columns: minmax(0, 1fr);
   }
+}
+
+/* AWS 자격 뱃지. 로고월과 다르다 — 획득한 자격의 실물이고 이름이 함께 붙는다.
+   바로 아래 자격 목록이 "그 자격이 무엇을 증명하는가" 를 이어서 설명한다. */
+.bu--cloud .bgs {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--sp-6) var(--sp-5);
+  list-style: none;
+}
+.bu--cloud .bg__item {
+  display: grid;
+  justify-items: center;
+  gap: var(--sp-3);
+  text-align: center;
+}
+.bu--cloud .bg__img {
+  width: 84px;
+  height: 84px;
+  /* 뱃지는 AWS 자산이다. 색을 바꾸거나 덧칠하지 않는다. */
+}
+.bu--cloud .bg__name {
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  line-height: 1.45;
+  max-width: 14ch;
+}
+
+@media (max-width: 1080px) {
+  .bu--cloud .bgs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .bu--cloud .bgs { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-5) var(--sp-4); }
+  .bu--cloud .bg__img { width: 68px; height: 68px; }
 }

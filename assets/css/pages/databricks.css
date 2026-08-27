@@ -1,0 +1,313 @@
+/* Databricks · Starburst 전용.
+   .bu--databricks 아래로만 건다 — 메인이나 다른 사업 페이지로 새어 나가지 않는다.
+   리듬: 짙은 파랑 히어로 → 흰 본문 → 짙은 파랑 플랫폼 → 흰 본문 → 회색 밴드 → 짙은 마무리. */
+.bu--databricks {
+  /* 이 페이지의 짙은 면. 데이터브릭스 주황은 로고 안에만 두고 화면을 지배하지 않는다. */
+  --deep-bg: #0a1f3d;
+  --deep-accent: #7cc0ff;
+  --db-line: rgba(255, 255, 255, 0.16);
+}
+
+/* ── 히어로 — 짙은 기술 면 ─────────────────────────── */
+.bu--databricks .hero {
+  background: var(--deep-bg);
+  color: var(--text-on-inverse);
+  padding-top: var(--sp-9);
+  padding-bottom: var(--sp-9);
+}
+.bu--databricks .hero h1 {
+  color: var(--text-on-inverse);
+}
+.bu--databricks .hero .eyebrow {
+  color: var(--deep-accent);
+}
+.bu--databricks .hero__lede,
+.bu--databricks .hero__meta {
+  color: var(--text-on-inverse-muted);
+}
+.bu--databricks .hero .btn {
+  color: var(--deep-accent);
+  border-color: var(--db-line);
+  background: transparent;
+}
+.bu--databricks .hero .btn:hover {
+  border-color: var(--deep-accent);
+}
+.bu--databricks .hero .btn--solid {
+  background: var(--c-white);
+  border-color: var(--c-white);
+  color: var(--deep-bg);
+}
+.bu--databricks .hero .btn--solid:hover {
+  background: var(--c-neutral-200);
+  border-color: var(--c-neutral-200);
+}
+
+/* 히어로 비주얼 — 흩어진 데이터가 하나로 모여 활용으로 이어진다.
+   아키텍처가 아니다. 자세한 구성은 아래 architecture 섹션이 맡는다. */
+.bu--databricks .dv {
+  margin: 0;
+  display: grid;
+  gap: var(--sp-5);
+}
+.bu--databricks .dv__stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--sp-5);
+}
+.bu--databricks .dv__sources,
+.bu--databricks .dv__outputs {
+  display: grid;
+  gap: var(--sp-2);
+  list-style: none;
+}
+.bu--databricks .dv__sources li,
+.bu--databricks .dv__outputs li {
+  font-size: var(--fs-xs);
+  color: var(--text-on-inverse-muted);
+  padding: var(--sp-2) var(--sp-4);
+  border: 1px solid var(--db-line);
+  border-radius: var(--radius-pill);
+  text-align: center;
+}
+/* 가운데로 모이는 선. 순수 CSS 라 이미지 자산이 없어도 성립한다. */
+.bu--databricks .dv__core {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 148px;
+  height: 148px;
+  border-radius: 50%;
+  border: 1px solid var(--deep-accent);
+  background: rgba(124, 192, 255, 0.08);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--text-on-inverse);
+}
+.bu--databricks .dv__core::before,
+.bu--databricks .dv__core::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: var(--sp-5);
+  height: 1px;
+  background: var(--db-line);
+}
+.bu--databricks .dv__core::before { right: 100%; }
+.bu--databricks .dv__core::after { left: 100%; }
+.bu--databricks .dv__caption {
+  font-size: var(--fs-xs);
+  color: var(--text-on-inverse-muted);
+  text-align: center;
+}
+
+/* ── 문제 — 왼쪽 메시지 + 번호 행 ──────────────────── */
+.bu--databricks .prs {
+  display: grid;
+  gap: 0;
+}
+.bu--databricks .pr {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--sp-5);
+  align-items: baseline;
+  padding-block: var(--sp-5);
+  border-top: 1px solid var(--border-hair);
+}
+.bu--databricks .pr:last-child {
+  border-bottom: 1px solid var(--border-hair);
+}
+.bu--databricks .pr__no {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--accent-local, var(--text-accent));
+  font-variant-numeric: tabular-nums;
+}
+.bu--databricks .pr__title {
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+.bu--databricks .pr__desc {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  margin-top: var(--sp-2);
+  line-height: 1.7;
+}
+
+/* ── 두 환경 — 경쟁이 아니라 자리가 다르다 ─────────── */
+.bu--databricks .envs {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--sp-6);
+  position: relative;
+}
+.bu--databricks .env {
+  display: grid;
+  gap: var(--sp-3);
+  align-content: start;
+  padding: var(--sp-7) var(--sp-6);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-hair);
+  background: var(--bg-card);
+}
+.bu--databricks .env--onprem {
+  background: var(--bg-band);
+}
+.bu--databricks .env__where {
+  font-size: var(--fs-2xs);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-faint);
+}
+.bu--databricks .env__name {
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+}
+.bu--databricks .env__desc {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  line-height: 1.75;
+}
+.bu--databricks .env__list {
+  display: grid;
+  gap: var(--sp-2);
+  list-style: none;
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+}
+.bu--databricks .env__list li::before {
+  content: "· ";
+  color: var(--text-faint);
+}
+/* 두 환경을 잇는 자리. 솔트웨어가 주체라는 것을 가운데에 둔다. */
+.bu--databricks .envs__hub {
+  grid-column: 1 / -1;
+  justify-self: center;
+  text-align: center;
+  padding: var(--sp-4) var(--sp-7);
+  border-radius: var(--radius-pill);
+  background: var(--bg-inverse);
+  color: var(--text-on-inverse);
+  margin-top: calc(var(--sp-5) * -1);
+}
+.bu--databricks .envs__hub-name {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+}
+.bu--databricks .envs__hub-desc {
+  font-size: var(--fs-xs);
+  color: var(--text-on-inverse-muted);
+  margin-top: 2px;
+}
+
+/* ── 플랫폼 기능 — 짙은 면 ─────────────────────────── */
+.bu--databricks .caps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--sp-6);
+}
+.bu--databricks .cap {
+  display: grid;
+  gap: var(--sp-3);
+  align-content: start;
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--deep-accent);
+}
+.bu--databricks .cap__name {
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.bu--databricks .cap__desc {
+  font-size: var(--fs-sm);
+  color: var(--text-on-inverse-muted);
+  line-height: 1.7;
+}
+.bu--databricks .cap__detail {
+  font-size: var(--fs-xs);
+  color: var(--deep-accent);
+  font-weight: 600;
+}
+
+/* ── 흐름 — 아키텍처와 확장이 함께 쓴다 ────────────── */
+.bu--databricks .fw {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: var(--sp-4);
+  list-style: none;
+}
+.bu--databricks .fw__node {
+  position: relative;
+  display: grid;
+  gap: var(--sp-2);
+  align-content: start;
+  padding: var(--sp-5);
+  border-radius: var(--radius-md);
+  background: var(--bg-band);
+}
+/* 진행 방향. 장식이라 스크린리더가 읽지 않고, 순서는 ol 이 전한다. */
+.bu--databricks .fw__node:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  width: var(--sp-4);
+  height: 1px;
+  background: var(--border-strong);
+}
+.bu--databricks .fw__name {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.bu--databricks .fw__desc {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* 마무리 — 이 페이지에서 가장 강한 면. 메인 히어로를 흉내 내지 않는다. */
+.bu--databricks .section--inverse {
+  background: var(--deep-bg);
+}
+
+@media (max-width: 1080px) {
+  .bu--databricks .caps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bu--databricks .fw { grid-auto-flow: row; }
+  .bu--databricks .fw__node:not(:last-child)::after {
+    top: 100%;
+    left: var(--sp-6);
+    width: 1px;
+    height: var(--sp-4);
+  }
+}
+@media (max-width: 860px) {
+  /* 모바일에서는 두 환경이 위아래로 서고 솔트웨어가 그 사이를 잇는다. */
+  .bu--databricks .envs { grid-template-columns: minmax(0, 1fr); }
+  .bu--databricks .envs__hub {
+    order: 1;
+    margin-block: calc(var(--sp-4) * -1);
+    position: relative;
+    z-index: 1;
+  }
+  .bu--databricks .env--onprem { order: 2; }
+}
+@media (max-width: 640px) {
+  .bu--databricks .caps { grid-template-columns: minmax(0, 1fr); }
+  .bu--databricks .dv__stage { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+  .bu--databricks .dv__core::before,
+  .bu--databricks .dv__core::after { display: none; }
+  .bu--databricks .dv__sources,
+  .bu--databricks .dv__outputs {
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    overflow-x: auto;
+    max-width: 100%;
+  }
+}

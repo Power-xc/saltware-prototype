@@ -2439,4 +2439,82 @@ a.post:hover .post__cover { transform: translateY(-3px); }
   .onward { grid-template-columns: minmax(0, 1fr); }
 }
 
+
+/* 짙은 기술 면. 색은 페이지가 --deep-bg 로 정한다 —
+   여기서 색을 박으면 사업마다 다른 톤을 쓸 수 없다. */
+.section--deep {
+  background: var(--deep-bg, var(--bg-inverse));
+  color: var(--text-on-inverse);
+}
+.section--deep > .container {
+  border-top: 0;
+}
+.section--deep .eyebrow {
+  color: var(--deep-accent, var(--text-accent-on-inverse));
+}
+.section--deep .lede,
+.section--deep .footnote {
+  color: var(--text-on-inverse-muted);
+}
+
+/* 문의 유형. 사업 둘 이상이 쓰므로 공유 어휘다 —
+   한 사업에만 스코프하면 다음 사업에서 스타일이 통째로 빠진다(실제로 그랬다). */
+.ucs {
+  display: grid;
+  gap: 0;
+}
+.uc {
+  display: grid;
+  grid-template-columns: minmax(0, 13rem) minmax(0, 1fr) minmax(0, 15rem);
+  gap: var(--sp-3) var(--sp-7);
+  align-items: baseline;
+  padding-block: var(--sp-6);
+  border-top: 1px solid var(--border-hair);
+}
+.uc:last-child {
+  border-bottom: 1px solid var(--border-hair);
+}
+.uc__name {
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+.uc__body {
+  display: grid;
+  gap: var(--sp-2);
+}
+.uc__env {
+  font-size: var(--fs-body);
+  color: var(--text-primary);
+}
+.uc__need {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+/* 맞물리는 범위. 위 Capabilities 의 이름을 그대로 되짚는 라벨이라 조용히 둔다. */
+.uc__scope {
+  font-size: var(--fs-xs);
+  color: var(--text-secondary);
+  padding-left: var(--sp-4);
+  border-left: 2px solid var(--accent-local, var(--text-accent));
+  line-height: 1.6;
+}
+
+
+@media (max-width: 1080px) {
+  .uc {
+    grid-template-columns: minmax(0, 12rem) minmax(0, 1fr);
+  }
+  .uc__scope {
+    grid-column: 2;
+  }
+}
+@media (max-width: 640px) {
+  .uc {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .uc__scope {
+    grid-column: 1;
+  }
 }
