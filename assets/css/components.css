@@ -230,10 +230,12 @@
   padding-bottom: var(--section-py);
 }
 .section--wide {
-  padding-bottom: var(--section-py-lg);
+  padding-block: var(--section-py-lg);
 }
+.section--wide + .section > .container,
 .section--wide > .container {
   padding-top: var(--section-py-lg);
+  margin-top: calc(var(--section-py-lg) * -1);
 }
 .section > .container {
   border-top: 1px solid var(--border-section);
@@ -242,9 +244,21 @@
 .section--inverse > .container {
   border-top: 0;
 }
-.section--band,
+/* 배경이 바뀌는 지점이 곧 구분이다. 선을 겹쳐 긋지 않는다. */
+.section--band {
+  background: var(--bg-band);
+}
 .section--card {
-  background: transparent;
+  background: var(--bg-card);
+}
+.section--band > .container,
+.section--card > .container,
+.section--inverse > .container,
+.section--band + .section > .container,
+.section--card + .section > .container,
+.section--inverse + .section > .container {
+  border-top: 0;
+  margin-top: 0;
 }
 .section--inverse {
   background: var(--bg-inverse);
@@ -958,11 +972,21 @@ html.js-reveal .reveal.is-in {
   display: grid;
   gap: var(--gap-grid);
   grid-template-columns: repeat(2, 1fr);
+  align-items: end;
 }
 @media (min-width: 860px) {
   .stats {
     grid-template-columns: repeat(4, 1fr);
   }
+  /* 명세 §11.10 — 모든 지표를 같은 크기로 만들지 않는다.
+     대표 하나를 크게 두고 나머지가 그 옆에 붙는다. */
+  .stats--3 {
+    grid-template-columns: 1.4fr 1fr 1fr;
+  }
+}
+.stat--lead .stat__num {
+  font-size: var(--fs-display);
+  line-height: 1;
 }
 .stat {
   display: grid;
@@ -1365,7 +1389,8 @@ a.intent:hover .arrow {
 
 .slider__pause {
   justify-self: center;
-  margin-top: var(--sp-2);
+  margin-top: var(--sp-3);
+  border: 1px solid var(--border-hair);
   font-size: var(--fs-label);
   line-height: 1;
   color: var(--text-faint);

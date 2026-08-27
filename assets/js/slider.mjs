@@ -31,6 +31,8 @@ export function initSlider() {
     const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
     let timer = null;
     let index = 0;
+    // 일시정지 버튼은 아래에서 만들어지므로 그때 채워진다.
+    let relabel = () => {};
 
     const mark = (i) => {
       index = i;
@@ -92,7 +94,7 @@ export function initSlider() {
         label();
       });
       dots.after(toggle);
-      label();
+      relabel = label;
       root.addEventListener("mouseleave", label);
       root.addEventListener("mouseenter", label);
     }
@@ -113,5 +115,6 @@ export function initSlider() {
 
     mark(0);
     start();
+    relabel();
   }
 }
