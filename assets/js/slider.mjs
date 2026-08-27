@@ -63,6 +63,40 @@ export function initSlider() {
       }),
     );
 
+    // 명세 §29 — 캐러셀은 키보드로 조작할 수 있어야 한다.
+    track.setAttribute("tabindex", "0");
+    track.setAttribute("role", "group");
+    track.setAttribute("aria-roledescription", "캐러셀");
+    track.addEventListener("keydown", (e) => {
+      const step = e.key === "ArrowRight" ? 1 : e.key === "ArrowLeft" ? -1 : 0;
+      if (!step) return;
+      e.preventDefault();
+      goTo(index + step);
+      start();
+    });
+
+    // 자동 넘김이 있으면 멈출 수단이 있어야 한다(§29 autoplay pause).
+    if (!reduced && dots) {
+      const toggle = document.createElement("button");
+      toggle.type = "button";
+      toggle.className = "slider__pause";
+      const label = () => {
+        const on = timer !== null;
+        toggle.setAttribute("aria-pressed", String(!on));
+        toggle.setAttribute("aria-label", on ? "자동 넘김 멈춤" : "자동 넘김 시작");
+        toggle.textContent = on ? "❙❙" : "▶";
+      };
+      toggle.addEventListener("click", () => {
+        if (timer) stop();
+        else start();
+        label();
+      });
+      dots.after(toggle);
+      label();
+      root.addEventListener("mouseleave", label);
+      root.addEventListener("mouseenter", label);
+    }
+
     // 손으로 스크롤하면 그 위치를 정답으로 삼는다.
     track.addEventListener("scroll", () => {
       const base = cards[0].offsetLeft;
