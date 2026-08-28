@@ -41,11 +41,6 @@
   align-items: center;
   gap: var(--sp-3);
 }
-.site-header__lang {
-  font-size: var(--fs-xs);
-  /* --header-ink 가 이미 72% 다. 여기서 opacity 를 또 곱하면 4.47:1 로 떨어진다. */
-  color: var(--header-ink);
-}
 .site-header__burger {
   display: none;
   font-size: 18px;
@@ -168,10 +163,6 @@
   gap: var(--sp-4);
   font-size: var(--fs-sm);
 }
-.mega__list--two {
-  grid-template-columns: 1fr 1fr;
-  gap: var(--sp-3) var(--sp-5);
-}
 .mega__list--horizontal {
   grid-auto-flow: column;
   grid-auto-columns: max-content;
@@ -202,14 +193,6 @@
   align-self: start;
 }
 
-.badge {
-  font-size: 10.5px;
-  color: var(--text-faint);
-  border: 1px solid var(--border-hair);
-  border-radius: 4px;
-  padding: 2px 6px;
-  margin-left: var(--sp-2);
-}
 .ext-mark {
   font-size: 0.8em;
   color: var(--text-faint);
@@ -300,6 +283,12 @@
 }
 .btn--lg {
   padding: 13px 26px;
+  font-size: var(--fs-sm);
+}
+/* FAQ 자료 요청처럼 본문 안에 놓이는 버튼. sm 과 lg 사이가 필요하다 —
+   없으면 blocks.mjs 의 size:"md" 가 조용히 기본 크기로 떨어진다. */
+.btn--md {
+  padding: 11px 21px;
   font-size: var(--fs-sm);
 }
 .btn--sm {
@@ -429,14 +418,6 @@
     grid-row: auto;
   }
 }
-.section__headrow {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: var(--sp-5);
-  flex-wrap: wrap;
-  margin-bottom: var(--sp-6);
-}
 
 /* ── 그리드 · 카드 ────────────────────────────────────── */
 .grid {
@@ -451,9 +432,6 @@
 }
 .grid--4 {
   grid-template-columns: repeat(4, 1fr);
-}
-.grid--5 {
-  grid-template-columns: repeat(5, 1fr);
 }
 
 .card {
@@ -835,14 +813,6 @@
   color: var(--state-danger);
 }
 
-.banner {
-  border: 1px solid var(--state-danger);
-  background: var(--state-danger-bg);
-  color: var(--state-danger);
-  border-radius: var(--radius-md);
-  padding: var(--sp-3) var(--sp-4);
-  font-size: var(--fs-sm);
-}
 
 .chips {
   display: flex;
@@ -1112,41 +1082,7 @@ html.js-reveal .reveal.is-in {
   letter-spacing: var(--tracking-base);
 }
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
-  border: 1px solid var(--border-hair);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-}
-.table__row {
-  border-bottom: 1px solid var(--border-soft);
-}
-.table__row:last-child {
-  border-bottom: none;
-}
 
-.timeline {
-  display: grid;
-  gap: var(--sp-4);
-}
-.timeline__item {
-  display: grid;
-  gap: var(--sp-2);
-  padding-left: var(--sp-5);
-  position: relative;
-}
-.timeline__item::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 4px;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: var(--text-accent);
-  border: 2px solid var(--bg-card);
-}
 
 /* ── 슬라이더 — 가로 스크롤 (JS 없이 CSS만으로 4장이 다 읽힌다) ── */
 /* 스크롤러는 track 이다. dots 를 스크롤러 안에 넣으면 같이 밀려 나간다. */
@@ -1329,23 +1265,6 @@ html.js-reveal .reveal.is-in {
 }
 
 /* ── 태그 ────────────────────────────────────────────── */
-.tag {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--sp-1);
-  border: 1px solid var(--border-hair);
-  border-radius: var(--radius-pill);
-  background: var(--bg-card);
-  padding: 4px 10px;
-  font-size: var(--fs-2xs);
-  font-weight: 600;
-  color: var(--text-secondary);
-}
-.tag--accent {
-  background: var(--bg-accent);
-  border-color: var(--c-accent-500);
-  color: var(--text-accent);
-}
 
 /* ── 분할 레이아웃 ──────────────────────────────────── */
 .split {
@@ -1354,39 +1273,10 @@ html.js-reveal .reveal.is-in {
   gap: var(--sp-6);
   align-items: center;
 }
-.split__aside {
-  border-radius: var(--radius-lg);
-  background: var(--bg-band);
-  padding: var(--sp-6);
-  display: grid;
-  gap: var(--sp-4);
-}
 
 /* ── 노트 ────────────────────────────────────────────── */
-.note {
-  border-left: 4px solid var(--text-accent);
-  background: var(--bg-accent);
-  border-radius: var(--radius-sm);
-  padding: var(--sp-3) var(--sp-4);
-  font-size: var(--fs-sm);
-  color: var(--text-primary);
-}
 
 /* ── 키-값 쌍 ──────────────────────────────────────── */
-.kv {
-  display: grid;
-  gap: var(--sp-2);
-}
-.kv__k {
-  font-size: var(--fs-xs);
-  font-weight: 600;
-  color: var(--text-faint);
-  letter-spacing: var(--tracking-label);
-}
-.kv__v {
-  font-size: var(--fs-body);
-  color: var(--text-primary);
-}
 
 /* ── 폼 ────────────────────────────────────────────── */
 .form {
@@ -1402,9 +1292,6 @@ html.js-reveal .reveal.is-in {
 
 /* ── 반응형 — 브레이크포인트 4종만 쓴다 ───────────────── */
 @media (max-width: 1080px) {
-  .grid--5 {
-    grid-template-columns: repeat(3, 1fr);
-  }
   .footer__grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -1414,9 +1301,6 @@ html.js-reveal .reveal.is-in {
 }
 @media (max-width: 860px) {
   .gnb,
-  .site-header__lang {
-    display: none;
-  }
   .site-header__right .btn--solid {
     display: none;
   }
@@ -1428,9 +1312,6 @@ html.js-reveal .reveal.is-in {
   }
   .grid--3,
   .grid--4,
-  .grid--5 {
-    grid-template-columns: repeat(2, 1fr);
-  }
   .hero__grid {
     grid-template-columns: 1fr;
   }
@@ -1449,9 +1330,6 @@ html.js-reveal .reveal.is-in {
   .grid--2,
   .grid--3,
   .grid--4,
-  .grid--5 {
-    grid-template-columns: 1fr;
-  }
   .steps {
     grid-template-columns: 1fr;
   }
@@ -1742,6 +1620,10 @@ a.intent:hover .arrow {
 .bu--redhat { --accent-local: var(--accent-redhat); }
 .bu--enview { --accent-local: var(--accent-enview); }
 .bu--smart-farm { --accent-local: var(--accent-smart-farm); }
+/* 솔루션 상세 두 장은 상위 사업의 색을 물려받는다 —
+   이게 없으면 9개 중 둘만 기본 파랑으로 떨어져 나온다. */
+.bu--sailpoint { --accent-local: var(--accent-identity); }
+.bu--cloud-hybrid { --accent-local: var(--c-accent-550); }
 
 .bu .eyebrow,
 .bu .step__no,
