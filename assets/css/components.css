@@ -724,6 +724,18 @@
   opacity: 0.85;
 }
 
+/* 기술 구조 다이어그램 — tech 블록 아래 한 장. SVG 원본이 다크라 테두리만 두른다. */
+.tech-diagram {
+  margin: var(--sp-6) 0 0;
+}
+.tech-diagram img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-hair);
+}
+
 /* v3 배너 자산이 있는 슬라이드 — 이미지가 오른쪽을 채우고 텍스트는 왼쪽에 앉는다.
    자산이 들어왔으므로 카드 비율을 기획의 2:1 로 되돌린다. */
 .slider--feature .slider__card--art {
