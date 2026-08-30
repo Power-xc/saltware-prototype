@@ -501,6 +501,36 @@
 /* 첫 화면은 뷰포트를 꽉 채우고, 내리면 일반 스크롤로 넘어간다.
    svh 를 쓰는 이유는 모바일 브라우저 UI 가 접혔다 펴져도 높이가 튀지 않게 하기 위해서다.
    min-height 라 내용이 길어지면 화면보다 커진다 — 잘리지 않는다. */
+/* v3 미디어 히어로 — 자산이 실재하는 페이지만 빌더가 클래스를 붙인다(.hero--m-*).
+   이미지는 좌측을 비워 생성되어 텍스트가 그 위에 앉는다. 인라인 style 금지 테스트와
+   호환되도록 배경은 전부 클래스로 맵핑한다. */
+.hero.hero--media {
+  background-color: var(--bg-inverse);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: var(--text-on-inverse);
+}
+.hero--media h1 { color: var(--text-on-inverse); }
+.hero--media .hero__lede { color: var(--text-on-inverse-muted); }
+.hero--media .hero__meta { color: var(--text-on-inverse-muted); }
+.hero--media .eyebrow { color: var(--text-accent-on-inverse); }
+.hero--media.hero--m-cloud { background-image: url("/media/business/hero-cloud.jpg"); }
+.hero--media.hero--m-databricks { background-image: url("/media/business/hero-databricks.jpg"); }
+.hero--media.hero--m-identity { background-image: url("/media/business/hero-identity.jpg"); }
+.hero--media.hero--m-redhat { background-image: url("/media/business/hero-redhat.jpg"); }
+.hero--media.hero--m-enview { background-image: url("/media/business/hero-enview.jpg"); }
+.hero--media.hero--m-smart-farm { background-image: url("/media/business/hero-smart-farm.jpg"); }
+.hero--media.hero--m-hub-business { background-image: url("/media/hub/hub-business.jpg"); }
+.hero--media.hero--m-hub-industries { background-image: url("/media/hub/hub-industries.jpg"); }
+.hero--media.hero--m-hub-insights { background-image: url("/media/hub/hub-insights.jpg"); }
+.hero--media.hero--m-hub-company { background-image: url("/media/hub/hub-company.jpg"); }
+.hero--media.hero--m-ind-public { background-image: url("/media/industry/ind-public.jpg"); }
+.hero--media.hero--m-ind-finance { background-image: url("/media/industry/ind-finance.jpg"); }
+.hero--media.hero--m-ind-manufacturing { background-image: url("/media/industry/ind-manufacturing.jpg"); }
+.hero--media.hero--m-ind-education { background-image: url("/media/industry/ind-education.jpg"); }
+.hero--media.hero--m-ind-agriculture { background-image: url("/media/industry/ind-agriculture.jpg"); }
+
 .hero--home {
   position: relative;
   overflow: hidden;
@@ -570,7 +600,11 @@
 }
 /* 첫 줄만 분홍→보라. 둘째 줄은 흰색으로 남는다(레퍼런스 실측). */
 .hero__accent {
-  background: linear-gradient(90deg, var(--hero-accent-from), var(--hero-accent-to));
+  background: linear-gradient(
+    90deg,
+    var(--hero-accent-from),
+    var(--hero-accent-to)
+  );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -644,6 +678,70 @@
   font-size: var(--fs-lede);
   max-width: 42ch;
 }
+/* 물방울 오브젝트 — 로고의 원에서 온 브랜드 오브젝트. 콘텐츠 뒤, 고스트 글자 앞. */
+.hero__drops {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.hero__drops svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.hero--home .hero__center,
+.hero--home .hero__feature,
+.hero--home .hero__cue {
+  position: relative;
+  z-index: 1;
+}
+.drops__dot {
+  /* 실루엣 — 투명한 방울 아래에서 액체 연결부(구이 목)만 은은하게 남긴다 */
+  fill: var(--cloud-deep);
+  opacity: 0.3;
+}
+.drops__stop-core { stop-color: var(--accent-cloud); stop-opacity: 0.03; }
+.drops__stop-mid { stop-color: var(--accent-cloud); stop-opacity: 0.08; }
+.drops__stop-edge { stop-color: var(--text-accent-on-inverse); stop-opacity: 0.55; }
+.drops__stop-lip { stop-color: var(--accent-cloud); stop-opacity: 0.12; }
+.drops__stop-under { stop-color: var(--accent-cloud); stop-opacity: 0.3; }
+.drops__stop-fade { stop-color: var(--accent-cloud); stop-opacity: 0; }
+.drops__rim {
+  fill: none;
+  stroke: var(--text-on-inverse);
+  opacity: 0.4;
+  transform: rotate(-135deg);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.drops__hl {
+  fill: var(--text-on-inverse);
+  opacity: 0.5;
+}
+.drops__spark {
+  fill: var(--text-on-inverse);
+  opacity: 0.85;
+}
+
+/* v3 배너 자산이 있는 슬라이드 — 이미지가 오른쪽을 채우고 텍스트는 왼쪽에 앉는다.
+   자산이 들어왔으므로 카드 비율을 기획의 2:1 로 되돌린다. */
+.slider--feature .slider__card--art {
+  min-height: calc(var(--banner-w) / 2);
+  background-color: var(--bg-inverse);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: var(--text-on-inverse);
+}
+.slider--feature .slider__card--art .card__title { color: var(--text-on-inverse); }
+.slider--feature .slider__card--art .card__desc { color: var(--text-on-inverse-muted); }
+.slider--feature .slider__card--art .eyebrow { color: var(--text-accent-on-inverse); }
+.slider--feature .slider__card--art .card__more { color: var(--text-accent-on-inverse); }
+.slider--feature .slider__card--art-aws { background-image: url("/media/banner/banner-aws.jpg"); }
+.slider--feature .slider__card--art-databricks { background-image: url("/media/banner/banner-databricks.jpg"); }
+.slider--feature .slider__card--art-identity { background-image: url("/media/banner/banner-identity.jpg"); }
+.slider--feature .slider__card--art-smart-farm { background-image: url("/media/banner/banner-smart-farm.jpg"); }
 .slider--feature .slider__card.is-active {
   transform: none;
   opacity: 1;
@@ -812,7 +910,6 @@
   font-size: 12px;
   color: var(--state-danger);
 }
-
 
 .chips {
   display: flex;
@@ -1081,8 +1178,6 @@ html.js-reveal .reveal.is-in {
   color: var(--text-muted);
   letter-spacing: var(--tracking-base);
 }
-
-
 
 /* ── 슬라이더 — 가로 스크롤 (JS 없이 CSS만으로 4장이 다 읽힌다) ── */
 /* 스크롤러는 track 이다. dots 를 스크롤러 안에 넣으면 같이 밀려 나간다. */
@@ -1613,17 +1708,35 @@ a.intent:hover .arrow {
    버튼과 링크는 Corporate Blue 를 유지한다. */
 /* --accent-local 은 글자에만 쓴다. Cloud 액센트(#0071e3)는 회색 밴드 위에서
    4.31:1 이라 글자로는 모자란다 — 색면용 값은 그대로 두고 글자만 한 단계 진하게. */
-.bu--cloud { --accent-local: var(--c-accent-550); }
-.bu--data-ai { --accent-local: var(--accent-data-ai); }
-.bu--databricks { --accent-local: var(--accent-databricks); }
-.bu--identity { --accent-local: var(--accent-identity); }
-.bu--redhat { --accent-local: var(--accent-redhat); }
-.bu--enview { --accent-local: var(--accent-enview); }
-.bu--smart-farm { --accent-local: var(--accent-smart-farm); }
+.bu--cloud {
+  --accent-local: var(--c-accent-550);
+}
+.bu--data-ai {
+  --accent-local: var(--accent-data-ai);
+}
+.bu--databricks {
+  --accent-local: var(--accent-databricks);
+}
+.bu--identity {
+  --accent-local: var(--accent-identity);
+}
+.bu--redhat {
+  --accent-local: var(--accent-redhat);
+}
+.bu--enview {
+  --accent-local: var(--accent-enview);
+}
+.bu--smart-farm {
+  --accent-local: var(--accent-smart-farm);
+}
 /* 솔루션 상세 두 장은 상위 사업의 색을 물려받는다 —
    이게 없으면 9개 중 둘만 기본 파랑으로 떨어져 나온다. */
-.bu--sailpoint { --accent-local: var(--accent-identity); }
-.bu--cloud-hybrid { --accent-local: var(--c-accent-550); }
+.bu--sailpoint {
+  --accent-local: var(--accent-identity);
+}
+.bu--cloud-hybrid {
+  --accent-local: var(--c-accent-550);
+}
 
 .bu .eyebrow,
 .bu .step__no,
@@ -1680,7 +1793,9 @@ a.intent:hover .arrow {
   grid-template-rows: auto 1fr;
   color: inherit;
   text-decoration: none;
-  transition: background var(--dur-hover) var(--ease), transform var(--dur-hover) var(--ease);
+  transition:
+    background var(--dur-hover) var(--ease),
+    transform var(--dur-hover) var(--ease);
 }
 a.mark:hover {
   background: var(--c-neutral-150);
@@ -1695,27 +1810,27 @@ a.mark:hover {
 .mark__sign {
   align-self: end;
   justify-self: end;
-  width: 46px;
-  height: 46px;
-  background: currentColor;
+  width: 40px;
+  height: 40px;
+  color: var(--text-accent);
 }
-.mark__sign--circle { color: var(--accent-cloud); border-radius: 50%; }
-.mark__sign--cross {
-  color: var(--accent-smart-farm);
-  clip-path: polygon(35% 0, 65% 0, 65% 35%, 100% 35%, 100% 65%, 65% 65%, 65% 100%, 35% 100%, 35% 65%, 0 65%, 0 35%, 35% 35%);
+.mark__sign svg {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
-.mark__sign--hex {
-  color: var(--accent-identity);
-  clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
-}
-.mark__sign--diamond { color: var(--text-primary); clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%); }
-.mark__sign--play { color: var(--accent-databricks); clip-path: polygon(0 0, 100% 50%, 0 100%); }
-.mark__sign--bars {
-  color: var(--accent-smart-farm);
-  clip-path: polygon(0 66%, 33% 66%, 33% 33%, 66% 33%, 66% 0, 100% 0, 100% 100%, 0 100%);
-}
-.mark__sign--square { color: var(--accent-data-ai); border-radius: var(--radius-xs); }
-.mark__sign--quarter { color: var(--text-primary); border-radius: 0 0 100% 0; }
+.mark__sign--g-public { color: var(--accent-cloud); }
+.mark__sign--g-finance { color: var(--accent-data-ai); }
+.mark__sign--g-manufacturing { color: var(--accent-databricks); }
+.mark__sign--g-education { color: var(--accent-identity); }
+.mark__sign--g-agriculture { color: var(--accent-smart-farm); }
+.mark__sign--g-cloud { color: var(--accent-cloud); }
+.mark__sign--g-data-ai { color: var(--accent-data-ai); }
+.mark__sign--g-databricks { color: var(--accent-databricks); }
+.mark__sign--g-identity { color: var(--accent-identity); }
+.mark__sign--g-redhat { color: var(--accent-redhat); }
+.mark__sign--g-enview { color: var(--accent-enview); }
+.mark__sign--g-smart-farm { color: var(--accent-smart-farm); }
 
 /* 가운데 정렬 제목 아래 균등한 칸. 레퍼런스의 Trusted Enterprise Partner. */
 .section--center .section__head {
@@ -1740,7 +1855,9 @@ a.mark:hover {
   text-decoration: none;
   transition: background var(--dur-hover) var(--ease);
 }
-a.quiet:hover { background: var(--c-neutral-150); }
+a.quiet:hover {
+  background: var(--c-neutral-150);
+}
 .quiet__name {
   font-size: var(--fs-h4);
   font-weight: 600;
@@ -1758,13 +1875,21 @@ a.quiet:hover { background: var(--c-neutral-150); }
   gap: var(--gap-tile);
   align-items: start;
 }
-.mos__head { padding-right: var(--sp-6); align-self: start; padding-top: var(--sp-6); }
+.mos__head {
+  padding-right: var(--sp-6);
+  align-self: start;
+  padding-top: var(--sp-6);
+}
 .mos__title {
   font-size: var(--fs-h2);
   letter-spacing: var(--tracking-display);
   margin-bottom: var(--sp-4);
 }
-.mos__lede { font-size: var(--fs-body); color: var(--text-muted); max-width: 30ch; }
+.mos__lede {
+  font-size: var(--fs-body);
+  color: var(--text-muted);
+  max-width: 30ch;
+}
 /* 그리드 아이템 기본값은 min-width: auto 다. 그대로 두면 카드 안 긴 문장이
    트랙보다 넓어지면서 열을 밀어내고 문서가 가로로 넘친다. */
 .mos__col {
@@ -1772,8 +1897,12 @@ a.quiet:hover { background: var(--c-neutral-150); }
   gap: var(--gap-tile);
   min-width: 0;
 }
-.mo { min-width: 0; }
-.mos__col--lift { margin-top: calc(var(--mosaic-offset) * -1); }
+.mo {
+  min-width: 0;
+}
+.mos__col--lift {
+  margin-top: calc(var(--mosaic-offset) * -1);
+}
 .mo {
   aspect-ratio: var(--mosaic-ratio);
   border-radius: var(--radius-xl);
@@ -1786,50 +1915,56 @@ a.quiet:hover { background: var(--c-neutral-150); }
   gap: var(--sp-2);
   color: var(--text-on-inverse);
   text-decoration: none;
-  /* 사진이 없다. 빈 액자를 만들지 않으려고 색면으로 둔다 —
-     자산이 들어오면 이 자리에 그대로 들어간다(§25.1). */
+  /* 시안 판정용 테스트 배선 — jpg 한 벌만. 확정되면 avif/webp image-set 으로 교체(§25.1).
+     databricks 는 자산이 아직 없어 색면 그대로다. */
   background:
     linear-gradient(to top, var(--scrim-bottom), transparent 62%),
-    linear-gradient(150deg, var(--bg-inverse), var(--accent-cloud));
+    url("/media/home/mosaic-cloud.jpg") center / cover no-repeat;
   transition: transform var(--dur-hover) var(--ease);
 }
-a.mo:hover { transform: translateY(-3px); }
+a.mo:hover {
+  transform: translateY(-3px);
+}
 .mo--data-ai {
   background:
     linear-gradient(to top, var(--scrim-bottom), transparent 62%),
-    linear-gradient(150deg, var(--bg-inverse), var(--accent-data-ai));
+    url("/media/home/mosaic-data-ai.jpg") center / cover no-repeat;
 }
 .mo--databricks {
   background:
     linear-gradient(to top, var(--scrim-bottom), transparent 62%),
-    linear-gradient(150deg, var(--bg-inverse), var(--accent-databricks));
+    url("/media/home/mosaic-databricks.jpg") center / cover no-repeat;
 }
 .mo--identity {
   background:
     linear-gradient(to top, var(--scrim-bottom), transparent 62%),
-    linear-gradient(150deg, var(--bg-inverse), var(--accent-identity));
+    url("/media/home/mosaic-identity.jpg") center / cover no-repeat;
 }
 .mo--redhat {
   background:
     linear-gradient(to top, var(--scrim-bottom), transparent 62%),
-    linear-gradient(150deg, var(--bg-inverse), var(--accent-redhat));
+    url("/media/home/mosaic-redhat.jpg") center / cover no-repeat;
 }
 .mo--enview {
   background:
     linear-gradient(to top, var(--scrim-bottom), transparent 62%),
-    linear-gradient(150deg, var(--bg-inverse), var(--accent-enview));
+    url("/media/home/mosaic-enview.jpg") center / cover no-repeat;
 }
 .mo--smart-farm {
   background:
     linear-gradient(to top, var(--scrim-bottom), transparent 62%),
-    linear-gradient(150deg, var(--bg-inverse), var(--accent-smart-farm));
+    url("/media/home/mosaic-smart-farm.jpg") center / cover no-repeat;
 }
 .mo__title {
   font-size: var(--fs-h3);
   font-weight: 600;
   letter-spacing: -0.02em;
 }
-.mo__desc { font-size: var(--fs-sm); opacity: 0.82; max-width: 30ch; }
+.mo__desc {
+  font-size: var(--fs-sm);
+  opacity: 0.82;
+  max-width: 30ch;
+}
 
 /* 표지 · 분류 · 제목 · 설명. 글 목록의 생김새. */
 .posts {
@@ -1850,10 +1985,24 @@ a.mo:hover { transform: translateY(-3px); }
   background: linear-gradient(140deg, var(--bg-inverse), var(--accent-cloud));
   transition: transform var(--dur-hover) var(--ease);
 }
-.post__cover--1 { background: linear-gradient(140deg, var(--bg-inverse), var(--accent-data-ai)); }
-.post__cover--2 { background: linear-gradient(140deg, var(--bg-inverse), var(--accent-identity)); }
-a.post:hover .post__cover { transform: translateY(-3px); }
-.post__meta { display: flex; align-items: center; justify-content: space-between; }
+.post__cover--1 {
+  background: linear-gradient(140deg, var(--bg-inverse), var(--accent-data-ai));
+}
+.post__cover--2 {
+  background: linear-gradient(
+    140deg,
+    var(--bg-inverse),
+    var(--accent-identity)
+  );
+}
+a.post:hover .post__cover {
+  transform: translateY(-3px);
+}
+.post__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 .post__tag {
   background: var(--bg-band);
   border-radius: var(--radius-xs);
@@ -1867,7 +2016,10 @@ a.post:hover .post__cover { transform: translateY(-3px); }
   letter-spacing: -0.025em;
   line-height: 1.4;
 }
-.post__desc { font-size: var(--fs-sm); color: var(--text-muted); }
+.post__desc {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
 
 /* 칸마다 크기가 다른 격자. 대표 숫자가 두 칸을 먹는다. */
 .bento {
@@ -1886,18 +2038,32 @@ a.post:hover .post__cover { transform: translateY(-3px); }
   gap: var(--sp-2);
   align-content: start;
 }
-.bento__cell--0 { grid-area: lead; }
-.bento__cell--1 { grid-area: a; }
-.bento__cell--2 { grid-area: b; }
+.bento__cell--0 {
+  grid-area: lead;
+}
+.bento__cell--1 {
+  grid-area: a;
+}
+.bento__cell--2 {
+  grid-area: b;
+}
 .bento__num {
   font-size: var(--fs-display);
   font-weight: 700;
   letter-spacing: var(--tracking-tight);
   line-height: 1;
 }
-.bento__cell--0 .bento__num { font-size: var(--fs-hero); }
-.bento__label { font-size: var(--fs-h4); font-weight: 600; }
-.bento__desc { font-size: var(--fs-sm); color: var(--text-muted); }
+.bento__cell--0 .bento__num {
+  font-size: var(--fs-hero);
+}
+.bento__label {
+  font-size: var(--fs-h4);
+  font-weight: 600;
+}
+.bento__desc {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
 
 /* 왼쪽 제목 + 오른쪽 본체. 벤토와 모자이크가 함께 쓴다. */
 .split {
@@ -1906,28 +2072,63 @@ a.post:hover .post__cover { transform: translateY(-3px); }
   gap: var(--sp-8);
   align-items: start;
 }
-.split__head { align-self: center; }
+.split__head {
+  align-self: center;
+}
 
 @media (max-width: 1080px) {
-  .marks { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .marks__head { grid-column: span 3; grid-row: auto; padding-right: 0; }
-  .quiets { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .mos { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-  .mos__head { grid-column: span 2; padding-right: 0; }
-  .mos__col--lift { margin-top: 0; }
-  .posts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .split { grid-template-columns: minmax(0, 1fr); }
+  .marks {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .marks__head {
+    grid-column: span 3;
+    grid-row: auto;
+    padding-right: 0;
+  }
+  .quiets {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .mos {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .mos__head {
+    grid-column: span 2;
+    padding-right: 0;
+  }
+  .mos__col--lift {
+    margin-top: 0;
+  }
+  .posts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .split {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 @media (max-width: 640px) {
   /* 타일은 두 열로 남긴다. 한 열이면 정사각 비율이 화면 폭만큼 커져 한 칸이 한 화면이 된다. */
   .marks,
-  .quiets { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .marks__head { grid-column: span 2; grid-row: auto; }
-  .mark { padding: var(--sp-4); }
-  .mark__sign { width: 34px; height: 34px; }
+  .quiets {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .marks__head {
+    grid-column: span 2;
+    grid-row: auto;
+  }
+  .mark {
+    padding: var(--sp-4);
+  }
+  .mark__sign {
+    width: 34px;
+    height: 34px;
+  }
   .mos,
-  .posts { grid-template-columns: minmax(0, 1fr); }
-  .mos__head { grid-column: span 1; }
+  .posts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .mos__head {
+    grid-column: span 1;
+  }
   .bento {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas: "lead" "a" "b";
@@ -1968,7 +2169,11 @@ a.post:hover .post__cover { transform: translateY(-3px); }
 /* 메인의 대표 사례 자리도 같은 색면으로 둔다. 회색 빈 액자 하나만 다른 언어로
    남으면 페이지가 두 벌로 보인다. 하위 페이지의 media 는 그대로다. */
 .home .media {
-  background: linear-gradient(140deg, var(--bg-inverse), var(--accent-databricks));
+  background: linear-gradient(
+    140deg,
+    var(--bg-inverse),
+    var(--accent-databricks)
+  );
   color: var(--text-on-inverse);
   opacity: 0.92;
 }
@@ -2266,16 +2471,31 @@ a.post:hover .post__cover { transform: translateY(-3px); }
 }
 
 @media (max-width: 1080px) {
-  .pbs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .stages { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .ps { grid-template-columns: minmax(0, 1fr); }
-  .ps__link { justify-self: center; rotate: 90deg; }
+  .pbs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .stages {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .ps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .ps__link {
+    justify-self: center;
+    rotate: 90deg;
+  }
 }
 @media (max-width: 640px) {
   .pbs,
-  .stages { grid-template-columns: minmax(0, 1fr); }
-  .cs { grid-template-columns: minmax(0, 1fr); }
-  .cs__desc { grid-column: 1; }
+  .stages {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cs {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cs__desc {
+    grid-column: 1;
+  }
 }
 
 /* 푸터 직전 이어보기. 마무리 CTA 와 무게가 겹치지 않게 조용히 둔다. */
@@ -2318,9 +2538,10 @@ a.post:hover .post__cover { transform: translateY(-3px); }
   margin-top: var(--sp-7);
 }
 @media (max-width: 640px) {
-  .onward { grid-template-columns: minmax(0, 1fr); }
+  .onward {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
-
 
 /* 짙은 기술 면. 색은 페이지가 --deep-bg 로 정한다 —
    여기서 색을 박으면 사업마다 다른 톤을 쓸 수 없다. */
@@ -2382,7 +2603,6 @@ a.post:hover .post__cover { transform: translateY(-3px); }
   border-left: 2px solid var(--accent-local, var(--text-accent));
   line-height: 1.6;
 }
-
 
 @media (max-width: 1080px) {
   .uc {

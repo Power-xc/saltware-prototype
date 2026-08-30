@@ -1,10 +1,11 @@
-import { initAnalytics } from "./analytics.mjs?v=2887cbbe27b9";
-import { initNav } from "./nav.mjs?v=2887cbbe27b9";
-import { initReveal } from "./reveal.mjs?v=2887cbbe27b9";
-import { initFaq, initCaseFilter } from "./disclosure.mjs?v=2887cbbe27b9";
-import { initContactForm } from "./contact-form.mjs?v=2887cbbe27b9";
-import { initSlider } from "./slider.mjs?v=2887cbbe27b9";
-import { initAssistant } from "./assistant.mjs?v=2887cbbe27b9";
+import { initAnalytics } from "./analytics.mjs?v=c6de66554f52";
+import { initNav } from "./nav.mjs?v=c6de66554f52";
+import { initReveal } from "./reveal.mjs?v=c6de66554f52";
+import { initFaq, initCaseFilter } from "./disclosure.mjs?v=c6de66554f52";
+import { initContactForm } from "./contact-form.mjs?v=c6de66554f52";
+import { initSlider } from "./slider.mjs?v=c6de66554f52";
+import { initDroplets } from "./droplets.mjs?v=c6de66554f52";
+import { initAssistant } from "./assistant.mjs?v=c6de66554f52";
 
 try {
   initAnalytics();
@@ -40,6 +41,11 @@ try {
   initSlider();
 } catch (e) {
   console.warn("Slider failed:", e);
+}
+try {
+  initDroplets();
+} catch (e) {
+  console.warn("Droplets failed:", e);
 }
 try {
   initAssistant();
