@@ -515,21 +515,21 @@
 .hero--media .hero__lede { color: var(--text-on-inverse-muted); }
 .hero--media .hero__meta { color: var(--text-on-inverse-muted); }
 .hero--media .eyebrow { color: var(--text-accent-on-inverse); }
-.hero--media.hero--m-cloud { background-image: url("/media/business/hero-cloud.jpg"); }
-.hero--media.hero--m-databricks { background-image: url("/media/business/hero-databricks.jpg"); }
-.hero--media.hero--m-identity { background-image: url("/media/business/hero-identity.jpg"); }
-.hero--media.hero--m-redhat { background-image: url("/media/business/hero-redhat.jpg"); }
-.hero--media.hero--m-enview { background-image: url("/media/business/hero-enview.jpg"); }
-.hero--media.hero--m-smart-farm { background-image: url("/media/business/hero-smart-farm.jpg"); }
-.hero--media.hero--m-hub-business { background-image: url("/media/hub/hub-business.jpg"); }
-.hero--media.hero--m-hub-industries { background-image: url("/media/hub/hub-industries.jpg"); }
-.hero--media.hero--m-hub-insights { background-image: url("/media/hub/hub-insights.jpg"); }
-.hero--media.hero--m-hub-company { background-image: url("/media/hub/hub-company.jpg"); }
-.hero--media.hero--m-ind-public { background-image: url("/media/industry/ind-public.jpg"); }
-.hero--media.hero--m-ind-finance { background-image: url("/media/industry/ind-finance.jpg"); }
-.hero--media.hero--m-ind-manufacturing { background-image: url("/media/industry/ind-manufacturing.jpg"); }
-.hero--media.hero--m-ind-education { background-image: url("/media/industry/ind-education.jpg"); }
-.hero--media.hero--m-ind-agriculture { background-image: url("/media/industry/ind-agriculture.jpg"); }
+.hero--media.hero--m-cloud { background-image: url("/saltware-prototype/media/business/hero-cloud.jpg"); }
+.hero--media.hero--m-databricks { background-image: url("/saltware-prototype/media/business/hero-databricks.jpg"); }
+.hero--media.hero--m-identity { background-image: url("/saltware-prototype/media/business/hero-identity.jpg"); }
+.hero--media.hero--m-redhat { background-image: url("/saltware-prototype/media/business/hero-redhat.jpg"); }
+.hero--media.hero--m-enview { background-image: url("/saltware-prototype/media/business/hero-enview.jpg"); }
+.hero--media.hero--m-smart-farm { background-image: url("/saltware-prototype/media/business/hero-smart-farm.jpg"); }
+.hero--media.hero--m-hub-business { background-image: url("/saltware-prototype/media/hub/hub-business.jpg"); }
+.hero--media.hero--m-hub-industries { background-image: url("/saltware-prototype/media/hub/hub-industries.jpg"); }
+.hero--media.hero--m-hub-insights { background-image: url("/saltware-prototype/media/hub/hub-insights.jpg"); }
+.hero--media.hero--m-hub-company { background-image: url("/saltware-prototype/media/hub/hub-company.jpg"); }
+.hero--media.hero--m-ind-public { background-image: url("/saltware-prototype/media/industry/ind-public.jpg"); }
+.hero--media.hero--m-ind-finance { background-image: url("/saltware-prototype/media/industry/ind-finance.jpg"); }
+.hero--media.hero--m-ind-manufacturing { background-image: url("/saltware-prototype/media/industry/ind-manufacturing.jpg"); }
+.hero--media.hero--m-ind-education { background-image: url("/saltware-prototype/media/industry/ind-education.jpg"); }
+.hero--media.hero--m-ind-agriculture { background-image: url("/saltware-prototype/media/industry/ind-agriculture.jpg"); }
 
 .hero--home {
   position: relative;
@@ -738,10 +738,10 @@
 .slider--feature .slider__card--art .card__desc { color: var(--text-on-inverse-muted); }
 .slider--feature .slider__card--art .eyebrow { color: var(--text-accent-on-inverse); }
 .slider--feature .slider__card--art .card__more { color: var(--text-accent-on-inverse); }
-.slider--feature .slider__card--art-aws { background-image: url("/media/banner/banner-aws.jpg"); }
-.slider--feature .slider__card--art-databricks { background-image: url("/media/banner/banner-databricks.jpg"); }
-.slider--feature .slider__card--art-identity { background-image: url("/media/banner/banner-identity.jpg"); }
-.slider--feature .slider__card--art-smart-farm { background-image: url("/media/banner/banner-smart-farm.jpg"); }
+.slider--feature .slider__card--art-aws { background-image: url("/saltware-prototype/media/banner/banner-aws.jpg"); }
+.slider--feature .slider__card--art-databricks { background-image: url("/saltware-prototype/media/banner/banner-databricks.jpg"); }
+.slider--feature .slider__card--art-identity { background-image: url("/saltware-prototype/media/banner/banner-identity.jpg"); }
+.slider--feature .slider__card--art-smart-farm { background-image: url("/saltware-prototype/media/banner/banner-smart-farm.jpg"); }
 .slider--feature .slider__card.is-active {
   transform: none;
   opacity: 1;
@@ -1919,7 +1919,7 @@ a.quiet:hover {
      databricks 는 자산이 아직 없어 색면 그대로다. */
   background:
     linear-gradient(to top, var(--scrim-bottom), transparent 62%),
-    url("/media/home/mosaic-cloud.jpg") center / cover no-repeat;
+    url("/saltware-prototype/media/home/mosaic-cloud.jpg") center / cover no-repeat;
   transition: transform var(--dur-hover) var(--ease);
 }
 a.mo:hover {
@@ -1928,32 +1928,32 @@ a.mo:hover {
 .mo--data-ai {
   background:
     linear-gradient(to top, var(--scrim-bottom), transparent 62%),
-    url("/media/home/mosaic-data-ai.jpg") center / cover no-repeat;
+    url("/saltware-prototype/media/home/mosaic-data-ai.jpg") center / cover no-repeat;
 }
 .mo--databricks {
   background:
     linear-gradient(to top, var(--scrim-bottom), transparent 62%),
-    url("/media/home/mosaic-databricks.jpg") center / cover no-repeat;
+    url("/saltware-prototype/media/home/mosaic-databricks.jpg") center / cover no-repeat;
 }
 .mo--identity {
   background:
     linear-gradient(to top, var(--scrim-bottom), transparent 62%),
-    url("/media/home/mosaic-identity.jpg") center / cover no-repeat;
+    url("/saltware-prototype/media/home/mosaic-identity.jpg") center / cover no-repeat;
 }
 .mo--redhat {
   background:
     linear-gradient(to top, var(--scrim-bottom), transparent 62%),
-    url("/media/home/mosaic-redhat.jpg") center / cover no-repeat;
+    url("/saltware-prototype/media/home/mosaic-redhat.jpg") center / cover no-repeat;
 }
 .mo--enview {
   background:
     linear-gradient(to top, var(--scrim-bottom), transparent 62%),
-    url("/media/home/mosaic-enview.jpg") center / cover no-repeat;
+    url("/saltware-prototype/media/home/mosaic-enview.jpg") center / cover no-repeat;
 }
 .mo--smart-farm {
   background:
     linear-gradient(to top, var(--scrim-bottom), transparent 62%),
-    url("/media/home/mosaic-smart-farm.jpg") center / cover no-repeat;
+    url("/saltware-prototype/media/home/mosaic-smart-farm.jpg") center / cover no-repeat;
 }
 .mo__title {
   font-size: var(--fs-h3);
