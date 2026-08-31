@@ -13,15 +13,20 @@
   border-bottom: 1px solid var(--header-line);
   color: var(--header-ink);
 }
+/* 메가존형 3분할 — 로고 | 메뉴 | CTA. 1fr auto 1fr 이라 메뉴가
+   로고 폭과 무관하게 화면 정중앙에 온다. flex 로 가운데를 잡으면
+   좌우 폭 차이만큼 메뉴가 쏠린다. */
 .site-header__bar {
   height: var(--header-h);
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
   gap: var(--sp-7);
 }
 .site-header__logo {
   display: inline-flex;
   align-items: center;
+  justify-self: start;
 }
 /* 원본 워드마크는 170×28 한 벌뿐이다. 확대하면 뭉개지므로 원래 크기로 둔다. */
 .wordmark {
@@ -36,7 +41,7 @@
   }
 }
 .site-header__right {
-  margin-left: auto;
+  justify-self: end;
   display: flex;
   align-items: center;
   gap: var(--sp-3);
@@ -49,12 +54,8 @@
 
 .gnb {
   display: flex;
-  gap: var(--sp-5);
-}
-.gnb {
-  display: flex;
-  gap: var(--sp-6);
-  height: 100%;
+  gap: var(--sp-7);
+  align-self: stretch;
   align-items: stretch;
 }
 /* 항목 전체 높이를 버튼이 차지해야 hover 로 메가가 열릴 때 커서가 빠지지 않는다. */
@@ -112,19 +113,34 @@
   position: absolute;
   top: 100%;
   inset-inline: 0;
-  border-top: 1px solid var(--header-line);
-  background: var(--bg-card);
+  border-top: 1px solid var(--mega-line);
+  background: var(--mega-bg);
+  backdrop-filter: saturate(180%) blur(20px);
   box-shadow: var(--shadow-mega);
-  /* 헤더가 검정이라 color 로 흰색을 내려보낸다. 메가 패널은 흰 바탕이므로
-     여기서 되돌리지 않으면 글자가 통째로 사라진다 — 실제로 그랬다. */
-  color: var(--text-primary);
+  /* 면 색은 --mega-* 토큰이 정한다 — 메인에선 다크 헤더를 그대로 잇고,
+     하위에선 흰 판이다. 헤더의 color 상속을 여기서 끊지 않으면
+     글자가 면과 함께 사라진다 — 실제로 그랬다. */
+  color: var(--mega-ink);
+  animation: mega-in var(--dur-hover) var(--ease);
+}
+/* hidden 해제 때마다 다시 그려지며 자동 재생된다 — JS 로 클래스를 돌리지 않는다. */
+@keyframes mega-in {
+  from {
+    opacity: 0;
+    translate: 0 -8px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mega {
+    animation: none;
+  }
 }
 .mega__item-name {
-  color: var(--text-primary);
+  color: var(--mega-ink);
   font-weight: 500;
 }
 .mega__item-desc {
-  color: var(--text-muted);
+  color: var(--mega-ink-soft);
 }
 /* 사업 열이 넓고 브랜드·전체보기가 뒤따른다. 열마다 상자를 두르지 않는다 —
    카드 벽이 되면 훑는 속도가 떨어진다. 구분은 여백과 라벨이 맡는다. */
@@ -142,7 +158,7 @@
   font-size: var(--fs-label);
   font-weight: 600;
   letter-spacing: var(--tracking-label);
-  color: var(--text-faint);
+  color: var(--mega-ink-faint);
   margin-bottom: var(--sp-5);
 }
 .mega__groups {
@@ -153,10 +169,10 @@
 .mega__group-label {
   font-size: var(--fs-xs);
   font-weight: 600;
-  color: var(--text-secondary);
+  color: var(--mega-ink-soft);
   padding-bottom: var(--sp-2);
   margin-bottom: var(--sp-3);
-  border-bottom: 1px solid var(--border-hair);
+  border-bottom: 1px solid var(--mega-line);
 }
 .mega__list {
   display: grid;
@@ -172,21 +188,22 @@
 .mega__item {
   display: grid;
   gap: 3px;
-  color: var(--text-primary);
+  color: var(--mega-ink);
   /* hover 는 글자와 화살표만 움직인다. 배경을 깔면 칸이 카드가 된다. */
   transition: color var(--dur-hover) var(--ease);
 }
 .mega__item:hover .mega__item-name {
-  color: var(--text-accent);
+  color: var(--mega-accent);
 }
 .mega__item-desc {
-  color: var(--text-muted);
+  color: var(--mega-ink-soft);
   font-size: var(--fs-xs);
   line-height: 1.5;
 }
 .mega__all {
   font-weight: 600;
   font-size: var(--fs-sm);
+  color: var(--mega-accent);
 }
 .mega__col--foot {
   justify-self: end;
@@ -511,25 +528,63 @@
   background-repeat: no-repeat;
   color: var(--text-on-inverse);
 }
-.hero--media h1 { color: var(--text-on-inverse); }
-.hero--media .hero__lede { color: var(--text-on-inverse-muted); }
-.hero--media .hero__meta { color: var(--text-on-inverse-muted); }
-.hero--media .eyebrow { color: var(--text-accent-on-inverse); }
-.hero--media.hero--m-cloud { background-image: url("/saltware-prototype/media/business/hero-cloud.jpg"); }
-.hero--media.hero--m-databricks { background-image: url("/saltware-prototype/media/business/hero-databricks.jpg"); }
-.hero--media.hero--m-identity { background-image: url("/saltware-prototype/media/business/hero-identity.jpg"); }
-.hero--media.hero--m-redhat { background-image: url("/saltware-prototype/media/business/hero-redhat.jpg"); }
-.hero--media.hero--m-enview { background-image: url("/saltware-prototype/media/business/hero-enview.jpg"); }
-.hero--media.hero--m-smart-farm { background-image: url("/saltware-prototype/media/business/hero-smart-farm.jpg"); }
-.hero--media.hero--m-hub-business { background-image: url("/saltware-prototype/media/hub/hub-business.jpg"); }
-.hero--media.hero--m-hub-industries { background-image: url("/saltware-prototype/media/hub/hub-industries.jpg"); }
-.hero--media.hero--m-hub-insights { background-image: url("/saltware-prototype/media/hub/hub-insights.jpg"); }
-.hero--media.hero--m-hub-company { background-image: url("/saltware-prototype/media/hub/hub-company.jpg"); }
-.hero--media.hero--m-ind-public { background-image: url("/saltware-prototype/media/industry/ind-public.jpg"); }
-.hero--media.hero--m-ind-finance { background-image: url("/saltware-prototype/media/industry/ind-finance.jpg"); }
-.hero--media.hero--m-ind-manufacturing { background-image: url("/saltware-prototype/media/industry/ind-manufacturing.jpg"); }
-.hero--media.hero--m-ind-education { background-image: url("/saltware-prototype/media/industry/ind-education.jpg"); }
-.hero--media.hero--m-ind-agriculture { background-image: url("/saltware-prototype/media/industry/ind-agriculture.jpg"); }
+.hero--media h1 {
+  color: var(--text-on-inverse);
+}
+.hero--media .hero__lede {
+  color: var(--text-on-inverse-muted);
+}
+.hero--media .hero__meta {
+  color: var(--text-on-inverse-muted);
+}
+.hero--media .eyebrow {
+  color: var(--text-accent-on-inverse);
+}
+.hero--media.hero--m-cloud {
+  background-image: url("/saltware-prototype/media/business/hero-cloud.jpg");
+}
+.hero--media.hero--m-databricks {
+  background-image: url("/saltware-prototype/media/business/hero-databricks.jpg");
+}
+.hero--media.hero--m-identity {
+  background-image: url("/saltware-prototype/media/business/hero-identity.jpg");
+}
+.hero--media.hero--m-redhat {
+  background-image: url("/saltware-prototype/media/business/hero-redhat.jpg");
+}
+.hero--media.hero--m-enview {
+  background-image: url("/saltware-prototype/media/business/hero-enview.jpg");
+}
+.hero--media.hero--m-smart-farm {
+  background-image: url("/saltware-prototype/media/business/hero-smart-farm.jpg");
+}
+.hero--media.hero--m-hub-business {
+  background-image: url("/saltware-prototype/media/hub/hub-business.jpg");
+}
+.hero--media.hero--m-hub-industries {
+  background-image: url("/saltware-prototype/media/hub/hub-industries.jpg");
+}
+.hero--media.hero--m-hub-insights {
+  background-image: url("/saltware-prototype/media/hub/hub-insights.jpg");
+}
+.hero--media.hero--m-hub-company {
+  background-image: url("/saltware-prototype/media/hub/hub-company.jpg");
+}
+.hero--media.hero--m-ind-public {
+  background-image: url("/saltware-prototype/media/industry/ind-public.jpg");
+}
+.hero--media.hero--m-ind-finance {
+  background-image: url("/saltware-prototype/media/industry/ind-finance.jpg");
+}
+.hero--media.hero--m-ind-manufacturing {
+  background-image: url("/saltware-prototype/media/industry/ind-manufacturing.jpg");
+}
+.hero--media.hero--m-ind-education {
+  background-image: url("/saltware-prototype/media/industry/ind-education.jpg");
+}
+.hero--media.hero--m-ind-agriculture {
+  background-image: url("/saltware-prototype/media/industry/ind-agriculture.jpg");
+}
 
 .hero--home {
   position: relative;
@@ -701,12 +756,30 @@
   fill: var(--cloud-deep);
   opacity: 0.3;
 }
-.drops__stop-core { stop-color: var(--accent-cloud); stop-opacity: 0.03; }
-.drops__stop-mid { stop-color: var(--accent-cloud); stop-opacity: 0.08; }
-.drops__stop-edge { stop-color: var(--text-accent-on-inverse); stop-opacity: 0.55; }
-.drops__stop-lip { stop-color: var(--accent-cloud); stop-opacity: 0.12; }
-.drops__stop-under { stop-color: var(--accent-cloud); stop-opacity: 0.3; }
-.drops__stop-fade { stop-color: var(--accent-cloud); stop-opacity: 0; }
+.drops__stop-core {
+  stop-color: var(--accent-cloud);
+  stop-opacity: 0.03;
+}
+.drops__stop-mid {
+  stop-color: var(--accent-cloud);
+  stop-opacity: 0.08;
+}
+.drops__stop-edge {
+  stop-color: var(--text-accent-on-inverse);
+  stop-opacity: 0.55;
+}
+.drops__stop-lip {
+  stop-color: var(--accent-cloud);
+  stop-opacity: 0.12;
+}
+.drops__stop-under {
+  stop-color: var(--accent-cloud);
+  stop-opacity: 0.3;
+}
+.drops__stop-fade {
+  stop-color: var(--accent-cloud);
+  stop-opacity: 0;
+}
 .drops__rim {
   fill: none;
   stroke: var(--text-on-inverse);
@@ -746,14 +819,30 @@
   background-repeat: no-repeat;
   color: var(--text-on-inverse);
 }
-.slider--feature .slider__card--art .card__title { color: var(--text-on-inverse); }
-.slider--feature .slider__card--art .card__desc { color: var(--text-on-inverse-muted); }
-.slider--feature .slider__card--art .eyebrow { color: var(--text-accent-on-inverse); }
-.slider--feature .slider__card--art .card__more { color: var(--text-accent-on-inverse); }
-.slider--feature .slider__card--art-aws { background-image: url("/saltware-prototype/media/banner/banner-aws.jpg"); }
-.slider--feature .slider__card--art-databricks { background-image: url("/saltware-prototype/media/banner/banner-databricks.jpg"); }
-.slider--feature .slider__card--art-identity { background-image: url("/saltware-prototype/media/banner/banner-identity.jpg"); }
-.slider--feature .slider__card--art-smart-farm { background-image: url("/saltware-prototype/media/banner/banner-smart-farm.jpg"); }
+.slider--feature .slider__card--art .card__title {
+  color: var(--text-on-inverse);
+}
+.slider--feature .slider__card--art .card__desc {
+  color: var(--text-on-inverse-muted);
+}
+.slider--feature .slider__card--art .eyebrow {
+  color: var(--text-accent-on-inverse);
+}
+.slider--feature .slider__card--art .card__more {
+  color: var(--text-accent-on-inverse);
+}
+.slider--feature .slider__card--art-aws {
+  background-image: url("/saltware-prototype/media/banner/banner-aws.jpg");
+}
+.slider--feature .slider__card--art-databricks {
+  background-image: url("/saltware-prototype/media/banner/banner-databricks.jpg");
+}
+.slider--feature .slider__card--art-identity {
+  background-image: url("/saltware-prototype/media/banner/banner-identity.jpg");
+}
+.slider--feature .slider__card--art-smart-farm {
+  background-image: url("/saltware-prototype/media/banner/banner-smart-farm.jpg");
+}
 .slider--feature .slider__card.is-active {
   transform: none;
   opacity: 1;
@@ -1407,8 +1496,10 @@ html.js-reveal .reveal.is-in {
   }
 }
 @media (max-width: 860px) {
+  /* CTA 클래스는 btn--dark 다 — btn--solid 로 적으면 아무것도 안 숨는다(실측).
+     모바일 헤더는 로고 + 버거만 남기고 CTA 는 서랍의 btn--block 이 맡는다. */
   .gnb,
-  .site-header__right .btn--solid {
+  .site-header__right .btn--dark {
     display: none;
   }
   .site-header__burger {
@@ -1842,18 +1933,42 @@ a.mark:hover {
   width: 100%;
   height: 100%;
 }
-.mark__sign--g-public { color: var(--accent-cloud); }
-.mark__sign--g-finance { color: var(--accent-data-ai); }
-.mark__sign--g-manufacturing { color: var(--accent-databricks); }
-.mark__sign--g-education { color: var(--accent-identity); }
-.mark__sign--g-agriculture { color: var(--accent-smart-farm); }
-.mark__sign--g-cloud { color: var(--accent-cloud); }
-.mark__sign--g-data-ai { color: var(--accent-data-ai); }
-.mark__sign--g-databricks { color: var(--accent-databricks); }
-.mark__sign--g-identity { color: var(--accent-identity); }
-.mark__sign--g-redhat { color: var(--accent-redhat); }
-.mark__sign--g-enview { color: var(--accent-enview); }
-.mark__sign--g-smart-farm { color: var(--accent-smart-farm); }
+.mark__sign--g-public {
+  color: var(--accent-cloud);
+}
+.mark__sign--g-finance {
+  color: var(--accent-data-ai);
+}
+.mark__sign--g-manufacturing {
+  color: var(--accent-databricks);
+}
+.mark__sign--g-education {
+  color: var(--accent-identity);
+}
+.mark__sign--g-agriculture {
+  color: var(--accent-smart-farm);
+}
+.mark__sign--g-cloud {
+  color: var(--accent-cloud);
+}
+.mark__sign--g-data-ai {
+  color: var(--accent-data-ai);
+}
+.mark__sign--g-databricks {
+  color: var(--accent-databricks);
+}
+.mark__sign--g-identity {
+  color: var(--accent-identity);
+}
+.mark__sign--g-redhat {
+  color: var(--accent-redhat);
+}
+.mark__sign--g-enview {
+  color: var(--accent-enview);
+}
+.mark__sign--g-smart-farm {
+  color: var(--accent-smart-farm);
+}
 
 /* 가운데 정렬 제목 아래 균등한 칸. 레퍼런스의 Trusted Enterprise Partner. */
 .section--center .section__head {

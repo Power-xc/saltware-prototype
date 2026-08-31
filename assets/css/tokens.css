@@ -155,6 +155,14 @@
   --header-line: rgba(0, 0, 0, 0.08);
   --header-cta-bg: var(--c-neutral-900);
   --header-cta-ink: var(--c-white);
+  /* 메가 패널은 헤더의 면을 따라간다 — 메인(다크 헤더)에서 흰 판이 떨어지면
+     면이 끊긴다(메가존 실측). 아래 .home 이 이 여섯 개를 함께 뒤집는다. */
+  --mega-bg: rgba(255, 255, 255, 0.97);
+  --mega-ink: var(--c-neutral-900);
+  --mega-ink-soft: var(--c-neutral-600);
+  --mega-ink-faint: var(--c-neutral-550);
+  --mega-line: rgba(0, 0, 0, 0.08);
+  --mega-accent: var(--c-accent-550);
   /* 색면·사진 위에 글자를 얹을 때 아래쪽에 까는 그늘.
      자산이 사진으로 바뀌어도 글자가 살아남게 한다. */
   --scrim-bottom: rgba(0, 0, 0, 0.45);
@@ -186,6 +194,13 @@
   --header-line: rgba(255, 255, 255, 0.14);
   --header-cta-bg: var(--c-white);
   --header-cta-ink: var(--c-neutral-900);
+  --mega-bg: rgba(13, 17, 17, 0.96);
+  --mega-ink: #ffffff;
+  --mega-ink-soft: rgba(255, 255, 255, 0.66);
+  --mega-ink-faint: rgba(255, 255, 255, 0.45);
+  --mega-line: rgba(255, 255, 255, 0.14);
+  /* 다크 위에서 --c-accent-550 은 대비가 모자란다. 액센트만 밝은 단으로. */
+  --mega-accent: #6fb3ff;
 }
 
 /* 다크 테마를 두지 않는다. 기획 v0.1 은 라이트 한 벌뿐이고
