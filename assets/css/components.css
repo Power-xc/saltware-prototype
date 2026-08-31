@@ -1702,6 +1702,81 @@ a.tile:hover {
   color: var(--text-accent);
 }
 
+/* 대표 솔루션 — 시그니처 이미지 다크 피처 카드 3장. 모자이크와 같은 결로,
+   아래 스크림이 문안 가독을 지킨다. */
+.sols {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap-tile);
+}
+.sol {
+  position: relative;
+  display: grid;
+  align-content: end;
+  gap: var(--sp-2);
+  min-height: 340px;
+  padding: var(--sp-6);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background-color: var(--bg-inverse);
+  background-size: cover;
+  background-position: center;
+  color: var(--text-on-inverse);
+  transition: transform var(--dur-hover) var(--ease);
+}
+.sol::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 38%, var(--scrim-bottom));
+}
+.sol > * {
+  position: relative;
+  z-index: 1;
+}
+.sol:hover {
+  transform: translateY(-4px);
+}
+.sol--art-data-ai {
+  background-image: url("/saltware-prototype/media/home/mosaic-data-ai.jpg?v=3419adf65f19");
+}
+.sol--art-databricks {
+  background-image: url("/saltware-prototype/media/home/mosaic-databricks.jpg?v=3419adf65f19");
+}
+.sol--art-cloud {
+  background-image: url("/saltware-prototype/media/home/mosaic-cloud.jpg?v=3419adf65f19");
+}
+.sol__eyebrow {
+  font-size: var(--fs-label-caps);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-accent-on-inverse);
+}
+.sol__title {
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+.sol__desc {
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: var(--text-on-inverse-muted);
+}
+.sol__more {
+  margin-top: var(--sp-2);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--text-accent-on-inverse);
+}
+@media (max-width: 860px) {
+  .sols {
+    grid-template-columns: 1fr;
+  }
+  .sol {
+    min-height: 240px;
+  }
+}
+
 /* 파트너·기술 로고 2단 — 위는 핵심 파트너 정적 줄, 아래는 기술 로고 롤링 벨트
    (메가존 Partners 실측, 사령관 지정: 캡션 없이 로고만). */
 .logos {
