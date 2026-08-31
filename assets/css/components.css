@@ -654,11 +654,11 @@
   position: relative;
   z-index: 1;
   display: grid;
-  /* 바깥 1fr 행이 남는 높이를 받으면 내부 행이 stretch 로 벌어진다 —
-     제목과 서브가 한 덩어리로 가운데에 앉게 패킹한다(실측: 105px 벌어짐).
-     제목 덩어리를 오브젝트 쪽으로 더 내린다 — 살짝 겹쳐도 된다는 판정. */
-  align-content: center;
-  margin-top: var(--sp-6);
+  /* 바깥 1fr 행이 남는 높이를 받으면 내부 행이 stretch 로 벌어진다.
+     제목 덩어리는 이 영역의 바닥, 즉 오브젝트 바로 위에 붙인다 —
+     center 에 margin 을 얹는 방식은 stretch 행에서 반만 먹혔다(실측).
+     오브젝트가 -22px 올라와 있어 서브와 살짝 겹친다(허용 판정). */
+  align-content: end;
   gap: var(--sp-3);
   justify-items: center;
 }
