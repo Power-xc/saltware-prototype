@@ -115,7 +115,6 @@
   inset-inline: 0;
   border-top: 1px solid var(--header-line);
   background: var(--mega-bg);
-  backdrop-filter: saturate(180%) blur(20px);
   box-shadow: var(--shadow-mega);
   /* 헤더의 color 상속을 여기서 끊고 본문 색으로 다시 세운다.
      상속에 맡겼다가 글자가 통째로 사라진 적이 있다. */
