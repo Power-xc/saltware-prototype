@@ -9,9 +9,9 @@
     <meta property="og:description" content="파트너십, 수상, 제품 출시 소식을 모았습니다. 기술 문서와 도입 가이드는 Insights에서 보실 수 있습니다." />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="/media/social/og-default.jpg" />
-    <link rel="stylesheet" href="/saltware-prototype/assets/css/tokens.css?v=c3ae8d87a69f" />
-    <link rel="stylesheet" href="/saltware-prototype/assets/css/base.css?v=c3ae8d87a69f" />
-    <link rel="stylesheet" href="/saltware-prototype/assets/css/components.css?v=c3ae8d87a69f" />
+    <link rel="stylesheet" href="/saltware-prototype/assets/css/tokens.css?v=538d1dc4ce56" />
+    <link rel="stylesheet" href="/saltware-prototype/assets/css/base.css?v=538d1dc4ce56" />
+    <link rel="stylesheet" href="/saltware-prototype/assets/css/components.css?v=538d1dc4ce56" />
       </head>
   <body class="" data-route="/company/newsroom">
     <a class="skip-link" href="#main">본문으로 건너뛰기</a>
@@ -88,8 +88,6 @@
     <main id="main"><section class="hero hero--plain"><div class="container hero__body"><p class="eyebrow">NEWSROOM</p><h1>무엇이<br />움직이고 있는가</h1><p class="hero__lede">파트너십, 수상, 제품 출시 소식을 모았습니다. 기술 문서와 도입 가이드는 Insights에서 보실 수 있습니다.</p></div></section>
 <section class="section">
   <div class="container"><div class="section__head"><h2>최신 소식</h2></div><div class="grid grid--3"><article class="card card--band reveal"><p class="eyebrow">2026.04 · PARTNERSHIP</p><h3 class="card__title">Databricks AI Days Seoul 2026 참가</h3><p class="card__desc">부스 파트너로 참가해 자체 AI 보안 솔루션 Sapie-Guardian을 시연했습니다.</p></article><article class="card card--band reveal"><p class="eyebrow">2026.03 · PARTNERSHIP</p><h3 class="card__title">Red Hat Premier Partner 선정</h3><p class="card__desc">약 3년간의 협력 끝에 레드햇 최고 등급 파트너로 선정됐습니다. RHEL·OpenShift·Ansible 대상입니다.</p></article><article class="card card--band reveal"><p class="eyebrow">2024 · PRODUCT</p><h3 class="card__title">AI 기반 SaaS 3종 상용화</h3><p class="card__desc">FitSapie, Sapie-Guardian을 포함한 자체 AI 제품을 상용화했습니다.</p></article><article class="card card--band reveal"><p class="eyebrow">2024 · CERTIFICATION</p><h3 class="card__title">AWS Migration Competency 획득</h3><p class="card__desc">Control Tower Delivery 인증도 함께 획득했습니다.</p></article><article class="card card--band reveal"><p class="eyebrow">2023 · AWARD</p><h3 class="card__title">레드햇 라이징 파트너상</h3><p class="card__desc">대한민국 브랜드 명예의 전당(클라우드 서비스 부문)에도 선정됐습니다.</p></article><article class="card card--band reveal"><p class="eyebrow">2022 · IR</p><h3 class="card__title">코스닥 상장</h3><p class="card__desc">종목코드 328380으로 코스닥에 상장했습니다.</p></article></div></div>
-</section><section class="section section--card">
-  <div class="container"><div class="section__head"><h2>보도자료 문의</h2></div><div class="proof"><div class="proof__row"><p class="card__title">홍보 담당</p></div><div class="proof__row"><p class="card__title">로고·이미지</p></div></div></div>
 </section>
 <section class="section section--inverse"><div class="container">
       <h2>어떤 사업이 필요한지 모르셔도 됩니다</h2>
@@ -133,7 +131,15 @@
      패널을 열어 실제로 동작하는 문의 창구로 보낸다. 승인된 위젯이 생기면
      이 패널을 그 위젯으로 바꾸면 되고, 그때까지 죽은 링크가 아니다. -->
 <div class="floating" data-assistant>
-  <div class="assistant" id="assistant-panel" role="dialog" aria-modal="false" aria-labelledby="assistant-title" data-assistant-panel hidden>
+  <div
+    class="assistant"
+    id="assistant-panel"
+    role="dialog"
+    aria-modal="false"
+    aria-labelledby="assistant-title"
+    data-assistant-panel
+    hidden
+  >
     <div class="assistant__head">
       <p class="assistant__title" id="assistant-title">무엇이든 물어보세요</p>
       <button type="button" class="assistant__close" data-assistant-close>
@@ -144,17 +150,42 @@
       온라인 AI 상담은 준비 중입니다. 궁금한 점을 남겨 주시면 담당자가 확인하고
       영업일 기준 1일 내 회신드립니다.
     </p>
-    <a class="btn btn--solid btn--block" href="/saltware-prototype/contact" data-ga-event="floating_assistant_fallback_click">문의 남기기</a>
-    <a class="assistant__alt" href="/saltware-prototype/contact" data-ga-event="floating_contact_click">문의 창구 전체 보기</a>
+    <a
+      class="btn btn--solid btn--block"
+      href="/saltware-prototype/contact"
+      data-ga-event="floating_assistant_fallback_click"
+      >문의 남기기</a
+    >
+    <a
+      class="assistant__alt"
+      href="/saltware-prototype/contact"
+      data-ga-event="floating_contact_click"
+      >문의 창구 전체 보기</a
+    >
   </div>
-  <button type="button" class="floating__ask" data-assistant-open aria-expanded="false" aria-haspopup="dialog" aria-controls="assistant-panel" data-ga-event="floating_assistant_click">
-    <span class="floating__spark" aria-hidden="true">✦</span>무엇이든 물어보세요
+  <button
+    type="button"
+    class="floating__ask"
+    data-assistant-open
+    aria-expanded="false"
+    aria-haspopup="dialog"
+    aria-controls="assistant-panel"
+    data-ga-event="floating_assistant_click"
+    aria-label="무엇이든 물어보세요"
+  >
+    <span class="floating__spark" aria-hidden="true">✦</span
+    ><span class="floating__label" aria-hidden="true">무엇이든 물어보세요</span>
   </button>
-  <button type="button" class="floating__top" data-to-top data-ga-event="back_to_top_click">
+  <button
+    type="button"
+    class="floating__top"
+    data-to-top
+    data-ga-event="back_to_top_click"
+  >
     <span class="sr-only">맨 위로</span><span aria-hidden="true">↑</span>
   </button>
 </div>
 
-    <script type="module" src="/saltware-prototype/assets/js/main.mjs?v=c3ae8d87a69f"></script>
+    <script type="module" src="/saltware-prototype/assets/js/main.mjs?v=538d1dc4ce56"></script>
   </body>
 </html>

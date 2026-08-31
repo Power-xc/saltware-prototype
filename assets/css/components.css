@@ -1577,6 +1577,12 @@ html.js-reveal .reveal.is-in {
   .site-header__right .btn--dark {
     display: none;
   }
+  /* display:none 이 된 GNB 는 그리드 항목을 만들지 않아 우측 그룹이
+     가운데 auto 열로 밀려 버거가 화면 중앙에 뜬다(실측 390: l=179).
+     모바일은 로고|버거 두 열로 다시 편다. */
+  .site-header__bar {
+    grid-template-columns: 1fr auto;
+  }
   .site-header__burger {
     display: inline-flex;
   }
@@ -1605,6 +1611,23 @@ html.js-reveal .reveal.is-in {
   .grid--4,
   .steps {
     grid-template-columns: 1fr;
+  }
+  /* 모바일은 리드가 3줄로 늘어 데스크톱용 음수 마진이 리드 셋째 줄을
+     덮는다(실측 390). 상쇄 없이 리드 아래로 내리고, 위 여백을 줄여 수납한다. */
+  .hero--home {
+    padding-top: var(--sp-7);
+  }
+  .hero__object {
+    width: 86vw;
+    margin-top: 0;
+  }
+  /* 390 에서 필 라벨이 슬라이더 도트와 문의 입력칸을 덮는다(실측) —
+     라벨을 접고 스파크만 남긴 원형으로 줄인다. */
+  .floating__label {
+    display: none;
+  }
+  .floating__ask {
+    padding: 13px 15px;
   }
   .footer__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
