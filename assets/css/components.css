@@ -1704,13 +1704,6 @@ a.tile:hover {
   letter-spacing: 0.14em;
   color: var(--text-faint);
 }
-/* 소스 순서상 아래의 .logos__prime 이 이기지 않게 복합 선택자로 못 박는다. */
-.logos__prime.logos__prime--certs {
-  gap: var(--sp-5) clamp(20px, 2.6vw, 40px);
-}
-.logos__prime--certs .logos__item img {
-  height: 64px;
-}
 .logos__prime {
   display: flex;
   flex-wrap: wrap;
