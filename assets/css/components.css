@@ -669,7 +669,7 @@
   width: min(580px, 78vw);
   aspect-ratio: 16 / 9;
   /* 서브 폰트를 살짝 파고들어도 된다는 판정 — 영상 상단은 빈 검정이라 안전하다. */
-  margin: calc(var(--sp-4) * -1) auto 0;
+  margin: calc(var(--sp-5) * -1) auto 0;
   display: grid;
   place-items: center;
   border: 1px dashed rgba(255, 255, 255, 0.16);
@@ -702,7 +702,7 @@
   /* --fs-hero(최대 88px)에서 두 단계 줄인 램프 — 오브젝트·배너와 한 화면에
      수납하기 위해서다(사령관 판정 2026-08-31). 토큰을 안 건드리는 이유:
      --fs-hero 는 벤토 대표 숫자가 같이 쓴다. */
-  font-size: clamp(28px, 4.1vw, 54px);
+  font-size: clamp(27px, 3.9vw, 50px);
   line-height: 1.12;
   letter-spacing: -0.04em;
   font-weight: 700;
@@ -730,7 +730,7 @@
   position: relative;
   z-index: 1;
   /* 오브젝트-배너 사이도 타이트하게 — 첫 화면 수납의 일부다. */
-  margin-top: var(--sp-2);
+  margin-top: var(--sp-1);
   /* 히어로는 가운데 정렬이지만 카드 안 내용은 기획대로 왼쪽 정렬이다. */
   text-align: left;
 }
