@@ -138,9 +138,6 @@
   color: var(--text-primary);
   font-weight: 600;
 }
-.mega__item-desc {
-  color: var(--text-muted);
-}
 /* 사업 열이 넓고 브랜드·전체보기가 뒤따른다. 열마다 상자를 두르지 않는다 —
    카드 벽이 되면 훑는 속도가 떨어진다. 구역 경계는 세로 헤어라인이 맡는다
    (여백만으로는 묶임이 안 읽힌다는 사령관 실측). */
@@ -194,10 +191,8 @@
   align-items: center;
 }
 .mega__item {
-  display: grid;
-  gap: 3px;
   color: var(--text-primary);
-  /* hover 는 글자와 화살표만 움직인다. 배경을 깔면 칸이 카드가 된다. */
+  /* hover 는 글자만 움직인다. 배경을 깔면 칸이 카드가 된다. */
   transition: color var(--dur-hover) var(--ease);
 }
 .mega__item:hover .mega__item-name {
@@ -211,11 +206,6 @@
 .mega__item--sub .mega__item-name {
   font-weight: 500;
   color: var(--text-secondary);
-}
-.mega__item-desc {
-  color: var(--text-muted);
-  font-size: var(--fs-xs);
-  line-height: 1.5;
 }
 .mega__all {
   font-weight: 600;
