@@ -2290,28 +2290,6 @@ a.post:hover .post__cover {
 .bento__desc {
   font-size: var(--fs-sm);
   color: var(--text-muted);
-  /* 글리프 장식과 겹치지 않게 오른쪽을 비워 둔다 */
-  max-width: calc(100% - 64px);
-}
-/* 결정 도트 글리프를 도트 아트 장식으로 — 카카오의 하프톤 일러스트 자리. */
-.bento__glyph {
-  position: absolute;
-  right: var(--sp-5);
-  bottom: var(--sp-5);
-  width: 64px;
-  height: 64px;
-  color: var(--text-accent);
-  opacity: 0.4;
-  pointer-events: none;
-}
-.bento__glyph svg {
-  width: 100%;
-  height: 100%;
-}
-.bento__cell--0 .bento__glyph {
-  width: 120px;
-  height: 120px;
-  opacity: 0.3;
 }
 
 /* 왼쪽 제목 + 오른쪽 본체. 벤토와 모자이크가 함께 쓴다. */
