@@ -113,14 +113,13 @@
   position: absolute;
   top: 100%;
   inset-inline: 0;
-  border-top: 1px solid var(--mega-line);
+  border-top: 1px solid var(--header-line);
   background: var(--mega-bg);
   backdrop-filter: saturate(180%) blur(20px);
   box-shadow: var(--shadow-mega);
-  /* 면 색은 --mega-* 토큰이 정한다 — 메인에선 다크 헤더를 그대로 잇고,
-     하위에선 흰 판이다. 헤더의 color 상속을 여기서 끊지 않으면
-     글자가 면과 함께 사라진다 — 실제로 그랬다. */
-  color: var(--mega-ink);
+  /* 헤더의 color 상속을 여기서 끊고 본문 색으로 다시 세운다.
+     상속에 맡겼다가 글자가 통째로 사라진 적이 있다. */
+  color: var(--text-primary);
   animation: mega-in var(--dur-hover) var(--ease);
 }
 /* hidden 해제 때마다 다시 그려지며 자동 재생된다 — JS 로 클래스를 돌리지 않는다. */
@@ -136,11 +135,11 @@
   }
 }
 .mega__item-name {
-  color: var(--mega-ink);
+  color: var(--text-primary);
   font-weight: 500;
 }
 .mega__item-desc {
-  color: var(--mega-ink-soft);
+  color: var(--text-muted);
 }
 /* 사업 열이 넓고 브랜드·전체보기가 뒤따른다. 열마다 상자를 두르지 않는다 —
    카드 벽이 되면 훑는 속도가 떨어진다. 구분은 여백과 라벨이 맡는다. */
@@ -158,7 +157,7 @@
   font-size: var(--fs-label);
   font-weight: 600;
   letter-spacing: var(--tracking-label);
-  color: var(--mega-ink-faint);
+  color: var(--text-faint);
   margin-bottom: var(--sp-5);
 }
 .mega__groups {
@@ -169,10 +168,10 @@
 .mega__group-label {
   font-size: var(--fs-xs);
   font-weight: 600;
-  color: var(--mega-ink-soft);
+  color: var(--text-secondary);
   padding-bottom: var(--sp-2);
   margin-bottom: var(--sp-3);
-  border-bottom: 1px solid var(--mega-line);
+  border-bottom: 1px solid var(--border-hair);
 }
 .mega__list {
   display: grid;
@@ -188,22 +187,21 @@
 .mega__item {
   display: grid;
   gap: 3px;
-  color: var(--mega-ink);
+  color: var(--text-primary);
   /* hover 는 글자와 화살표만 움직인다. 배경을 깔면 칸이 카드가 된다. */
   transition: color var(--dur-hover) var(--ease);
 }
 .mega__item:hover .mega__item-name {
-  color: var(--mega-accent);
+  color: var(--text-accent);
 }
 .mega__item-desc {
-  color: var(--mega-ink-soft);
+  color: var(--text-muted);
   font-size: var(--fs-xs);
   line-height: 1.5;
 }
 .mega__all {
   font-weight: 600;
   font-size: var(--fs-sm);
-  color: var(--mega-accent);
 }
 .mega__col--foot {
   justify-self: end;
