@@ -654,6 +654,9 @@
   position: relative;
   z-index: 1;
   display: grid;
+  /* 바깥 1fr 행이 남는 높이를 받으면 내부 행이 stretch 로 벌어진다 —
+     제목과 서브가 한 덩어리로 가운데에 앉게 패킹한다(실측: 105px 벌어짐). */
+  align-content: center;
   gap: var(--sp-3);
   justify-items: center;
 }
