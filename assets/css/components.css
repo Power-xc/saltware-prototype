@@ -175,7 +175,8 @@
   row-gap: var(--sp-1);
 }
 .mega__grid--list {
-  grid-template-columns: minmax(0, 1fr) auto;
+  /* 브랜드 열이 없는 패널 — 앵커 + 목록 두 구역만. */
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 2.7fr);
 }
 .mega__label {
   font-size: var(--fs-label-caps);
@@ -188,12 +189,6 @@
   display: grid;
   gap: var(--sp-1);
   font-size: var(--fs-sm);
-}
-.mega__list--horizontal {
-  grid-auto-flow: column;
-  grid-auto-columns: max-content;
-  gap: var(--sp-7);
-  align-items: center;
 }
 /* 링크는 호버 필 행이다 — 색만 바꾸던 이전 안은 메뉴로 안 읽혔다(사령관 판정).
    상시 배경은 여전히 두지 않는다 — 카드 벽 금지 원칙은 hover 에만 예외다. */
@@ -225,11 +220,6 @@
 .mega__all {
   font-weight: 600;
   font-size: var(--fs-sm);
-}
-/* list 패널(인사이트 등)의 '전체 보기' 열 — 오른쪽 끝에 붙는다. */
-.mega__col--foot {
-  justify-self: end;
-  align-self: center;
 }
 
 .ext-mark {
