@@ -138,19 +138,42 @@
   color: var(--text-primary);
   font-weight: 600;
 }
-/* 사업 열이 넓고 브랜드·전체보기가 뒤따른다. 열마다 상자를 두르지 않는다 —
-   카드 벽이 되면 훑는 속도가 떨어진다. 구역 경계는 세로 헤어라인이 맡는다
-   (여백만으로는 묶임이 안 읽힌다는 사령관 실측). */
+/* 메가존 실측 구조 — 왼쪽 앵커 존(제목·설명·전체 보기)이 시선의 진입점을
+   만들고, 링크는 호버 필 행으로 묶는다. 구역 경계는 세로 헤어라인. */
 .mega__grid {
   display: grid;
-  grid-template-columns: minmax(0, 3.2fr) minmax(0, 1fr) minmax(0, 0.7fr);
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.8fr) minmax(0, 0.9fr);
   gap: var(--sp-7);
-  padding-block: var(--sp-7) var(--sp-8);
+  padding-block: var(--sp-7);
   align-items: stretch;
 }
 .mega__grid > * + * {
   border-left: 1px solid var(--border-hair);
   padding-left: var(--sp-7);
+}
+.mega__title {
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+}
+.mega__desc {
+  margin-top: var(--sp-2);
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 24ch;
+}
+.mega__col--intro .mega__all {
+  display: inline-block;
+  margin-top: var(--sp-5);
+  color: var(--text-accent);
+}
+/* 사업 목록 — 위에서 아래로 채우는 2열. Databricks 가 상위 항목 바로 밑에 온다. */
+.mega__list--flat {
+  grid-template-rows: repeat(4, auto);
+  grid-auto-flow: column;
+  column-gap: var(--sp-6);
+  row-gap: var(--sp-1);
 }
 .mega__grid--list {
   grid-template-columns: minmax(0, 1fr) auto;
@@ -162,26 +185,9 @@
   color: var(--text-faint);
   margin-bottom: var(--sp-5);
 }
-/* 묶음은 한 줄에 나란히 세운다 — 2×2 로 접으면 라벨 줄이 어긋나 흩어져 보인다. */
-.mega__groups {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--sp-6);
-}
-/* 묶음 제목은 링크와 같은 무게면 전부 메뉴처럼 읽힌다(사령관 실측 2회).
-   1차(라벨화)로도 부족해 더 벌린다 — 제목은 11px 초소형 캡스에 헤어라인까지
-   걷어 순수 라벨로 내리고, 대신 링크 이름의 굵기를 올린다. */
-.mega__group-label {
-  font-size: var(--fs-label-caps);
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-  margin-bottom: var(--sp-3);
-}
 .mega__list {
   display: grid;
-  gap: var(--sp-4);
+  gap: var(--sp-1);
   font-size: var(--fs-sm);
 }
 .mega__list--horizontal {
@@ -190,18 +196,28 @@
   gap: var(--sp-7);
   align-items: center;
 }
+/* 링크는 호버 필 행이다 — 색만 바꾸던 이전 안은 메뉴로 안 읽혔다(사령관 판정).
+   상시 배경은 여전히 두지 않는다 — 카드 벽 금지 원칙은 hover 에만 예외다. */
 .mega__item {
+  display: block;
+  padding: 9px var(--sp-3);
+  border-radius: var(--radius-sm);
   color: var(--text-primary);
-  /* hover 는 글자만 움직인다. 배경을 깔면 칸이 카드가 된다. */
-  transition: color var(--dur-hover) var(--ease);
+  transition:
+    background var(--dur-hover) var(--ease),
+    color var(--dur-hover) var(--ease);
+}
+.mega__item:hover {
+  background: var(--bg-band);
 }
 .mega__item:hover .mega__item-name {
   color: var(--text-accent);
 }
 /* 상위 사업 아래 기술·솔루션 — 들여쓰기 + 왼쪽 헤어라인으로 종속을 드러낸다. */
 .mega__item--sub {
-  padding-left: var(--sp-4);
+  margin-left: var(--sp-3);
   border-left: 2px solid var(--border-hair);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
 }
 .mega__item--sub .mega__item-name {
   font-weight: 500;
@@ -211,9 +227,10 @@
   font-weight: 600;
   font-size: var(--fs-sm);
 }
+/* list 패널(인사이트 등)의 '전체 보기' 열 — 오른쪽 끝에 붙는다. */
 .mega__col--foot {
   justify-self: end;
-  align-self: start;
+  align-self: center;
 }
 
 .ext-mark {
