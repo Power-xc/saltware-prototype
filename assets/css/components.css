@@ -1648,11 +1648,26 @@ a.tile:hover {
 .logos__item {
   display: grid;
   justify-items: center;
+  align-content: end;
   gap: var(--sp-3);
 }
+/* 로고별 광학 보정 — 원본 비율이 달라 같은 height 면 크기가 널뛴다(실측).
+   워드마크 캡하이트가 비슷해 보이는 값으로 하나씩 맞춘다. */
 .logos__item img {
   height: 30px;
   width: auto;
+}
+.logos__item--aws img {
+  height: 34px;
+}
+.logos__item--red-hat img {
+  height: 34px;
+}
+.logos__item--sailpoint img {
+  height: 26px;
+}
+.logos__item--anthropic img {
+  height: 20px;
 }
 .logos__note {
   font-size: var(--fs-2xs);
