@@ -22,7 +22,8 @@ const formatPhone = (v) => {
 };
 
 const track = (name, params = {}) => {
-  if (Array.isArray(window.dataLayer)) window.dataLayer.push({ event: name, ...params });
+  if (Array.isArray(window.dataLayer))
+    window.dataLayer.push({ event: name, ...params });
 };
 
 function fieldError(input, message) {
@@ -40,12 +41,18 @@ function fieldError(input, message) {
 function validate(form) {
   const bad = [];
   for (const input of form.querySelectorAll(".field input, .field textarea")) {
-    const label = input.closest(".field")?.querySelector("label")?.textContent.replace(" *", "").trim() ?? "";
+    const label =
+      input
+        .closest(".field")
+        ?.querySelector("label")
+        ?.textContent.replace(" *", "")
+        .trim() ?? "";
     const value = input.value.trim();
     let message = "";
     if (input.required && !value)
       message = `${label}${objectParticle(label)} 입력해 주세요.`;
-    else if (input.name === "email" && value && !EMAIL.test(value)) message = "이메일 형식을 확인해 주세요.";
+    else if (input.name === "email" && value && !EMAIL.test(value))
+      message = "이메일 형식을 확인해 주세요.";
     fieldError(input, message);
     if (message) bad.push(input);
   }
@@ -66,6 +73,24 @@ export function initContactForm() {
   const chips = [...form.querySelectorAll("[data-topic]")];
   let busy = false;
 
+  // CTA 가 붙여 보낸 attribution 을 폼 상태로 옮긴다 — 어느 사업·어느 버튼에서
+  // 온 문의인지 payload 까지 살아남는다(사령관 지시 2026-08-31).
+  const params = new URLSearchParams(location.search);
+  const buSelect = form.querySelector('[name="business_unit"]');
+  const wanted = params.get("business");
+  if (
+    buSelect &&
+    wanted &&
+    [...buSelect.options].some((o) => o.value === wanted)
+  ) {
+    buSelect.value = wanted;
+  }
+  const srcPage = form.querySelector('[name="source_page"]');
+  if (srcPage) srcPage.value = params.get("from") ?? "";
+  const ctaPos = form.querySelector('[name="cta_position"]');
+  if (ctaPos) ctaPos.value = params.get("source") ?? "";
+  const business = () => buSelect?.value ?? "";
+
   const say = (text, kind = "") => {
     if (!state) return;
     state.textContent = text;
@@ -85,7 +110,8 @@ export function initContactForm() {
   }
 
   const topic = () =>
-    form.querySelector('[data-topic][aria-pressed="true"]')?.dataset.topic ?? "";
+    form.querySelector('[data-topic][aria-pressed="true"]')?.dataset.topic ??
+    "";
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -109,8 +135,15 @@ export function initContactForm() {
 
     if (!endpoint) {
       // 엔드포인트 배선 전에는 흐름만 확인한다. 아무 데도 보내지 않는다.
-      track("generate_lead", { lead_category: topic(), transport: "dry-run" });
-      say("확인했습니다. 지금은 접수 경로가 연결되지 않아 실제로 전송되지 않았습니다.", "ok");
+      track("generate_lead", {
+        lead_category: topic(),
+        lead_business: business(),
+        transport: "dry-run",
+      });
+      say(
+        "확인했습니다. 지금은 접수 경로가 연결되지 않아 실제로 전송되지 않았습니다.",
+        "ok",
+      );
       busy = false;
       submit?.removeAttribute("aria-disabled");
       return;
@@ -124,7 +157,10 @@ export function initContactForm() {
         body: JSON.stringify({ ...payload, topic: topic() }),
       });
       if (!res.ok) throw new Error(String(res.status));
-      track("generate_lead", { lead_category: topic() });
+      track("generate_lead", {
+        lead_category: topic(),
+        lead_business: business(),
+      });
       say("문의가 접수되었습니다. 영업일 기준 1일 내 회신드립니다.", "ok");
       form.reset();
     } catch {

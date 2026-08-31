@@ -1,11 +1,12 @@
-import { initAnalytics } from "./analytics.mjs?v=25a7d814336f";
-import { initNav } from "./nav.mjs?v=25a7d814336f";
-import { initReveal } from "./reveal.mjs?v=25a7d814336f";
-import { initFaq, initCaseFilter } from "./disclosure.mjs?v=25a7d814336f";
-import { initContactForm } from "./contact-form.mjs?v=25a7d814336f";
-import { initSlider } from "./slider.mjs?v=25a7d814336f";
-import { initDroplets } from "./droplets.mjs?v=25a7d814336f";
-import { initAssistant } from "./assistant.mjs?v=25a7d814336f";
+import { initAnalytics } from "./analytics.mjs?v=e75c9ccbace2";
+import { initNav } from "./nav.mjs?v=e75c9ccbace2";
+import { initReveal } from "./reveal.mjs?v=e75c9ccbace2";
+import { initFaq, initCaseFilter } from "./disclosure.mjs?v=e75c9ccbace2";
+import { initContactForm } from "./contact-form.mjs?v=e75c9ccbace2";
+import { initAttribution } from "./attribution.mjs?v=e75c9ccbace2";
+import { initSlider } from "./slider.mjs?v=e75c9ccbace2";
+import { initDroplets } from "./droplets.mjs?v=e75c9ccbace2";
+import { initAssistant } from "./assistant.mjs?v=e75c9ccbace2";
 
 try {
   initAnalytics();
@@ -36,6 +37,11 @@ try {
   initContactForm();
 } catch (e) {
   console.warn("Contact form failed:", e);
+}
+try {
+  initAttribution();
+} catch (e) {
+  console.warn("Attribution failed:", e);
 }
 try {
   initSlider();

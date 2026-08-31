@@ -203,6 +203,15 @@
 .mega__item:hover .mega__item-name {
   color: var(--text-accent);
 }
+/* 상위 사업 아래 기술·솔루션 — 들여쓰기 + 왼쪽 헤어라인으로 종속을 드러낸다. */
+.mega__item--sub {
+  padding-left: var(--sp-4);
+  border-left: 2px solid var(--border-hair);
+}
+.mega__item--sub .mega__item-name {
+  font-weight: 500;
+  color: var(--text-secondary);
+}
 .mega__item-desc {
   color: var(--text-muted);
   font-size: var(--fs-xs);
@@ -1022,6 +1031,7 @@
   color: var(--text-secondary);
 }
 .field input,
+.field select,
 .field textarea {
   width: 100%;
   border: 1px solid var(--border-hair);
@@ -1033,6 +1043,7 @@
   color: var(--text-primary);
 }
 .field input:focus,
+.field select:focus,
 .field textarea:focus {
   outline: none;
   border-color: var(--text-primary);
@@ -1680,6 +1691,25 @@ a.tile:hover {
 .logos {
   display: grid;
   gap: var(--sp-8);
+}
+/* 층 라벨 — 회사·기술·자격이 각각 무엇의 목록인지 한 줄로 밝힌다. */
+.logos__tier {
+  display: grid;
+  gap: var(--sp-5);
+  justify-items: center;
+}
+.logos__tier-label {
+  font-size: var(--fs-label-caps);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--text-faint);
+}
+/* 소스 순서상 아래의 .logos__prime 이 이기지 않게 복합 선택자로 못 박는다. */
+.logos__prime.logos__prime--certs {
+  gap: var(--sp-5) clamp(20px, 2.6vw, 40px);
+}
+.logos__prime--certs .logos__item img {
+  height: 64px;
 }
 .logos__prime {
   display: flex;
