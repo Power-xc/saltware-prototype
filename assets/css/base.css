@@ -23,6 +23,10 @@ body {
   font-size: var(--fs-body);
   line-height: 1.6;
   letter-spacing: var(--tracking-base);
+  /* 한글은 어절 단위로 꺾어야 한다 — 히어로 제목이 "누구/나", "나가보/지"로
+     글자 중간에서 갈라졌다(실측). 긴 영문 토큰은 break-word 가 받는다. */
+  word-break: keep-all;
+  overflow-wrap: break-word;
   -webkit-font-smoothing: antialiased;
 }
 
