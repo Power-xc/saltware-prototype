@@ -622,8 +622,9 @@
   grid-template-rows: 1fr auto;
   align-content: center;
   /* 첫 화면 수납(사령관 판정 2026-08-31) — 제목·서브·오브젝트에 배너 반 이상까지
-     한 뷰포트에 들어오도록 세로 리듬을 조인다. */
-  padding-top: var(--sp-4);
+     한 뷰포트에 들어오도록 세로 리듬을 조인다. 제목이 헤더에 붙어 보여
+     위만 반 단계 되돌렸다("타이틀 약간 내려"). */
+  padding-top: var(--sp-6);
   padding-bottom: var(--sp-6);
   text-align: center;
 }
