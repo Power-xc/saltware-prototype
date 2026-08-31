@@ -1557,6 +1557,17 @@ a.intent:hover .arrow {
     align-items: start;
   }
 }
+.media--img {
+  padding: 0;
+  overflow: hidden;
+}
+.media--img img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .lead {
   display: grid;
   gap: var(--sp-4);
