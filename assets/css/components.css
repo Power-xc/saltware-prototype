@@ -142,13 +142,18 @@
   color: var(--text-muted);
 }
 /* 사업 열이 넓고 브랜드·전체보기가 뒤따른다. 열마다 상자를 두르지 않는다 —
-   카드 벽이 되면 훑는 속도가 떨어진다. 구분은 여백과 라벨이 맡는다. */
+   카드 벽이 되면 훑는 속도가 떨어진다. 구역 경계는 세로 헤어라인이 맡는다
+   (여백만으로는 묶임이 안 읽힌다는 사령관 실측). */
 .mega__grid {
   display: grid;
-  grid-template-columns: minmax(0, 2.6fr) minmax(0, 1fr) minmax(0, 0.7fr);
-  gap: var(--sp-8);
+  grid-template-columns: minmax(0, 3.2fr) minmax(0, 1fr) minmax(0, 0.7fr);
+  gap: var(--sp-7);
   padding-block: var(--sp-7) var(--sp-8);
-  align-items: start;
+  align-items: stretch;
+}
+.mega__grid > * + * {
+  border-left: 1px solid var(--border-hair);
+  padding-left: var(--sp-7);
 }
 .mega__grid--list {
   grid-template-columns: minmax(0, 1fr) auto;
@@ -160,10 +165,11 @@
   color: var(--text-faint);
   margin-bottom: var(--sp-5);
 }
+/* 묶음은 한 줄에 나란히 세운다 — 2×2 로 접으면 라벨 줄이 어긋나 흩어져 보인다. */
 .mega__groups {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--sp-6) var(--sp-7);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--sp-6);
 }
 /* 묶음 제목은 링크와 같은 무게면 전부 메뉴처럼 읽힌다(사령관 실측 2회).
    1차(라벨화)로도 부족해 더 벌린다 — 제목은 11px 초소형 캡스에 헤어라인까지
