@@ -84,7 +84,6 @@
 
   --fs-display: clamp(30px, 4vw, 45px);
   --fs-hero: clamp(38px, 6.4vw, 88px);
-  --fs-ghost: clamp(96px, 17vw, 280px);
   --fs-h2: 29px;
   --fs-h3: 22px;
   --fs-h4: 17px;
@@ -121,10 +120,10 @@
   --hero-bg: #0d1111;
   --hero-ink: #ffffff;
   --hero-ink-soft: rgba(255, 255, 255, 0.72);
-  --hero-ghost: rgba(255, 255, 255, 0.055);
-  /* 히어로 제목 첫 줄. 레퍼런스(layout-main-01) 좌우 실측 — 분홍에서 보라로 간다. */
-  --hero-accent-from: #d779e8;
-  --hero-accent-to: #957cfd;
+  /* 히어로 제목 첫 줄. 레퍼런스는 분홍→보라였으나 사령관 판정(2026-08-31)으로
+     브랜드 컬러시스템의 파랑 램프를 쓴다 — 이미지 계약(보라 금지)과도 맞는다. */
+  --hero-accent-from: var(--text-accent-on-inverse);
+  --hero-accent-to: var(--c-accent-500);
 
   /* 기획 실측 — 섹션 여백과 격자 간격은 스케일에 없는 값이다. */
   --section-py: clamp(64px, 8vw, 104px);

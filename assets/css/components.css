@@ -622,22 +622,6 @@
   height: 28px;
   background: linear-gradient(currentColor, transparent);
 }
-/* 레퍼런스는 고스트가 화면 밖으로 잘려 나갈 만큼 크다. 잘리는 것이 의도다. */
-.hero__ghost {
-  position: absolute;
-  inset-inline: 0;
-  top: 18%;
-  text-align: center;
-  white-space: nowrap;
-  font-size: var(--fs-ghost);
-  font-weight: 700;
-  line-height: 0.92;
-  letter-spacing: -0.05em;
-  color: var(--hero-ghost);
-  pointer-events: none;
-  user-select: none;
-  z-index: 0;
-}
 .hero__center {
   position: relative;
   z-index: 1;
@@ -651,7 +635,7 @@
   letter-spacing: -0.04em;
   font-weight: 700;
 }
-/* 첫 줄만 분홍→보라. 둘째 줄은 흰색으로 남는다(레퍼런스 실측). */
+/* 첫 줄만 그라디언트. 둘째 줄은 흰색으로 남는다(레퍼런스 실측). */
 .hero__accent {
   background: linear-gradient(
     90deg,
@@ -808,9 +792,10 @@
 }
 
 /* v3 배너 자산이 있는 슬라이드 — 이미지가 오른쪽을 채우고 텍스트는 왼쪽에 앉는다.
-   자산이 들어왔으므로 카드 비율을 기획의 2:1 로 되돌린다. */
+   비율은 16:9 다 — 기획은 2:1 이었으나 낮아 보인다는 사령관 판정(2026-08-31).
+   자산 마스터도 같은 16:9 로 뽑는다(prompts/01-brand-image 18–21). */
 .slider--feature .slider__card--art {
-  min-height: calc(var(--banner-w) / 2);
+  min-height: calc(var(--banner-w) * 9 / 16);
   background-color: var(--bg-inverse);
   background-position: center;
   background-size: cover;
