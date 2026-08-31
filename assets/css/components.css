@@ -554,49 +554,49 @@
   max-width: 42ch;
 }
 .hero--media.hero--m-cloud {
-  background-image: url("/saltware-prototype/media/business/hero-cloud.jpg?v=55d793c6ad90");
+  background-image: url("/saltware-prototype/media/business/hero-cloud.jpg?v=3419adf65f19");
 }
 .hero--media.hero--m-databricks {
-  background-image: url("/saltware-prototype/media/business/hero-databricks.jpg?v=55d793c6ad90");
+  background-image: url("/saltware-prototype/media/business/hero-databricks.jpg?v=3419adf65f19");
 }
 .hero--media.hero--m-identity {
-  background-image: url("/saltware-prototype/media/business/hero-identity.jpg?v=55d793c6ad90");
+  background-image: url("/saltware-prototype/media/business/hero-identity.jpg?v=3419adf65f19");
 }
 .hero--media.hero--m-redhat {
-  background-image: url("/saltware-prototype/media/business/hero-redhat.jpg?v=55d793c6ad90");
+  background-image: url("/saltware-prototype/media/business/hero-redhat.jpg?v=3419adf65f19");
 }
 .hero--media.hero--m-enview {
-  background-image: url("/saltware-prototype/media/business/hero-enview.jpg?v=55d793c6ad90");
+  background-image: url("/saltware-prototype/media/business/hero-enview.jpg?v=3419adf65f19");
 }
 .hero--media.hero--m-smart-farm {
-  background-image: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=55d793c6ad90");
+  background-image: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=3419adf65f19");
 }
 .hero--media.hero--m-hub-business {
-  background-image: url("/saltware-prototype/media/hub/hub-business.jpg?v=55d793c6ad90");
+  background-image: url("/saltware-prototype/media/hub/hub-business.jpg?v=3419adf65f19");
 }
 .hero--media.hero--m-hub-industries {
-  background-image: url("/saltware-prototype/media/hub/hub-industries.jpg?v=55d793c6ad90");
+  background-image: url("/saltware-prototype/media/hub/hub-industries.jpg?v=3419adf65f19");
 }
 .hero--media.hero--m-hub-insights {
-  background-image: url("/saltware-prototype/media/hub/hub-insights.jpg?v=55d793c6ad90");
+  background-image: url("/saltware-prototype/media/hub/hub-insights.jpg?v=3419adf65f19");
 }
 .hero--media.hero--m-hub-company {
-  background-image: url("/saltware-prototype/media/hub/hub-company.jpg?v=55d793c6ad90");
+  background-image: url("/saltware-prototype/media/hub/hub-company.jpg?v=3419adf65f19");
 }
 .hero--media.hero--m-ind-public {
-  background-image: url("/saltware-prototype/media/industry/ind-public.jpg?v=55d793c6ad90");
+  background-image: url("/saltware-prototype/media/industry/ind-public.jpg?v=3419adf65f19");
 }
 .hero--media.hero--m-ind-finance {
-  background-image: url("/saltware-prototype/media/industry/ind-finance.jpg?v=55d793c6ad90");
+  background-image: url("/saltware-prototype/media/industry/ind-finance.jpg?v=3419adf65f19");
 }
 .hero--media.hero--m-ind-manufacturing {
-  background-image: url("/saltware-prototype/media/industry/ind-manufacturing.jpg?v=55d793c6ad90");
+  background-image: url("/saltware-prototype/media/industry/ind-manufacturing.jpg?v=3419adf65f19");
 }
 .hero--media.hero--m-ind-education {
-  background-image: url("/saltware-prototype/media/industry/ind-education.jpg?v=55d793c6ad90");
+  background-image: url("/saltware-prototype/media/industry/ind-education.jpg?v=3419adf65f19");
 }
 .hero--media.hero--m-ind-agriculture {
-  background-image: url("/saltware-prototype/media/industry/ind-agriculture.jpg?v=55d793c6ad90");
+  background-image: url("/saltware-prototype/media/industry/ind-agriculture.jpg?v=3419adf65f19");
 }
 
 .hero--home {
@@ -885,16 +885,16 @@
   color: var(--text-accent-on-inverse);
 }
 .slider--feature .slider__card--art-aws {
-  background-image: url("/saltware-prototype/media/banner/banner-aws.jpg?v=55d793c6ad90");
+  background-image: url("/saltware-prototype/media/banner/banner-aws.jpg?v=3419adf65f19");
 }
 .slider--feature .slider__card--art-databricks {
-  background-image: url("/saltware-prototype/media/banner/banner-databricks.jpg?v=55d793c6ad90");
+  background-image: url("/saltware-prototype/media/banner/banner-databricks.jpg?v=3419adf65f19");
 }
 .slider--feature .slider__card--art-identity {
-  background-image: url("/saltware-prototype/media/banner/banner-identity.jpg?v=55d793c6ad90");
+  background-image: url("/saltware-prototype/media/banner/banner-identity.jpg?v=3419adf65f19");
 }
 .slider--feature .slider__card--art-smart-farm {
-  background-image: url("/saltware-prototype/media/banner/banner-smart-farm.jpg?v=55d793c6ad90");
+  background-image: url("/saltware-prototype/media/banner/banner-smart-farm.jpg?v=3419adf65f19");
 }
 .slider--feature .slider__card.is-active {
   transform: none;
@@ -2229,7 +2229,7 @@ a.quiet:hover {
      databricks 는 자산이 아직 없어 색면 그대로다. */
   background:
     linear-gradient(to top, var(--scrim-bottom), transparent 62%),
-    url("/saltware-prototype/media/home/mosaic-cloud.jpg?v=55d793c6ad90") center / cover no-repeat;
+    url("/saltware-prototype/media/home/mosaic-cloud.jpg?v=3419adf65f19") center / cover no-repeat;
   transition: transform var(--dur-hover) var(--ease);
 }
 a.mo:hover {
@@ -2238,32 +2238,32 @@ a.mo:hover {
 .mo--data-ai {
   background:
     linear-gradient(to top, var(--scrim-bottom), transparent 62%),
-    url("/saltware-prototype/media/home/mosaic-data-ai.jpg?v=55d793c6ad90") center / cover no-repeat;
+    url("/saltware-prototype/media/home/mosaic-data-ai.jpg?v=3419adf65f19") center / cover no-repeat;
 }
 .mo--databricks {
   background:
     linear-gradient(to top, var(--scrim-bottom), transparent 62%),
-    url("/saltware-prototype/media/home/mosaic-databricks.jpg?v=55d793c6ad90") center / cover no-repeat;
+    url("/saltware-prototype/media/home/mosaic-databricks.jpg?v=3419adf65f19") center / cover no-repeat;
 }
 .mo--identity {
   background:
     linear-gradient(to top, var(--scrim-bottom), transparent 62%),
-    url("/saltware-prototype/media/home/mosaic-identity.jpg?v=55d793c6ad90") center / cover no-repeat;
+    url("/saltware-prototype/media/home/mosaic-identity.jpg?v=3419adf65f19") center / cover no-repeat;
 }
 .mo--redhat {
   background:
     linear-gradient(to top, var(--scrim-bottom), transparent 62%),
-    url("/saltware-prototype/media/home/mosaic-redhat.jpg?v=55d793c6ad90") center / cover no-repeat;
+    url("/saltware-prototype/media/home/mosaic-redhat.jpg?v=3419adf65f19") center / cover no-repeat;
 }
 .mo--enview {
   background:
     linear-gradient(to top, var(--scrim-bottom), transparent 62%),
-    url("/saltware-prototype/media/home/mosaic-enview.jpg?v=55d793c6ad90") center / cover no-repeat;
+    url("/saltware-prototype/media/home/mosaic-enview.jpg?v=3419adf65f19") center / cover no-repeat;
 }
 .mo--smart-farm {
   background:
     linear-gradient(to top, var(--scrim-bottom), transparent 62%),
-    url("/saltware-prototype/media/home/mosaic-smart-farm.jpg?v=55d793c6ad90") center / cover no-repeat;
+    url("/saltware-prototype/media/home/mosaic-smart-farm.jpg?v=3419adf65f19") center / cover no-repeat;
 }
 .mo__title {
   font-size: var(--fs-h3);
