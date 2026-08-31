@@ -2235,10 +2235,13 @@ a.post:hover .post__cover {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   grid-template-areas:
     "lead lead a a"
-    "lead lead b b";
+    "lead lead b b"
+    "c c d e";
   gap: var(--gap-tile);
 }
 .bento__cell {
+  position: relative;
+  overflow: hidden;
   background: var(--bg-band);
   border-radius: var(--radius-xl);
   padding: var(--sp-6);
@@ -2255,6 +2258,15 @@ a.post:hover .post__cover {
 .bento__cell--2 {
   grid-area: b;
 }
+.bento__cell--3 {
+  grid-area: c;
+}
+.bento__cell--4 {
+  grid-area: d;
+}
+.bento__cell--5 {
+  grid-area: e;
+}
 .bento__num {
   font-size: var(--fs-display);
   font-weight: 700;
@@ -2264,6 +2276,13 @@ a.post:hover .post__cover {
 .bento__cell--0 .bento__num {
   font-size: var(--fs-hero);
 }
+/* 카카오 임팩트 실측 — 큰 수 옆의 작은 단위 첨자. */
+.bento__unit {
+  font-size: 0.35em;
+  font-weight: 600;
+  margin-left: 0.15em;
+  color: var(--text-secondary);
+}
 .bento__label {
   font-size: var(--fs-h4);
   font-weight: 600;
@@ -2271,6 +2290,28 @@ a.post:hover .post__cover {
 .bento__desc {
   font-size: var(--fs-sm);
   color: var(--text-muted);
+  /* 글리프 장식과 겹치지 않게 오른쪽을 비워 둔다 */
+  max-width: calc(100% - 64px);
+}
+/* 결정 도트 글리프를 도트 아트 장식으로 — 카카오의 하프톤 일러스트 자리. */
+.bento__glyph {
+  position: absolute;
+  right: var(--sp-5);
+  bottom: var(--sp-5);
+  width: 64px;
+  height: 64px;
+  color: var(--text-accent);
+  opacity: 0.4;
+  pointer-events: none;
+}
+.bento__glyph svg {
+  width: 100%;
+  height: 100%;
+}
+.bento__cell--0 .bento__glyph {
+  width: 120px;
+  height: 120px;
+  opacity: 0.3;
 }
 
 /* 왼쪽 제목 + 오른쪽 본체. 벤토와 모자이크가 함께 쓴다. */
@@ -2339,7 +2380,7 @@ a.post:hover .post__cover {
   }
   .bento {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: "lead" "a" "b";
+    grid-template-areas: "lead" "a" "b" "c" "d" "e";
   }
 }
 
