@@ -1580,47 +1580,100 @@ a.tile:hover {
   line-height: 1.5;
 }
 
-/* 문제 기준 탐색(§11.5). 카드 벽이 아니라 고르는 목록이다. */
-.intents {
+/* 문제 기준 탐색(§11.5) — 이미지 카드 가로 레일. 목록이 아니라 골라 넘기는
+   선반이다. 스크롤바는 숨기되 스크롤 자체는 살린다. */
+.rail {
+  display: flex;
+  gap: var(--gap-tile);
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  padding-bottom: var(--sp-2);
+  scrollbar-width: none;
+}
+.rail::-webkit-scrollbar {
+  display: none;
+}
+.rail__card {
+  flex: none;
+  width: clamp(230px, 22vw, 300px);
   display: grid;
-  border-top: 1px solid var(--border-hair);
+  gap: var(--sp-1);
+  align-content: start;
+  scroll-snap-align: start;
 }
-.intent {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2px;
-  padding: var(--sp-4) 0;
-  border-bottom: 1px solid var(--border-hair);
-  position: relative;
-  transition: padding-left var(--dur-hover) var(--ease);
+.rail__img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  margin-bottom: var(--sp-2);
 }
-@media (min-width: 860px) {
-  .intent {
-    grid-template-columns: 0.9fr 1.5fr auto;
-    align-items: baseline;
-    gap: var(--sp-5);
-  }
-}
-a.intent:hover {
-  padding-left: var(--sp-3);
-  color: var(--text-primary);
-}
-.intent__q {
-  font-size: var(--fs-h4);
+.rail__q {
   font-weight: 600;
-  letter-spacing: -0.025em;
+  letter-spacing: -0.015em;
+  transition: color var(--dur-hover) var(--ease);
 }
-.intent__a {
+.rail__a {
   font-size: var(--fs-sm);
   color: var(--text-muted);
+  line-height: 1.55;
 }
-.arrow {
+.rail__more {
+  margin-top: var(--sp-1);
+  font-size: var(--fs-xs);
+  font-weight: 600;
   color: var(--text-accent);
-  font-size: var(--fs-sm);
-  transition: transform var(--dur-hover) var(--ease);
 }
-a.intent:hover .arrow {
-  transform: translateX(4px);
+.rail__card:hover .rail__q {
+  color: var(--text-accent);
+}
+
+/* 파트너 로고 롤링 — 하단 신뢰 요소. 같은 벌 두 개가 -100% 씩 흘러 이음새가 없다. */
+.logos {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
+}
+.logos__group {
+  flex: none;
+  display: flex;
+  align-items: start;
+  gap: clamp(44px, 6vw, 96px);
+  padding-inline-end: clamp(44px, 6vw, 96px);
+  animation: logos-roll 40s linear infinite;
+}
+.logos:hover .logos__group {
+  animation-play-state: paused;
+}
+.logos__item {
+  display: grid;
+  justify-items: center;
+  gap: var(--sp-3);
+}
+.logos__item img {
+  height: 30px;
+  width: auto;
+}
+.logos__note {
+  font-size: var(--fs-2xs);
+  color: var(--text-faint);
+  white-space: nowrap;
+}
+@keyframes logos-roll {
+  to {
+    translate: -100% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .logos {
+    flex-wrap: wrap;
+  }
+  .logos__group {
+    animation: none;
+  }
+  .logos__group[aria-hidden="true"] {
+    display: none;
+  }
 }
 
 /* 대표 1 + 보조 n(§11.7·11.8). 같은 크기로 늘어놓지 않는다. */
