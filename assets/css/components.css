@@ -136,7 +136,7 @@
 }
 .mega__item-name {
   color: var(--text-primary);
-  font-weight: 500;
+  font-weight: 600;
 }
 .mega__item-desc {
   color: var(--text-muted);
@@ -154,9 +154,9 @@
   grid-template-columns: minmax(0, 1fr) auto;
 }
 .mega__label {
-  font-size: var(--fs-label);
-  font-weight: 600;
-  letter-spacing: var(--tracking-label);
+  font-size: var(--fs-label-caps);
+  font-weight: 500;
+  letter-spacing: 0.14em;
   color: var(--text-faint);
   margin-bottom: var(--sp-5);
 }
@@ -165,17 +165,16 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--sp-6) var(--sp-7);
 }
-/* 묶음 제목은 링크와 같은 무게면 전부 메뉴처럼 읽힌다(사령관 실측).
-   eyebrow 와 같은 소문자 라벨 계열로 내려 '클릭 안 되는 제목'임을 드러낸다. */
+/* 묶음 제목은 링크와 같은 무게면 전부 메뉴처럼 읽힌다(사령관 실측 2회).
+   1차(라벨화)로도 부족해 더 벌린다 — 제목은 11px 초소형 캡스에 헤어라인까지
+   걷어 순수 라벨로 내리고, 대신 링크 이름의 굵기를 올린다. */
 .mega__group-label {
-  font-size: var(--fs-label);
-  font-weight: 600;
-  letter-spacing: var(--tracking-label);
+  font-size: var(--fs-label-caps);
+  font-weight: 500;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--text-faint);
-  padding-bottom: var(--sp-2);
   margin-bottom: var(--sp-3);
-  border-bottom: 1px solid var(--border-hair);
 }
 .mega__list {
   display: grid;
