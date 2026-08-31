@@ -611,7 +611,8 @@
   display: grid;
   grid-template-rows: 1fr auto;
   align-content: center;
-  padding-top: var(--sp-8);
+  /* 제목 축소와 세트 — 위 여백을 한 단계 줄여 블록 전체를 올린다. */
+  padding-top: var(--sp-7);
   padding-bottom: var(--sp-7);
   text-align: center;
 }
@@ -650,7 +651,7 @@
 .hero__object {
   width: min(640px, 86vw);
   height: clamp(160px, 20vw, 280px);
-  margin: var(--sp-6) auto 0;
+  margin: var(--sp-5) auto 0;
   display: grid;
   place-items: center;
   border: 1px dashed rgba(255, 255, 255, 0.16);
@@ -672,7 +673,10 @@
   content: none;
 }
 .hero--home h1 {
-  font-size: var(--fs-hero);
+  /* --fs-hero(최대 88px)에서 한 단계 줄인 램프 — 오브젝트 슬롯이 들어오며
+     첫 화면이 붐벼서 제목을 조금 줄이고 위로 올린다(사령관 판정 2026-08-31).
+     토큰을 안 건드리는 이유: --fs-hero 는 벤토 대표 숫자가 같이 쓴다. */
+  font-size: clamp(34px, 5.2vw, 72px);
   line-height: 1.12;
   letter-spacing: -0.04em;
   font-weight: 700;
