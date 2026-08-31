@@ -644,6 +644,33 @@
   gap: var(--sp-4);
   justify-items: center;
 }
+/* 메인 오브젝트 자리 — 사령관이 직접 제작 중(2026-08-31). 자산이 오면 이
+   컨테이너에 그대로 얹는다. 높이를 미리 예약해 도착 시 레이아웃이 튀지 않게
+   하고, 그동안은 옅은 점선 가이드로 자리만 보인다. */
+.hero__object {
+  width: min(640px, 86vw);
+  height: clamp(160px, 20vw, 280px);
+  margin: var(--sp-6) auto 0;
+  display: grid;
+  place-items: center;
+  border: 1px dashed rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius-hero);
+}
+.hero__object::after {
+  content: "OBJECT";
+  font-size: var(--fs-label-caps);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  color: var(--hero-ink-soft);
+  opacity: 0.35;
+}
+/* 자산이 들어오면(자식이 생기면) 가이드는 스스로 사라진다. */
+.hero__object:not(:empty) {
+  border: 0;
+}
+.hero__object:not(:empty)::after {
+  content: none;
+}
 .hero--home h1 {
   font-size: var(--fs-hero);
   line-height: 1.12;
