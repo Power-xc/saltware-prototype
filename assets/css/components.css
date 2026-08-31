@@ -1669,8 +1669,20 @@ a.tile:hover {
   color: var(--text-accent);
 }
 
-/* 파트너 로고 롤링 — 하단 신뢰 요소. 같은 벌 두 개가 -100% 씩 흘러 이음새가 없다. */
+/* 파트너·기술 로고 2단 — 위는 핵심 파트너 정적 줄, 아래는 기술 로고 롤링 벨트
+   (메가존 Partners 실측, 사령관 지정: 캡션 없이 로고만). */
 .logos {
+  display: grid;
+  gap: var(--sp-8);
+}
+.logos__prime {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--sp-6) clamp(44px, 6vw, 90px);
+}
+.logos__belt {
   display: flex;
   overflow: hidden;
   width: 100%;
@@ -1678,19 +1690,17 @@ a.tile:hover {
 .logos__group {
   flex: none;
   display: flex;
-  align-items: start;
-  gap: clamp(44px, 6vw, 96px);
-  padding-inline-end: clamp(44px, 6vw, 96px);
-  animation: logos-roll 40s linear infinite;
+  align-items: center;
+  gap: clamp(40px, 5vw, 80px);
+  padding-inline-end: clamp(40px, 5vw, 80px);
+  animation: logos-roll 36s linear infinite;
 }
-.logos:hover .logos__group {
+.logos__belt:hover .logos__group {
   animation-play-state: paused;
 }
 .logos__item {
   display: grid;
-  justify-items: center;
-  align-content: end;
-  gap: var(--sp-3);
+  place-items: center;
 }
 /* 로고별 광학 보정 — 원본 비율이 달라 같은 height 면 크기가 널뛴다(실측).
    워드마크 캡하이트가 비슷해 보이는 값으로 하나씩 맞춘다. */
@@ -1714,10 +1724,33 @@ a.tile:hover {
 .logos__item--anthropic img {
   height: 20px;
 }
-.logos__note {
-  font-size: var(--fs-2xs);
-  color: var(--text-faint);
-  white-space: nowrap;
+/* 벨트(기술 로고)는 한 단계 작게 돈다. */
+.logos__group .logos__item img {
+  height: 24px;
+}
+.logos__item--starburst img {
+  height: 22px;
+}
+.logos__item--snowflake img {
+  height: 26px;
+}
+.logos__item--claude img {
+  height: 20px;
+}
+.logos__item--xabyss img {
+  height: 28px;
+}
+.logos__item--ibm img {
+  height: 22px;
+}
+.logos__item--oracle img {
+  height: 18px;
+}
+.logos__item--cisco img {
+  height: 28px;
+}
+.logos__item--citrix img {
+  height: 20px;
 }
 @keyframes logos-roll {
   to {
@@ -1725,7 +1758,7 @@ a.tile:hover {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .logos {
+  .logos__belt {
     flex-wrap: wrap;
   }
   .logos__group {
