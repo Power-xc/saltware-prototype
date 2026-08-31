@@ -655,8 +655,10 @@
   z-index: 1;
   display: grid;
   /* 바깥 1fr 행이 남는 높이를 받으면 내부 행이 stretch 로 벌어진다 —
-     제목과 서브가 한 덩어리로 가운데에 앉게 패킹한다(실측: 105px 벌어짐). */
+     제목과 서브가 한 덩어리로 가운데에 앉게 패킹한다(실측: 105px 벌어짐).
+     제목 덩어리를 오브젝트 쪽으로 더 내린다 — 살짝 겹쳐도 된다는 판정. */
   align-content: center;
+  margin-top: var(--sp-6);
   gap: var(--sp-3);
   justify-items: center;
 }
