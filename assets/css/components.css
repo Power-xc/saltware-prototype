@@ -621,9 +621,10 @@
   display: grid;
   grid-template-rows: 1fr auto;
   align-content: center;
-  /* 제목 축소와 세트 — 위 여백을 한 단계 줄여 블록 전체를 올린다. */
-  padding-top: var(--sp-7);
-  padding-bottom: var(--sp-7);
+  /* 첫 화면 수납(사령관 판정 2026-08-31) — 제목·서브·오브젝트에 배너 반 이상까지
+     한 뷰포트에 들어오도록 세로 리듬을 조인다. */
+  padding-top: var(--sp-4);
+  padding-bottom: var(--sp-6);
   text-align: center;
 }
 /* 다음 화면이 있다는 표시. 명세 §9 가 상시 애니메이션을 금지하므로 움직이지 않는다. */
@@ -652,18 +653,18 @@
   position: relative;
   z-index: 1;
   display: grid;
-  gap: var(--sp-4);
+  gap: var(--sp-3);
   justify-items: center;
 }
 /* 메인 오브젝트 자리 — 사령관이 직접 제작 중(2026-08-31). 자산이 오면 이
    컨테이너에 그대로 얹는다. 높이를 미리 예약해 도착 시 레이아웃이 튀지 않게
    하고, 빈 동안은 옅은 점선 가이드가 자리를 보인다(사령관 지시로 유지). */
 .hero__object {
-  /* 영상 원본이 16:9 다 — 비율을 그대로 살리고, 리드 바로 아래로 당긴다
-     (사령관 판정 2026-08-31: 위로 올리고 전체 비율 맞게). */
-  width: min(680px, 84vw);
+  /* 영상 원본이 16:9 다 — 비율을 살리되, 배너 반 이상이 첫 화면에 같이
+     들어오는 크기까지만 키운다(1440×900 실측 예산). */
+  width: min(580px, 78vw);
   aspect-ratio: 16 / 9;
-  margin: var(--sp-3) auto 0;
+  margin: var(--sp-2) auto 0;
   display: grid;
   place-items: center;
   border: 1px dashed rgba(255, 255, 255, 0.16);
@@ -693,10 +694,10 @@
   mix-blend-mode: screen;
 }
 .hero--home h1 {
-  /* --fs-hero(최대 88px)에서 한 단계 줄인 램프 — 오브젝트 슬롯이 들어오며
-     첫 화면이 붐벼서 제목을 조금 줄이고 위로 올린다(사령관 판정 2026-08-31).
-     토큰을 안 건드리는 이유: --fs-hero 는 벤토 대표 숫자가 같이 쓴다. */
-  font-size: clamp(34px, 5.2vw, 72px);
+  /* --fs-hero(최대 88px)에서 두 단계 줄인 램프 — 오브젝트·배너와 한 화면에
+     수납하기 위해서다(사령관 판정 2026-08-31). 토큰을 안 건드리는 이유:
+     --fs-hero 는 벤토 대표 숫자가 같이 쓴다. */
+  font-size: clamp(30px, 4.4vw, 58px);
   line-height: 1.12;
   letter-spacing: -0.04em;
   font-weight: 700;
@@ -723,7 +724,8 @@
 .hero__feature {
   position: relative;
   z-index: 1;
-  margin-top: var(--sp-7);
+  /* 오브젝트-배너 사이도 타이트하게 — 첫 화면 수납의 일부다. */
+  margin-top: var(--sp-4);
   /* 히어로는 가운데 정렬이지만 카드 안 내용은 기획대로 왼쪽 정렬이다. */
   text-align: left;
 }
