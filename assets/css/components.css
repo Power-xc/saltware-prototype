@@ -1184,6 +1184,174 @@ html.js-reveal .reveal.is-in {
   box-shadow: var(--shadow-mega);
 }
 
+/* ── 브랜드 가이드(/company/brand) ─────────────────────── */
+/* 워드마크 두 벌을 실제 바탕 위에서 보여준다. */
+.bg__stages {
+  display: grid;
+  gap: var(--gap-tile);
+}
+@media (min-width: 860px) {
+  .bg__stages {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.bg__stage {
+  border: 1px solid var(--border-hair);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-8) var(--sp-6) var(--sp-5);
+  display: grid;
+  justify-items: center;
+  gap: var(--sp-5);
+}
+.bg__stage img {
+  width: min(280px, 70%);
+  height: auto;
+}
+.bg__stage--light {
+  background: var(--bg-card);
+}
+.bg__stage--dark {
+  background: var(--bg-inverse);
+}
+.bg__stage-label {
+  font-size: var(--fs-label);
+  letter-spacing: var(--tracking-label);
+  color: var(--text-faint);
+}
+.bg__stage--dark .bg__stage-label {
+  color: var(--text-on-inverse-muted);
+}
+.bg__wordmark {
+  display: grid;
+  gap: var(--sp-6);
+}
+.bg__wordmark-body {
+  display: grid;
+  gap: var(--sp-4);
+  max-width: 62ch;
+}
+.bg__desc {
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+.bg__dont-label {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--text-faint);
+  letter-spacing: var(--tracking-label);
+}
+.bg__dont {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  list-style: none;
+  padding: 0;
+}
+.bg__dont li {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  border: 1px solid var(--border-hair);
+  border-radius: var(--radius-pill);
+  padding: 6px var(--sp-3);
+  text-decoration: line-through;
+}
+/* 컬러 스와치 — 색면은 토큰 클래스로만 칠한다. */
+.bg__colors {
+  display: grid;
+  gap: var(--gap-tile);
+}
+@media (min-width: 860px) {
+  .bg__colors {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+.bg__color {
+  display: grid;
+  gap: var(--sp-1);
+  align-content: start;
+}
+.bg__chip {
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-hair);
+}
+.bg__chip--dot {
+  background: var(--c-brand-dot);
+}
+.bg__chip--ink {
+  background: var(--c-neutral-900);
+}
+.bg__chip--accent {
+  background: var(--c-accent-500);
+}
+.bg__chip--ground {
+  background: var(--c-neutral-50);
+}
+.bg__color-name {
+  font-weight: 600;
+  margin-top: var(--sp-2);
+}
+.bg__color-code {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--text-faint);
+}
+.bg__color-use {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+/* 활자 견본 */
+.bg__type {
+  display: grid;
+  gap: var(--sp-5);
+}
+.bg__specimen {
+  font-size: var(--fs-h1);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  max-width: 24ch;
+}
+.bg__type-name {
+  font-weight: 600;
+  font-size: var(--fs-h4);
+}
+.bg__type-body {
+  display: grid;
+  gap: var(--sp-2);
+  max-width: 62ch;
+}
+/* 자산 다운로드 행 */
+.bg__assets {
+  display: grid;
+  border-top: 1px solid var(--border-hair);
+}
+.bg__asset {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-4) var(--sp-2);
+  border-bottom: 1px solid var(--border-hair);
+  font-weight: 600;
+  transition: background var(--dur-hover) var(--ease);
+}
+a.bg__asset:hover {
+  background: var(--bg-band);
+  color: var(--text-accent);
+}
+.bg__asset--pending {
+  color: var(--text-faint);
+  font-weight: 500;
+}
+.bg__asset-hint {
+  font-size: var(--fs-xs);
+  color: var(--text-faint);
+  font-weight: 500;
+  text-align: right;
+}
+
 /* ── 푸터 ─────────────────────────────────────────────── */
 .site-footer {
   background: var(--bg-band);
