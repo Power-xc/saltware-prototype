@@ -1184,6 +1184,70 @@ html.js-reveal .reveal.is-in {
   box-shadow: var(--shadow-mega);
 }
 
+/* ── 자료 서가(가이드·자료실) — 한 행 = 파일 하나 ─────────── */
+.dls {
+  display: grid;
+  border-top: 1px solid var(--border-hair);
+}
+.dl {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-5);
+  padding: var(--sp-4) var(--sp-2);
+  border-bottom: 1px solid var(--border-hair);
+  transition: background var(--dur-hover) var(--ease);
+}
+a.dl:hover {
+  background: var(--bg-band);
+}
+a.dl:hover .dl__act {
+  color: var(--text-accent);
+}
+.dl__body {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.dl__title {
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+.dl__desc {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+.dl__meta {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--text-faint);
+}
+.dl__act {
+  flex: none;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+/* 준비 중 — 링크 흉내를 내지 않는다(죽은 클릭 금지). */
+.dl--pending .dl__title,
+.dl--pending .dl__desc {
+  color: var(--text-faint);
+}
+.dl__act--pending {
+  font-weight: 500;
+  color: var(--text-faint);
+  border: 1px solid var(--border-hair);
+  border-radius: var(--radius-pill);
+  padding: 4px var(--sp-3);
+}
+@media (max-width: 640px) {
+  .dl {
+    flex-wrap: wrap;
+    gap: var(--sp-2) var(--sp-4);
+  }
+}
+
 /* ── 브랜드 가이드(/company/brand) ─────────────────────── */
 /* 워드마크 두 벌을 실제 바탕 위에서 보여준다. */
 .bg__stages {
