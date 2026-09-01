@@ -904,18 +904,10 @@
 .slider--feature .slider__card--art .card__more {
   color: var(--text-accent-on-inverse);
 }
-/* 디자이너 프레임(2026-09-01) — 투명 배경 오브젝트라 cover 로 당기면 카피를
-   덮는다. 원본 크기를 살려 오른쪽에 앉힌다(왼쪽은 카피 여백). */
-.slider--feature .slider__card--art-aws {
-  background-image: url("/saltware-prototype/media/banner/banner-aws-certified.png?v=114bf8abeb33");
-  background-size: contain;
-  background-position: right center;
-}
-.slider--feature .slider__card--art-databricks {
-  background-image: url("/saltware-prototype/media/banner/banner-databricks-docs.png?v=114bf8abeb33");
-  background-size: contain;
-  background-position: right center;
-}
+/* 디자이너 프레임(2026-09-01)의 s1·s2 아트는 수신본이 축소 해상도라 흐릿하다.
+   원본 파일이 올 때까지 이미지 없이 다크 단색 카드로 둔다(사령관 지시 — 일단 단색).
+   파일이 오면 media/banner/banner-aws-certified.png · banner-databricks-docs.png 를
+   교체하고 여기에 contain·right 배치 규칙을 되살린다. */
 .slider--feature .slider__card--art-identity {
   background-image: url("/saltware-prototype/media/banner/banner-identity.jpg?v=114bf8abeb33");
 }
@@ -2395,8 +2387,7 @@ a.mo:hover {
   transform: translateY(-3px);
 }
 .mo--data-ai {
-  color: var(--text-primary);
-  background: url("/saltware-prototype/media/home/mosaic-data-ai.png?v=114bf8abeb33") center / cover no-repeat;
+  background: linear-gradient(140deg, var(--bg-inverse), var(--accent-data-ai));
 }
 .mo--databricks {
   background:
@@ -2404,12 +2395,10 @@ a.mo:hover {
     url("/saltware-prototype/media/home/mosaic-databricks.jpg?v=114bf8abeb33") center / cover no-repeat;
 }
 .mo--identity {
-  color: var(--text-primary);
-  background: url("/saltware-prototype/media/home/mosaic-identity.png?v=114bf8abeb33") center / cover no-repeat;
+  background: linear-gradient(140deg, var(--bg-inverse), var(--accent-identity));
 }
 .mo--redhat {
-  color: var(--text-primary);
-  background: url("/saltware-prototype/media/home/mosaic-redhat.png?v=114bf8abeb33") center / cover no-repeat;
+  background: linear-gradient(140deg, var(--bg-inverse), var(--accent-redhat));
 }
 .mo--enview {
   background:
@@ -2417,9 +2406,7 @@ a.mo:hover {
     url("/saltware-prototype/media/home/mosaic-enview.jpg?v=114bf8abeb33") center / cover no-repeat;
 }
 .mo--smart-farm {
-  background:
-    linear-gradient(to top, var(--scrim-bottom-strong), transparent 55%),
-    url("/saltware-prototype/media/home/mosaic-smart-farm.png?v=114bf8abeb33") center / cover no-repeat;
+  background: linear-gradient(140deg, var(--bg-inverse), var(--accent-smart-farm));
 }
 .mo__title {
   font-size: var(--fs-h3);
