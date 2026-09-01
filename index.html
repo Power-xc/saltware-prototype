@@ -11,9 +11,9 @@
 데이터, 인프라, 보안, AI를 연결해 실제 운영까지 이어갑니다" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="/media/social/og-default.jpg" />
-    <link rel="stylesheet" href="/saltware-prototype/assets/css/tokens.css?v=d199deaba9fa" />
-    <link rel="stylesheet" href="/saltware-prototype/assets/css/base.css?v=d199deaba9fa" />
-    <link rel="stylesheet" href="/saltware-prototype/assets/css/components.css?v=d199deaba9fa" />
+    <link rel="stylesheet" href="/saltware-prototype/assets/css/tokens.css?v=4f83b7d11b3b" />
+    <link rel="stylesheet" href="/saltware-prototype/assets/css/base.css?v=4f83b7d11b3b" />
+    <link rel="stylesheet" href="/saltware-prototype/assets/css/components.css?v=4f83b7d11b3b" />
       </head>
   <body class="home" data-route="/">
     <a class="skip-link" href="#main">본문으로 건너뛰기</a>
@@ -136,41 +136,32 @@
 </section>
 <section class="section section--wide">
   <div class="container"><div class="section__head"><h2>대표 수행 영역</h2><p class="lede">산업과 사업 두 축으로, 솔트웨어가 직접 수행하는 영역을 소개합니다.</p></div><div class="cases" data-cases>
-  <div class="cases__panes"><article class="cases__pane" data-case-pane>
-    <div class="media cases__media cases__media--cloud" role="img" aria-label="클라우드"></div>
-    <div class="cases__body">
+  <div class="cases__stage"><div class="media cases__media cases__media--cloud" role="img" aria-label="클라우드" data-case-media></div><div class="media cases__media cases__media--databricks" role="img" aria-label="데이터·AI" data-case-media hidden></div><div class="media cases__media cases__media--identity" role="img" aria-label="계정·권한" data-case-media hidden></div><div class="cases__body" data-case-body>
       <p class="eyebrow">클라우드</p>
       <h3 class="cases__title">AWS 이전과 운영</h3>
       <p class="cases__desc">진단과 이전부터 운영·모니터링, 비용 관리까지 — 옮기고 나서를 함께 운영합니다.</p>
       <a href="/saltware-prototype/business/cloud" class="card__more" data-ga-event="home_case_click">자세히 보기</a>
-    </div>
-  </article><article class="cases__pane" data-case-pane>
-    <div class="media cases__media cases__media--databricks" role="img" aria-label="데이터·AI"></div>
-    <div class="cases__body">
+    </div><div class="cases__body" data-case-body hidden>
       <p class="eyebrow">데이터·AI</p>
       <h3 class="cases__title">데이터 플랫폼 구축</h3>
       <p class="cases__desc">흩어진 데이터를 연결해 분석과 AI가 이어질 기반을 만듭니다.</p>
       <a href="/saltware-prototype/business/databricks" class="card__more" data-ga-event="home_case_click">자세히 보기</a>
-    </div>
-  </article><article class="cases__pane" data-case-pane>
-    <div class="media cases__media cases__media--identity" role="img" aria-label="계정·권한"></div>
-    <div class="cases__body">
+    </div><div class="cases__body" data-case-body hidden>
       <p class="eyebrow">계정·권한</p>
       <h3 class="cases__title">계정·권한 체계 구축</h3>
       <p class="cases__desc">입사부터 퇴사까지 계정 라이프사이클을 하나의 정책으로 처리합니다.</p>
       <a href="/saltware-prototype/business/identity" class="card__more" data-ga-event="home_case_click">자세히 보기</a>
-    </div>
-  </article></div>
-  <div class="cases__nav"><button type="button" class="cases__tab is-active" data-case-tab aria-pressed="true" data-ga-event="home_case_tab_click">
-    <span class="cases__tab-kicker">클라우드</span>
-    <span class="cases__tab-title">AWS 이전과 운영</span>
-  </button><button type="button" class="cases__tab" data-case-tab aria-pressed="false" data-ga-event="home_case_tab_click">
-    <span class="cases__tab-kicker">데이터·AI</span>
-    <span class="cases__tab-title">데이터 플랫폼 구축</span>
-  </button><button type="button" class="cases__tab" data-case-tab aria-pressed="false" data-ga-event="home_case_tab_click">
-    <span class="cases__tab-kicker">계정·권한</span>
-    <span class="cases__tab-title">계정·권한 체계 구축</span>
-  </button></div>
+    </div></div>
+  <div class="cases__nav"><a class="cases__tab is-active" href="/saltware-prototype/business/cloud" data-case-tab data-ga-event="home_case_tab_click" aria-current="true">
+      <span class="cases__tab-kicker">클라우드</span>
+      <span class="cases__tab-title">AWS 이전과 운영</span>
+    </a><a class="cases__tab" href="/saltware-prototype/business/databricks" data-case-tab data-ga-event="home_case_tab_click">
+      <span class="cases__tab-kicker">데이터·AI</span>
+      <span class="cases__tab-title">데이터 플랫폼 구축</span>
+    </a><a class="cases__tab" href="/saltware-prototype/business/identity" data-case-tab data-ga-event="home_case_tab_click">
+      <span class="cases__tab-kicker">계정·권한</span>
+      <span class="cases__tab-title">계정·권한 체계 구축</span>
+    </a></div>
 </div></div>
 </section>
 <section class="section">
@@ -290,6 +281,6 @@
   </button>
 </div>
 
-    <script type="module" src="/saltware-prototype/assets/js/main.mjs?v=d199deaba9fa"></script>
+    <script type="module" src="/saltware-prototype/assets/js/main.mjs?v=4f83b7d11b3b"></script>
   </body>
 </html>

@@ -1,20 +1,30 @@
-// 대표 수행 영역 — 오른쪽 목록에서 고르면 왼쪽 컷·본문이 그 영역으로 바뀐다.
-// 패널 숨김은 여기서만 건다 — JS 가 죽으면 전 패널이 펼쳐진 채 남아 본문이 보인다.
+// 대표 수행 영역 — 오른쪽 목록을 누르면 하나뿐인 컷·본문이 그 영역으로 바뀐다.
+// 둘째 이후 패널은 서버가 hidden 으로 내보낸다 — JS 가 없어도 이미지 영역은
+// 언제나 하나고, 목록은 사업 상세로 가는 실제 링크로 남는다.
 export function initCases() {
   for (const root of document.querySelectorAll("[data-cases]")) {
-    const panes = [...root.querySelectorAll("[data-case-pane]")];
+    const medias = [...root.querySelectorAll("[data-case-media]")];
+    const bodies = [...root.querySelectorAll("[data-case-body]")];
     const tabs = [...root.querySelectorAll("[data-case-tab]")];
-    if (panes.length < 2 || tabs.length !== panes.length) continue;
+    if (tabs.length < 2 || medias.length !== tabs.length) continue;
     const show = (idx) => {
-      panes.forEach((p, n) => {
-        p.hidden = n !== idx;
+      medias.forEach((m, n) => {
+        m.hidden = n !== idx;
+      });
+      bodies.forEach((b, n) => {
+        b.hidden = n !== idx;
       });
       tabs.forEach((t, n) => {
         t.classList.toggle("is-active", n === idx);
-        t.setAttribute("aria-pressed", String(n === idx));
+        if (n === idx) t.setAttribute("aria-current", "true");
+        else t.removeAttribute("aria-current");
       });
     };
-    tabs.forEach((t, n) => t.addEventListener("click", () => show(n)));
-    show(0);
+    tabs.forEach((t, n) =>
+      t.addEventListener("click", (e) => {
+        e.preventDefault();
+        show(n);
+      }),
+    );
   }
 }

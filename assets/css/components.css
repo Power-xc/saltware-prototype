@@ -2551,9 +2551,15 @@ a.mo:hover {
     gap: var(--sp-7);
   }
 }
-.cases__pane {
+.cases__stage {
   display: grid;
   gap: var(--sp-5);
+}
+/* display 를 명시한 요소는 UA 의 [hidden] display:none 을 눌러 이긴다 —
+   숨김을 다시 명시하지 않으면 셋이 다 보인다(실측). */
+.cases__media[hidden],
+.cases__body[hidden] {
+  display: none;
 }
 .cases__media {
   aspect-ratio: 16 / 10;
