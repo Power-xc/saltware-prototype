@@ -1185,14 +1185,16 @@ html.js-reveal .reveal.is-in {
 }
 
 /* ── 자료 서가(가이드·자료실) — 한 행 = 파일 하나 ─────────── */
+/* 3열 그리드로 열을 고정한다 — flex space-between 은 형식 라벨이 행마다
+   다른 자리에 떠서 깨져 보였다(실측). 동작은 실제 버튼 모양으로. */
 .dls {
   display: grid;
   border-top: 1px solid var(--border-hair);
 }
 .dl {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 52px 128px;
   align-items: center;
-  justify-content: space-between;
   gap: var(--sp-5);
   padding: var(--sp-4) var(--sp-2);
   border-bottom: 1px solid var(--border-hair);
@@ -1200,9 +1202,6 @@ html.js-reveal .reveal.is-in {
 }
 a.dl:hover {
   background: var(--bg-band);
-}
-a.dl:hover .dl__act {
-  color: var(--text-accent);
 }
 .dl__body {
   display: grid;
@@ -1218,33 +1217,50 @@ a.dl:hover .dl__act {
   color: var(--text-muted);
 }
 .dl__meta {
-  flex: none;
   font-family: var(--font-mono);
   font-size: var(--fs-xs);
   color: var(--text-faint);
+  text-align: center;
 }
+/* 동작 열 — 진짜 버튼. 파일이 있으면 파랑 솔리드, 없으면 무광 비활성. */
 .dl__act {
-  flex: none;
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 128px;
+  padding: 9px 0;
+  border-radius: var(--radius-pill);
   font-size: var(--fs-sm);
   font-weight: 600;
-  color: var(--text-primary);
+  background: var(--c-accent-500);
+  color: var(--c-white);
+  transition: background var(--dur-hover) var(--ease);
 }
-/* 준비 중 — 링크 흉내를 내지 않는다(죽은 클릭 금지). */
-.dl--pending .dl__title,
+a.dl:hover .dl__act {
+  background: var(--c-accent-600);
+}
+.dl--pending .dl__title {
+  color: var(--text-muted);
+}
 .dl--pending .dl__desc {
   color: var(--text-faint);
 }
 .dl__act--pending {
-  font-weight: 500;
+  background: var(--bg-band);
   color: var(--text-faint);
   border: 1px solid var(--border-hair);
-  border-radius: var(--radius-pill);
-  padding: 4px var(--sp-3);
 }
 @media (max-width: 640px) {
   .dl {
-    flex-wrap: wrap;
-    gap: var(--sp-2) var(--sp-4);
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .dl__meta {
+    display: none;
+  }
+  .dl__act {
+    width: auto;
+    padding: 9px var(--sp-4);
   }
 }
 
