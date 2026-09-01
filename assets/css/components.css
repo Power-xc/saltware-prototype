@@ -574,49 +574,49 @@
   max-width: 42ch;
 }
 .hero--media.hero--m-cloud {
-  background-image: url("/saltware-prototype/media/business/hero-cloud.jpg?v=3419adf65f19");
+  background-image: url("/saltware-prototype/media/business/hero-cloud.jpg?v=114bf8abeb33");
 }
 .hero--media.hero--m-databricks {
-  background-image: url("/saltware-prototype/media/business/hero-databricks.jpg?v=3419adf65f19");
+  background-image: url("/saltware-prototype/media/business/hero-databricks.jpg?v=114bf8abeb33");
 }
 .hero--media.hero--m-identity {
-  background-image: url("/saltware-prototype/media/business/hero-identity.jpg?v=3419adf65f19");
+  background-image: url("/saltware-prototype/media/business/hero-identity.jpg?v=114bf8abeb33");
 }
 .hero--media.hero--m-redhat {
-  background-image: url("/saltware-prototype/media/business/hero-redhat.jpg?v=3419adf65f19");
+  background-image: url("/saltware-prototype/media/business/hero-redhat.jpg?v=114bf8abeb33");
 }
 .hero--media.hero--m-enview {
-  background-image: url("/saltware-prototype/media/business/hero-enview.jpg?v=3419adf65f19");
+  background-image: url("/saltware-prototype/media/business/hero-enview.jpg?v=114bf8abeb33");
 }
 .hero--media.hero--m-smart-farm {
-  background-image: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=3419adf65f19");
+  background-image: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=114bf8abeb33");
 }
 .hero--media.hero--m-hub-business {
-  background-image: url("/saltware-prototype/media/hub/hub-business.jpg?v=3419adf65f19");
+  background-image: url("/saltware-prototype/media/hub/hub-business.jpg?v=114bf8abeb33");
 }
 .hero--media.hero--m-hub-industries {
-  background-image: url("/saltware-prototype/media/hub/hub-industries.jpg?v=3419adf65f19");
+  background-image: url("/saltware-prototype/media/hub/hub-industries.jpg?v=114bf8abeb33");
 }
 .hero--media.hero--m-hub-insights {
-  background-image: url("/saltware-prototype/media/hub/hub-insights.jpg?v=3419adf65f19");
+  background-image: url("/saltware-prototype/media/hub/hub-insights.jpg?v=114bf8abeb33");
 }
 .hero--media.hero--m-hub-company {
-  background-image: url("/saltware-prototype/media/hub/hub-company.jpg?v=3419adf65f19");
+  background-image: url("/saltware-prototype/media/hub/hub-company.jpg?v=114bf8abeb33");
 }
 .hero--media.hero--m-ind-public {
-  background-image: url("/saltware-prototype/media/industry/ind-public.jpg?v=3419adf65f19");
+  background-image: url("/saltware-prototype/media/industry/ind-public.jpg?v=114bf8abeb33");
 }
 .hero--media.hero--m-ind-finance {
-  background-image: url("/saltware-prototype/media/industry/ind-finance.jpg?v=3419adf65f19");
+  background-image: url("/saltware-prototype/media/industry/ind-finance.jpg?v=114bf8abeb33");
 }
 .hero--media.hero--m-ind-manufacturing {
-  background-image: url("/saltware-prototype/media/industry/ind-manufacturing.jpg?v=3419adf65f19");
+  background-image: url("/saltware-prototype/media/industry/ind-manufacturing.jpg?v=114bf8abeb33");
 }
 .hero--media.hero--m-ind-education {
-  background-image: url("/saltware-prototype/media/industry/ind-education.jpg?v=3419adf65f19");
+  background-image: url("/saltware-prototype/media/industry/ind-education.jpg?v=114bf8abeb33");
 }
 .hero--media.hero--m-ind-agriculture {
-  background-image: url("/saltware-prototype/media/industry/ind-agriculture.jpg?v=3419adf65f19");
+  background-image: url("/saltware-prototype/media/industry/ind-agriculture.jpg?v=114bf8abeb33");
 }
 
 .hero--home {
@@ -904,17 +904,23 @@
 .slider--feature .slider__card--art .card__more {
   color: var(--text-accent-on-inverse);
 }
+/* 디자이너 프레임(2026-09-01) — 투명 배경 오브젝트라 cover 로 당기면 카피를
+   덮는다. 원본 크기를 살려 오른쪽에 앉힌다(왼쪽은 카피 여백). */
 .slider--feature .slider__card--art-aws {
-  background-image: url("/saltware-prototype/media/banner/banner-aws.jpg?v=3419adf65f19");
+  background-image: url("/saltware-prototype/media/banner/banner-aws-certified.png?v=114bf8abeb33");
+  background-size: contain;
+  background-position: right center;
 }
 .slider--feature .slider__card--art-databricks {
-  background-image: url("/saltware-prototype/media/banner/banner-databricks.jpg?v=3419adf65f19");
+  background-image: url("/saltware-prototype/media/banner/banner-databricks-docs.png?v=114bf8abeb33");
+  background-size: contain;
+  background-position: right center;
 }
 .slider--feature .slider__card--art-identity {
-  background-image: url("/saltware-prototype/media/banner/banner-identity.jpg?v=3419adf65f19");
+  background-image: url("/saltware-prototype/media/banner/banner-identity.jpg?v=114bf8abeb33");
 }
 .slider--feature .slider__card--art-smart-farm {
-  background-image: url("/saltware-prototype/media/banner/banner-smart-farm.jpg?v=3419adf65f19");
+  background-image: url("/saltware-prototype/media/banner/banner-smart-farm.jpg?v=114bf8abeb33");
 }
 .slider--feature .slider__card.is-active {
   transform: none;
@@ -1775,13 +1781,13 @@ a.tile:hover {
   transform: translateY(-4px);
 }
 .sol--art-data-ai {
-  background-image: url("/saltware-prototype/media/home/mosaic-data-ai.jpg?v=3419adf65f19");
+  background-image: url("/saltware-prototype/media/home/mosaic-data-ai.jpg?v=114bf8abeb33");
 }
 .sol--art-databricks {
-  background-image: url("/saltware-prototype/media/home/mosaic-databricks.jpg?v=3419adf65f19");
+  background-image: url("/saltware-prototype/media/home/mosaic-databricks.jpg?v=114bf8abeb33");
 }
 .sol--art-cloud {
-  background-image: url("/saltware-prototype/media/home/mosaic-cloud.jpg?v=3419adf65f19");
+  background-image: url("/saltware-prototype/media/home/mosaic-cloud.jpg?v=114bf8abeb33");
 }
 .sol__eyebrow {
   font-size: var(--fs-label-caps);
@@ -2382,41 +2388,38 @@ a.quiet:hover {
      databricks 는 자산이 아직 없어 색면 그대로다. */
   background:
     linear-gradient(to top, var(--scrim-bottom), transparent 62%),
-    url("/saltware-prototype/media/home/mosaic-cloud.jpg?v=3419adf65f19") center / cover no-repeat;
+    url("/saltware-prototype/media/home/mosaic-cloud.jpg?v=114bf8abeb33") center / cover no-repeat;
   transition: transform var(--dur-hover) var(--ease);
 }
 a.mo:hover {
   transform: translateY(-3px);
 }
 .mo--data-ai {
-  background:
-    linear-gradient(to top, var(--scrim-bottom), transparent 62%),
-    url("/saltware-prototype/media/home/mosaic-data-ai.jpg?v=3419adf65f19") center / cover no-repeat;
+  color: var(--text-primary);
+  background: url("/saltware-prototype/media/home/mosaic-data-ai.png?v=114bf8abeb33") center / cover no-repeat;
 }
 .mo--databricks {
   background:
     linear-gradient(to top, var(--scrim-bottom), transparent 62%),
-    url("/saltware-prototype/media/home/mosaic-databricks.jpg?v=3419adf65f19") center / cover no-repeat;
+    url("/saltware-prototype/media/home/mosaic-databricks.jpg?v=114bf8abeb33") center / cover no-repeat;
 }
 .mo--identity {
-  background:
-    linear-gradient(to top, var(--scrim-bottom), transparent 62%),
-    url("/saltware-prototype/media/home/mosaic-identity.jpg?v=3419adf65f19") center / cover no-repeat;
+  color: var(--text-primary);
+  background: url("/saltware-prototype/media/home/mosaic-identity.png?v=114bf8abeb33") center / cover no-repeat;
 }
 .mo--redhat {
-  background:
-    linear-gradient(to top, var(--scrim-bottom), transparent 62%),
-    url("/saltware-prototype/media/home/mosaic-redhat.jpg?v=3419adf65f19") center / cover no-repeat;
+  color: var(--text-primary);
+  background: url("/saltware-prototype/media/home/mosaic-redhat.png?v=114bf8abeb33") center / cover no-repeat;
 }
 .mo--enview {
   background:
     linear-gradient(to top, var(--scrim-bottom), transparent 62%),
-    url("/saltware-prototype/media/home/mosaic-enview.jpg?v=3419adf65f19") center / cover no-repeat;
+    url("/saltware-prototype/media/home/mosaic-enview.jpg?v=114bf8abeb33") center / cover no-repeat;
 }
 .mo--smart-farm {
   background:
-    linear-gradient(to top, var(--scrim-bottom), transparent 62%),
-    url("/saltware-prototype/media/home/mosaic-smart-farm.jpg?v=3419adf65f19") center / cover no-repeat;
+    linear-gradient(to top, var(--scrim-bottom-strong), transparent 55%),
+    url("/saltware-prototype/media/home/mosaic-smart-farm.png?v=114bf8abeb33") center / cover no-repeat;
 }
 .mo__title {
   font-size: var(--fs-h3);
@@ -2447,6 +2450,14 @@ a.mo:hover {
   border-radius: var(--radius-md);
   background: linear-gradient(140deg, var(--bg-inverse), var(--accent-cloud));
   transition: transform var(--dur-hover) var(--ease);
+  overflow: hidden;
+}
+/* 실물 표지가 있는 글 — 그라디언트 면 위를 이미지가 덮는다. */
+.post__cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 .post__cover--1 {
   background: linear-gradient(140deg, var(--bg-inverse), var(--accent-data-ai));
