@@ -9,9 +9,9 @@
     <meta property="og:description" content="EnView는 솔트웨어가 구축·운영하는 기업 업무 포털입니다." />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="/media/social/og-default.jpg" />
-    <link rel="stylesheet" href="/saltware-prototype/assets/css/tokens.css?v=7abf5d11804c" />
-    <link rel="stylesheet" href="/saltware-prototype/assets/css/base.css?v=7abf5d11804c" />
-    <link rel="stylesheet" href="/saltware-prototype/assets/css/components.css?v=7abf5d11804c" />
+    <link rel="stylesheet" href="/saltware-prototype/assets/css/tokens.css?v=e1cc30bf106c" />
+    <link rel="stylesheet" href="/saltware-prototype/assets/css/base.css?v=e1cc30bf106c" />
+    <link rel="stylesheet" href="/saltware-prototype/assets/css/components.css?v=e1cc30bf106c" />
       </head>
   <body class="bu bu--enview" data-route="/business/enview">
     <a class="skip-link" href="#main">본문으로 건너뛰기</a>
@@ -177,66 +177,23 @@
     </div>
     <div class="footer__social"><a href="https://www.youtube.com/@saltware_youtube" class="footer__sns" target="_blank" rel="noopener noreferrer">YouTube<span class="ext-mark" aria-hidden="true">↗</span></a><a href="https://www.instagram.com/saltware_official" class="footer__sns" target="_blank" rel="noopener noreferrer">Instagram<span class="ext-mark" aria-hidden="true">↗</span></a><a href="https://www.facebook.com/Saltware.co.kr" class="footer__sns" target="_blank" rel="noopener noreferrer">Facebook<span class="ext-mark" aria-hidden="true">↗</span></a></div>
   </div>
-</footer> <!-- 떠 있는 진입점. 헤더에 이미 문의하기가 있으므로 여기는 문의 CTA 를 복제하지 않는다.
-     대화형 어시스턴트 백엔드가 없다 — 가짜 대화를 만들지 않고, 사실만 적은 작은
-     패널을 열어 실제로 동작하는 문의 창구로 보낸다. 승인된 위젯이 생기면
-     이 패널을 그 위젯으로 바꾸면 되고, 그때까지 죽은 링크가 아니다. -->
-<div class="floating" data-assistant>
-  <div
-    class="assistant"
-    id="assistant-panel"
-    role="dialog"
-    aria-modal="false"
-    aria-labelledby="assistant-title"
-    data-assistant-panel
-    hidden
-  >
-    <div class="assistant__head">
-      <p class="assistant__title" id="assistant-title">무엇이든 물어보세요</p>
-      <button type="button" class="assistant__close" data-assistant-close>
-        <span class="sr-only">닫기</span><span aria-hidden="true">✕</span>
-      </button>
-    </div>
-    <p class="assistant__body">
-      온라인 AI 상담은 준비 중입니다. 궁금한 점을 남겨 주시면 담당자가 확인하고
-      영업일 기준 1일 내 회신드립니다.
-    </p>
-    <a
-      class="btn btn--solid btn--block"
-      href="/saltware-prototype/contact"
-      data-ga-event="floating_assistant_fallback_click"
-      >문의 남기기</a
-    >
-    <a
-      class="assistant__alt"
-      href="/saltware-prototype/contact"
-      data-ga-event="floating_contact_click"
-      >문의 창구 전체 보기</a
-    >
-  </div>
-  <button
-    type="button"
+</footer> <!-- 떠 있는 진입점 — 문의 페이지 직행(사령관 지시 2026-09-01: 팝업 없이 바로 이동).
+     라벨은 모바일에서 접혀 ✦ 원형이 된다(aria-label 유지). -->
+<div class="floating">
+  <a
     class="floating__ask"
-    data-assistant-open
-    aria-expanded="false"
-    aria-haspopup="dialog"
-    aria-controls="assistant-panel"
-    data-ga-event="floating_assistant_click"
-    aria-label="무엇이든 물어보세요"
+    href="/saltware-prototype/contact"
+    data-ga-event="floating_contact_click"
+    aria-label="문의하기"
   >
     <span class="floating__spark" aria-hidden="true">✦</span
-    ><span class="floating__label" aria-hidden="true">무엇이든 물어보세요</span>
-  </button>
-  <button
-    type="button"
-    class="floating__top"
-    data-to-top
-    data-ga-event="back_to_top_click"
-  >
+    ><span class="floating__label" aria-hidden="true">문의하기</span>
+  </a>
+  <button type="button" class="floating__top" data-to-top data-ga-event="back_to_top_click">
     <span class="sr-only">맨 위로</span><span aria-hidden="true">↑</span>
   </button>
 </div>
 
-    <script type="module" src="/saltware-prototype/assets/js/main.mjs?v=7abf5d11804c"></script>
+    <script type="module" src="/saltware-prototype/assets/js/main.mjs?v=e1cc30bf106c"></script>
   </body>
 </html>

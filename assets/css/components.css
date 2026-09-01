@@ -1172,55 +1172,6 @@ html.js-reveal .reveal.is-in {
   font-size: 1.05em;
 }
 
-/* 문의 진입 패널. 대화형이 아니다 — 사실 한 문단과 실제 창구로 가는 링크뿐이다.
-   화면을 덮지 않는 작은 패널이라 배경 상호작용을 막지 않는다(aria-modal=false). */
-.assistant {
-  width: min(320px, calc(100vw - var(--sp-6) * 2));
-  background: var(--bg-card);
-  border: 1px solid var(--border-hair);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-mega);
-  padding: var(--sp-5);
-  display: grid;
-  gap: var(--sp-4);
-  text-align: left;
-}
-.assistant__head {
-  display: flex;
-  align-items: start;
-  justify-content: space-between;
-  gap: var(--sp-3);
-}
-.assistant__title {
-  font-size: var(--fs-h4);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-.assistant__close {
-  min-width: 32px;
-  min-height: 32px;
-  display: grid;
-  place-items: center;
-  color: var(--text-muted);
-  border-radius: var(--radius-xs);
-}
-.assistant__close:hover {
-  color: var(--text-primary);
-  background: var(--bg-band);
-}
-.assistant__body {
-  font-size: var(--fs-sm);
-  color: var(--text-muted);
-  line-height: 1.7;
-}
-.assistant__alt {
-  font-size: var(--fs-xs);
-  color: var(--text-muted);
-  text-align: center;
-}
-.assistant__alt:hover {
-  color: var(--text-accent);
-}
 .floating__top {
   width: 44px;
   height: 44px;
@@ -2417,6 +2368,80 @@ a.mo:hover {
   font-size: var(--fs-sm);
   opacity: 0.82;
   max-width: 30ch;
+}
+
+/* 대표 수행 영역 — 왼쪽 큰 컷 + 오른쪽 선택 목록. 목록을 누르면 컷이 바뀐다
+   (사령관 지시 2026-09-01). 컷은 원본 이미지가 올 때까지 사업 액센트 색면이다. */
+.cases {
+  display: grid;
+  gap: var(--sp-6);
+}
+@media (min-width: 1080px) {
+  .cases {
+    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+    align-items: start;
+    gap: var(--sp-7);
+  }
+}
+.cases__pane {
+  display: grid;
+  gap: var(--sp-5);
+}
+.cases__media {
+  aspect-ratio: 16 / 10;
+}
+.cases__media--cloud {
+  background: linear-gradient(140deg, var(--bg-inverse), var(--accent-cloud));
+}
+.cases__media--databricks {
+  background: linear-gradient(140deg, var(--bg-inverse), var(--accent-databricks));
+}
+.cases__media--identity {
+  background: linear-gradient(140deg, var(--bg-inverse), var(--accent-identity));
+}
+.cases__body {
+  display: grid;
+  gap: var(--sp-2);
+  justify-items: start;
+}
+.cases__title {
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.cases__desc {
+  color: var(--text-muted);
+  max-width: 52ch;
+  line-height: 1.65;
+}
+.cases__nav {
+  display: grid;
+  border-top: 1px solid var(--border-hair);
+}
+.cases__tab {
+  text-align: left;
+  display: grid;
+  gap: 4px;
+  padding: var(--sp-4) var(--sp-3);
+  border-bottom: 1px solid var(--border-hair);
+  border-radius: 0;
+  transition: background var(--dur-hover) var(--ease);
+}
+.cases__tab:hover {
+  background: var(--bg-band);
+}
+.cases__tab.is-active {
+  background: var(--bg-band);
+  box-shadow: inset 2px 0 0 var(--c-accent-500);
+}
+.cases__tab-kicker {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--text-accent);
+}
+.cases__tab-title {
+  font-weight: 600;
+  letter-spacing: -0.015em;
 }
 
 /* 표지 · 분류 · 제목 · 설명. 글 목록의 생김새. */
