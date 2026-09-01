@@ -2618,22 +2618,36 @@ a.mo:hover {
   max-width: 30ch;
 }
 
-/* 대표 수행 영역 — 왼쪽 큰 컷 + 오른쪽 선택 목록. 목록을 누르면 컷이 바뀐다
-   (사령관 지시 2026-09-01). 컷은 원본 이미지가 올 때까지 사업 액센트 색면이다. */
+/* 대표 수행 영역 — 왼쪽 컷 하나, 오른쪽은 선택 목록 + 그 아래 본문.
+   두 열의 키가 맞아야 다음 섹션과의 여백이 어긋나지 않는다(사령관 지적 2026-09-01).
+   컷은 원본 이미지가 올 때까지 사업 액센트 색면이다. */
 .cases {
   display: grid;
-  gap: var(--sp-6);
+  gap: var(--sp-5);
+  grid-template-areas:
+    "stage"
+    "panel"
+    "nav";
 }
 @media (min-width: 1080px) {
   .cases {
-    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "stage nav"
+      "stage panel";
     align-items: start;
-    gap: var(--sp-7);
+    column-gap: var(--sp-7);
   }
 }
 .cases__stage {
-  display: grid;
-  gap: var(--sp-5);
+  grid-area: stage;
+}
+.cases__nav {
+  grid-area: nav;
+}
+.cases__panel {
+  grid-area: panel;
 }
 /* display 를 명시한 요소는 UA 의 [hidden] display:none 을 눌러 이긴다 —
    숨김을 다시 명시하지 않으면 셋이 다 보인다(실측). */
@@ -2683,6 +2697,7 @@ a.mo:hover {
 }
 .cases__tab:hover {
   background: var(--bg-band);
+  color: var(--text-primary);
 }
 .cases__tab.is-active {
   background: var(--bg-band);
@@ -2907,6 +2922,17 @@ a.post:hover .post__cover {
 }
 .home .section--band {
   padding-block: var(--section-py);
+}
+/* wide 변형의 큰 패딩과 다음 섹션 당김(-py-lg 음수 마진)은 서브페이지
+   헤어라인 정렬용이다 — 홈 리듬에선 다음 섹션 머리가 컷 밑으로 파고든다
+   (실측 -152px, INSIGHTS 고아 노출). 홈에서는 보통 섹션과 같게 눕힌다. */
+.home .section--wide {
+  padding-block: 0 clamp(44px, 5.5vw, 72px);
+}
+.home .section--wide > .container,
+.home .section--wide + .section > .container {
+  margin-top: 0;
+  padding-top: clamp(44px, 5.5vw, 72px);
 }
 /* 마무리는 가운데로 모은다. 레퍼런스의 밴드가 그렇게 생겼다. */
 .section--focus > .container {
