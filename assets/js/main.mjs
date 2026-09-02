@@ -1,13 +1,14 @@
-import { initAnalytics } from "./analytics.mjs?v=65ae00f31e76";
-import { initNav } from "./nav.mjs?v=65ae00f31e76";
-import { initReveal } from "./reveal.mjs?v=65ae00f31e76";
-import { initFaq, initCaseFilter } from "./disclosure.mjs?v=65ae00f31e76";
-import { initContactForm } from "./contact-form.mjs?v=65ae00f31e76";
-import { initAttribution } from "./attribution.mjs?v=65ae00f31e76";
-import { initHeroObject } from "./hero-object.mjs?v=65ae00f31e76";
-import { initNewsletter } from "./newsletter.mjs?v=65ae00f31e76";
-import { initDroplets } from "./droplets.mjs?v=65ae00f31e76";
-import { initCases } from "./cases.mjs?v=65ae00f31e76";
+import { initAnalytics } from "./analytics.mjs?v=5b2c062310f8";
+import { initNav } from "./nav.mjs?v=5b2c062310f8";
+import { initReveal } from "./reveal.mjs?v=5b2c062310f8";
+import { initFaq, initCaseFilter } from "./disclosure.mjs?v=5b2c062310f8";
+import { initContactForm } from "./contact-form.mjs?v=5b2c062310f8";
+import { initAttribution } from "./attribution.mjs?v=5b2c062310f8";
+import { initHeroObject } from "./hero-object.mjs?v=5b2c062310f8";
+import { initSlider } from "./slider.mjs?v=5b2c062310f8";
+import { initNewsletter } from "./newsletter.mjs?v=5b2c062310f8";
+import { initDroplets } from "./droplets.mjs?v=5b2c062310f8";
+import { initCases } from "./cases.mjs?v=5b2c062310f8";
 
 try {
   initAnalytics();
@@ -48,6 +49,11 @@ try {
   initHeroObject();
 } catch (e) {
   console.warn("Hero object failed:", e);
+}
+try {
+  initSlider();
+} catch (e) {
+  console.warn("Slider failed:", e);
 }
 try {
   initNewsletter();

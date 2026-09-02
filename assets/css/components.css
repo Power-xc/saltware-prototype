@@ -486,12 +486,6 @@
   gap: var(--sp-3);
   align-content: start;
 }
-/* 카드 hover — 명세 §9. 들리는 정도만. */
-.card {
-  transition:
-    border-color var(--dur-hover) var(--ease),
-    box-shadow var(--dur-hover) var(--ease);
-}
 /* 기획의 카드는 전부 흰색이다. 회색 카드를 따로 두지 않는다. */
 .card--band {
   background: var(--bg-card);
@@ -635,10 +629,7 @@
   background: var(--hero-bg);
   color: var(--hero-ink);
   display: grid;
-  /* 배너가 있던 시절엔 첫 행이 1fr 로 남는 높이를 받아 제목 덩어리를 배너 위에 붙였다.
-     배너를 내린 뒤(2026-09-02) 그 남는 높이가 전부 제목 위에 쌓였다(실측 390: 205px).
-     행을 모두 auto 로 두고 align-content 가 위아래로 나누게 한다. */
-  grid-template-rows: auto;
+  grid-template-rows: 1fr auto;
   align-content: center;
   /* 첫 화면 수납(사령관 판정 2026-08-31) — 제목·서브·오브젝트에 배너 반 이상까지
      한 뷰포트에 들어오도록 세로 리듬을 조인다. 제목 위 여백은 사령관이
@@ -647,24 +638,24 @@
      내린 만큼 오브젝트 음수 마진이 상쇄해 배너 위치는 유지된다.
      84 는 제목이 두 줄이던 시절의 값이다(v2.1). v3 에서 제목이 한 줄로 줄고
      리드 아래 부연 세 줄이 들어오면서 배너가 첫 화면 밖으로 밀렸다 —
-     부연이 먹은 만큼(실측 44px) 여기서 되돌려 "배너 반 이상" 규칙을 지킨다. */
-  padding-top: 40px;
+     부연이 먹은 만큼(실측 44px) 여기서 되돌려 "배너 반 이상" 규칙을 지킨다.
+     v4(두 줄 제목 + 층 띠)에서 배너 노출이 160px(40%)로 다시 떨어져 24 까지 내렸다(실측 1440×844). */
+  padding-top: 24px;
   padding-bottom: var(--sp-6);
   text-align: center;
 }
 /* 오브젝트 아래 층 띠 — 오브젝트가 무엇의 상징인지 적는다(2026-09-02).
-   여섯 층이 선으로 이어지고 맨 끝 AI 만 액센트를 받는다. 통째로 스택 섹션 앵커다. */
+   여섯 층이 선으로 이어지고 맨 끝 AI 만 액센트를 받는다. 통째로 스택 섹션 앵커다.
+   배너와 한 화면에 들어가야 하므로 오브젝트 아래 빈 면을 파고든다. */
 .hero__layers {
-  position: relative;
-  z-index: 1;
   justify-self: center;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   row-gap: var(--sp-2);
-  margin-top: calc(var(--sp-3) * -1);
-  padding: var(--sp-2) var(--sp-4);
+  margin-top: calc(var(--sp-5) * -1);
+  padding: 0 var(--sp-4);
   font-size: var(--fs-label-caps);
   font-weight: 600;
   letter-spacing: var(--tracking-label);
@@ -726,16 +717,13 @@
   gap: var(--sp-3);
   justify-items: center;
 }
-.nb {
-  white-space: nowrap;
-}
 /* 메인 오브젝트 자리 — 사령관이 직접 제작 중(2026-08-31). 자산이 오면 이
    컨테이너에 그대로 얹는다. 높이를 미리 예약해 도착 시 레이아웃이 튀지 않게
    하고, 빈 동안은 옅은 점선 가이드가 자리를 보인다(사령관 지시로 유지). */
 .hero__object {
   /* 영상 원본이 16:9 다 — 비율을 살리되, 배너 반 이상이 첫 화면에 같이
      들어오는 크기까지만 키운다(1440×900 실측 예산). */
-  width: min(620px, 80vw);
+  width: min(580px, 80vw);
   aspect-ratio: 16 / 9;
   /* 서브 폰트를 파고들어도 된다는 판정 — 영상 상단 40% 가 빈 검정이라 안전하다.
      제목을 크게 내린 만큼(-44px) 여기서 상쇄해 배너 위치를 지킨다. */
@@ -804,10 +792,68 @@
   color: var(--hero-ink-soft);
   opacity: 0.66;
 }
+.hero__feature {
+  position: relative;
+  z-index: 1;
+  /* 오브젝트-배너 사이도 타이트하게 — 첫 화면 수납의 일부다. */
+  margin-top: var(--sp-1);
+  /* 히어로는 가운데 정렬이지만 카드 안 내용은 기획대로 왼쪽 정렬이다. */
+  text-align: left;
+}
 .eyebrow--muted {
   color: var(--text-faint);
   font-size: var(--fs-label-caps);
   letter-spacing: 0.14em;
+}
+
+/* 메인 캐러셀은 큰 카드 한 장씩이다 (기획 실측 880×400). */
+/* 배너는 한 번에 한 장이다. 가운데 것이 크고 양옆이 작게 비친다(레퍼런스 실측).
+   트랙 좌우에 여백을 줘야 첫 장과 마지막 장도 가운데에 설 수 있다. */
+.slider--feature .slider__track {
+  /* 기획 실측 880 에서 두 번 줄인 값 — 첫 화면 수납(사령관 "배너도 약간 줄여"). */
+  --banner-w: min(760px, 50vw);
+  /* 100vw 는 세로 스크롤바 폭까지 포함한다. 그 값으로 여백을 잡으면
+     트랙이 뷰포트보다 스크롤바만큼 넓어져 문서 전체가 가로로 넘친다. */
+  padding-inline: calc((100% - var(--banner-w)) / 2);
+  gap: var(--sp-5);
+  scroll-snap-type: x mandatory;
+}
+.slider--feature .slider__card {
+  width: var(--banner-w);
+  /* 레퍼런스 배너는 2:1 이지만 오른쪽을 브랜드 이미지가 채운다.
+     실제 이미지가 없는 동안은 조금 낮춰 빈 면을 줄인다 —
+     자산이 들어오면 2/1 로 되돌린다.
+     비율은 최소 높이로만 건다. aspect-ratio 로 못 박으면 좁은 화면에서
+     카드 안 다섯 줄이 잘린다 — 실제로 390·430px 에서 잘리고 있었다. */
+  min-height: calc(var(--banner-w) / 2.7);
+  min-height: 0;
+  padding: clamp(24px, 3.4vw, 52px);
+  border: 0;
+  border-radius: 24px;
+  scroll-snap-align: center;
+  /* 제목은 위, 행동은 아래. 가운데는 비워 둔다 — 레퍼런스 배너의 배치다. */
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  transform: scale(0.86);
+  opacity: 0.42;
+  transition:
+    transform var(--dur-content) var(--ease),
+    opacity var(--dur-content) var(--ease);
+}
+.slider--feature .slider__card .card__more {
+  margin-top: auto;
+  padding-top: var(--sp-5);
+}
+.slider--feature .slider__card .card__title {
+  font-size: clamp(22px, 2.3vw, 38px);
+  line-height: 1.24;
+  letter-spacing: -0.032em;
+  max-width: 18ch;
+}
+.slider--feature .slider__card .card__desc {
+  font-size: var(--fs-lede);
+  max-width: 42ch;
 }
 /* 물방울 오브젝트 — 로고의 원에서 온 브랜드 오브젝트. 콘텐츠 뒤, 고스트 글자 앞. */
 .hero__drops {
@@ -822,9 +868,14 @@
   height: 100%;
 }
 .hero--home .hero__center,
+.hero--home .hero__feature,
+.hero--home .hero__layers,
 .hero--home .hero__cue {
   position: relative;
   z-index: 1;
+}
+.nb {
+  white-space: nowrap;
 }
 .drops__dot {
   /* 실루엣 — 투명한 방울 아래에서 액체 연결부(구이 목)만 은은하게 남긴다 */
@@ -882,6 +933,61 @@
   height: auto;
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-hair);
+}
+
+/* v3 배너 자산이 있는 슬라이드 — 이미지가 오른쪽을 채우고 텍스트는 왼쪽에 앉는다.
+   비율은 16:9 다 — 기획은 2:1 이었으나 낮아 보인다는 사령관 판정(2026-08-31).
+   자산 마스터도 같은 16:9 로 뽑는다(prompts/01-brand-image 18–21). */
+.slider--feature .slider__card--art {
+  min-height: calc(var(--banner-w) * 9 / 16);
+  background-color: var(--bg-inverse);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  color: var(--text-on-inverse);
+}
+.slider--feature .slider__card--art .card__title {
+  color: var(--text-on-inverse);
+}
+.slider--feature .slider__card--art .card__desc {
+  color: var(--text-on-inverse-muted);
+}
+.slider--feature .slider__card--art .eyebrow {
+  color: var(--text-accent-on-inverse);
+}
+.slider--feature .slider__card--art .card__more {
+  color: var(--text-accent-on-inverse);
+}
+/* 디자이너 프레임 아트(원본 해상도 2026-09-01 오후 수신) — 투명 배경 오브젝트라
+   cover 로 당기면 카피를 덮는다. 원본 크기를 살려 오른쪽에 앉힌다. */
+.slider--feature .slider__card--art-aws {
+  background-image: url("/saltware-prototype/media/banner/banner-aws-certified.png?v=ebaa797f3d9a");
+  background-size: contain;
+  background-position: right center;
+}
+.slider--feature .slider__card--art-databricks {
+  background-image: url("/saltware-prototype/media/banner/banner-databricks-docs.png?v=ebaa797f3d9a");
+  background-size: contain;
+  background-position: right center;
+}
+.slider--feature .slider__card--art-identity {
+  background-image: url("/saltware-prototype/media/banner/banner-identity.jpg?v=ebaa797f3d9a");
+}
+.slider--feature .slider__card--art-smart-farm {
+  background-image: url("/saltware-prototype/media/banner/banner-smart-farm.jpg?v=ebaa797f3d9a");
+}
+.slider--feature .slider__card.is-active {
+  transform: none;
+  opacity: 1;
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.28);
+}
+@media (max-width: 640px) {
+  .slider--feature .slider__track {
+    --banner-w: 84%;
+  }
+  .slider--feature .slider__card {
+    min-height: calc(var(--banner-w) * 3 / 4);
+  }
 }
 
 .hero__meta {
@@ -1508,6 +1614,98 @@ a.bg__asset:hover {
   letter-spacing: var(--tracking-base);
 }
 
+/* ── 슬라이더 — 가로 스크롤 (JS 없이 CSS만으로 4장이 다 읽힌다) ── */
+/* 스크롤러는 track 이다. dots 를 스크롤러 안에 넣으면 같이 밀려 나간다. */
+.slider {
+  display: grid;
+  gap: var(--sp-4);
+}
+.slider__track {
+  display: flex;
+  gap: var(--sp-4);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding-bottom: var(--sp-3);
+  -webkit-overflow-scrolling: touch;
+}
+@media (prefers-reduced-motion: reduce) {
+  .slider__track {
+    scroll-behavior: auto;
+  }
+}
+.slider__track::-webkit-scrollbar {
+  height: 6px;
+}
+.slider__track::-webkit-scrollbar-track {
+  background: var(--bg-band);
+}
+.slider__track::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: var(--radius-xs);
+}
+.slider__card {
+  flex: 0 0 auto;
+  width: 280px;
+  scroll-snap-align: start;
+  border: 1px solid var(--border-hair);
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  padding: var(--sp-4);
+  display: grid;
+  gap: var(--sp-2);
+  align-content: start;
+}
+.slider__dots {
+  display: flex;
+  gap: var(--sp-2);
+  justify-content: center;
+}
+/* 어두운 히어로 안의 흰 카드는 글자색을 되돌린다.
+   상속된 흰색이 흰 배경 위에 놓이면 제목과 링크가 사라진다. */
+.hero--home .card,
+.hero--home .slider__card {
+  color: var(--text-primary);
+}
+.hero--home .card__desc {
+  color: var(--text-muted);
+}
+.hero--home .slider__dot {
+  background: rgba(29, 29, 31, 0.22);
+}
+.hero--home .slider__dot[aria-pressed="true"],
+.hero--home .slider__dot.is-active {
+  background: var(--hero-ink);
+}
+.hero--home .slider__pause {
+  color: var(--hero-ink-soft);
+  border-color: rgba(29, 29, 31, 0.25);
+}
+/* 배너에는 점과 일시정지 버튼이 있다. 스크롤바까지 보이면 조작 표시가 셋이 된다 —
+   레퍼런스에는 없다. 키보드·휠 스크롤은 그대로 동작한다. */
+.hero--home .slider__track {
+  scrollbar-width: none;
+}
+.hero--home .slider__track::-webkit-scrollbar {
+  display: none;
+}
+.slider__dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: var(--border-strong);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.slider__dot[aria-pressed="true"],
+.slider__dot.is-active {
+  background: var(--text-primary);
+  width: 10px;
+  height: 10px;
+}
+
 .flows {
   display: grid;
   gap: var(--sp-4);
@@ -1662,6 +1860,9 @@ a.bg__asset:hover {
     grid-template-columns: 1fr;
     gap: var(--sp-2);
   }
+  .slider__card {
+    width: 240px;
+  }
 }
 @media (max-width: 640px) {
   .grid--2,
@@ -1678,8 +1879,6 @@ a.bg__asset:hover {
      덮는다(실측 390). 상쇄 없이 리드 아래로 내리고, 위 여백을 줄여 수납한다. */
   .hero--home {
     padding-top: var(--sp-7);
-    /* 배너가 없는 첫 화면은 내용만큼만 — 한 화면을 억지로 채우면 빈 면이 남는다. */
-    min-height: 0;
   }
   .hero__object {
     width: 86vw;
@@ -1715,6 +1914,9 @@ a.bg__asset:hover {
   }
   .footer__copy {
     margin-left: 0;
+  }
+  .slider__card {
+    width: 200px;
   }
 }
 
@@ -2002,6 +2204,7 @@ a.app:hover {
   gap: var(--sp-3);
   align-items: end;
 }
+
 
 
 /* 빠른 탐색용 타일. 설명 카드로 키우지 않는다(§11.4). */
@@ -2459,6 +2662,40 @@ a.tile:hover {
 .pf__does {
   font-size: var(--fs-sm);
   color: var(--text-muted);
+}
+
+/* 카드 hover — 명세 §9. 들리는 정도만. */
+.card,
+.slider__card {
+  transition:
+    border-color var(--dur-hover) var(--ease),
+    box-shadow var(--dur-hover) var(--ease);
+}
+
+.slider__pause {
+  justify-self: center;
+  margin-top: var(--sp-3);
+  border: 1px solid var(--border-hair);
+  font-size: var(--fs-label);
+  line-height: 1;
+  color: var(--text-faint);
+  padding: var(--sp-2) var(--sp-3);
+  border-radius: var(--radius-pill);
+  transition: color var(--dur-hover) var(--ease);
+}
+.slider__pause:hover {
+  color: var(--text-primary);
+}
+/* 캐러셀은 어두운 히어로에만 있다. 위 hover 규칙과 특정도가 같아 뒤에 와야 이긴다 —
+   그대로 두면 hover 순간 버튼이 검정 위 검정이 된다. */
+.hero--home .slider__pause:hover {
+  color: var(--hero-ink);
+  border-color: var(--hero-ink);
+}
+.slider__track:focus-visible {
+  outline: 2px solid var(--c-accent-500);
+  outline-offset: 4px;
+  border-radius: var(--radius-md);
 }
 
 /* ── 사업별 로컬 액센트 — 명세 §7 ────────────────────── */
