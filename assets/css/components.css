@@ -486,6 +486,12 @@
   gap: var(--sp-3);
   align-content: start;
 }
+/* 카드 hover — 명세 §9. 들리는 정도만. */
+.card {
+  transition:
+    border-color var(--dur-hover) var(--ease),
+    box-shadow var(--dur-hover) var(--ease);
+}
 /* 기획의 카드는 전부 흰색이다. 회색 카드를 따로 두지 않는다. */
 .card--band {
   background: var(--bg-card);
@@ -629,7 +635,10 @@
   background: var(--hero-bg);
   color: var(--hero-ink);
   display: grid;
-  grid-template-rows: 1fr auto;
+  /* 배너가 있던 시절엔 첫 행이 1fr 로 남는 높이를 받아 제목 덩어리를 배너 위에 붙였다.
+     배너를 내린 뒤(2026-09-02) 그 남는 높이가 전부 제목 위에 쌓였다(실측 390: 205px).
+     행을 모두 auto 로 두고 align-content 가 위아래로 나누게 한다. */
+  grid-template-rows: auto;
   align-content: center;
   /* 첫 화면 수납(사령관 판정 2026-08-31) — 제목·서브·오브젝트에 배너 반 이상까지
      한 뷰포트에 들어오도록 세로 리듬을 조인다. 제목 위 여백은 사령관이
@@ -642,6 +651,46 @@
   padding-top: 40px;
   padding-bottom: var(--sp-6);
   text-align: center;
+}
+/* 오브젝트 아래 층 띠 — 오브젝트가 무엇의 상징인지 적는다(2026-09-02).
+   여섯 층이 선으로 이어지고 맨 끝 AI 만 액센트를 받는다. 통째로 스택 섹션 앵커다. */
+.hero__layers {
+  position: relative;
+  z-index: 1;
+  justify-self: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  row-gap: var(--sp-2);
+  margin-top: calc(var(--sp-3) * -1);
+  padding: var(--sp-2) var(--sp-4);
+  font-size: var(--fs-label-caps);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--hero-ink-soft);
+  text-decoration: none;
+  transition: color var(--dur-hover) var(--ease);
+}
+.hero__layers:hover {
+  color: var(--hero-ink);
+}
+.hero__layer {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+.hero__layer + .hero__layer::before {
+  content: "";
+  width: 24px;
+  height: 1px;
+  margin-inline: var(--sp-3);
+  background: currentColor;
+  opacity: 0.35;
+}
+.hero__layer--top {
+  color: var(--text-accent);
 }
 /* 다음 화면이 있다는 표시. 명세 §9 가 상시 애니메이션을 금지하므로 움직이지 않는다. */
 /* 다음 화면이 있다는 표시. 흐름 안에 둔다 — 절대 배치하면
@@ -676,6 +725,9 @@
   align-content: end;
   gap: var(--sp-3);
   justify-items: center;
+}
+.nb {
+  white-space: nowrap;
 }
 /* 메인 오브젝트 자리 — 사령관이 직접 제작 중(2026-08-31). 자산이 오면 이
    컨테이너에 그대로 얹는다. 높이를 미리 예약해 도착 시 레이아웃이 튀지 않게
@@ -752,68 +804,10 @@
   color: var(--hero-ink-soft);
   opacity: 0.66;
 }
-.hero__feature {
-  position: relative;
-  z-index: 1;
-  /* 오브젝트-배너 사이도 타이트하게 — 첫 화면 수납의 일부다. */
-  margin-top: var(--sp-1);
-  /* 히어로는 가운데 정렬이지만 카드 안 내용은 기획대로 왼쪽 정렬이다. */
-  text-align: left;
-}
 .eyebrow--muted {
   color: var(--text-faint);
   font-size: var(--fs-label-caps);
   letter-spacing: 0.14em;
-}
-
-/* 메인 캐러셀은 큰 카드 한 장씩이다 (기획 실측 880×400). */
-/* 배너는 한 번에 한 장이다. 가운데 것이 크고 양옆이 작게 비친다(레퍼런스 실측).
-   트랙 좌우에 여백을 줘야 첫 장과 마지막 장도 가운데에 설 수 있다. */
-.slider--feature .slider__track {
-  /* 기획 실측 880 에서 두 번 줄인 값 — 첫 화면 수납(사령관 "배너도 약간 줄여"). */
-  --banner-w: min(760px, 50vw);
-  /* 100vw 는 세로 스크롤바 폭까지 포함한다. 그 값으로 여백을 잡으면
-     트랙이 뷰포트보다 스크롤바만큼 넓어져 문서 전체가 가로로 넘친다. */
-  padding-inline: calc((100% - var(--banner-w)) / 2);
-  gap: var(--sp-5);
-  scroll-snap-type: x mandatory;
-}
-.slider--feature .slider__card {
-  width: var(--banner-w);
-  /* 레퍼런스 배너는 2:1 이지만 오른쪽을 브랜드 이미지가 채운다.
-     실제 이미지가 없는 동안은 조금 낮춰 빈 면을 줄인다 —
-     자산이 들어오면 2/1 로 되돌린다.
-     비율은 최소 높이로만 건다. aspect-ratio 로 못 박으면 좁은 화면에서
-     카드 안 다섯 줄이 잘린다 — 실제로 390·430px 에서 잘리고 있었다. */
-  min-height: calc(var(--banner-w) / 2.7);
-  min-height: 0;
-  padding: clamp(24px, 3.4vw, 52px);
-  border: 0;
-  border-radius: 24px;
-  scroll-snap-align: center;
-  /* 제목은 위, 행동은 아래. 가운데는 비워 둔다 — 레퍼런스 배너의 배치다. */
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-2);
-  transform: scale(0.86);
-  opacity: 0.42;
-  transition:
-    transform var(--dur-content) var(--ease),
-    opacity var(--dur-content) var(--ease);
-}
-.slider--feature .slider__card .card__more {
-  margin-top: auto;
-  padding-top: var(--sp-5);
-}
-.slider--feature .slider__card .card__title {
-  font-size: clamp(22px, 2.3vw, 38px);
-  line-height: 1.24;
-  letter-spacing: -0.032em;
-  max-width: 18ch;
-}
-.slider--feature .slider__card .card__desc {
-  font-size: var(--fs-lede);
-  max-width: 42ch;
 }
 /* 물방울 오브젝트 — 로고의 원에서 온 브랜드 오브젝트. 콘텐츠 뒤, 고스트 글자 앞. */
 .hero__drops {
@@ -828,7 +822,6 @@
   height: 100%;
 }
 .hero--home .hero__center,
-.hero--home .hero__feature,
 .hero--home .hero__cue {
   position: relative;
   z-index: 1;
@@ -889,61 +882,6 @@
   height: auto;
   border-radius: var(--radius-lg);
   border: 1px solid var(--border-hair);
-}
-
-/* v3 배너 자산이 있는 슬라이드 — 이미지가 오른쪽을 채우고 텍스트는 왼쪽에 앉는다.
-   비율은 16:9 다 — 기획은 2:1 이었으나 낮아 보인다는 사령관 판정(2026-08-31).
-   자산 마스터도 같은 16:9 로 뽑는다(prompts/01-brand-image 18–21). */
-.slider--feature .slider__card--art {
-  min-height: calc(var(--banner-w) * 9 / 16);
-  background-color: var(--bg-inverse);
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  color: var(--text-on-inverse);
-}
-.slider--feature .slider__card--art .card__title {
-  color: var(--text-on-inverse);
-}
-.slider--feature .slider__card--art .card__desc {
-  color: var(--text-on-inverse-muted);
-}
-.slider--feature .slider__card--art .eyebrow {
-  color: var(--text-accent-on-inverse);
-}
-.slider--feature .slider__card--art .card__more {
-  color: var(--text-accent-on-inverse);
-}
-/* 디자이너 프레임 아트(원본 해상도 2026-09-01 오후 수신) — 투명 배경 오브젝트라
-   cover 로 당기면 카피를 덮는다. 원본 크기를 살려 오른쪽에 앉힌다. */
-.slider--feature .slider__card--art-aws {
-  background-image: url("/saltware-prototype/media/banner/banner-aws-certified.png?v=ebaa797f3d9a");
-  background-size: contain;
-  background-position: right center;
-}
-.slider--feature .slider__card--art-databricks {
-  background-image: url("/saltware-prototype/media/banner/banner-databricks-docs.png?v=ebaa797f3d9a");
-  background-size: contain;
-  background-position: right center;
-}
-.slider--feature .slider__card--art-identity {
-  background-image: url("/saltware-prototype/media/banner/banner-identity.jpg?v=ebaa797f3d9a");
-}
-.slider--feature .slider__card--art-smart-farm {
-  background-image: url("/saltware-prototype/media/banner/banner-smart-farm.jpg?v=ebaa797f3d9a");
-}
-.slider--feature .slider__card.is-active {
-  transform: none;
-  opacity: 1;
-  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.28);
-}
-@media (max-width: 640px) {
-  .slider--feature .slider__track {
-    --banner-w: 84%;
-  }
-  .slider--feature .slider__card {
-    min-height: calc(var(--banner-w) * 3 / 4);
-  }
 }
 
 .hero__meta {
@@ -1570,98 +1508,6 @@ a.bg__asset:hover {
   letter-spacing: var(--tracking-base);
 }
 
-/* ── 슬라이더 — 가로 스크롤 (JS 없이 CSS만으로 4장이 다 읽힌다) ── */
-/* 스크롤러는 track 이다. dots 를 스크롤러 안에 넣으면 같이 밀려 나간다. */
-.slider {
-  display: grid;
-  gap: var(--sp-4);
-}
-.slider__track {
-  display: flex;
-  gap: var(--sp-4);
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  padding-bottom: var(--sp-3);
-  -webkit-overflow-scrolling: touch;
-}
-@media (prefers-reduced-motion: reduce) {
-  .slider__track {
-    scroll-behavior: auto;
-  }
-}
-.slider__track::-webkit-scrollbar {
-  height: 6px;
-}
-.slider__track::-webkit-scrollbar-track {
-  background: var(--bg-band);
-}
-.slider__track::-webkit-scrollbar-thumb {
-  background: var(--border-strong);
-  border-radius: var(--radius-xs);
-}
-.slider__card {
-  flex: 0 0 auto;
-  width: 280px;
-  scroll-snap-align: start;
-  border: 1px solid var(--border-hair);
-  border-radius: var(--radius-md);
-  background: var(--bg-card);
-  padding: var(--sp-4);
-  display: grid;
-  gap: var(--sp-2);
-  align-content: start;
-}
-.slider__dots {
-  display: flex;
-  gap: var(--sp-2);
-  justify-content: center;
-}
-/* 어두운 히어로 안의 흰 카드는 글자색을 되돌린다.
-   상속된 흰색이 흰 배경 위에 놓이면 제목과 링크가 사라진다. */
-.hero--home .card,
-.hero--home .slider__card {
-  color: var(--text-primary);
-}
-.hero--home .card__desc {
-  color: var(--text-muted);
-}
-.hero--home .slider__dot {
-  background: rgba(29, 29, 31, 0.22);
-}
-.hero--home .slider__dot[aria-pressed="true"],
-.hero--home .slider__dot.is-active {
-  background: var(--hero-ink);
-}
-.hero--home .slider__pause {
-  color: var(--hero-ink-soft);
-  border-color: rgba(29, 29, 31, 0.25);
-}
-/* 배너에는 점과 일시정지 버튼이 있다. 스크롤바까지 보이면 조작 표시가 셋이 된다 —
-   레퍼런스에는 없다. 키보드·휠 스크롤은 그대로 동작한다. */
-.hero--home .slider__track {
-  scrollbar-width: none;
-}
-.hero--home .slider__track::-webkit-scrollbar {
-  display: none;
-}
-.slider__dot {
-  width: 8px;
-  height: 8px;
-  padding: 0;
-  border: none;
-  border-radius: 50%;
-  background: var(--border-strong);
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-.slider__dot[aria-pressed="true"],
-.slider__dot.is-active {
-  background: var(--text-primary);
-  width: 10px;
-  height: 10px;
-}
-
 .flows {
   display: grid;
   gap: var(--sp-4);
@@ -1816,9 +1662,6 @@ a.bg__asset:hover {
     grid-template-columns: 1fr;
     gap: var(--sp-2);
   }
-  .slider__card {
-    width: 240px;
-  }
 }
 @media (max-width: 640px) {
   .grid--2,
@@ -1835,10 +1678,24 @@ a.bg__asset:hover {
      덮는다(실측 390). 상쇄 없이 리드 아래로 내리고, 위 여백을 줄여 수납한다. */
   .hero--home {
     padding-top: var(--sp-7);
+    /* 배너가 없는 첫 화면은 내용만큼만 — 한 화면을 억지로 채우면 빈 면이 남는다. */
+    min-height: 0;
   }
   .hero__object {
     width: 86vw;
     margin-top: 0;
+  }
+  /* 층 띠는 두 줄로 접히며 연결선이 줄 머리에 매달렸다(실측) — 선을 접고 격자로 둔다. */
+  .hero__layers {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    justify-content: center;
+    column-gap: var(--sp-4);
+    row-gap: var(--sp-2);
+    margin-top: 0;
+  }
+  .hero__layer + .hero__layer::before {
+    content: none;
   }
   /* 390 에서 필 라벨이 슬라이더 도트와 문의 입력칸을 덮는다(실측) —
      라벨을 접고 스파크만 남긴 원형으로 줄인다. */
@@ -1859,12 +1716,293 @@ a.bg__asset:hover {
   .footer__copy {
     margin-left: 0;
   }
-  .slider__card {
-    width: 200px;
-  }
 }
 
 /* ── 카드가 아닌 구성 — 명세 §4.2 ─────────────────────── */
+
+/* ── AI Full Stack — 층이 아래에서 위로 쌓인다(사령관 지시 2026-09-02) ────
+   사업 영역 카드 여섯 장을 대신한다. 카드가 아니라 층(slab)이다 — 왼쪽 색 등뼈가
+   층마다 사업 액센트를 받아 한 덩어리로 쌓인다. 보안·거버넌스는 층이 아니라
+   오른쪽 레일로 전 층을 관통하고, 설명과 응용·산업 솔루션은 선반이 맡는다. */
+.stack {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 56px minmax(0, 0.44fr);
+  gap: var(--gap-tile);
+  align-items: stretch;
+  margin-bottom: var(--sp-6);
+}
+.stack__layers {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  border: 1px solid var(--border-hair);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: var(--bg-card);
+}
+.layer {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 0.9fr) minmax(0, 1.5fr) 24px;
+  align-items: center;
+  column-gap: var(--sp-5);
+  padding: var(--sp-5) var(--sp-5) var(--sp-5) 0;
+  border-top: 1px solid var(--border-hair);
+  border-left: 4px solid var(--border-strong);
+  color: inherit;
+  text-decoration: none;
+  transition: background var(--dur-hover) var(--ease);
+}
+.stack__layers > li:first-child .layer {
+  border-top: 0;
+}
+a.layer:hover {
+  background: var(--bg-band);
+}
+/* 맨 위 층(AI)은 스택의 결론이다 — 액센트 면으로 한 단 세운다. */
+.layer--top {
+  background: var(--bg-accent);
+}
+a.layer--top:hover {
+  background: var(--bg-accent);
+  filter: brightness(0.97);
+}
+.layer--cloud {
+  border-left-color: var(--accent-cloud);
+}
+.layer--cloud-hybrid {
+  border-left-color: var(--accent-cloud);
+}
+.layer--data-ai {
+  border-left-color: var(--accent-data-ai);
+}
+.layer--databricks {
+  border-left-color: var(--accent-databricks);
+}
+.layer--identity {
+  border-left-color: var(--accent-identity);
+}
+.layer--redhat {
+  border-left-color: var(--accent-redhat);
+}
+.layer__n {
+  justify-self: center;
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+.layer__id {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+.layer__name {
+  font-size: var(--fs-h3);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+}
+.layer__ko {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+.layer__body {
+  display: grid;
+  gap: var(--sp-1);
+  min-width: 0;
+}
+.layer__role {
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+.layer__meta {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+.layer__go {
+  justify-self: end;
+  color: var(--text-faint);
+  transition: transform var(--dur-hover) var(--ease), color var(--dur-hover) var(--ease);
+}
+a.layer:hover .layer__go {
+  color: var(--text-accent);
+  transform: translateX(3px);
+}
+/* 관통 레일 — 아래에서 위로 읽힌다. 장식이라 aria-hidden 이고 설명은 선반에 있다. */
+.stack__rail {
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border-hair);
+  border-radius: var(--radius-xl);
+  background: var(--bg-band);
+  border-right: 4px solid var(--border-strong);
+}
+.stack__rail--identity {
+  border-right-color: var(--accent-identity);
+}
+.stack__rail-text {
+  writing-mode: vertical-rl;
+  /* 한글은 세로쓰기에서 바로 서고 로마자는 눕는다 — 180° 돌리면 한글만 뒤집힌다(실측).
+     전부 눕혀 한 방향으로 읽히게 한다. */
+  text-orientation: sideways;
+  transform: rotate(180deg);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.stack__rail-sub {
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text-muted);
+}
+.stack__shelf {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: var(--gap-tile);
+  min-width: 0;
+}
+.shelf {
+  display: grid;
+  gap: var(--sp-2);
+  align-content: start;
+  padding: var(--sp-5) var(--sp-6);
+  border: 1px solid var(--border-hair);
+  border-radius: var(--radius-xl);
+  background: var(--bg-card);
+  color: inherit;
+  text-decoration: none;
+  min-width: 0;
+}
+.shelf--cross {
+  border-left: 4px solid var(--border-strong);
+  transition: background var(--dur-hover) var(--ease);
+}
+.shelf--identity {
+  border-left-color: var(--accent-identity);
+}
+a.shelf--cross:hover {
+  background: var(--bg-band);
+}
+.shelf--apps {
+  background: var(--bg-band);
+  border-color: transparent;
+}
+.shelf__tag {
+  font-size: var(--fs-label-caps);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-accent);
+}
+.shelf__name {
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.shelf__role {
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+.shelf__meta {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+.apps {
+  display: grid;
+  gap: var(--sp-2);
+  margin-top: var(--sp-2);
+}
+.app {
+  display: grid;
+  gap: 2px;
+  padding: var(--sp-4);
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  border-left: 4px solid var(--border-strong);
+  color: inherit;
+  text-decoration: none;
+  transition: transform var(--dur-hover) var(--ease);
+}
+a.app:hover {
+  transform: translateY(-2px);
+}
+.app--enview {
+  border-left-color: var(--accent-enview);
+}
+.app--smart-farm {
+  border-left-color: var(--accent-smart-farm);
+}
+.app__name {
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+.app__desc {
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+/* ── 뉴스레터 — 채널 둘 + 신청 폼(dry-run) ───────────────────── */
+.nl {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--sp-7);
+  align-items: start;
+  padding: var(--sp-7);
+  border: 1px solid var(--border-hair);
+  border-radius: var(--radius-xl);
+  background: var(--bg-card);
+}
+.nl__channels {
+  display: grid;
+  gap: var(--sp-4);
+}
+.nl__ch {
+  display: grid;
+  gap: var(--sp-1);
+  padding-top: var(--sp-4);
+  border-top: 1px solid var(--border-hair);
+}
+.nl__ch:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+.nl__tag {
+  font-size: var(--fs-label-caps);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-accent);
+}
+.nl__name {
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.nl__desc {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}
+.nl__form {
+  display: grid;
+  gap: var(--sp-4);
+}
+.nl__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--sp-3);
+  align-items: end;
+}
+
 
 /* 빠른 탐색용 타일. 설명 카드로 키우지 않는다(§11.4). */
 .tiles {
@@ -2321,40 +2459,6 @@ a.tile:hover {
 .pf__does {
   font-size: var(--fs-sm);
   color: var(--text-muted);
-}
-
-/* 카드 hover — 명세 §9. 들리는 정도만. */
-.card,
-.slider__card {
-  transition:
-    border-color var(--dur-hover) var(--ease),
-    box-shadow var(--dur-hover) var(--ease);
-}
-
-.slider__pause {
-  justify-self: center;
-  margin-top: var(--sp-3);
-  border: 1px solid var(--border-hair);
-  font-size: var(--fs-label);
-  line-height: 1;
-  color: var(--text-faint);
-  padding: var(--sp-2) var(--sp-3);
-  border-radius: var(--radius-pill);
-  transition: color var(--dur-hover) var(--ease);
-}
-.slider__pause:hover {
-  color: var(--text-primary);
-}
-/* 캐러셀은 어두운 히어로에만 있다. 위 hover 규칙과 특정도가 같아 뒤에 와야 이긴다 —
-   그대로 두면 hover 순간 버튼이 검정 위 검정이 된다. */
-.hero--home .slider__pause:hover {
-  color: var(--hero-ink);
-  border-color: var(--hero-ink);
-}
-.slider__track:focus-visible {
-  outline: 2px solid var(--c-accent-500);
-  outline-offset: 4px;
-  border-radius: var(--radius-md);
 }
 
 /* ── 사업별 로컬 액센트 — 명세 §7 ────────────────────── */
@@ -2904,6 +3008,26 @@ a.post:hover .post__cover {
   .split {
     grid-template-columns: minmax(0, 1fr);
   }
+  /* 스택은 한 열로 — 레일은 층 아래 가로 띠가 되고 선반은 두 칸으로 편다. */
+  .stack {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .stack__rail {
+    padding: var(--sp-3) var(--sp-5);
+    border-right: 0;
+    border-left: 4px solid var(--border-strong);
+  }
+  .stack__rail--identity {
+    border-left-color: var(--accent-identity);
+  }
+  .stack__rail-text {
+    writing-mode: horizontal-tb;
+    transform: none;
+  }
+  .stack__shelf {
+    grid-template-rows: none;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
 }
 @media (max-width: 640px) {
   /* 타일은 두 열로 남긴다. 한 열이면 정사각 비율이 화면 폭만큼 커져 한 칸이 한 화면이 된다. */
@@ -2928,6 +3052,32 @@ a.post:hover .post__cover {
   }
   .mos__head {
     grid-column: span 1;
+  }
+  /* 층은 번호·이름 / 본문 두 줄로 접는다 — 네 열은 390 에서 본문이 한 글자 폭이 된다. */
+  .layer {
+    grid-template-columns: 44px minmax(0, 1fr) 20px;
+    column-gap: var(--sp-3);
+    row-gap: var(--sp-2);
+    padding-right: var(--sp-4);
+  }
+  .layer__body {
+    grid-column: 2 / 3;
+  }
+  .layer__go {
+    grid-column: 3;
+    grid-row: 1;
+  }
+  .stack__shelf {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .nl {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-6);
+    padding: var(--sp-5);
+  }
+  .nl__row {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: stretch;
   }
   .bento {
     grid-template-columns: minmax(0, 1fr);
