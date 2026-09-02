@@ -636,8 +636,10 @@
      세 번에 걸쳐 내려 잡은 값이다 — 정렬로는 안 내려간다(콘텐츠가 화면을
      이미 채워 1fr 여유가 0). 실공간을 위에 넣는 것만 먹힌다(실측).
      내린 만큼 오브젝트 음수 마진이 상쇄해 배너 위치는 유지된다.
-     96 에서 아주 살짝 되올린 값 — 스케일에 없는 중간값이라 리터럴로 둔다. */
-  padding-top: 84px;
+     84 는 제목이 두 줄이던 시절의 값이다(v2.1). v3 에서 제목이 한 줄로 줄고
+     리드 아래 부연 세 줄이 들어오면서 배너가 첫 화면 밖으로 밀렸다 —
+     부연이 먹은 만큼(실측 44px) 여기서 되돌려 "배너 반 이상" 규칙을 지킨다. */
+  padding-top: 40px;
   padding-bottom: var(--sp-6);
   text-align: center;
 }
@@ -736,6 +738,15 @@
 .hero--home .hero__lede {
   max-width: 58ch;
   color: var(--hero-ink-soft);
+}
+/* 리드 아래 부연 — 리드보다 한 단 작고 옅게 두어 읽는 순서가 제목→리드→부연으로
+   내려간다. 첫 화면 예산을 세 줄만큼 먹으므로 행간은 본문보다 조인다. */
+.hero--home .hero__note {
+  max-width: 64ch;
+  font-size: var(--fs-body);
+  line-height: 1.62;
+  color: var(--hero-ink-soft);
+  opacity: 0.78;
 }
 .hero--home .eyebrow--muted {
   color: var(--hero-ink-soft);
@@ -1815,6 +1826,10 @@ a.bg__asset:hover {
   .grid--4,
   .steps {
     grid-template-columns: 1fr;
+  }
+  /* 부연의 사령관 줄바꿈은 이 폭에서 고아 줄을 만든다 — 접고 자연 줄바꿈에 맡긴다. */
+  .br-soft {
+    display: none;
   }
   /* 모바일은 리드가 3줄로 늘어 데스크톱용 음수 마진이 리드 셋째 줄을
      덮는다(실측 390). 상쇄 없이 리드 아래로 내리고, 위 여백을 줄여 수납한다. */
