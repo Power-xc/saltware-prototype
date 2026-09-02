@@ -139,8 +139,6 @@
   /* 레퍼런스 격자 — 타일·모자이크·벤토가 공유한다. 값이 흩어지면 리듬이 깨진다. */
   --gap-tile: 16px;
   --tile-ratio: 1 / 1.05;
-  --mosaic-ratio: 16 / 10;
-  --mosaic-offset: clamp(40px, 7vw, 116px);
   --cover-ratio: 16 / 9;
   --lh-display: 1.24;
   --lh-lede: 1.68;

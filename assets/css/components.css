@@ -574,49 +574,49 @@
   max-width: 42ch;
 }
 .hero--media.hero--m-cloud {
-  background-image: url("/saltware-prototype/media/business/hero-cloud.jpg?v=ebaa797f3d9a");
+  background-image: url("/saltware-prototype/media/business/hero-cloud.jpg?v=ef94240315c8");
 }
 .hero--media.hero--m-databricks {
-  background-image: url("/saltware-prototype/media/business/hero-databricks.jpg?v=ebaa797f3d9a");
+  background-image: url("/saltware-prototype/media/business/hero-databricks.jpg?v=ef94240315c8");
 }
 .hero--media.hero--m-identity {
-  background-image: url("/saltware-prototype/media/business/hero-identity.jpg?v=ebaa797f3d9a");
+  background-image: url("/saltware-prototype/media/business/hero-identity.jpg?v=ef94240315c8");
 }
 .hero--media.hero--m-redhat {
-  background-image: url("/saltware-prototype/media/business/hero-redhat.jpg?v=ebaa797f3d9a");
+  background-image: url("/saltware-prototype/media/business/hero-redhat.jpg?v=ef94240315c8");
 }
 .hero--media.hero--m-enview {
-  background-image: url("/saltware-prototype/media/business/hero-enview.jpg?v=ebaa797f3d9a");
+  background-image: url("/saltware-prototype/media/business/hero-enview.jpg?v=ef94240315c8");
 }
 .hero--media.hero--m-smart-farm {
-  background-image: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=ebaa797f3d9a");
+  background-image: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=ef94240315c8");
 }
 .hero--media.hero--m-hub-business {
-  background-image: url("/saltware-prototype/media/hub/hub-business.jpg?v=ebaa797f3d9a");
+  background-image: url("/saltware-prototype/media/hub/hub-business.jpg?v=ef94240315c8");
 }
 .hero--media.hero--m-hub-industries {
-  background-image: url("/saltware-prototype/media/hub/hub-industries.jpg?v=ebaa797f3d9a");
+  background-image: url("/saltware-prototype/media/hub/hub-industries.jpg?v=ef94240315c8");
 }
 .hero--media.hero--m-hub-insights {
-  background-image: url("/saltware-prototype/media/hub/hub-insights.jpg?v=ebaa797f3d9a");
+  background-image: url("/saltware-prototype/media/hub/hub-insights.jpg?v=ef94240315c8");
 }
 .hero--media.hero--m-hub-company {
-  background-image: url("/saltware-prototype/media/hub/hub-company.jpg?v=ebaa797f3d9a");
+  background-image: url("/saltware-prototype/media/hub/hub-company.jpg?v=ef94240315c8");
 }
 .hero--media.hero--m-ind-public {
-  background-image: url("/saltware-prototype/media/industry/ind-public.jpg?v=ebaa797f3d9a");
+  background-image: url("/saltware-prototype/media/industry/ind-public.jpg?v=ef94240315c8");
 }
 .hero--media.hero--m-ind-finance {
-  background-image: url("/saltware-prototype/media/industry/ind-finance.jpg?v=ebaa797f3d9a");
+  background-image: url("/saltware-prototype/media/industry/ind-finance.jpg?v=ef94240315c8");
 }
 .hero--media.hero--m-ind-manufacturing {
-  background-image: url("/saltware-prototype/media/industry/ind-manufacturing.jpg?v=ebaa797f3d9a");
+  background-image: url("/saltware-prototype/media/industry/ind-manufacturing.jpg?v=ef94240315c8");
 }
 .hero--media.hero--m-ind-education {
-  background-image: url("/saltware-prototype/media/industry/ind-education.jpg?v=ebaa797f3d9a");
+  background-image: url("/saltware-prototype/media/industry/ind-education.jpg?v=ef94240315c8");
 }
 .hero--media.hero--m-ind-agriculture {
-  background-image: url("/saltware-prototype/media/industry/ind-agriculture.jpg?v=ebaa797f3d9a");
+  background-image: url("/saltware-prototype/media/industry/ind-agriculture.jpg?v=ef94240315c8");
 }
 
 .hero--home {
@@ -961,20 +961,33 @@
 /* 디자이너 프레임 아트(원본 해상도 2026-09-01 오후 수신) — 투명 배경 오브젝트라
    cover 로 당기면 카피를 덮는다. 원본 크기를 살려 오른쪽에 앉힌다. */
 .slider--feature .slider__card--art-aws {
-  background-image: url("/saltware-prototype/media/banner/banner-aws-certified.png?v=ebaa797f3d9a");
+  background-image: url("/saltware-prototype/media/banner/banner-aws-certified.png?v=ef94240315c8");
   background-size: contain;
   background-position: right center;
 }
+/* 데이터브릭스 슬라이드 — 디자이너 프레임(2026-09-02)의 라이트 블록 아트. 왼쪽이 옅은 파랑 면이라
+   흰 활자가 안 선다 — 이 카드만 짙은 잉크로 뒤집는다(#1d1d1f 대비 7:1 이상). */
 .slider--feature .slider__card--art-databricks {
-  background-image: url("/saltware-prototype/media/banner/banner-databricks-docs.png?v=ebaa797f3d9a");
-  background-size: contain;
-  background-position: right center;
+  background-image: url("/saltware-prototype/media/banner/banner-databricks-blocks.png?v=ef94240315c8");
+  background-size: cover;
+  background-position: center;
+  color: var(--text-primary);
+}
+.slider--feature .slider__card--art-databricks .card__title {
+  color: var(--text-primary);
+}
+.slider--feature .slider__card--art-databricks .card__desc {
+  color: var(--text-secondary);
+}
+.slider--feature .slider__card--art-databricks .eyebrow,
+.slider--feature .slider__card--art-databricks .card__more {
+  color: var(--accent-databricks);
 }
 .slider--feature .slider__card--art-identity {
-  background-image: url("/saltware-prototype/media/banner/banner-identity.jpg?v=ebaa797f3d9a");
+  background-image: url("/saltware-prototype/media/banner/banner-identity.jpg?v=ef94240315c8");
 }
 .slider--feature .slider__card--art-smart-farm {
-  background-image: url("/saltware-prototype/media/banner/banner-smart-farm.jpg?v=ebaa797f3d9a");
+  background-image: url("/saltware-prototype/media/banner/banner-smart-farm.jpg?v=ef94240315c8");
 }
 .slider--feature .slider__card.is-active {
   transform: none;
@@ -1945,10 +1958,10 @@ a.bg__asset:hover {
 }
 .layer {
   display: grid;
-  grid-template-columns: 52px minmax(0, 0.9fr) minmax(0, 1.5fr) 24px;
+  grid-template-columns: 136px minmax(0, 0.8fr) minmax(0, 1.5fr) 24px;
   align-items: center;
   column-gap: var(--sp-5);
-  padding: var(--sp-5) var(--sp-5) var(--sp-5) 0;
+  padding: var(--sp-4) var(--sp-5) var(--sp-4) var(--sp-4);
   border-top: 1px solid var(--border-hair);
   border-left: 4px solid var(--border-strong);
   color: inherit;
@@ -1987,12 +2000,32 @@ a.layer--top:hover {
 .layer--redhat {
   border-left-color: var(--accent-redhat);
 }
+/* 아트 칸 — 디자이너 라이트 일러스트(16:10). 모서리가 투명한 원본이라 밴드 면 위에 앉힌다.
+   번호는 아트 왼쪽 아래 칩이다 — 아트가 없는 층도 같은 칸을 가져 열이 흔들리지 않는다. */
+.layer__art {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--bg-band);
+}
+.layer__art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .layer__n {
-  justify-self: center;
-  font-size: var(--fs-label);
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  padding: 2px 7px;
+  border-radius: var(--radius-xs);
+  background: rgba(255, 255, 255, 0.86);
+  font-size: var(--fs-label-caps);
   font-weight: 600;
   letter-spacing: var(--tracking-label);
-  color: var(--text-faint);
+  color: var(--text-secondary);
   font-variant-numeric: tabular-nums;
 }
 .layer__id {
@@ -2126,8 +2159,10 @@ a.shelf--cross:hover {
 }
 .app {
   display: grid;
-  gap: 2px;
-  padding: var(--sp-4);
+  grid-template-columns: 72px minmax(0, 1fr);
+  align-items: center;
+  column-gap: var(--sp-4);
+  padding: var(--sp-3) var(--sp-4) var(--sp-3) var(--sp-3);
   border-radius: var(--radius-md);
   background: var(--bg-card);
   border-left: 4px solid var(--border-strong);
@@ -2143,6 +2178,23 @@ a.app:hover {
 }
 .app--smart-farm {
   border-left-color: var(--accent-smart-farm);
+}
+.app__art {
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius-xs);
+  overflow: hidden;
+  background: var(--bg-band);
+}
+.app__art img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.app__text {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
 }
 .app__name {
   font-weight: 600;
@@ -2335,13 +2387,13 @@ a.tile:hover {
   transform: translateY(-4px);
 }
 .sol--art-data-ai {
-  background-image: url("/saltware-prototype/media/home/mosaic-data-ai.jpg?v=ebaa797f3d9a");
+  background-image: url("/saltware-prototype/media/home/mosaic-data-ai.jpg?v=ef94240315c8");
 }
 .sol--art-databricks {
-  background-image: url("/saltware-prototype/media/home/mosaic-databricks.jpg?v=ebaa797f3d9a");
+  background-image: url("/saltware-prototype/media/home/mosaic-databricks.jpg?v=ef94240315c8");
 }
 .sol--art-cloud {
-  background-image: url("/saltware-prototype/media/home/mosaic-cloud.jpg?v=ebaa797f3d9a");
+  background-image: url("/saltware-prototype/media/home/mosaic-cloud.jpg?v=ef94240315c8");
 }
 .sol__eyebrow {
   font-size: var(--fs-label-caps);
@@ -2891,99 +2943,6 @@ a.quiet:hover {
   color: var(--text-muted);
 }
 
-/* 왼쪽 제목 + 오른쪽 두 열. 오른쪽 열이 위로 올라가 격자로 보이지 않는다. */
-.mos {
-  display: grid;
-  grid-template-columns: minmax(0, 0.66fr) minmax(0, 1fr) minmax(0, 1fr);
-  gap: var(--gap-tile);
-  align-items: start;
-}
-.mos__head {
-  padding-right: var(--sp-6);
-  align-self: start;
-  padding-top: var(--sp-6);
-}
-.mos__title {
-  font-size: var(--fs-h2);
-  letter-spacing: var(--tracking-display);
-  margin-bottom: var(--sp-4);
-}
-.mos__lede {
-  font-size: var(--fs-body);
-  color: var(--text-muted);
-  max-width: 30ch;
-}
-/* 그리드 아이템 기본값은 min-width: auto 다. 그대로 두면 카드 안 긴 문장이
-   트랙보다 넓어지면서 열을 밀어내고 문서가 가로로 넘친다. */
-.mos__col {
-  display: grid;
-  gap: var(--gap-tile);
-  min-width: 0;
-}
-.mo {
-  min-width: 0;
-}
-.mos__col--lift {
-  margin-top: calc(var(--mosaic-offset) * -1);
-}
-.mo {
-  aspect-ratio: var(--mosaic-ratio);
-  border-radius: var(--radius-xl);
-  padding: var(--sp-6);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-  text-align: center;
-  gap: var(--sp-2);
-  color: var(--text-on-inverse);
-  text-decoration: none;
-  /* 배경은 톤 클래스가 전부 명시한다 — 라이트 일러스트 카드는 어두운 활자로 뒤집는다. */
-  background: var(--bg-card);
-  transition: transform var(--dur-hover) var(--ease);
-}
-.mo--cloud {
-  color: var(--text-primary);
-  background: url("/saltware-prototype/media/home/mosaic-cloud.png?v=ebaa797f3d9a") center / cover no-repeat;
-}
-a.mo:hover {
-  transform: translateY(-3px);
-}
-.mo--data-ai {
-  background: linear-gradient(140deg, var(--bg-inverse), var(--accent-data-ai));
-}
-.mo--databricks {
-  background:
-    linear-gradient(to top, var(--scrim-bottom), transparent 62%),
-    url("/saltware-prototype/media/home/mosaic-databricks.jpg?v=ebaa797f3d9a") center / cover no-repeat;
-}
-.mo--identity {
-  color: var(--text-primary);
-  background: url("/saltware-prototype/media/home/mosaic-identity.png?v=ebaa797f3d9a") center / cover no-repeat;
-}
-.mo--redhat {
-  color: var(--text-primary);
-  background: url("/saltware-prototype/media/home/mosaic-redhat.png?v=ebaa797f3d9a") center / cover no-repeat;
-}
-.mo--enview {
-  color: var(--text-primary);
-  background: url("/saltware-prototype/media/home/mosaic-enview.png?v=ebaa797f3d9a") center / cover no-repeat;
-}
-.mo--smart-farm {
-  color: var(--text-primary);
-  background: url("/saltware-prototype/media/home/mosaic-smart-farm.png?v=ebaa797f3d9a") center / cover no-repeat;
-}
-.mo__title {
-  font-size: var(--fs-h3);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-.mo__desc {
-  font-size: var(--fs-sm);
-  opacity: 0.82;
-  max-width: 30ch;
-}
-
 /* 대표 수행 영역 — 왼쪽 컷 하나, 오른쪽은 선택 목록 + 그 아래 본문.
    두 열의 키가 맞아야 다음 섹션과의 여백이 어긋나지 않는다(사령관 지적 2026-09-01).
    컷은 원본 이미지가 올 때까지 사업 액센트 색면이다. */
@@ -3031,7 +2990,7 @@ a.mo:hover {
   background: linear-gradient(140deg, var(--bg-inverse), var(--accent-databricks));
 }
 .cases__media--identity {
-  background: url("/saltware-prototype/media/case/case-identity-security.png?v=ebaa797f3d9a") center / cover
+  background: url("/saltware-prototype/media/case/case-identity-security.png?v=ef94240315c8") center / cover
     no-repeat;
 }
 .cases__body {
@@ -3229,16 +3188,6 @@ a.post:hover .post__cover {
   .quiets {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .mos {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  }
-  .mos__head {
-    grid-column: span 2;
-    padding-right: 0;
-  }
-  .mos__col--lift {
-    margin-top: 0;
-  }
   .posts {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -3283,22 +3232,22 @@ a.post:hover .post__cover {
     width: 34px;
     height: 34px;
   }
-  .mos,
   .posts {
     grid-template-columns: minmax(0, 1fr);
   }
-  .mos__head {
-    grid-column: span 1;
-  }
   /* 층은 번호·이름 / 본문 두 줄로 접는다 — 네 열은 390 에서 본문이 한 글자 폭이 된다. */
   .layer {
-    grid-template-columns: 44px minmax(0, 1fr) 20px;
+    grid-template-columns: 96px minmax(0, 1fr) 20px;
     column-gap: var(--sp-3);
     row-gap: var(--sp-2);
     padding-right: var(--sp-4);
   }
+  .layer__art {
+    align-self: start;
+  }
+  /* 본문은 아트·이름 행 아래 전체 폭으로 — 아트 옆 좁은 열에 두면 한 줄이 네 글자가 된다(실측 390). */
   .layer__body {
-    grid-column: 2 / 3;
+    grid-column: 1 / -1;
   }
   .layer__go {
     grid-column: 3;
