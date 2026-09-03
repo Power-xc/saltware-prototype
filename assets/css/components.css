@@ -1935,91 +1935,100 @@ a.bg__asset:hover {
 
 /* ── 카드가 아닌 구성 — 명세 §4.2 ─────────────────────── */
 
-/* ── AI Full Stack — 층이 아래에서 위로 쌓인다(사령관 지시 2026-09-02) ────
-   사업 영역 카드 여섯 장을 대신한다. 카드가 아니라 층(slab)이다 — 왼쪽 색 등뼈가
-   층마다 사업 액센트를 받아 한 덩어리로 쌓인다. 보안·거버넌스는 층이 아니라
-   오른쪽 레일로 전 층을 관통하고, 설명과 응용·산업 솔루션은 선반이 맡는다. */
+/* ── AI Full Stack — 사업 영역 모자이크의 모양으로(사령관 3차 판정 2026-09-03) ──
+   디자이너 프레임의 어긋난 두 열 이미지 카드(16:10)를 층 구조에 씌운다. 오른쪽 열이
+   --stk-lift 만큼 들려 06 → 01 이 계단으로 내려간다. 왼쪽 머리는 제목·관통·CTA,
+   두 열 아래 선반은 응용·산업 솔루션이다. */
 .stack {
+  --stk-lift: clamp(40px, 7vw, 116px);
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 56px minmax(0, 0.44fr);
+  grid-template-columns: minmax(0, 0.66fr) minmax(0, 1fr) minmax(0, 1fr);
   gap: var(--gap-tile);
-  align-items: stretch;
-  margin-bottom: var(--sp-6);
+  align-items: start;
+  padding-top: var(--stk-lift);
 }
-.stack__layers {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+.stk__head {
   display: grid;
-  border: 1px solid var(--border-hair);
+  gap: var(--sp-4);
+  align-content: start;
+  padding-right: var(--sp-6);
+  padding-top: var(--sp-2);
+}
+.stk__title {
+  font-size: var(--fs-h2);
+  letter-spacing: var(--tracking-display);
+}
+.stk__lede {
+  font-size: var(--fs-body);
+  color: var(--text-muted);
+  max-width: 32ch;
+}
+.stk__head .cta-row {
+  margin-top: var(--sp-2);
+}
+.stk__col {
+  display: grid;
+  gap: var(--gap-tile);
+  min-width: 0;
+}
+.stk__col--lift {
+  margin-top: calc(var(--stk-lift) * -1);
+}
+/* 카드 — 아트가 면을 채우고 글자는 아래 흰 스크림 위에 앉는다(아트의 아래 1/3 은 조용한 계약). */
+.stk__card {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
   border-radius: var(--radius-xl);
   overflow: hidden;
-  background: var(--bg-card);
-}
-.layer {
-  display: grid;
-  grid-template-columns: 136px minmax(0, 0.8fr) minmax(0, 1.5fr) 24px;
-  align-items: center;
-  column-gap: var(--sp-5);
-  padding: var(--sp-4) var(--sp-5) var(--sp-4) var(--sp-4);
-  border-top: 1px solid var(--border-hair);
-  border-left: 4px solid var(--border-strong);
-  color: inherit;
-  text-decoration: none;
-  transition: background var(--dur-hover) var(--ease);
-}
-.stack__layers > li:first-child .layer {
-  border-top: 0;
-}
-a.layer:hover {
   background: var(--bg-band);
+  border-left: 4px solid var(--border-strong);
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: transform var(--dur-hover) var(--ease);
 }
-/* 맨 위 층(AI)은 스택의 결론이다 — 액센트 면으로 한 단 세운다. */
-.layer--top {
-  background: var(--bg-accent);
+a.stk__card:hover {
+  transform: translateY(-3px);
 }
-a.layer--top:hover {
-  background: var(--bg-accent);
-  filter: brightness(0.97);
-}
-.layer--cloud {
+.stk__card--cloud,
+.stk__card--cloud-hybrid {
   border-left-color: var(--accent-cloud);
 }
-.layer--cloud-hybrid {
-  border-left-color: var(--accent-cloud);
-}
-.layer--data-ai {
+.stk__card--data-ai {
   border-left-color: var(--accent-data-ai);
 }
-.layer--databricks {
+.stk__card--databricks {
   border-left-color: var(--accent-databricks);
 }
-.layer--identity {
-  border-left-color: var(--accent-identity);
-}
-.layer--redhat {
+.stk__card--redhat {
   border-left-color: var(--accent-redhat);
 }
-/* 아트 칸 — 디자이너 라이트 일러스트(16:10). 모서리가 투명한 원본이라 밴드 면 위에 앉힌다.
-   번호는 아트 왼쪽 아래 칩이다 — 아트가 없는 층도 같은 칸을 가져 열이 흔들리지 않는다. */
-.layer__art {
-  position: relative;
-  aspect-ratio: 16 / 10;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  background: var(--bg-band);
+.stk__card--identity {
+  border-left-color: var(--accent-identity);
 }
-.layer__art img {
-  display: block;
+.stk__art {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.layer__n {
+.stk__card::after {
+  content: "";
   position: absolute;
-  left: 8px;
-  bottom: 8px;
-  padding: 2px 7px;
+  inset: 0;
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.94) 0%, rgba(255, 255, 255, 0.72) 30%, transparent 58%);
+}
+/* 맨 위 층(AI)은 스택의 결론 — 액센트 테두리로 한 단 세운다. */
+.stk__card--top {
+  box-shadow: 0 0 0 2px var(--border-accent);
+}
+.stk__n {
+  position: absolute;
+  z-index: 1;
+  top: var(--sp-4);
+  left: var(--sp-4);
+  padding: 3px 8px;
   border-radius: var(--radius-xs);
   background: rgba(255, 255, 255, 0.86);
   font-size: var(--fs-label-caps);
@@ -2028,179 +2037,139 @@ a.layer--top:hover {
   color: var(--text-secondary);
   font-variant-numeric: tabular-nums;
 }
-.layer__id {
+.stk__text {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: grid;
   gap: 2px;
-  min-width: 0;
+  padding: var(--sp-5) var(--sp-5) var(--sp-5);
 }
-.layer__name {
+.stk__name {
   font-size: var(--fs-h3);
   font-weight: 600;
   letter-spacing: -0.025em;
   line-height: 1.15;
 }
-.layer__ko {
+.stk__ko {
   font-size: var(--fs-xs);
   color: var(--text-muted);
 }
-.layer__body {
+.stk__role {
+  margin-top: var(--sp-1);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+.stk__tech {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+/* 관통 — 층이 아니라 머리 아래 띠. 설명·근거·링크가 여기 있다. */
+.stk__cross {
   display: grid;
   gap: var(--sp-1);
-  min-width: 0;
-}
-.layer__role {
-  font-size: var(--fs-sm);
-  line-height: 1.55;
-  color: var(--text-secondary);
-}
-.layer__meta {
-  font-size: var(--fs-xs);
-  color: var(--text-muted);
-}
-.layer__go {
-  justify-self: end;
-  color: var(--text-faint);
-  transition: transform var(--dur-hover) var(--ease), color var(--dur-hover) var(--ease);
-}
-a.layer:hover .layer__go {
-  color: var(--text-accent);
-  transform: translateX(3px);
-}
-/* 관통 레일 — 아래에서 위로 읽힌다. 장식이라 aria-hidden 이고 설명은 선반에 있다. */
-.stack__rail {
-  display: grid;
-  place-items: center;
-  border: 1px solid var(--border-hair);
-  border-radius: var(--radius-xl);
+  padding: var(--sp-4) var(--sp-5);
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--border-strong);
   background: var(--bg-band);
-  border-right: 4px solid var(--border-strong);
-}
-.stack__rail--identity {
-  border-right-color: var(--accent-identity);
-}
-.stack__rail-text {
-  writing-mode: vertical-rl;
-  /* 한글은 세로쓰기에서 바로 서고 로마자는 눕는다 — 180° 돌리면 한글만 뒤집힌다(실측).
-     전부 눕혀 한 방향으로 읽히게 한다. */
-  text-orientation: sideways;
-  transform: rotate(180deg);
-  display: inline-flex;
-  align-items: center;
-  gap: var(--sp-2);
-  font-size: var(--fs-label);
-  font-weight: 600;
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-  color: var(--text-secondary);
-  white-space: nowrap;
-}
-.stack__rail-sub {
-  font-weight: 500;
-  text-transform: none;
-  letter-spacing: 0;
-  color: var(--text-muted);
-}
-.stack__shelf {
-  display: grid;
-  grid-template-rows: auto 1fr;
-  gap: var(--gap-tile);
-  min-width: 0;
-}
-.shelf {
-  display: grid;
-  gap: var(--sp-2);
-  align-content: start;
-  padding: var(--sp-5) var(--sp-6);
-  border: 1px solid var(--border-hair);
-  border-radius: var(--radius-xl);
-  background: var(--bg-card);
   color: inherit;
   text-decoration: none;
-  min-width: 0;
-}
-.shelf--cross {
-  border-left: 4px solid var(--border-strong);
   transition: background var(--dur-hover) var(--ease);
 }
-.shelf--identity {
+.stk__cross--identity {
   border-left-color: var(--accent-identity);
 }
-a.shelf--cross:hover {
-  background: var(--bg-band);
+a.stk__cross:hover {
+  background: var(--c-neutral-150);
 }
-.shelf--apps {
-  background: var(--bg-band);
-  border-color: transparent;
-}
-.shelf__tag {
+.stk__tag {
   font-size: var(--fs-label-caps);
   font-weight: 600;
   letter-spacing: var(--tracking-label);
   color: var(--text-accent);
 }
-.shelf__name {
+.stk__cross-name {
   font-size: var(--fs-h4);
   font-weight: 600;
   letter-spacing: -0.02em;
 }
-.shelf__role {
+.stk__cross-ko {
+  display: block;
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  color: var(--text-muted);
+}
+.stk__cross-role {
   font-size: var(--fs-sm);
-  line-height: 1.55;
+  line-height: 1.5;
   color: var(--text-secondary);
 }
-.shelf__meta {
+.stk__meta {
   font-size: var(--fs-xs);
   color: var(--text-muted);
 }
-.apps {
+/* 응용 선반 — 두 열 아래, 스택 밖. */
+.stk__shelf {
+  grid-column: 2 / -1;
   display: grid;
   gap: var(--sp-2);
+  padding: var(--sp-5) var(--sp-6);
+  border-radius: var(--radius-xl);
+  background: var(--bg-band);
+}
+.stk__shelf-lede {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+}
+.stk__apps {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap-tile);
   margin-top: var(--sp-2);
 }
-.app {
+.stk__app {
   display: grid;
-  grid-template-columns: 72px minmax(0, 1fr);
+  grid-template-columns: 96px minmax(0, 1fr);
   align-items: center;
   column-gap: var(--sp-4);
   padding: var(--sp-3) var(--sp-4) var(--sp-3) var(--sp-3);
   border-radius: var(--radius-md);
-  background: var(--bg-card);
   border-left: 4px solid var(--border-strong);
+  background: var(--bg-card);
   color: inherit;
   text-decoration: none;
   transition: transform var(--dur-hover) var(--ease);
 }
-a.app:hover {
+a.stk__app:hover {
   transform: translateY(-2px);
 }
-.app--enview {
+.stk__app--enview {
   border-left-color: var(--accent-enview);
 }
-.app--smart-farm {
+.stk__app--smart-farm {
   border-left-color: var(--accent-smart-farm);
 }
-.app__art {
-  aspect-ratio: 16 / 10;
-  border-radius: var(--radius-xs);
-  overflow: hidden;
-  background: var(--bg-band);
-}
-.app__art img {
+.stk__app-art {
   display: block;
   width: 100%;
-  height: 100%;
+  aspect-ratio: 16 / 10;
   object-fit: cover;
+  border-radius: var(--radius-xs);
+  background: var(--bg-band);
 }
-.app__text {
+.stk__app-text {
   display: grid;
   gap: 2px;
   min-width: 0;
 }
-.app__name {
+.stk__app-name {
   font-weight: 600;
   letter-spacing: -0.015em;
 }
-.app__desc {
+.stk__app-desc {
   font-size: var(--fs-xs);
   line-height: 1.5;
   color: var(--text-muted);
@@ -3194,25 +3163,16 @@ a.post:hover .post__cover {
   .split {
     grid-template-columns: minmax(0, 1fr);
   }
-  /* 스택은 한 열로 — 레일은 층 아래 가로 띠가 되고 선반은 두 칸으로 편다. */
+  /* 스택 — 머리가 위로 올라가고 두 열은 남는다(들림 유지). */
   .stack {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .stack__rail {
-    padding: var(--sp-3) var(--sp-5);
-    border-right: 0;
-    border-left: 4px solid var(--border-strong);
-  }
-  .stack__rail--identity {
-    border-left-color: var(--accent-identity);
-  }
-  .stack__rail-text {
-    writing-mode: horizontal-tb;
-    transform: none;
-  }
-  .stack__shelf {
-    grid-template-rows: none;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .stk__head {
+    grid-column: span 2;
+    padding-right: 0;
+  }
+  .stk__shelf {
+    grid-column: 1 / -1;
   }
 }
 @media (max-width: 640px) {
@@ -3235,25 +3195,38 @@ a.post:hover .post__cover {
   .posts {
     grid-template-columns: minmax(0, 1fr);
   }
-  /* 층은 번호·이름 / 본문 두 줄로 접는다 — 네 열은 390 에서 본문이 한 글자 폭이 된다. */
-  .layer {
-    grid-template-columns: 96px minmax(0, 1fr) 20px;
-    column-gap: var(--sp-3);
-    row-gap: var(--sp-2);
-    padding-right: var(--sp-4);
+  /* 스택 — 한 열, 06 → 01 순서(order). 열 래퍼는 contents 로 풀어 카드가 직접 격자 항목이 된다. */
+  .stack {
+    grid-template-columns: minmax(0, 1fr);
+    padding-top: 0;
   }
-  .layer__art {
-    align-self: start;
+  .stk__head {
+    grid-column: auto;
   }
-  /* 본문은 아트·이름 행 아래 전체 폭으로 — 아트 옆 좁은 열에 두면 한 줄이 네 글자가 된다(실측 390). */
-  .layer__body {
-    grid-column: 1 / -1;
+  .stk__col {
+    display: contents;
   }
-  .layer__go {
-    grid-column: 3;
-    grid-row: 1;
+  .stk__col--lift {
+    margin-top: 0;
   }
-  .stack__shelf {
+  /* 390 에서 16:10 은 글자 덩어리가 카드의 2/3 를 먹어 스크림 밖으로 나간다 — 카드를 세우고 스크림을 올린다. */
+  .stk__card {
+    aspect-ratio: 4 / 3;
+  }
+  .stk__card::after {
+    background: linear-gradient(to top, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.8) 40%, transparent 70%);
+  }
+  .stk__card--l06 { order: 1; }
+  .stk__card--l05 { order: 2; }
+  .stk__card--l04 { order: 3; }
+  .stk__card--l03 { order: 4; }
+  .stk__card--l02 { order: 5; }
+  .stk__card--l01 { order: 6; }
+  .stk__shelf {
+    order: 7;
+    grid-column: auto;
+  }
+  .stk__apps {
     grid-template-columns: minmax(0, 1fr);
   }
   .nl {
