@@ -1,75 +1,75 @@
-// 메인 히어로 카드 — 큰 카드 3(영상 고정) + 작은 카드 3. 작은 카드나 층 띠의 탭을 누르면
-// 그 층의 카피 블록이 가로 카드로 들어오고, 있던 층의 블록이 작은 카드로 나간다 — 영상은
-// 그대로 돈다. 접근성·배터리 배려: reduced-motion 은 재생하지 않고, 화면 밖이면 멈춘다.
+// 메인 히어로 카드 — 01 · 02 는 고정, 03 ~ 06 중 하나만 가로로 펼쳐진다. 작은 카드나
+// 층 띠의 탭을 누르면 그 카드가 제자리에서 펼쳐지고 있던 가로 카드가 접힌다 — 번호도
+// 내용도 자리를 떠나지 않는다. 펼친 카드의 영상만 재생한다(01 · 02 는 늘).
+// 접근성·배터리 배려: reduced-motion 은 재생하지 않고, 화면 밖이면 전부 멈춘다.
 
 export function initHeroObject() {
   const track = document.querySelector("[data-hcards]");
   if (!track) return;
-  const wide = track.querySelector("[data-hwide]");
-  const minis = [...track.querySelectorAll("[data-hmini]")];
+  const cards = [...track.querySelectorAll("[data-hcard]")];
+  const flex = [...track.querySelectorAll("[data-hflex]")];
   const tabs = [...document.querySelectorAll("[data-hlayer]")];
-  if (!wide || !minis.length) return;
+  const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let visible = true;
 
-  // 카드가 지금 품은 층의 번호 · 이름 · 링크를 카피 블록에서 다시 읽어 붙인다.
-  const label = (card) => {
-    const t = card.querySelector(".hcard__text");
-    if (!t) return;
-    card.href = t.dataset.href || "#";
-    card.querySelector(".hcard__n").textContent = t.dataset.n;
-    const side = card.querySelector(".hcard__side");
-    if (side) side.textContent = t.dataset.name;
-    if (t.dataset.event) card.dataset.gaEvent = t.dataset.event;
-    t.classList.remove("is-in");
-    void t.offsetWidth;
-    t.classList.add("is-in");
-  };
-  const layerOf = (card) => Number(card.querySelector(".hcard__text")?.dataset.layer);
-  const bigLayers = () => [...track.querySelectorAll("[data-hcard]")].map(layerOf);
-  const syncTabs = () => {
-    const on = new Set(bigLayers());
+  const isWide = (c) => c.classList.contains("hcard--wide");
+  const sync = () => {
+    cards.forEach((c) => {
+      const v = c.querySelector("video");
+      if (!v) return;
+      const plays = !reduced && visible && (!c.dataset.hflex || isWide(c));
+      if (plays) v.play().catch(() => {});
+      else v.pause();
+    });
     tabs.forEach((t, i) => {
-      t.classList.toggle("is-active", on.has(i));
-      if (on.has(i)) t.setAttribute("aria-current", "true");
+      const c = cards[i];
+      const on = !!c && (!c.dataset.hflex || isWide(c));
+      t.classList.toggle("is-active", on);
+      if (on) t.setAttribute("aria-current", "true");
       else t.removeAttribute("aria-current");
     });
   };
-
-  const swap = (mini) => {
-    const a = wide.querySelector(".hcard__text");
-    const b = mini.querySelector(".hcard__text");
-    if (!a || !b) return;
-    mini.appendChild(a);
-    wide.appendChild(b);
-    label(wide);
-    label(mini);
-    syncTabs();
+  const expand = (card) => {
+    if (isWide(card)) return;
+    flex.forEach((c) => {
+      const on = c === card;
+      c.classList.toggle("hcard--wide", on);
+      c.classList.toggle("hcard--mini", !on);
+      const t = c.querySelector(".hcard__text");
+      if (t) {
+        t.classList.remove("is-in");
+        if (on) {
+          void t.offsetWidth;
+          t.classList.add("is-in");
+        }
+      }
+    });
+    sync();
   };
 
-  minis.forEach((m) => {
-    m.addEventListener("click", (e) => {
+  flex.forEach((c) => {
+    // 작은 카드의 첫 클릭은 펼침, 펼친 카드의 클릭은 이동.
+    c.addEventListener("click", (e) => {
+      if (isWide(c)) return;
       e.preventDefault();
-      swap(m);
+      expand(c);
     });
   });
-  tabs.forEach((t, i) =>
+  tabs.forEach((t, i) => {
     t.addEventListener("click", () => {
-      const mini = minis.find((m) => layerOf(m) === i);
-      if (mini) swap(mini);
-    }),
-  );
-
-  const videos = [...track.querySelectorAll("video")];
-  if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    videos.forEach((v) => {
-      v.removeAttribute("autoplay");
-      v.pause();
+      const c = cards[i];
+      if (c?.dataset.hflex) expand(c);
     });
-  } else {
-    const io = new IntersectionObserver(
-      ([entry]) => videos.forEach((v) => (entry.isIntersecting ? v.play().catch(() => {}) : v.pause())),
-      { threshold: 0.05 },
-    );
-    io.observe(track);
-  }
-  syncTabs();
+  });
+
+  if (reduced) cards.forEach((c) => c.querySelector("video")?.removeAttribute("autoplay"));
+  const io = new IntersectionObserver(
+    ([entry]) => {
+      visible = entry.isIntersecting;
+      sync();
+    },
+    { threshold: 0.05 },
+  );
+  io.observe(track);
+  sync();
 }
