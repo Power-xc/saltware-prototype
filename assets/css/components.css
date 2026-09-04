@@ -696,28 +696,6 @@
 .hero__layer--top {
   color: var(--text-accent);
 }
-/* 다음 화면이 있다는 표시. 명세 §9 가 상시 애니메이션을 금지하므로 움직이지 않는다. */
-/* 다음 화면이 있다는 표시. 흐름 안에 둔다 — 절대 배치하면
-   일시정지 버튼과 같은 자리에 겹쳐 앉는다. */
-.hero__cue {
-  position: relative;
-  z-index: 1;
-  justify-self: center;
-  margin-top: var(--sp-4);
-  font-size: var(--fs-label);
-  letter-spacing: var(--tracking-label);
-  color: var(--hero-ink-soft);
-  opacity: 0.55;
-  display: grid;
-  justify-items: center;
-  gap: 6px;
-}
-.hero__cue::after {
-  content: "";
-  width: 1px;
-  height: 28px;
-  background: linear-gradient(currentColor, transparent);
-}
 .hero__center {
   position: relative;
   z-index: 1;
@@ -897,8 +875,7 @@
 }
 .hero--home .hero__center,
 .hero--home .hero__feature,
-.hero--home .hero__layers,
-.hero--home .hero__cue {
+.hero--home .hero__layers {
   position: relative;
   z-index: 1;
 }
@@ -3227,28 +3204,36 @@ a.post:hover .post__more {
 
 /* 레퍼런스는 섹션을 선으로 자르지 않는다. 배경과 여백이 구분을 맡는다.
    메인에만 적용한다 — 하위 페이지는 지금의 hairline 구분을 유지한다. */
-/* 홈 세로 리듬 — 위(64~104) + 아래(64~104)가 겹쳐 섹션 사이가 최대 208px
-   벌어졌다("여백이 너무 큼", 사령관 실측). 홈만 한 단계 조인다. */
+/* 홈 세로 리듬 — 값 하나(--home-gap)로 통일한다(사령관 "전체 간격 최적화" 2026-09-04).
+   위·아래가 같은 값이라 섹션 사이는 그 두 배(데스크톱 120)다. 이전엔 72+72 에
+   밴드가 컨테이너 패딩까지 겹쳐 248px 로 벌어졌다(실측 1440). */
+.home {
+  --home-gap: clamp(40px, 4.6vw, 60px);
+}
 .home .section > .container {
   border-top: 0;
-  padding-top: clamp(44px, 5.5vw, 72px);
+  padding-top: var(--home-gap);
 }
 .home .section {
-  padding-bottom: clamp(44px, 5.5vw, 72px);
+  padding-bottom: var(--home-gap);
 }
+/* 밴드는 자기 안쪽 여백만 갖는다 — 바깥 패딩은 앞 섹션의 아래 여백이 맡는다. */
 .home .section--band {
-  padding-block: var(--section-py);
+  padding-block: clamp(56px, 6vw, 80px);
+}
+.home .section--band > .container {
+  padding-top: 0;
 }
 /* wide 변형의 큰 패딩과 다음 섹션 당김(-py-lg 음수 마진)은 서브페이지
    헤어라인 정렬용이다 — 홈 리듬에선 다음 섹션 머리가 컷 밑으로 파고든다
    (실측 -152px, INSIGHTS 고아 노출). 홈에서는 보통 섹션과 같게 눕힌다. */
 .home .section--wide {
-  padding-block: 0 clamp(44px, 5.5vw, 72px);
+  padding-block: 0 var(--home-gap);
 }
 .home .section--wide > .container,
 .home .section--wide + .section > .container {
   margin-top: 0;
-  padding-top: clamp(44px, 5.5vw, 72px);
+  padding-top: var(--home-gap);
 }
 /* 마무리는 가운데로 모은다. 레퍼런스의 밴드가 그렇게 생겼다. */
 .section--focus > .container {
