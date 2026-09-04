@@ -3040,9 +3040,27 @@ a.quiet:hover {
 .post--lead {
   grid-row: span 2;
 }
+/* 대표 표지는 16:9 — 3:2 는 912px 폭에서 608px 이라 섹션이 화면을 넘겼다(20차 판정). */
 .post--lead .post__cover {
-  aspect-ratio: 3 / 2;
+  aspect-ratio: var(--cover-ratio);
   border-radius: var(--radius-lg);
+}
+/* 보조 둘은 표지 왼쪽 · 글 오른쪽. 세로로 쌓으면 오른쪽 열이 대표보다 높아져
+   섹션 높이를 끌어올린다(실측 1440: 오른쪽 734 vs 대표 623). */
+.post:not(.post--lead) {
+  grid-template-columns: minmax(0, 0.44fr) minmax(0, 1fr);
+  column-gap: var(--sp-4);
+  align-content: start;
+}
+.post:not(.post--lead) > * {
+  grid-column: 2;
+}
+.post:not(.post--lead) .post__cover {
+  grid-column: 1;
+  grid-row: 1 / -1;
+  height: 100%;
+  min-height: 104px;
+  aspect-ratio: auto;
 }
 .post--lead .post__title {
   font-size: var(--fs-h3);
@@ -3054,24 +3072,21 @@ a.quiet:hover {
   .posts {
     grid-template-columns: minmax(0, 1fr);
   }
-  /* 보조 둘은 표지 왼쪽 · 글 오른쪽으로 눕힌다 — 폰에서 셋을 다 세우면 900px 을 넘긴다. */
-  .post:not(.post--lead) {
-    grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr);
-    column-gap: var(--sp-4);
-    align-content: start;
-  }
-  .post:not(.post--lead) > * {
-    grid-column: 2;
-  }
-  .post:not(.post--lead) .post__cover {
-    grid-column: 1;
-    grid-row: 1 / -1;
-    height: 100%;
-    min-height: 96px;
-    aspect-ratio: auto;
-  }
   .post--lead {
     grid-row: auto;
+  }
+  /* 폰은 대표 표지도 2:1 — 한 열이라 16:9 는 201px 을 먹는다. 보조는 더 얇게. */
+  .post--lead .post__cover {
+    aspect-ratio: 2 / 1;
+  }
+  .posts {
+    gap: var(--sp-5);
+  }
+  .post:not(.post--lead) .post__cover {
+    min-height: 84px;
+  }
+  .post:not(.post--lead) .post__title {
+    font-size: var(--fs-body);
   }
   .post--lead .post__cover {
     aspect-ratio: var(--cover-ratio);
