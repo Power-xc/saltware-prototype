@@ -1508,99 +1508,167 @@ a.bg__asset:hover {
 }
 
 /* ── 푸터 ─────────────────────────────────────────────── */
+/* ── 푸터 — 어두운 면 · 접힌 링크 그룹 ─────────────────
+   데이터브릭스 푸터의 구조(사령관 요청 2026-09-04): 로고 → 접힌 링크 그룹이
+   세로로 쌓이고 → 채용 안내 → 주소 · SNS → 저작권 · 법적 고지. 명세 §11.14 가
+   허용한 검정 푸터라 --bg-inverse 위에 on-inverse 글자 토큰만 쓴다. */
 .site-footer {
-  background: var(--bg-band);
-  border-top: 1px solid var(--border-hair);
-  margin-top: var(--sp-9);
+  background: var(--bg-inverse);
+  color: var(--text-on-inverse);
+  padding-top: var(--sp-9);
   /* 마지막 줄이 부동 UI 밑에 깔리지 않게 아래를 비워 둔다. */
   padding-bottom: calc(var(--floating-clear) + env(safe-area-inset-bottom));
 }
+/* 바탕의 a:hover(회색)와 포커스 링(검정)은 어두운 면에서 사라진다. */
+.site-footer a:hover {
+  color: var(--text-on-inverse);
+}
+.site-footer :focus-visible {
+  outline-color: var(--text-on-inverse);
+}
+.site-footer .ext-mark {
+  color: inherit;
+  opacity: 0.6;
+}
+.footer__top {
+  display: grid;
+  gap: var(--sp-5);
+  margin-bottom: var(--sp-7);
+}
+.footer__top .wordmark {
+  width: 140px;
+  height: 23px;
+}
 /* 서술 한 문단. 푸터에 큰 제목을 두지 않는 대신 이 줄이 회사를 설명한다. */
 .footer__intro {
-  padding-top: var(--sp-8);
-}
-.footer__intro p {
   font-size: var(--fs-sm);
-  color: var(--text-muted);
+  color: var(--text-on-inverse-muted);
   max-width: 76ch;
   line-height: 1.7;
 }
-/* 정보군이 여섯이다. 4열로 두면 뒤 둘이 다음 줄로 접혀 1·2열 아래에 붙는다 —
-   실제로 그렇게 나가고 있었다. 열 수를 데이터에 맞춘다. */
-.footer__grid {
+/* 링크 그룹 왼쪽 · 채용 안내 오른쪽 아래. 그룹은 접힌 채로 쌓인다 —
+   여섯 묶음 30여 개 링크를 다 펼치면 푸터가 화면 하나를 넘긴다. */
+.footer__body {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: var(--sp-7) var(--sp-6);
-  padding-block: var(--sp-8);
-  align-items: start;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--sp-7) var(--sp-8);
+  align-items: end;
+  padding-bottom: var(--sp-8);
+}
+.footer__groups {
+  display: grid;
+  max-width: 640px;
 }
 .footer__label {
-  font-size: var(--fs-2xs);
-  letter-spacing: var(--tracking-label);
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding-block: var(--sp-4);
+  font-size: var(--fs-body);
   font-weight: 600;
-  letter-spacing: var(--tracking-label);
-  color: var(--text-faint);
-  margin-bottom: var(--sp-3);
+  color: var(--text-accent-on-inverse);
+  cursor: pointer;
+  list-style: none;
 }
-.footer__col a {
-  display: block;
+.footer__label::-webkit-details-marker {
+  display: none;
+}
+/* 펼침 표시 — 순수 CSS 꺾쇠. 열리면 뒤집힌다. */
+.footer__chev {
+  width: 8px;
+  height: 8px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform var(--dur-hover) var(--ease);
+}
+.footer__group[open] .footer__chev {
+  transform: translateY(2px) rotate(225deg);
+}
+.footer__list {
+  display: grid;
+  justify-items: start;
+  gap: var(--sp-2);
+  padding-bottom: var(--sp-5);
+}
+.footer__list a,
+.footer__list span {
   font-size: var(--fs-sm);
-  color: var(--text-secondary);
-  margin-bottom: var(--sp-3);
+  color: var(--text-on-inverse-muted);
   transition: color var(--dur-hover) var(--ease);
 }
-.footer__col a:hover {
-  color: var(--text-primary);
+.footer__careers {
+  display: grid;
+  gap: var(--sp-2);
+  justify-items: start;
+  padding-bottom: var(--sp-4);
+}
+.footer__careers-head {
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.35;
+}
+.footer__careers-link {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-accent-on-inverse);
+}
+/* 주소 · SNS — 작은 글자 한 덩어리. */
+.footer__info {
+  display: grid;
+  gap: var(--sp-6);
+  padding-bottom: var(--sp-7);
 }
 .footer__addr {
-  font-size: var(--fs-xs);
-  color: var(--text-muted);
-  margin-top: var(--sp-2);
-}
-/* 아래 바는 조용하게. 로고 · 회사 정보 한 줄 · SNS 세 덩어리로만 나눈다. */
-.footer__bottom {
-  border-top: 1px solid var(--border-hair);
-  padding-block: var(--sp-6);
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  gap: var(--sp-4) var(--sp-6);
-  align-items: start;
-}
-.footer__social {
-  flex-wrap: wrap;
-  justify-content: flex-end;
-}
-.footer__bottom .wordmark {
-  width: 128px;
-  height: 21px;
-  opacity: 0.72;
-}
-.footer__meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px var(--sp-4);
-  align-items: baseline;
+  justify-items: start;
+  gap: var(--sp-1);
+  font-style: normal;
   font-size: var(--fs-xs);
-  color: var(--text-faint);
+  color: var(--text-on-inverse-muted);
 }
-.footer__meta .footer__link {
-  color: var(--text-muted);
+.footer__firm {
+  color: var(--text-on-inverse);
 }
-.footer__meta .footer__link:hover {
-  color: var(--text-primary);
+.footer__map {
+  margin-top: var(--sp-2);
+  font-weight: 600;
+  color: var(--text-accent-on-inverse);
 }
 .footer__social {
   display: flex;
-  gap: var(--sp-3);
+  flex-wrap: wrap;
+  gap: var(--sp-4);
 }
 .footer__sns {
   font-size: var(--fs-xs);
-  color: var(--text-muted);
+  font-weight: 600;
+  color: var(--text-on-inverse-muted);
 }
-.footer__copy {
-  margin-left: auto;
+/* 아래 바 — 저작권과 법적 고지가 한 줄, 전부 왼쪽. 오른쪽 아래는 부동 UI
+   (문의 · 맨 위로)가 차지하는 자리라 거기 두면 가려진다(실측 1440). */
+.footer__bottom {
+  border-top: 1px solid var(--border-inverse);
+  padding-top: var(--sp-5);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--sp-3) var(--sp-6);
   font-size: var(--fs-xs);
-  color: var(--text-faint);
+  color: var(--text-on-inverse-muted);
+}
+.footer__legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+}
+.footer__legal > * + * {
+  border-left: 1px solid var(--border-inverse);
+  padding-left: var(--sp-3);
+}
+.footer__legal [aria-disabled="true"] {
+  opacity: 0.6;
 }
 
 /* ── 리드·통계·테이블·타임라인 ───────────────────────── */
@@ -1835,9 +1903,6 @@ a.bg__asset:hover {
 
 /* ── 반응형 — 브레이크포인트 4종만 쓴다 ───────────────── */
 @media (max-width: 1080px) {
-  .footer__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
   .split {
     grid-template-columns: 1fr;
   }
@@ -1917,16 +1982,12 @@ a.bg__asset:hover {
   .floating__ask {
     padding: 13px 15px;
   }
-  .footer__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--sp-6) var(--sp-5);
-  }
-  .footer__bottom {
+  /* 채용 안내가 그룹 아래로 내려온다. */
+  .footer__body {
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--sp-4);
   }
-  .footer__copy {
-    margin-left: 0;
+  .footer__groups {
+    max-width: none;
   }
   .slider__card {
     width: 200px;
@@ -3008,15 +3069,17 @@ a.quiet:hover {
   letter-spacing: -0.015em;
 }
 
-/* 표지 · 분류 · 제목 · 설명. 글 목록의 생김새. */
+/* 표지 · 분류 · 제목 · 링크. 글 목록의 생김새 — 데이터브릭스 스포트라이트의
+   문법(사령관 요청 2026-09-04): 상자 없이 표지가 위, 작은 분류, 제목, 화살표 링크.
+   제목은 섹션 머리가 가운데(section--center)라 격자만 전폭이다. */
 .posts {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--sp-6);
+  gap: var(--sp-7) var(--sp-6);
 }
 .post {
   display: grid;
-  gap: var(--sp-3);
+  gap: var(--sp-2);
   align-content: start;
   color: inherit;
   text-decoration: none;
@@ -3028,7 +3091,11 @@ a.quiet:hover {
   transition: transform var(--dur-hover) var(--ease);
   overflow: hidden;
 }
-/* 실물 표지가 있는 글 — 그라디언트 면 위를 이미지가 덮는다. */
+/* 실물 표지가 있는 글 — 그라디언트 면은 걷는다. 비율 반올림으로 남는
+   1px 틈에 파란 선이 비쳤다(실측 390·2x). */
+.post__cover:has(img) {
+  background: none;
+}
 .post__cover img {
   width: 100%;
   height: 100%;
@@ -3053,12 +3120,14 @@ a.post:hover .post__cover {
   align-items: center;
   justify-content: space-between;
 }
+.post__meta {
+  margin-top: var(--sp-2);
+}
 .post__tag {
-  background: var(--bg-band);
-  border-radius: var(--radius-xs);
-  padding: 4px 10px;
-  font-size: var(--fs-xs);
-  color: var(--text-secondary);
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-faint);
 }
 .post__title {
   font-size: var(--fs-h4);
@@ -3069,6 +3138,16 @@ a.post:hover .post__cover {
 .post__desc {
   font-size: var(--fs-sm);
   color: var(--text-muted);
+}
+.post__more {
+  margin-top: var(--sp-1);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-accent);
+}
+a.post:hover .post__more {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 /* 칸마다 크기가 다른 격자. 대표 숫자가 두 칸을 먹는다. */
@@ -3194,6 +3273,14 @@ a.post:hover .post__cover {
   }
   .posts {
     grid-template-columns: minmax(0, 1fr);
+  }
+  /* 법적 고지가 줄을 바꾸면 세로줄이 줄머리에 남는다 — 좁은 폭은 간격만으로 나눈다. */
+  .footer__legal {
+    gap: var(--sp-2) var(--sp-4);
+  }
+  .footer__legal > * + * {
+    border-left: 0;
+    padding-left: 0;
   }
   /* 스택 — 한 열, 06 → 01 순서(order). 열 래퍼는 contents 로 풀어 카드가 직접 격자 항목이 된다. */
   .stack {
