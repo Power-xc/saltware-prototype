@@ -1,13 +1,18 @@
-import { initAnalytics } from "./analytics.mjs?v=290e1b796111";
-import { initNav } from "./nav.mjs?v=290e1b796111";
-import { initReveal } from "./reveal.mjs?v=290e1b796111";
-import { initFaq, initCaseFilter, initFooterGroups } from "./disclosure.mjs?v=290e1b796111";
-import { initContactForm } from "./contact-form.mjs?v=290e1b796111";
-import { initAttribution } from "./attribution.mjs?v=290e1b796111";
-import { initHeroObject } from "./hero-object.mjs?v=290e1b796111";
-import { initNewsletter } from "./newsletter.mjs?v=290e1b796111";
-import { initDroplets } from "./droplets.mjs?v=290e1b796111";
-import { initCases } from "./cases.mjs?v=290e1b796111";
+import { initAnalytics } from "./analytics.mjs?v=6ae41f564c8c";
+import { initNav } from "./nav.mjs?v=6ae41f564c8c";
+import { initReveal } from "./reveal.mjs?v=6ae41f564c8c";
+import {
+  initFaq,
+  initCaseFilter,
+  initFooterGroups,
+  initStackFold,
+} from "./disclosure.mjs?v=6ae41f564c8c";
+import { initContactForm } from "./contact-form.mjs?v=6ae41f564c8c";
+import { initAttribution } from "./attribution.mjs?v=6ae41f564c8c";
+import { initHeroObject } from "./hero-object.mjs?v=6ae41f564c8c";
+import { initNewsletter } from "./newsletter.mjs?v=6ae41f564c8c";
+import { initDroplets } from "./droplets.mjs?v=6ae41f564c8c";
+import { initCases } from "./cases.mjs?v=6ae41f564c8c";
 
 try {
   initAnalytics();
@@ -38,6 +43,11 @@ try {
   initFooterGroups();
 } catch (e) {
   console.warn("Footer groups failed:", e);
+}
+try {
+  initStackFold();
+} catch (e) {
+  console.warn("Stack fold failed:", e);
 }
 try {
   initContactForm();

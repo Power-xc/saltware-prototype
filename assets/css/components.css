@@ -2057,12 +2057,12 @@ a.bg__asset:hover {
    카드는 아트 위 · 글 아래 — 그림 위 스크림에 글자를 얹던 3차 형태를 걷었다. 높이는 반으로. */
 .stack {
   display: grid;
-  gap: var(--sp-6);
+  gap: var(--sp-5);
 }
 .stk__head {
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-  gap: var(--sp-3) var(--sp-8);
+  gap: var(--sp-2) var(--sp-8);
   align-items: start;
 }
 .stk__head > .eyebrow {
@@ -2091,6 +2091,7 @@ a.bg__asset:hover {
 /* 가로 카드 — 아트 왼쪽(정사각에 가깝게 자름) · 글 오른쪽. 세로 카드 두 줄이 1,000px 을 먹어
    "좀 더 작게"(15차 판정) — 두 줄 400px 안에 여섯이 들어오고, 아래 응용 선반과 같은 생김새가 된다. */
 .stk__card {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr);
   border-radius: var(--radius-lg);
@@ -2226,7 +2227,7 @@ a.stk__cross:hover {
 .stk__shelf {
   display: grid;
   gap: var(--sp-2);
-  padding: var(--sp-5) var(--sp-6);
+  padding: var(--sp-4) var(--sp-5);
   border-radius: var(--radius-xl);
   background: var(--bg-band);
 }
@@ -2263,6 +2264,7 @@ a.stk__app:hover {
   border-left-color: var(--accent-smart-farm);
 }
 .stk__app-art {
+  max-height: 56px;
   display: block;
   width: 100%;
   aspect-ratio: 16 / 10;
@@ -3023,8 +3025,9 @@ a.quiet:hover {
 .cases__body[hidden] {
   display: none;
 }
+/* 컷은 2:1 — 16:10 은 484px 이라 섹션 하나가 화면 반을 먹었다(16차 판정 2026-09-04). */
 .cases__media {
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 2 / 1;
   overflow: hidden;
 }
 /* 컷이 있으면 면을 채운다 — 없는 사례는 아래 사업 톤의 면으로 남는다. */
@@ -3091,8 +3094,8 @@ a.quiet:hover {
    제목은 섹션 머리가 가운데(section--center)라 격자만 전폭이다. */
 .posts {
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-  gap: var(--sp-6);
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: var(--sp-5);
 }
 /* 큰 대표 1 + 작은 2 — 명세 §11.9·§445 의 비대칭(2차 판정 2026-09-04). 대표가
    왼쪽 두 행을 차지하고 보조 둘이 오른쪽에 쌓인다. 대표 표지는 3:2 라
@@ -3101,12 +3104,29 @@ a.quiet:hover {
   grid-row: span 2;
 }
 .post--lead .post__cover {
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 2 / 1;
   border-radius: var(--radius-lg);
 }
 .post--lead .post__title {
   font-size: var(--fs-h3);
   letter-spacing: var(--tracking-tight);
+}
+/* 보조 둘은 가로 카드 — 표지 왼쪽 · 글 오른쪽(스택 카드와 같은 결, 16차 판정).
+   세로로 쌓으면 대표 높이를 넘겨 섹션이 1,000px 을 먹었다(실측 1440). */
+.post:not(.post--lead) {
+  grid-template-columns: minmax(0, 0.46fr) minmax(0, 1fr);
+  column-gap: var(--sp-4);
+  align-content: start;
+}
+.post:not(.post--lead) > * {
+  grid-column: 2;
+}
+.post:not(.post--lead) .post__cover {
+  grid-column: 1;
+  grid-row: 1 / -1;
+  height: 100%;
+  min-height: 108px;
+  aspect-ratio: auto;
 }
 /* 좁은 폭 — 대표도 보조도 한 열, 같은 비율·같은 제목 크기. 기본 규칙 뒤에
    있어야 이긴다(앞쪽 860 블록에 두었더니 덮였다 — 실측 390). */
@@ -3328,16 +3348,48 @@ a.post:hover .post__more {
     border-left: 0;
     padding-left: 0;
   }
-  /* 스택 — 카드 한 열, 아트 위 · 글 아래(폰 폭에선 옆에 둘 자리가 없다). */
+  /* 스택 — 카드 한 열, 아트 위 · 글 아래(폰 폭에선 옆에 둘 자리가 없다).
+     아트는 21:9 로 눕혀 여섯 장이 먹는 세로를 줄인다(17차 판정 "모바일 높이 살짝"). */
   .stk__grid {
     grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-2);
   }
   .stk__card {
     grid-template-columns: minmax(0, 1fr);
   }
   .stk__media {
     min-height: 0;
-    aspect-ratio: 2 / 1;
+    aspect-ratio: 21 / 9;
+  }
+  .stk__text {
+    padding: var(--sp-3) var(--sp-4) var(--sp-4);
+  }
+  /* 04 ~ 06 은 접힌 한 줄 — 번호 + 이름만. 누르면 펼쳐진다(disclosure.mjs). */
+  .stk__card--fold.is-folded {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: var(--sp-3);
+    min-height: 56px;
+    padding: var(--sp-3) var(--sp-4);
+    cursor: pointer;
+  }
+  .stk__card--fold.is-folded .stk__media,
+  .stk__card--fold.is-folded .stk__ko,
+  .stk__card--fold.is-folded .stk__role,
+  .stk__card--fold.is-folded .stk__tech,
+  .stk__card--fold.is-folded .stk__more {
+    display: none;
+  }
+  .stk__card--fold.is-folded .stk__n {
+    position: static;
+  }
+  .stk__card--fold.is-folded .stk__text {
+    padding: 0;
+  }
+  .stk__card--fold.is-folded .stk__name {
+    font-size: var(--fs-sm);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
   }
   .stk__apps {
     grid-template-columns: minmax(0, 1fr);
@@ -3363,11 +3415,15 @@ a.post:hover .post__more {
    위·아래가 같은 값이라 섹션 사이는 그 두 배(데스크톱 120)다. 이전엔 72+72 에
    밴드가 컨테이너 패딩까지 겹쳐 248px 로 벌어졌다(실측 1440). */
 .home {
-  --home-gap: clamp(40px, 4.6vw, 60px);
+  --home-gap: clamp(36px, 3.8vw, 52px);
 }
 .home .section > .container {
   border-top: 0;
   padding-top: var(--home-gap);
+}
+/* 홈은 섹션이 열하나다 — 머리와 본문 사이도 한 단 조인다(16차 판정). */
+.home .section__head {
+  margin-bottom: var(--sp-5);
 }
 .home .section {
   padding-bottom: var(--home-gap);
