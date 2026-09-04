@@ -942,6 +942,51 @@
     animation: none;
   }
 }
+/* 1280 아래 — 여섯을 한 줄에 두면 세로 카드가 200px 밑으로 내려가 카피가 번호 칩을 덮는다
+   (실측 1080 · 900). 큰 셋은 윗줄에 예시 비율 그대로, 작은 셋은 아랫줄 가로 막대.
+   작은 카드를 누르면 윗줄 가로 자리로 올라오고 있던 가로 카드가 아랫줄로 내려간다. */
+@media (max-width: 1279px) {
+  .hcards {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 2.34fr);
+    align-items: stretch;
+  }
+  .hcard {
+    grid-row: 1;
+    transition: none;
+  }
+  .hcard--wide {
+    grid-row: 1;
+    grid-column: 3;
+  }
+  .hcard--mini {
+    grid-row: 2;
+    grid-column: auto;
+    aspect-ratio: auto;
+    min-height: 56px;
+    padding: var(--sp-3) var(--sp-4);
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+  }
+  .hcard--mini .hcard__n,
+  .hcard--mini .hcard__side {
+    position: static;
+    transform: none;
+  }
+  .hcard--mini .hcard__n {
+    padding-inline: 10px;
+  }
+  .hcard--mini .hcard__side {
+    writing-mode: horizontal-tb;
+    font-size: var(--fs-2xs);
+    white-space: normal;
+  }
+  .hcard--wide .hcard__tech {
+    display: none;
+  }
+}
+
 /* 물방울 오브젝트 — 로고의 원에서 온 브랜드 오브젝트. 콘텐츠 뒤, 고스트 글자 앞. */
 .hero__drops {
   position: absolute;
@@ -1874,18 +1919,6 @@ a.bg__asset:hover {
     grid-template-columns: 1fr;
     gap: var(--sp-2);
   }
-}
-@media (max-width: 640px) {
-  .grid--2,
-  .grid--3,
-  .grid--4,
-  .steps {
-    grid-template-columns: 1fr;
-  }
-  /* 부연의 사령관 줄바꿈은 이 폭에서 고아 줄을 만든다 — 접고 자연 줄바꿈에 맡긴다. */
-  .br-soft {
-    display: none;
-  }
   /* 모바일은 리드가 5줄로 늘어 위 여백을 줄여 수납한다(실측 390). */
   .hero--home {
     padding-top: var(--sp-6);
@@ -1906,23 +1939,17 @@ a.bg__asset:hover {
   .hero__layer + .hero__layer::before {
     content: none;
   }
-  /* 390 에서 필 라벨이 슬라이더 도트와 문의 입력칸을 덮는다(실측) —
-     라벨을 접고 스파크만 남긴 원형으로 줄인다. */
-  .floating__label {
-    display: none;
-  }
-  .floating__ask {
-    padding: 13px 15px;
-  }
-  /* 히어로 카드 — 세로 아코디언. 큰 카드(01 · 02 · 펼친 것)는 3:2, 작은 카드는 번호 + 가로 이름 한 줄. */
+  /* 히어로 카드 — 세로 아코디언. 큰 카드(01 · 02 · 펼친 것)는 태블릿 2:1(셋을 3:2 로 쌓으면
+     1400px 을 넘긴다 — 실측 768), 폰은 3:2. 작은 카드는 번호 + 가로 이름 한 줄. */
   .hcards {
+    display: flex;
     flex-direction: column;
     gap: var(--sp-2);
   }
   .hcard,
   .hcard--wide {
     flex: none;
-    aspect-ratio: 3 / 2;
+    aspect-ratio: 2 / 1;
     padding: var(--sp-4);
     transition: none;
   }
@@ -1955,6 +1982,31 @@ a.bg__asset:hover {
   .hcard--wide .hcard__desc,
   .hcard--wide .hcard__tech {
     display: none;
+  }
+}
+@media (max-width: 640px) {
+  .grid--2,
+  .grid--3,
+  .grid--4,
+  .steps {
+    grid-template-columns: 1fr;
+  }
+  /* 부연의 사령관 줄바꿈은 이 폭에서 고아 줄을 만든다 — 접고 자연 줄바꿈에 맡긴다. */
+  .br-soft {
+    display: none;
+  }
+  /* 폰은 큰 카드를 3:2 로 — 2:1 은 두 줄 제목이 칩에 닿는다. */
+  .hcard,
+  .hcard--wide {
+    aspect-ratio: 3 / 2;
+  }
+  /* 390 에서 필 라벨이 슬라이더 도트와 문의 입력칸을 덮는다(실측) —
+     라벨을 접고 스파크만 남긴 원형으로 줄인다. */
+  .floating__label {
+    display: none;
+  }
+  .floating__ask {
+    padding: 13px 15px;
   }
   /* 푸터 — 열이 접힌 그룹으로 바뀐다(disclosure.mjs 가 open 을 내린다). */
   .footer__groups {
