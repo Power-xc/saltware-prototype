@@ -23,6 +23,8 @@
   --c-accent-500: #0071e3;
   /* 워드마크 점 4개의 실측값(재구성 2026-08-31) — 브랜드 가이드 스와치가 쓴다. */
   --c-brand-dot: #f49f20;
+  /* 제목 램프의 끝 — 점 주황보다 한 단 짙어 글자에 깊이가 생긴다. */
+  --c-brand-dot-deep: #e8811a;
   /* 글자용 파랑. #0071e3 는 회색 밴드 위에서 4.31:1 로 모자란다. */
   --c-accent-550: #0064cc;
   --c-accent-600: #0055b4;
@@ -124,10 +126,10 @@
   --hero-bg: var(--c-neutral-50);
   --hero-ink: var(--c-neutral-900);
   --hero-ink-soft: var(--c-neutral-600);
-  /* 히어로 제목 첫 줄. 레퍼런스는 분홍→보라였으나 사령관 판정(2026-08-31)으로
-     브랜드 컬러시스템의 파랑 램프를 쓴다 — 이미지 계약(보라 금지)과도 맞는다. */
-  --hero-accent-from: var(--text-accent-on-inverse);
-  --hero-accent-to: var(--c-accent-500);
+  /* 히어로 제목 첫 줄. 파랑 램프(2026-08-31)에서 로고 점의 주황 램프로(사령관 판정
+     2026-09-04 "로고 색 녹이자") — 히어로 카드 영상(주황·검정)과 한 결이 된다. */
+  --hero-accent-from: var(--c-brand-dot);
+  --hero-accent-to: var(--c-brand-dot-deep);
 
   /* 기획 실측 — 섹션 여백과 격자 간격은 스케일에 없는 값이다. */
   --section-py: clamp(64px, 8vw, 104px);

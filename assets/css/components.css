@@ -574,49 +574,49 @@
   max-width: 42ch;
 }
 .hero--media.hero--m-cloud {
-  background-image: url("/saltware-prototype/media/business/hero-cloud.jpg?v=c22be010f30c");
+  background-image: url("/saltware-prototype/media/business/hero-cloud.jpg?v=2fc3595831d0");
 }
 .hero--media.hero--m-databricks {
-  background-image: url("/saltware-prototype/media/business/hero-databricks.jpg?v=c22be010f30c");
+  background-image: url("/saltware-prototype/media/business/hero-databricks.jpg?v=2fc3595831d0");
 }
 .hero--media.hero--m-identity {
-  background-image: url("/saltware-prototype/media/business/hero-identity.jpg?v=c22be010f30c");
+  background-image: url("/saltware-prototype/media/business/hero-identity.jpg?v=2fc3595831d0");
 }
 .hero--media.hero--m-redhat {
-  background-image: url("/saltware-prototype/media/business/hero-redhat.jpg?v=c22be010f30c");
+  background-image: url("/saltware-prototype/media/business/hero-redhat.jpg?v=2fc3595831d0");
 }
 .hero--media.hero--m-enview {
-  background-image: url("/saltware-prototype/media/business/hero-enview.jpg?v=c22be010f30c");
+  background-image: url("/saltware-prototype/media/business/hero-enview.jpg?v=2fc3595831d0");
 }
 .hero--media.hero--m-smart-farm {
-  background-image: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=c22be010f30c");
+  background-image: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=2fc3595831d0");
 }
 .hero--media.hero--m-hub-business {
-  background-image: url("/saltware-prototype/media/hub/hub-business.jpg?v=c22be010f30c");
+  background-image: url("/saltware-prototype/media/hub/hub-business.jpg?v=2fc3595831d0");
 }
 .hero--media.hero--m-hub-industries {
-  background-image: url("/saltware-prototype/media/hub/hub-industries.jpg?v=c22be010f30c");
+  background-image: url("/saltware-prototype/media/hub/hub-industries.jpg?v=2fc3595831d0");
 }
 .hero--media.hero--m-hub-insights {
-  background-image: url("/saltware-prototype/media/hub/hub-insights.jpg?v=c22be010f30c");
+  background-image: url("/saltware-prototype/media/hub/hub-insights.jpg?v=2fc3595831d0");
 }
 .hero--media.hero--m-hub-company {
-  background-image: url("/saltware-prototype/media/hub/hub-company.jpg?v=c22be010f30c");
+  background-image: url("/saltware-prototype/media/hub/hub-company.jpg?v=2fc3595831d0");
 }
 .hero--media.hero--m-ind-public {
-  background-image: url("/saltware-prototype/media/industry/ind-public.jpg?v=c22be010f30c");
+  background-image: url("/saltware-prototype/media/industry/ind-public.jpg?v=2fc3595831d0");
 }
 .hero--media.hero--m-ind-finance {
-  background-image: url("/saltware-prototype/media/industry/ind-finance.jpg?v=c22be010f30c");
+  background-image: url("/saltware-prototype/media/industry/ind-finance.jpg?v=2fc3595831d0");
 }
 .hero--media.hero--m-ind-manufacturing {
-  background-image: url("/saltware-prototype/media/industry/ind-manufacturing.jpg?v=c22be010f30c");
+  background-image: url("/saltware-prototype/media/industry/ind-manufacturing.jpg?v=2fc3595831d0");
 }
 .hero--media.hero--m-ind-education {
-  background-image: url("/saltware-prototype/media/industry/ind-education.jpg?v=c22be010f30c");
+  background-image: url("/saltware-prototype/media/industry/ind-education.jpg?v=2fc3595831d0");
 }
 .hero--media.hero--m-ind-agriculture {
-  background-image: url("/saltware-prototype/media/industry/ind-agriculture.jpg?v=c22be010f30c");
+  background-image: url("/saltware-prototype/media/industry/ind-agriculture.jpg?v=2fc3595831d0");
 }
 
 .hero--home {
@@ -631,11 +631,10 @@
   display: grid;
   grid-template-rows: 1fr auto;
   align-content: center;
-  /* 첫 화면 수납(사령관 판정 2026-08-31) — 제목·서브·오브젝트에 배너 반 이상까지
+  /* 첫 화면 수납(사령관 판정 2026-08-31) — 제목·서브·층 띠에 카드 반 이상까지
      한 뷰포트에 들어오도록 세로 리듬을 조인다. 제목 위 여백은 사령관이
      세 번에 걸쳐 내려 잡은 값이다 — 정렬로는 안 내려간다(콘텐츠가 화면을
      이미 채워 1fr 여유가 0). 실공간을 위에 넣는 것만 먹힌다(실측).
-     내린 만큼 오브젝트 음수 마진이 상쇄해 배너 위치는 유지된다.
      84 는 제목이 두 줄이던 시절의 값이다(v2.1). v3 에서 제목이 한 줄로 줄고
      리드 아래 부연 세 줄이 들어오면서 배너가 첫 화면 밖으로 밀렸다 —
      부연이 먹은 만큼(실측 44px) 여기서 되돌려 "배너 반 이상" 규칙을 지킨다.
@@ -644,9 +643,9 @@
   padding-bottom: var(--sp-6);
   text-align: center;
 }
-/* 오브젝트 아래 층 띠 — 오브젝트가 무엇의 상징인지 적는다(2026-09-02).
+/* 리드 아래 층 띠 — 스택의 여섯 층을 한 줄로 적는다(2026-09-02).
    여섯 층이 선으로 이어지고 맨 끝 AI 만 액센트를 받는다. 통째로 스택 섹션 앵커다.
-   배너와 한 화면에 들어가야 하므로 오브젝트 아래 빈 면을 파고든다. */
+   오브젝트가 빠진 뒤(4차 판정 2026-09-04)에는 리드 아래 정상 간격으로 앉는다. */
 .hero__layers {
   justify-self: center;
   display: flex;
@@ -654,7 +653,7 @@
   justify-content: center;
   align-items: center;
   row-gap: var(--sp-2);
-  margin-top: calc(var(--sp-5) * -1);
+  margin-top: var(--sp-6);
   padding: 0 var(--sp-4);
   font-size: var(--fs-label-caps);
   font-weight: 600;
@@ -710,53 +709,14 @@
   z-index: 1;
   display: grid;
   /* 바깥 1fr 행이 남는 높이를 받으면 내부 행이 stretch 로 벌어진다.
-     제목 덩어리는 이 영역의 바닥, 즉 오브젝트 바로 위에 붙인다 —
-     center 에 margin 을 얹는 방식은 stretch 행에서 반만 먹혔다(실측).
-     오브젝트가 -22px 올라와 있어 서브와 살짝 겹친다(허용 판정). */
+     제목 덩어리는 이 영역의 바닥, 즉 층 띠 바로 위에 붙인다 —
+     center 에 margin 을 얹는 방식은 stretch 행에서 반만 먹혔다(실측). */
   align-content: end;
   gap: var(--sp-3);
   justify-items: center;
 }
-/* 메인 오브젝트 자리 — 사령관이 직접 제작 중(2026-08-31). 자산이 오면 이
-   컨테이너에 그대로 얹는다. 높이를 미리 예약해 도착 시 레이아웃이 튀지 않게
-   하고, 빈 동안은 옅은 점선 가이드가 자리를 보인다(사령관 지시로 유지). */
-.hero__object {
-  /* 영상 원본이 16:9 다 — 비율을 살리되, 배너 반 이상이 첫 화면에 같이
-     들어오는 크기까지만 키운다(1440×900 실측 예산). */
-  width: min(580px, 80vw);
-  aspect-ratio: 16 / 9;
-  /* 서브 폰트를 파고들어도 된다는 판정 — 영상 상단 40% 가 빈 검정이라 안전하다.
-     제목을 크게 내린 만큼(-44px) 여기서 상쇄해 배너 위치를 지킨다. */
-  margin: calc(var(--sp-5) * -1) auto 0;
-  display: grid;
-  place-items: center;
-  border: 1px dashed rgba(0, 0, 0, 0.14);
-  border-radius: var(--radius-hero);
-}
-.hero__object::after {
-  content: "OBJECT";
-  font-size: var(--fs-label-caps);
-  font-weight: 600;
-  letter-spacing: var(--tracking-label);
-  color: var(--hero-ink-soft);
-  opacity: 0.35;
-}
-/* 자산이 들어오면(자식이 생기면) 가이드는 스스로 사라진다. */
-.hero__object:not(:empty) {
-  border: 0;
-}
-.hero__object:not(:empty)::after {
-  content: none;
-}
-/* 오브젝트 영상은 알파 채널본(webm/vp9 + mov/hevc)이라 흰 바탕에 그대로 뜬다.
-   블렌드가 필요 없다 — 검정 배경은 인코딩 단계에서 밝기-알파로 걷어냈다. */
-.hero__object-video {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
 .hero--home h1 {
-  /* --fs-hero(최대 88px)에서 두 단계 줄인 램프 — 오브젝트·배너와 한 화면에
+  /* --fs-hero(최대 88px)에서 두 단계 줄인 램프 — 층 띠·카드와 한 화면에
      수납하기 위해서다(사령관 판정 2026-08-31). 토큰을 안 건드리는 이유:
      --fs-hero 는 벤토 대표 숫자가 같이 쓴다. */
   font-size: clamp(27px, 3.9vw, 50px);
@@ -1852,23 +1812,19 @@ a.bg__asset:hover {
   .br-soft {
     display: none;
   }
-  /* 모바일은 리드가 3줄로 늘어 데스크톱용 음수 마진이 리드 셋째 줄을
-     덮는다(실측 390). 상쇄 없이 리드 아래로 내리고, 위 여백을 줄여 수납한다. */
+  /* 모바일은 리드가 5줄로 늘어 위 여백을 줄여 수납한다(실측 390). */
   .hero--home {
     padding-top: var(--sp-7);
   }
-  .hero__object {
-    width: 86vw;
-    margin-top: 0;
-  }
-  /* 층 띠는 두 줄로 접히며 연결선이 줄 머리에 매달렸다(실측) — 선을 접고 격자로 둔다. */
+  /* 층 띠는 두 줄로 접히며 연결선이 줄 머리에 매달렸다(실측) — 선을 접고 격자로 둔다.
+     리드와는 한 단 띄운다 — 붙이면 리드의 마지막 줄로 읽힌다(실측 390). */
   .hero__layers {
     display: grid;
     grid-template-columns: repeat(3, auto);
     justify-content: center;
     column-gap: var(--sp-4);
     row-gap: var(--sp-2);
-    margin-top: 0;
+    margin-top: var(--sp-5);
   }
   .hero__layer + .hero__layer::before {
     content: none;
@@ -2338,13 +2294,13 @@ a.tile:hover {
   transform: translateY(-4px);
 }
 .sol--art-data-ai {
-  background-image: url("/saltware-prototype/media/home/mosaic-data-ai.jpg?v=c22be010f30c");
+  background-image: url("/saltware-prototype/media/home/mosaic-data-ai.jpg?v=2fc3595831d0");
 }
 .sol--art-databricks {
-  background-image: url("/saltware-prototype/media/home/mosaic-databricks.jpg?v=c22be010f30c");
+  background-image: url("/saltware-prototype/media/home/mosaic-databricks.jpg?v=2fc3595831d0");
 }
 .sol--art-cloud {
-  background-image: url("/saltware-prototype/media/home/mosaic-cloud.jpg?v=c22be010f30c");
+  background-image: url("/saltware-prototype/media/home/mosaic-cloud.jpg?v=2fc3595831d0");
 }
 .sol__eyebrow {
   font-size: var(--fs-label-caps);
