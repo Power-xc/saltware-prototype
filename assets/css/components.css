@@ -629,8 +629,11 @@
   background: var(--hero-bg);
   color: var(--hero-ink);
   display: grid;
-  /* 위에 붙인다 — 남는 높이는 카드 아래로(10차 판정 "위로 올리고"). */
-  align-content: start;
+  /* 첫 화면에 딱 맞춘다(13차 판정) — 글 덩어리는 위, [띠 + 카드] 덩어리가 남는 높이를 받아
+     카드가 그 높이를 채운다. 화면이 길면 카드가 예시 비율의 1.25배까지만 자라고 나머지는
+     글과 카드 사이 여백이 된다. 화면이 짧으면 카드가 줄되 260px 아래로는 안 내려간다(그땐 스크롤). */
+  grid-template-rows: auto minmax(0, 1fr);
+  align-content: stretch;
   /* 첫 화면 수납(사령관 판정 2026-08-31) — 제목·서브·층 띠에 카드 반 이상까지
      한 뷰포트에 들어오도록 세로 리듬을 조인다. 제목 위 여백은 사령관이
      세 번에 걸쳐 내려 잡은 값이다 — 정렬로는 안 내려간다(콘텐츠가 화면을
@@ -657,7 +660,7 @@
   justify-content: flex-start;
   align-items: center;
   row-gap: var(--sp-2);
-  margin-top: var(--sp-7);
+  margin-bottom: var(--sp-4);
   padding: 0;
   font-size: var(--fs-label-caps);
   font-weight: 600;
@@ -702,8 +705,9 @@
 }
 .hero--home h1 {
   /* 예시의 크기로 — 첫 화면에서 제목이 먼저 들어온다(10차 판정 "더 확 들어오게").
+     폭뿐 아니라 높이도 본다 — 낮은 노트북 화면(1440×800)에서 제목이 카드 자리를 먹지 않게.
      --fs-hero 토큰을 안 쓰는 이유: 벤토 대표 숫자가 같이 쓴다. */
-  font-size: clamp(30px, 5.2vw, 74px);
+  font-size: clamp(30px, min(5.2vw, 7.4svh), 74px);
   line-height: 1.04;
   letter-spacing: -0.045em;
   font-weight: 700;
@@ -748,7 +752,14 @@
   /* .container 의 auto 마진이 그리드 항목의 stretch 를 끈다 — 카드 여섯이 내용 폭으로
      오그라들어 가운데 몰렸다(실측 1440). 제목 블록과 같이 폭을 채운다. */
   width: 100%;
-  margin-top: var(--sp-1);
+  margin-top: var(--sp-7);
+  /* 띠 + 카드 덩어리 — 남는 높이의 바닥에 붙고, 카드가 그 높이를 채운다.
+     카드 높이 상한은 컨테이너 폭에서 계산한다(cqw). */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 0;
+  container-type: inline-size;
 }
 /* 히어로 카드 — 여섯 층이 번호 순서대로 한 줄. 01 · 02 는 디자이너 예시 비율(888×1292)의
    세로 카드로 고정, 03 ~ 06 중 하나가 가로(2.34) 나머지가 작은 카드(0.36)다(9차 판정
@@ -759,14 +770,17 @@
   display: flex;
   align-items: stretch;
   gap: var(--sp-4);
-  margin-top: var(--sp-4);
+  /* 높이 = 남는 첫 화면 높이. 상한은 예시 비율(세로 카드 888 : 1292)의 1.25배,
+     하한 260 — 세로 카드 폭 = (컨테이너 − 간격 5) / 5.42 단위. */
+  flex: 1 1 auto;
+  min-height: 260px;
+  max-height: calc((100cqw - 5 * var(--sp-4)) / 5.42 * 1.455 * 1.25);
 }
 .hcard {
   position: relative;
   isolation: isolate;
   flex: 1 1 0;
   min-width: 0;
-  aspect-ratio: 888 / 1292;
   display: grid;
   align-content: end;
   padding: var(--sp-5);
@@ -778,11 +792,9 @@
 }
 .hcard--wide {
   flex-grow: 2.34;
-  aspect-ratio: auto;
 }
 .hcard--mini {
   flex-grow: 0.36;
-  aspect-ratio: auto;
   cursor: pointer;
 }
 @media (hover: hover) {
@@ -949,7 +961,10 @@
   .hcards {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 2.34fr);
+    grid-template-rows: minmax(0, 1fr) auto;
     align-items: stretch;
+    min-height: calc(260px + 56px + var(--sp-4));
+    max-height: calc((100cqw - 2 * var(--sp-4)) / 4.34 * 1.455 * 1.25 + 56px + var(--sp-4));
   }
   .hcard {
     grid-row: 1;
@@ -1945,6 +1960,11 @@ a.bg__asset:hover {
     display: flex;
     flex-direction: column;
     gap: var(--sp-2);
+    min-height: 0;
+    max-height: none;
+  }
+  .hero__feature {
+    justify-content: flex-start;
   }
   .hcard,
   .hcard--wide {
