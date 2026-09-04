@@ -16,6 +16,25 @@ export function initFaq() {
   });
 }
 
+/** 푸터 링크 열 — 데스크톱은 열린 표, 모바일만 접는다. 마크업은 open 으로 나가
+    JS 가 없어도 전부 보인다. 폭 경계는 토큰(--bp-md)에서 읽는다 — 스타일시트와
+    어긋난 숫자를 여기 따로 두지 않는다. */
+export function initFooterGroups() {
+  const groups = document.querySelectorAll('.footer__group');
+  if (!groups.length) return;
+  const bp = getComputedStyle(document.documentElement).getPropertyValue('--bp-md').trim();
+  const narrow = window.matchMedia(`(max-width: ${bp})`);
+  const apply = () => {
+    groups.forEach((g) => {
+      g.open = !narrow.matches;
+      const s = g.querySelector('summary');
+      if (s) s.tabIndex = narrow.matches ? 0 : -1;
+    });
+  };
+  apply();
+  narrow.addEventListener('change', apply);
+}
+
 export function initCaseFilter() {
   document.querySelectorAll('[data-case-filter]').forEach((root) => {
     const chips = [...root.querySelectorAll('.chip')];

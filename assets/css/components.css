@@ -1508,14 +1508,16 @@ a.bg__asset:hover {
 }
 
 /* ── 푸터 ─────────────────────────────────────────────── */
-/* ── 푸터 — 어두운 면 · 접힌 링크 그룹 ─────────────────
-   데이터브릭스 푸터의 구조(사령관 요청 2026-09-04): 로고 → 접힌 링크 그룹이
-   세로로 쌓이고 → 채용 안내 → 주소 · SNS → 저작권 · 법적 고지. 명세 §11.14 가
-   허용한 검정 푸터라 --bg-inverse 위에 on-inverse 글자 토큰만 쓴다. */
+/* ── 푸터 — 어두운 면 · 열린 링크 열 ────────────────────
+   데이터브릭스 푸터의 면과 순서(사령관 요청 2026-09-04)에 명세 §11.14 의 Apple
+   정보구조를 얹는다(2차 판정): 로고 · 서술 → 링크 열 6(데스크톱은 열린 표, 모바일만
+   접힘) → 주소 · SNS · 채용 안내 → 저작권 · 법적 고지. 접힌 채로 두었더니 검정
+   면의 오른쪽 절반이 비어 "링크 목록"으로 읽혔다(실측 1440).
+   --bg-inverse 위에 on-inverse 글자 토큰만 쓴다. */
 .site-footer {
   background: var(--bg-inverse);
   color: var(--text-on-inverse);
-  padding-top: var(--sp-9);
+  padding-top: var(--sp-8);
   /* 마지막 줄이 부동 UI 밑에 깔리지 않게 아래를 비워 둔다. */
   padding-bottom: calc(var(--floating-clear) + env(safe-area-inset-bottom));
 }
@@ -1532,7 +1534,7 @@ a.bg__asset:hover {
 }
 .footer__top {
   display: grid;
-  gap: var(--sp-5);
+  gap: var(--sp-4);
   margin-bottom: var(--sp-7);
 }
 .footer__top .wordmark {
@@ -1546,39 +1548,39 @@ a.bg__asset:hover {
   max-width: 76ch;
   line-height: 1.7;
 }
-/* 링크 그룹 왼쪽 · 채용 안내 오른쪽 아래. 그룹은 접힌 채로 쌓인다 —
-   여섯 묶음 30여 개 링크를 다 펼치면 푸터가 화면 하나를 넘긴다. */
-.footer__body {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: var(--sp-7) var(--sp-8);
-  align-items: end;
-  padding-bottom: var(--sp-8);
-}
+/* 정보군이 여섯이다. 4열로 두면 뒤 둘이 다음 줄로 접혀 1·2열 아래에 붙는다 —
+   열 수를 데이터에 맞춘다. */
 .footer__groups {
   display: grid;
-  max-width: 640px;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: var(--sp-7) var(--sp-6);
+  align-items: start;
+  padding-bottom: var(--sp-8);
 }
+/* 열 제목. 데스크톱에서는 접을 수 없다 — 열 하나가 사라지면 표가 깨진다. */
 .footer__label {
   display: flex;
   align-items: center;
   gap: var(--sp-2);
-  padding-block: var(--sp-4);
-  font-size: var(--fs-body);
+  padding-bottom: var(--sp-3);
+  font-size: var(--fs-sm);
   font-weight: 600;
-  color: var(--text-accent-on-inverse);
+  color: var(--text-on-inverse);
   cursor: pointer;
   list-style: none;
+  pointer-events: none;
 }
 .footer__label::-webkit-details-marker {
   display: none;
 }
-/* 펼침 표시 — 순수 CSS 꺾쇠. 열리면 뒤집힌다. */
+/* 펼침 표시 — 순수 CSS 꺾쇠. 모바일에서만 보이고, 열리면 뒤집힌다. */
 .footer__chev {
+  display: none;
   width: 8px;
   height: 8px;
   border-right: 1.5px solid currentColor;
   border-bottom: 1.5px solid currentColor;
+  color: var(--text-on-inverse-muted);
   transform: translateY(-2px) rotate(45deg);
   transition: transform var(--dur-hover) var(--ease);
 }
@@ -1589,7 +1591,6 @@ a.bg__asset:hover {
   display: grid;
   justify-items: start;
   gap: var(--sp-2);
-  padding-bottom: var(--sp-5);
 }
 .footer__list a,
 .footer__list span {
@@ -1597,28 +1598,17 @@ a.bg__asset:hover {
   color: var(--text-on-inverse-muted);
   transition: color var(--dur-hover) var(--ease);
 }
-.footer__careers {
-  display: grid;
-  gap: var(--sp-2);
-  justify-items: start;
-  padding-bottom: var(--sp-4);
-}
-.footer__careers-head {
-  font-size: var(--fs-h4);
-  font-weight: 600;
-  letter-spacing: var(--tracking-tight);
-  line-height: 1.35;
-}
-.footer__careers-link {
-  font-size: var(--fs-sm);
-  font-weight: 600;
-  color: var(--text-accent-on-inverse);
-}
-/* 주소 · SNS — 작은 글자 한 덩어리. */
+/* 주소 · SNS 왼쪽, 채용 안내 오른쪽 아래. */
 .footer__info {
   display: grid;
-  gap: var(--sp-6);
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--sp-6) var(--sp-8);
+  align-items: end;
   padding-bottom: var(--sp-7);
+}
+.footer__where {
+  display: grid;
+  gap: var(--sp-5);
 }
 .footer__addr {
   display: grid;
@@ -1645,6 +1635,22 @@ a.bg__asset:hover {
   font-size: var(--fs-xs);
   font-weight: 600;
   color: var(--text-on-inverse-muted);
+}
+.footer__careers {
+  display: grid;
+  gap: var(--sp-2);
+  justify-items: start;
+}
+.footer__careers-head {
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.35;
+}
+.footer__careers-link {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-accent-on-inverse);
 }
 /* 아래 바 — 저작권과 법적 고지가 한 줄, 전부 왼쪽. 오른쪽 아래는 부동 UI
    (문의 · 맨 위로)가 차지하는 자리라 거기 두면 가려진다(실측 1440). */
@@ -1982,12 +1988,23 @@ a.bg__asset:hover {
   .floating__ask {
     padding: 13px 15px;
   }
-  /* 채용 안내가 그룹 아래로 내려온다. */
-  .footer__body {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  /* 푸터 — 열이 접힌 그룹으로 바뀐다(disclosure.mjs 가 open 을 내린다). */
   .footer__groups {
-    max-width: none;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+  .footer__label {
+    padding-block: var(--sp-4);
+    pointer-events: auto;
+  }
+  .footer__chev {
+    display: block;
+  }
+  .footer__list {
+    padding-bottom: var(--sp-5);
+  }
+  .footer__info {
+    grid-template-columns: minmax(0, 1fr);
   }
   .slider__card {
     width: 200px;
@@ -3074,8 +3091,40 @@ a.quiet:hover {
    제목은 섹션 머리가 가운데(section--center)라 격자만 전폭이다. */
 .posts {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--sp-7) var(--sp-6);
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: var(--sp-6);
+}
+/* 큰 대표 1 + 작은 2 — 명세 §11.9·§445 의 비대칭(2차 판정 2026-09-04). 대표가
+   왼쪽 두 행을 차지하고 보조 둘이 오른쪽에 쌓인다. 대표 표지는 3:2 라
+   16:9 보조 둘을 쌓은 높이와 맞는다(실측 1400). */
+.post--lead {
+  grid-row: span 2;
+}
+.post--lead .post__cover {
+  aspect-ratio: 3 / 2;
+  border-radius: var(--radius-lg);
+}
+.post--lead .post__title {
+  font-size: var(--fs-h3);
+  letter-spacing: var(--tracking-tight);
+}
+/* 좁은 폭 — 대표도 보조도 한 열, 같은 비율·같은 제목 크기. 기본 규칙 뒤에
+   있어야 이긴다(앞쪽 860 블록에 두었더니 덮였다 — 실측 390). */
+@media (max-width: 860px) {
+  .posts {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .post--lead {
+    grid-row: auto;
+  }
+  .post--lead .post__cover {
+    aspect-ratio: var(--cover-ratio);
+    border-radius: var(--radius-md);
+  }
+  .post--lead .post__title {
+    font-size: var(--fs-h4);
+    letter-spacing: -0.025em;
+  }
 }
 .post {
   display: grid;
@@ -3236,9 +3285,6 @@ a.post:hover .post__more {
   .quiets {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-  .posts {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
   .split {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -3270,9 +3316,6 @@ a.post:hover .post__more {
   .mark__sign {
     width: 34px;
     height: 34px;
-  }
-  .posts {
-    grid-template-columns: minmax(0, 1fr);
   }
   /* 법적 고지가 줄을 바꾸면 세로줄이 줄머리에 남는다 — 좁은 폭은 간격만으로 나눈다. */
   .footer__legal {

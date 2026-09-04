@@ -1,14 +1,14 @@
-import { initAnalytics } from "./analytics.mjs?v=353f72444ea1";
-import { initNav } from "./nav.mjs?v=353f72444ea1";
-import { initReveal } from "./reveal.mjs?v=353f72444ea1";
-import { initFaq, initCaseFilter } from "./disclosure.mjs?v=353f72444ea1";
-import { initContactForm } from "./contact-form.mjs?v=353f72444ea1";
-import { initAttribution } from "./attribution.mjs?v=353f72444ea1";
-import { initHeroObject } from "./hero-object.mjs?v=353f72444ea1";
-import { initSlider } from "./slider.mjs?v=353f72444ea1";
-import { initNewsletter } from "./newsletter.mjs?v=353f72444ea1";
-import { initDroplets } from "./droplets.mjs?v=353f72444ea1";
-import { initCases } from "./cases.mjs?v=353f72444ea1";
+import { initAnalytics } from "./analytics.mjs?v=fb4f78fa13cd";
+import { initNav } from "./nav.mjs?v=fb4f78fa13cd";
+import { initReveal } from "./reveal.mjs?v=fb4f78fa13cd";
+import { initFaq, initCaseFilter, initFooterGroups } from "./disclosure.mjs?v=fb4f78fa13cd";
+import { initContactForm } from "./contact-form.mjs?v=fb4f78fa13cd";
+import { initAttribution } from "./attribution.mjs?v=fb4f78fa13cd";
+import { initHeroObject } from "./hero-object.mjs?v=fb4f78fa13cd";
+import { initSlider } from "./slider.mjs?v=fb4f78fa13cd";
+import { initNewsletter } from "./newsletter.mjs?v=fb4f78fa13cd";
+import { initDroplets } from "./droplets.mjs?v=fb4f78fa13cd";
+import { initCases } from "./cases.mjs?v=fb4f78fa13cd";
 
 try {
   initAnalytics();
@@ -34,6 +34,11 @@ try {
   initCaseFilter();
 } catch (e) {
   console.warn("Case filter failed:", e);
+}
+try {
+  initFooterGroups();
+} catch (e) {
+  console.warn("Footer groups failed:", e);
 }
 try {
   initContactForm();
