@@ -19,17 +19,21 @@
   --c-neutral-600: #6e6e73;
   --c-neutral-700: #424245;
   --c-neutral-900: #1d1d1f;
-  --c-accent-50: #e8f4ff;
-  --c-accent-500: #0071e3;
-  /* 워드마크 점 4개의 실측값(재구성 2026-08-31) — 브랜드 가이드 스와치가 쓴다. */
+  /* 브랜드 액센트 = 로고 점의 주황(사령관 판정 2026-09-04 "메인 컬러를 로고 오렌지 · 그레이 · 블랙으로").
+     주황은 포인트로만 — 글자는 550, 넓은 면은 쓰지 않고, 1차 버튼은 잉크(검정)다.
+     이 줄이 브랜드색 스위치다. 이전은 Corporate Blue #0071e3(2026-08-27 기록). */
+  --c-accent-50: #fff3e2;
+  --c-accent-500: #f49f20;
+  /* 워드마크 점 4개의 실측값(재구성 2026-08-31) — 액센트와 같은 값, 브랜드 가이드 스와치가 쓴다. */
   --c-brand-dot: #f49f20;
   /* 제목 램프의 끝 — 점 주황보다 한 단 짙어 글자에 깊이가 생긴다. */
   --c-brand-dot-deep: #e8811a;
-  /* 글자용 파랑. #0071e3 는 회색 밴드 위에서 4.31:1 로 모자란다. */
-  --c-accent-550: #0064cc;
-  --c-accent-600: #0055b4;
+  /* 글자용 주황. #f49f20 은 흰 바탕에서 2.1:1 이라 글자로 못 쓴다 — 회색 밴드 위 4.9:1 까지 짙힌 값. */
+  --c-accent-550: #a85400;
+  --c-accent-600: #8a4400;
   /* 사업별 로컬 액센트 — 명세 §7. 파트너 색이 화면을 지배하지 않게 절제한다.
-     eyebrow·아이콘·얇은 강조선에만 쓰고 넓은 면적에 칠하지 않는다. */
+     eyebrow·아이콘·얇은 강조선에만 쓰고 넓은 면적에 칠하지 않는다.
+     Cloud 의 파랑은 AWS 계열 색면용으로 남는다 — 브랜드 액센트가 아니다. */
   --accent-cloud: #0071e3;
   /* Cloud 마무리 면. 브랜드 파랑 계열의 짙은 남색이라 검정과 구분된다. */
   --cloud-deep: #0b2545;
@@ -60,13 +64,13 @@
   /* 어두운 면 위에서는 라이트용 회색·파랑이 그대로 가라앉는다.
      --text-muted 를 #1d1d1f 에 올리면 3.32:1 이라 사실상 안 읽힌다. */
   --text-on-inverse-muted: #b8b8bd;
-  --text-accent-on-inverse: #6cb6ff;
+  --text-accent-on-inverse: var(--c-brand-dot);
   --text-accent: var(--c-accent-550);
 
   /* 시맨틱 — border */
   --border-hair: rgba(0, 0, 0, 0.07);
   --border-section: rgba(0, 0, 0, 0.08);
-  --border-accent: rgba(0, 113, 227, 0.3);
+  --border-accent: rgba(244, 159, 32, 0.45);
   --border-soft: rgba(0, 0, 0, 0.055);
   --border-strong: var(--c-neutral-400);
   --border-inverse: rgba(255, 255, 255, 0.18);
