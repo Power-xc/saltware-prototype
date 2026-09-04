@@ -2088,9 +2088,11 @@ a.bg__asset:hover {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--gap-tile);
 }
+/* 가로 카드 — 아트 왼쪽(정사각에 가깝게 자름) · 글 오른쪽. 세로 카드 두 줄이 1,000px 을 먹어
+   "좀 더 작게"(15차 판정) — 두 줄 400px 안에 여섯이 들어오고, 아래 응용 선반과 같은 생김새가 된다. */
 .stk__card {
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr);
   border-radius: var(--radius-lg);
   overflow: hidden;
   background: var(--bg-card);
@@ -2109,10 +2111,10 @@ a.stk__card:hover {
 .stk__card--top {
   border-color: var(--border-accent);
 }
-/* 아트는 2:1 — 16:10 이면 두 줄이 1,050px 을 먹는다. 그림의 주제가 가운데라 위아래를 조금 잘라도 산다. */
+/* 아트는 카드 높이를 그대로 채운다 — 그림의 주제가 가운데라 좌우를 잘라도 산다. */
 .stk__media {
   position: relative;
-  aspect-ratio: 2 / 1;
+  min-height: 176px;
   background: var(--bg-band);
 }
 .stk__art {
@@ -2124,9 +2126,9 @@ a.stk__card:hover {
 }
 .stk__n {
   position: absolute;
-  top: var(--sp-3);
-  left: var(--sp-3);
-  padding: 4px 12px;
+  top: var(--sp-2);
+  left: var(--sp-2);
+  padding: 3px 10px;
   border-radius: var(--radius-pill);
   border: 1px solid var(--border-hair);
   background: rgba(255, 255, 255, 0.86);
@@ -2138,9 +2140,9 @@ a.stk__card:hover {
 }
 .stk__text {
   display: grid;
-  gap: var(--sp-1);
-  align-content: start;
-  padding: var(--sp-4) var(--sp-5) var(--sp-5);
+  gap: 2px;
+  align-content: center;
+  padding: var(--sp-4);
 }
 .stk__ko {
   font-size: var(--fs-label);
@@ -2149,24 +2151,24 @@ a.stk__card:hover {
   color: var(--text-accent);
 }
 .stk__name {
-  font-size: var(--fs-h3);
+  font-size: var(--fs-h4);
   font-weight: 700;
-  letter-spacing: -0.025em;
-  line-height: 1.15;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 .stk__role {
-  margin-top: var(--sp-1);
-  font-size: var(--fs-sm);
-  line-height: 1.55;
+  margin-top: 2px;
+  font-size: var(--fs-xs);
+  line-height: 1.5;
   color: var(--text-secondary);
 }
 .stk__tech {
-  font-size: var(--fs-xs);
+  font-size: var(--fs-2xs);
   color: var(--text-muted);
 }
 .stk__more {
-  margin-top: var(--sp-2);
-  font-size: var(--fs-sm);
+  margin-top: var(--sp-1);
+  font-size: var(--fs-xs);
   font-weight: 600;
   color: var(--text-accent);
 }
@@ -3326,9 +3328,16 @@ a.post:hover .post__more {
     border-left: 0;
     padding-left: 0;
   }
-  /* 스택 — 카드 한 열. */
+  /* 스택 — 카드 한 열, 아트 위 · 글 아래(폰 폭에선 옆에 둘 자리가 없다). */
   .stk__grid {
     grid-template-columns: minmax(0, 1fr);
+  }
+  .stk__card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .stk__media {
+    min-height: 0;
+    aspect-ratio: 2 / 1;
   }
   .stk__apps {
     grid-template-columns: minmax(0, 1fr);
