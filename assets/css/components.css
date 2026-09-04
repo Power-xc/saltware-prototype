@@ -641,20 +641,34 @@
      v4(두 줄 제목 + 층 띠)에서 배너 노출이 160px(40%)로 다시 떨어져 24 까지 내렸다(실측 1440×844). */
   padding-top: 24px;
   padding-bottom: var(--sp-6);
-  text-align: center;
+  /* 왼쪽 정렬 — 디자이너 예시의 제목 문법(5차 판정 2026-09-04). 가운데 정렬은 오브젝트와 함께 갔다. */
+  text-align: left;
+}
+/* 제목 아래 한 줄 — 필 CTA 와 리드가 나란히. 예시의 "버튼 + 작은 태그라인" 자리다. */
+.hero__row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-6);
+  margin-top: var(--sp-3);
+}
+.hero__cta {
+  flex: none;
+}
+.hero__row .br-soft {
+  display: none;
 }
 /* 리드 아래 층 띠 — 스택의 여섯 층을 한 줄로 적는다(2026-09-02).
    여섯 층이 선으로 이어지고 맨 끝 AI 만 액센트를 받는다. 통째로 스택 섹션 앵커다.
-   오브젝트가 빠진 뒤(4차 판정 2026-09-04)에는 리드 아래 정상 간격으로 앉는다. */
+   왼쪽 정렬 제목 블록의 마지막 줄이다(5차 판정). */
 .hero__layers {
-  justify-self: center;
+  justify-self: start;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   row-gap: var(--sp-2);
   margin-top: var(--sp-6);
-  padding: 0 var(--sp-4);
+  padding: 0;
   font-size: var(--fs-label-caps);
   font-weight: 600;
   letter-spacing: var(--tracking-label);
@@ -707,22 +721,25 @@
 .hero__center {
   position: relative;
   z-index: 1;
+  /* .container 의 auto 마진이 그리드 항목의 stretch 를 끄고 내용 폭(제목 폭)으로
+     줄인다 — 왼쪽 정렬이 되자 제목 블록이 858px 로 가운데 몰렸다(실측 1440). 폭을 채운다. */
+  width: 100%;
   display: grid;
   /* 바깥 1fr 행이 남는 높이를 받으면 내부 행이 stretch 로 벌어진다.
-     제목 덩어리는 이 영역의 바닥, 즉 층 띠 바로 위에 붙인다 —
+     제목 덩어리는 이 영역의 바닥, 즉 카드 바로 위에 붙인다 —
      center 에 margin 을 얹는 방식은 stretch 행에서 반만 먹혔다(실측). */
   align-content: end;
   gap: var(--sp-3);
-  justify-items: center;
+  justify-items: start;
 }
 .hero--home h1 {
-  /* --fs-hero(최대 88px)에서 두 단계 줄인 램프 — 층 띠·카드와 한 화면에
-     수납하기 위해서다(사령관 판정 2026-08-31). 토큰을 안 건드리는 이유:
-     --fs-hero 는 벤토 대표 숫자가 같이 쓴다. */
-  font-size: clamp(27px, 3.9vw, 50px);
-  line-height: 1.12;
+  /* --fs-hero(최대 88px)에서 한 단계 줄인 램프 — 오브젝트가 빠져 예산이 생겼다(5차 판정).
+     토큰을 안 건드리는 이유: --fs-hero 는 벤토 대표 숫자가 같이 쓴다. */
+  font-size: clamp(30px, 4.4vw, 58px);
+  line-height: 1.1;
   letter-spacing: -0.04em;
   font-weight: 700;
+  max-width: 22ch;
 }
 /* 첫 줄만 그라디언트. 둘째 줄은 흰색으로 남는다(레퍼런스 실측). */
 .hero__accent {
@@ -736,7 +753,9 @@
   color: transparent;
 }
 .hero--home .hero__lede {
-  max-width: 58ch;
+  max-width: 46ch;
+  font-size: var(--fs-body);
+  line-height: 1.7;
   color: var(--hero-ink-soft);
 }
 /* 리드 아래 부연 — 리드보다 한 단 작고 옅게 두어 읽는 순서가 제목→리드→부연으로
@@ -755,10 +774,7 @@
 .hero__feature {
   position: relative;
   z-index: 1;
-  /* 오브젝트-배너 사이도 타이트하게 — 첫 화면 수납의 일부다. */
   margin-top: var(--sp-1);
-  /* 히어로는 가운데 정렬이지만 카드 안 내용은 기획대로 왼쪽 정렬이다. */
-  text-align: left;
 }
 /* 히어로 카드 3장 — 디자이너 프레임(2026-09-04)의 01 · 02 · 03. 세로 둘 + 가로 하나가
    한 줄(888 : 888 : 2080 실측), 배경은 영상 루프, 카피는 아래 스크림 위에 앉는다 —
@@ -1821,10 +1837,15 @@ a.bg__asset:hover {
   .hero__layers {
     display: grid;
     grid-template-columns: repeat(3, auto);
-    justify-content: center;
+    justify-content: start;
     column-gap: var(--sp-4);
     row-gap: var(--sp-2);
     margin-top: var(--sp-5);
+  }
+  /* 버튼과 리드는 세로로 — 리드가 먼저, 버튼이 그 아래. */
+  .hero__row {
+    flex-direction: column-reverse;
+    gap: var(--sp-4);
   }
   .hero__layer + .hero__layer::before {
     content: none;
