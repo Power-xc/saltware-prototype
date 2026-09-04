@@ -2016,8 +2016,10 @@ a.bg__asset:hover {
   .br-soft {
     display: none;
   }
-  /* 폰은 큰 카드를 3:2 로 — 2:1 은 두 줄 제목이 칩에 닿는다. */
-  .hcard,
+  /* 폰은 큰 카드를 3:2 로 — 2:1 은 두 줄 제목이 칩에 닿는다.
+     :not(--mini) 가 필요하다 — 이 블록이 860 블록보다 뒤라 작은 카드까지 3:2 가 되어
+     번호 한 줄이어야 할 것이 270px 로 두꺼워졌다(사령관 실측 2026-09-04). */
+  .hcard:not(.hcard--mini),
   .hcard--wide {
     aspect-ratio: 3 / 2;
   }
@@ -2057,12 +2059,12 @@ a.bg__asset:hover {
    카드는 아트 위 · 글 아래 — 그림 위 스크림에 글자를 얹던 3차 형태를 걷었다. 높이는 반으로. */
 .stack {
   display: grid;
-  gap: var(--sp-5);
+  gap: var(--sp-6);
 }
 .stk__head {
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-  gap: var(--sp-2) var(--sp-8);
+  gap: var(--sp-3) var(--sp-8);
   align-items: start;
 }
 .stk__head > .eyebrow {
@@ -2227,7 +2229,7 @@ a.stk__cross:hover {
 .stk__shelf {
   display: grid;
   gap: var(--sp-2);
-  padding: var(--sp-4) var(--sp-5);
+  padding: var(--sp-5) var(--sp-6);
   border-radius: var(--radius-xl);
   background: var(--bg-band);
 }
@@ -2264,7 +2266,6 @@ a.stk__app:hover {
   border-left-color: var(--accent-smart-farm);
 }
 .stk__app-art {
-  max-height: 56px;
   display: block;
   width: 100%;
   aspect-ratio: 16 / 10;
@@ -3025,9 +3026,8 @@ a.quiet:hover {
 .cases__body[hidden] {
   display: none;
 }
-/* 컷은 2:1 — 16:10 은 484px 이라 섹션 하나가 화면 반을 먹었다(16차 판정 2026-09-04). */
 .cases__media {
-  aspect-ratio: 2 / 1;
+  aspect-ratio: 16 / 10;
   overflow: hidden;
 }
 /* 컷이 있으면 면을 채운다 — 없는 사례는 아래 사업 톤의 면으로 남는다. */
@@ -3094,8 +3094,8 @@ a.quiet:hover {
    제목은 섹션 머리가 가운데(section--center)라 격자만 전폭이다. */
 .posts {
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
-  gap: var(--sp-5);
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: var(--sp-6);
 }
 /* 큰 대표 1 + 작은 2 — 명세 §11.9·§445 의 비대칭(2차 판정 2026-09-04). 대표가
    왼쪽 두 행을 차지하고 보조 둘이 오른쪽에 쌓인다. 대표 표지는 3:2 라
@@ -3104,35 +3104,34 @@ a.quiet:hover {
   grid-row: span 2;
 }
 .post--lead .post__cover {
-  aspect-ratio: 2 / 1;
+  aspect-ratio: 3 / 2;
   border-radius: var(--radius-lg);
 }
 .post--lead .post__title {
   font-size: var(--fs-h3);
   letter-spacing: var(--tracking-tight);
 }
-/* 보조 둘은 가로 카드 — 표지 왼쪽 · 글 오른쪽(스택 카드와 같은 결, 16차 판정).
-   세로로 쌓으면 대표 높이를 넘겨 섹션이 1,000px 을 먹었다(실측 1440). */
-.post:not(.post--lead) {
-  grid-template-columns: minmax(0, 0.46fr) minmax(0, 1fr);
-  column-gap: var(--sp-4);
-  align-content: start;
-}
-.post:not(.post--lead) > * {
-  grid-column: 2;
-}
-.post:not(.post--lead) .post__cover {
-  grid-column: 1;
-  grid-row: 1 / -1;
-  height: 100%;
-  min-height: 108px;
-  aspect-ratio: auto;
-}
 /* 좁은 폭 — 대표도 보조도 한 열, 같은 비율·같은 제목 크기. 기본 규칙 뒤에
    있어야 이긴다(앞쪽 860 블록에 두었더니 덮였다 — 실측 390). */
 @media (max-width: 860px) {
   .posts {
     grid-template-columns: minmax(0, 1fr);
+  }
+  /* 보조 둘은 표지 왼쪽 · 글 오른쪽으로 눕힌다 — 폰에서 셋을 다 세우면 900px 을 넘긴다. */
+  .post:not(.post--lead) {
+    grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr);
+    column-gap: var(--sp-4);
+    align-content: start;
+  }
+  .post:not(.post--lead) > * {
+    grid-column: 2;
+  }
+  .post:not(.post--lead) .post__cover {
+    grid-column: 1;
+    grid-row: 1 / -1;
+    height: 100%;
+    min-height: 96px;
+    aspect-ratio: auto;
   }
   .post--lead {
     grid-row: auto;
@@ -3308,6 +3307,16 @@ a.post:hover .post__more {
   .split {
     grid-template-columns: minmax(0, 1fr);
   }
+  /* 세로 리듬 · 섹션 머리 · 큰 컷은 폰·태블릿에서만 조인다(17차 판정 — 데스크톱은 그대로). */
+  .home {
+    --home-gap: clamp(36px, 3.8vw, 52px);
+  }
+  .home .section__head {
+    margin-bottom: var(--sp-5);
+  }
+  .cases__media {
+    aspect-ratio: 2 / 1;
+  }
   /* 스택 — 머리는 한 열(관통 띠가 리드 아래로), 카드는 두 열. */
   .stk__head {
     grid-template-columns: minmax(0, 1fr);
@@ -3415,15 +3424,11 @@ a.post:hover .post__more {
    위·아래가 같은 값이라 섹션 사이는 그 두 배(데스크톱 120)다. 이전엔 72+72 에
    밴드가 컨테이너 패딩까지 겹쳐 248px 로 벌어졌다(실측 1440). */
 .home {
-  --home-gap: clamp(36px, 3.8vw, 52px);
+  --home-gap: clamp(40px, 4.6vw, 60px);
 }
 .home .section > .container {
   border-top: 0;
   padding-top: var(--home-gap);
-}
-/* 홈은 섹션이 열하나다 — 머리와 본문 사이도 한 단 조인다(16차 판정). */
-.home .section__head {
-  margin-bottom: var(--sp-5);
 }
 .home .section {
   padding-bottom: var(--home-gap);
