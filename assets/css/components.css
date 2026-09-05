@@ -207,6 +207,20 @@
 .mega__item:hover .mega__item-name {
   color: var(--text-accent);
 }
+/* 목적지가 아직 없는 항목 — 눌리지 않는다는 것이 보여야 한다(1차 피드백 신설 사업 4종). */
+.mega__item--pending,
+.footer__list [aria-disabled="true"] {
+  color: var(--text-faint);
+  cursor: default;
+}
+.mega__item--pending .mega__item-name::after {
+  content: "준비 중";
+  margin-left: var(--sp-2);
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  opacity: 0.75;
+}
 /* 상위 사업 아래 기술·솔루션 — 들여쓰기 + 왼쪽 헤어라인으로 종속을 드러낸다. */
 .mega__item--sub {
   margin-left: var(--sp-3);
@@ -575,49 +589,31 @@
   max-width: 42ch;
 }
 .hero--media.hero--m-cloud {
-  background-image: url("/saltware-prototype/media/business/hero-cloud.jpg?v=2fc3595831d0");
+  background-image: url("/saltware-prototype/media/business/hero-cloud.jpg?v=511fb9d37064");
 }
 .hero--media.hero--m-databricks {
-  background-image: url("/saltware-prototype/media/business/hero-databricks.jpg?v=2fc3595831d0");
+  background-image: url("/saltware-prototype/media/business/hero-databricks.jpg?v=511fb9d37064");
 }
 .hero--media.hero--m-identity {
-  background-image: url("/saltware-prototype/media/business/hero-identity.jpg?v=2fc3595831d0");
+  background-image: url("/saltware-prototype/media/business/hero-identity.jpg?v=511fb9d37064");
 }
 .hero--media.hero--m-redhat {
-  background-image: url("/saltware-prototype/media/business/hero-redhat.jpg?v=2fc3595831d0");
+  background-image: url("/saltware-prototype/media/business/hero-redhat.jpg?v=511fb9d37064");
 }
 .hero--media.hero--m-enview {
-  background-image: url("/saltware-prototype/media/business/hero-enview.jpg?v=2fc3595831d0");
+  background-image: url("/saltware-prototype/media/business/hero-enview.jpg?v=511fb9d37064");
 }
 .hero--media.hero--m-smart-farm {
-  background-image: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=2fc3595831d0");
+  background-image: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=511fb9d37064");
 }
 .hero--media.hero--m-hub-business {
-  background-image: url("/saltware-prototype/media/hub/hub-business.jpg?v=2fc3595831d0");
-}
-.hero--media.hero--m-hub-industries {
-  background-image: url("/saltware-prototype/media/hub/hub-industries.jpg?v=2fc3595831d0");
+  background-image: url("/saltware-prototype/media/hub/hub-business.jpg?v=511fb9d37064");
 }
 .hero--media.hero--m-hub-insights {
-  background-image: url("/saltware-prototype/media/hub/hub-insights.jpg?v=2fc3595831d0");
+  background-image: url("/saltware-prototype/media/hub/hub-insights.jpg?v=511fb9d37064");
 }
 .hero--media.hero--m-hub-company {
-  background-image: url("/saltware-prototype/media/hub/hub-company.jpg?v=2fc3595831d0");
-}
-.hero--media.hero--m-ind-public {
-  background-image: url("/saltware-prototype/media/industry/ind-public.jpg?v=2fc3595831d0");
-}
-.hero--media.hero--m-ind-finance {
-  background-image: url("/saltware-prototype/media/industry/ind-finance.jpg?v=2fc3595831d0");
-}
-.hero--media.hero--m-ind-manufacturing {
-  background-image: url("/saltware-prototype/media/industry/ind-manufacturing.jpg?v=2fc3595831d0");
-}
-.hero--media.hero--m-ind-education {
-  background-image: url("/saltware-prototype/media/industry/ind-education.jpg?v=2fc3595831d0");
-}
-.hero--media.hero--m-ind-agriculture {
-  background-image: url("/saltware-prototype/media/industry/ind-agriculture.jpg?v=2fc3595831d0");
+  background-image: url("/saltware-prototype/media/hub/hub-company.jpg?v=511fb9d37064");
 }
 
 .hero--home {
@@ -2404,13 +2400,13 @@ a.tile:hover {
   transform: translateY(-4px);
 }
 .sol--art-data-ai {
-  background-image: url("/saltware-prototype/media/home/mosaic-data-ai.jpg?v=2fc3595831d0");
+  background-image: url("/saltware-prototype/media/home/mosaic-data-ai.jpg?v=511fb9d37064");
 }
 .sol--art-databricks {
-  background-image: url("/saltware-prototype/media/home/mosaic-databricks.jpg?v=2fc3595831d0");
+  background-image: url("/saltware-prototype/media/home/mosaic-databricks.jpg?v=511fb9d37064");
 }
 .sol--art-cloud {
-  background-image: url("/saltware-prototype/media/home/mosaic-cloud.jpg?v=2fc3595831d0");
+  background-image: url("/saltware-prototype/media/home/mosaic-cloud.jpg?v=511fb9d37064");
 }
 .sol__eyebrow {
   font-size: var(--fs-label-caps);
@@ -2788,104 +2784,6 @@ a.tile:hover {
    메인만 이 어휘를 쓴다. 하위 페이지의 hairline 구분은 그대로 둔다.
    명세 §4-3 배경 밴드 예외는 requests/2026-08-27-reference-layout-match.md 에 기록했다. */
 
-/* 제목이 격자 한 칸을 차지한다. 레퍼런스는 6열에 제목이 3열을 먹는다 —
-   우리는 산업이 6개라 4열에 제목 2열로 같은 비율을 유지하면서 빈 칸이 남지 않는다. */
-.marks {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: var(--gap-tile);
-}
-/* 레퍼런스는 6열 중 3열을 제목이 먹는다. 우리는 산업이 6개라 제목이 두 행을 걸치면
-   오른쪽 3열 × 2행이 정확히 채워진다 — 빈 칸이 남지 않는다. */
-.marks__head {
-  grid-column: span 3;
-  grid-row: span 2;
-  align-self: start;
-  padding-right: var(--sp-7);
-  padding-top: var(--sp-4);
-}
-.marks__title {
-  font-size: var(--fs-h2);
-  letter-spacing: var(--tracking-display);
-  margin-bottom: var(--sp-4);
-}
-.marks__lede {
-  font-size: var(--fs-body);
-  color: var(--text-muted);
-  max-width: 32ch;
-}
-.mark {
-  background: var(--bg-band);
-  border-radius: var(--radius-xl);
-  aspect-ratio: var(--tile-ratio);
-  padding: var(--sp-5);
-  display: grid;
-  grid-template-rows: auto 1fr;
-  color: inherit;
-  text-decoration: none;
-  transition:
-    background var(--dur-hover) var(--ease),
-    transform var(--dur-hover) var(--ease);
-}
-a.mark:hover {
-  background: var(--c-neutral-150);
-  transform: translateY(-2px);
-}
-.mark__name {
-  font-size: var(--fs-h4);
-  font-weight: 500;
-  letter-spacing: -0.02em;
-}
-/* 도형은 순수 CSS 다. 아이콘 세트를 섞어 쓰지 않는다(§11). */
-.mark__sign {
-  align-self: end;
-  justify-self: end;
-  width: 40px;
-  height: 40px;
-  color: var(--text-accent);
-}
-.mark__sign svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-.mark__sign--g-public {
-  color: var(--accent-cloud);
-}
-.mark__sign--g-finance {
-  color: var(--accent-data-ai);
-}
-.mark__sign--g-manufacturing {
-  color: var(--accent-databricks);
-}
-.mark__sign--g-education {
-  color: var(--accent-identity);
-}
-.mark__sign--g-agriculture {
-  color: var(--accent-smart-farm);
-}
-.mark__sign--g-cloud {
-  color: var(--accent-cloud);
-}
-.mark__sign--g-data-ai {
-  color: var(--accent-data-ai);
-}
-.mark__sign--g-databricks {
-  color: var(--accent-databricks);
-}
-.mark__sign--g-identity {
-  color: var(--accent-identity);
-}
-.mark__sign--g-redhat {
-  color: var(--accent-redhat);
-}
-.mark__sign--g-enview {
-  color: var(--accent-enview);
-}
-.mark__sign--g-smart-farm {
-  color: var(--accent-smart-farm);
-}
-
 /* 가운데 정렬 제목 아래 균등한 칸. 레퍼런스의 Trusted Enterprise Partner. */
 .section--center .section__head {
   text-align: center;
@@ -3245,14 +3143,6 @@ a.post:hover .post__more {
 }
 
 @media (max-width: 1080px) {
-  .marks {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-  .marks__head {
-    grid-column: span 3;
-    grid-row: auto;
-    padding-right: 0;
-  }
   .quiets {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -3285,21 +3175,8 @@ a.post:hover .post__more {
   }
 }
 @media (max-width: 640px) {
-  /* 타일은 두 열로 남긴다. 한 열이면 정사각 비율이 화면 폭만큼 커져 한 칸이 한 화면이 된다. */
-  .marks,
   .quiets {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-  .marks__head {
-    grid-column: span 2;
-    grid-row: auto;
-  }
-  .mark {
-    padding: var(--sp-4);
-  }
-  .mark__sign {
-    width: 34px;
-    height: 34px;
   }
   /* 법적 고지가 줄을 바꾸면 세로줄이 줄머리에 남는다 — 좁은 폭은 간격만으로 나눈다. */
   .footer__legal {
