@@ -919,12 +919,12 @@
   font-size: clamp(24px, 2.4vw, 36px);
   max-width: 18ch;
 }
-/* 카드 안 텍스트 구조는 전부 같다 — 킥커 · 제목 · 설명 · 기술 · 행동
-   (사령관 2026-09-06 "카드 안에 있는 텍스트 구조는 통일"). 예전에는 설명·기술을
-   가로 카드에만 두어 같은 줄의 카드가 3단과 5단으로 갈라져 읽혔다.
+/* 카드 안 텍스트 구조는 전부 같다 — 킥커 · 제목 · 설명 · 행동
+   (사령관 2026-09-06 "카드 안에 있는 텍스트 구조는 통일"). 예전에는 설명을
+   가로 카드에만 두어 같은 줄의 카드가 서로 다른 단수로 갈라져 읽혔다.
+   기술·제품군 줄은 같은 날 걷었다 — 히어로에 제품명까지 오면 내용이 너무 많다.
    접힌 카드만 블록을 통째로 감춘다(.hcard--mini .hcard__text). */
-.hcard__desc,
-.hcard__tech {
+.hcard__desc {
   color: var(--text-on-inverse-muted);
 }
 /* 설명은 두 줄로 자른다 — 층마다 문장 길이가 달라 블록 높이가 들쭉날쭉해진다. */
@@ -940,10 +940,6 @@
   font-size: var(--fs-body);
   line-height: 1.6;
   max-width: 44ch;
-}
-.hcard__tech {
-  font-size: var(--fs-xs);
-  opacity: 0.85;
 }
 .hcard__more {
   margin-top: var(--sp-1);
@@ -1011,9 +1007,6 @@
     writing-mode: horizontal-tb;
     font-size: var(--fs-2xs);
     white-space: normal;
-  }
-  .hcard--wide .hcard__tech {
-    display: none;
   }
 }
 
@@ -2018,8 +2011,7 @@ a.bg__asset:hover {
   /* 이 폭의 큰 카드는 2:1(태블릿) · 3:2(폰)라 5단을 담지 못한다 — 설명·기술을 두면
      텍스트 블록 상단이 번호 배지까지 올라와 킥커와 겹친다(실측 390 2026-09-06).
      데스크톱과 달리 여기서는 카드 전부를 킥커·제목·행동 3단으로 맞춘다. */
-  .hcard__desc,
-  .hcard__tech {
+  .hcard__desc {
     display: none;
   }
 }
