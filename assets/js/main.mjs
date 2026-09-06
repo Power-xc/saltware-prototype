@@ -1,18 +1,19 @@
-import { initAnalytics } from "./analytics.mjs?v=b0dd69d8e9e5";
-import { initNav } from "./nav.mjs?v=b0dd69d8e9e5";
-import { initReveal } from "./reveal.mjs?v=b0dd69d8e9e5";
+import { initAnalytics } from "./analytics.mjs?v=ffa27152ad7b";
+import { initNav } from "./nav.mjs?v=ffa27152ad7b";
+import { initReveal } from "./reveal.mjs?v=ffa27152ad7b";
 import {
   initFaq,
   initCaseFilter,
   initFooterGroups,
   initStackFold,
-} from "./disclosure.mjs?v=b0dd69d8e9e5";
-import { initContactForm } from "./contact-form.mjs?v=b0dd69d8e9e5";
-import { initAttribution } from "./attribution.mjs?v=b0dd69d8e9e5";
-import { initHeroObject } from "./hero-object.mjs?v=b0dd69d8e9e5";
-import { initNewsletter } from "./newsletter.mjs?v=b0dd69d8e9e5";
-import { initDroplets } from "./droplets.mjs?v=b0dd69d8e9e5";
-import { initCases } from "./cases.mjs?v=b0dd69d8e9e5";
+} from "./disclosure.mjs?v=ffa27152ad7b";
+import { initContactForm } from "./contact-form.mjs?v=ffa27152ad7b";
+import { initAttribution } from "./attribution.mjs?v=ffa27152ad7b";
+import { initHeroObject } from "./hero-object.mjs?v=ffa27152ad7b";
+import { initNewsletter } from "./newsletter.mjs?v=ffa27152ad7b";
+import { initDroplets } from "./droplets.mjs?v=ffa27152ad7b";
+import { initCases } from "./cases.mjs?v=ffa27152ad7b";
+import { initRails } from "./rail.mjs?v=ffa27152ad7b";
 
 try {
   initAnalytics();
@@ -82,4 +83,9 @@ try {
   initCases();
 } catch (e) {
   console.warn("Cases failed:", e);
+}
+try {
+  initRails();
+} catch (e) {
+  console.warn("Rails failed:", e);
 }

@@ -2382,11 +2382,30 @@ a.tile:hover {
 
 /* 문제 기준 탐색(§11.5) — 이미지 카드 가로 레일. 목록이 아니라 골라 넘기는
    선반이다. 스크롤바는 숨기되 스크롤 자체는 살린다. */
+/* 가로 레일 — 애플식(사령관 2026-09-06 "옆으로 어떻게 넘기는데"). 카드는 컨테이너 안쪽 선에서
+   서고 오른쪽은 화면 끝까지 흘러 "더 있다" 가 보인다. 넘김은 ‹ › 버튼 — 스크롤은 브라우저가
+   스냅으로 하고 버튼은 카드 하나만큼 민다(rail.mjs). 버튼은 JS 가 is-ready 를 붙여야 보이고,
+   넘칠 것이 없으면(is-static) 버튼 줄이 접힌다. 100vw 는 세로 스크롤바 폭만큼 넓을 수 있어
+   섹션이 가로로 잘라 낸다(.section:has(.rail)). */
+.section:has(.rail) {
+  overflow-x: clip;
+}
+.rail-wrap {
+  display: grid;
+  gap: var(--sp-4);
+}
 .rail {
+  /* 컨테이너 안쪽 선까지의 거리. 50% 를 쓰면 scroll-padding 에서는 스크롤포트 기준이 되어
+     첫 카드가 화면 끝에 붙어 시작했다(실측 1440: scrollLeft 52). 마진·패딩·스냅 패딩이 같은
+     값이라 세로 스크롤바가 있는 브라우저에서도 첫 카드는 컨테이너 선에 선다. */
+  --rail-inset: max(var(--sp-6), calc((100vw - var(--container)) / 2 + var(--sp-6)));
   display: flex;
   gap: var(--gap-tile);
   overflow-x: auto;
-  scroll-snap-type: x proximity;
+  scroll-snap-type: x mandatory;
+  margin-inline: calc(-1 * var(--rail-inset));
+  padding-inline: var(--rail-inset);
+  scroll-padding-inline: var(--rail-inset);
   padding-bottom: var(--sp-2);
   scrollbar-width: none;
 }
@@ -2426,6 +2445,44 @@ a.tile:hover {
 }
 .rail__card:hover .rail__q {
   color: var(--text-accent);
+}
+.rail__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--sp-4);
+}
+.rail__nav {
+  display: none;
+  gap: var(--sp-2);
+  margin-left: auto;
+}
+.rail-wrap.is-ready:not(.is-static) .rail__nav {
+  display: flex;
+}
+/* 아이콘만 있는 원형 버튼 — 맨 위로(.floating__top)와 같은 부류. 면은 밴드색, 누르면 잉크. */
+.rail__btn {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: var(--radius-circle);
+  display: inline-grid;
+  place-items: center;
+  background: var(--bg-band);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition:
+    background var(--dur-hover) var(--ease),
+    color var(--dur-hover) var(--ease),
+    opacity var(--dur-hover) var(--ease);
+}
+.rail__btn:hover:not(:disabled) {
+  background: var(--bg-inverse);
+  color: var(--text-on-inverse);
+}
+.rail__btn:disabled {
+  opacity: 0.3;
+  cursor: default;
 }
 
 /* 대표 솔루션 — 시그니처 이미지 다크 피처 카드 3장. 모자이크와 같은 결로,
@@ -2989,80 +3046,54 @@ a.quiet:hover {
 /* 표지 · 분류 · 제목 · 링크. 글 목록의 생김새 — 데이터브릭스 스포트라이트의
    문법(사령관 요청 2026-09-04): 상자 없이 표지가 위, 작은 분류, 제목, 화살표 링크.
    제목은 섹션 머리가 가운데(section--center)라 격자만 전폭이다. */
+/* 인사이트 — 큰 대표 1 + 작은 2(§11.9 비대칭, 2차 판정 2026-09-04). 보조 둘은 오른쪽 열에
+   위에서부터 쌓인다 — 예전엔 대표가 두 행을 차지해 보조가 그 높이를 반씩 받아 위아래로 벌어졌고,
+   가로 원본(736×412)이 96×104 세로 상자에 잘려 알아볼 수 없는 조각이 됐다(사령관 2026-09-06
+   "깨지고 이상한"). 지금은 모든 표지가 16:9 이고 보조는 표지 옆에 글을 가운데 세운다. */
 .posts {
   display: grid;
   grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
   gap: var(--sp-6);
+  align-items: start;
 }
-/* 큰 대표 1 + 작은 2 — 명세 §11.9·§445 의 비대칭(2차 판정 2026-09-04). 대표가
-   왼쪽 두 행을 차지하고 보조 둘이 오른쪽에 쌓인다. 대표 표지는 3:2 라
-   16:9 보조 둘을 쌓은 높이와 맞는다(실측 1400). */
-.post--lead {
-  grid-row: span 2;
+.posts__side {
+  display: grid;
+  gap: var(--sp-5);
+  justify-items: start;
 }
-/* 대표 표지는 16:9 — 3:2 는 912px 폭에서 608px 이라 섹션이 화면을 넘겼다(20차 판정). */
-.post--lead .post__cover {
-  aspect-ratio: var(--cover-ratio);
-  border-radius: var(--radius-lg);
+.posts__all {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-accent);
 }
-/* 보조 둘은 표지 왼쪽 · 글 오른쪽. 세로로 쌓으면 오른쪽 열이 대표보다 높아져
-   섹션 높이를 끌어올린다(실측 1440: 오른쪽 734 vs 대표 623). */
-.post:not(.post--lead) {
-  grid-template-columns: minmax(0, 0.44fr) minmax(0, 1fr);
-  column-gap: var(--sp-4);
+.post {
+  display: grid;
+  gap: var(--sp-3);
   align-content: start;
+  color: inherit;
+  text-decoration: none;
 }
-.post:not(.post--lead) > * {
-  grid-column: 2;
+.post__body {
+  display: grid;
+  gap: var(--sp-2);
+  justify-items: start;
 }
-.post:not(.post--lead) .post__cover {
-  grid-column: 1;
-  grid-row: 1 / -1;
-  height: 100%;
-  min-height: 104px;
-  aspect-ratio: auto;
+.post--lead .post__cover {
+  border-radius: var(--radius-lg);
 }
 .post--lead .post__title {
   font-size: var(--fs-h3);
   letter-spacing: var(--tracking-tight);
 }
-/* 좁은 폭 — 대표도 보조도 한 열, 같은 비율·같은 제목 크기. 기본 규칙 뒤에
-   있어야 이긴다(앞쪽 860 블록에 두었더니 덮였다 — 실측 390). */
-@media (max-width: 860px) {
-  .posts {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .post--lead {
-    grid-row: auto;
-  }
-  /* 폰은 대표 표지도 2:1 — 한 열이라 16:9 는 201px 을 먹는다. 보조는 더 얇게. */
-  .post--lead .post__cover {
-    aspect-ratio: 2 / 1;
-  }
-  .posts {
-    gap: var(--sp-5);
-  }
-  .post:not(.post--lead) .post__cover {
-    min-height: 84px;
-  }
-  .post:not(.post--lead) .post__title {
-    font-size: var(--fs-body);
-  }
-  .post--lead .post__cover {
-    aspect-ratio: var(--cover-ratio);
-    border-radius: var(--radius-md);
-  }
-  .post--lead .post__title {
-    font-size: var(--fs-h4);
-    letter-spacing: -0.025em;
-  }
+.posts__side .post {
+  width: 100%;
+  grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr);
+  column-gap: var(--sp-4);
+  align-items: center;
 }
-.post {
-  display: grid;
-  gap: var(--sp-2);
-  align-content: start;
-  color: inherit;
-  text-decoration: none;
+.posts__side .post + .post {
+  padding-top: var(--sp-5);
+  border-top: 1px solid var(--border-section);
 }
 .post__cover {
   aspect-ratio: var(--cover-ratio);
@@ -3100,9 +3131,6 @@ a.post:hover .post__cover {
   align-items: center;
   justify-content: space-between;
 }
-.post__meta {
-  margin-top: var(--sp-2);
-}
 .post__tag {
   font-size: var(--fs-label);
   font-weight: 600;
@@ -3128,6 +3156,23 @@ a.post:hover .post__cover {
 a.post:hover .post__more {
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+/* 좁은 폭 — 한 열. 보조는 표지 옆 글 그대로(표지 ~137px, 3줄 제목이 옆에 선다 — 실측 390). */
+@media (max-width: 860px) {
+  .posts {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-5);
+  }
+  .post--lead .post__cover {
+    border-radius: var(--radius-md);
+  }
+  .post--lead .post__title {
+    font-size: var(--fs-h4);
+    letter-spacing: -0.025em;
+  }
+  .posts__side .post__title {
+    font-size: var(--fs-body);
+  }
 }
 
 /* 칸마다 크기가 다른 격자. 대표 숫자가 두 칸을 먹는다. */
