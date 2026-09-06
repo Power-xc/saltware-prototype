@@ -84,7 +84,7 @@ a:hover {
 :focus-visible {
   outline: 2px solid var(--text-primary);
   outline-offset: 3px;
-  border-radius: 6px;
+  border-radius: var(--radius-xs);
 }
 
 .container {

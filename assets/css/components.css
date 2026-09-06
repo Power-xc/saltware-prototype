@@ -86,7 +86,7 @@
   inset-inline: 0;
   bottom: calc(50% - 0.95em);
   height: 2px;
-  border-radius: 2px;
+  border-radius: var(--radius-xs);
   background: var(--header-ink-strong);
 }
 .gnb__item[aria-expanded="true"]::after {
@@ -95,9 +95,9 @@
   left: 50%;
   translate: -50% 0;
   bottom: calc(50% - 0.95em);
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
+  width: var(--dot-sm);
+  height: var(--dot-sm);
+  border-radius: var(--radius-circle);
   background: var(--header-ink-strong);
 }
 .gnb__item[aria-current="page"][aria-expanded="true"]::after {
@@ -106,7 +106,7 @@
   translate: none;
   width: auto;
   height: 2px;
-  border-radius: 2px;
+  border-radius: var(--radius-xs);
 }
 
 .mega {
@@ -522,7 +522,7 @@
 }
 
 .media {
-  border-radius: var(--radius-hero);
+  border-radius: var(--radius-xl);
   border: 0;
   background: var(--bg-band);
   aspect-ratio: 4 / 3;
@@ -833,7 +833,7 @@
   left: var(--sp-5);
   padding: 5px 16px;
   border: 1px solid var(--border-inverse);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-sm);
   background: rgba(255, 255, 255, 0.14);
   backdrop-filter: blur(6px);
   font-size: var(--fs-xs);
@@ -1230,7 +1230,7 @@
 .field textarea {
   width: 100%;
   border: 1px solid var(--border-hair);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   background: var(--bg-card);
   padding: 11px 14px;
   font: inherit;
@@ -1260,7 +1260,7 @@
 .chip {
   border: 1px solid var(--border-hair);
   background: var(--bg-card);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-sm);
   padding: 6px 13px;
   font-size: var(--fs-xs);
 }
@@ -1343,7 +1343,7 @@ html.js-reveal .reveal.is-in {
 .floating__top {
   width: 44px;
   height: 44px;
-  border-radius: 50%;
+  border-radius: var(--radius-circle);
   display: grid;
   place-items: center;
   background: var(--bg-card);
@@ -1499,7 +1499,7 @@ a.dl:hover .dl__act {
   font-size: var(--fs-sm);
   color: var(--text-muted);
   border: 1px solid var(--border-hair);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-sm);
   padding: 6px var(--sp-3);
   text-decoration: line-through;
 }
@@ -1822,7 +1822,7 @@ a.bg__asset:hover {
   gap: var(--sp-2);
 }
 .flow__step {
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-sm);
   background: var(--bg-band);
   padding: 9px 16px;
   font-size: var(--fs-xs);
@@ -2149,7 +2149,7 @@ a.stk__card:hover {
   top: var(--sp-2);
   left: var(--sp-2);
   padding: 3px 10px;
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border-hair);
   background: rgba(255, 255, 255, 0.86);
   font-size: var(--fs-label-caps);
@@ -2315,7 +2315,7 @@ a.stk__cross:hover {
   align-content: start;
   padding: var(--sp-4) var(--sp-4) var(--sp-5);
   border: 1px solid var(--border-hair);
-  border-radius: var(--radius-tile);
+  border-radius: var(--radius-md);
   background: var(--bg-card);
   transition:
     border-color var(--dur-hover) var(--ease),
@@ -3495,9 +3495,9 @@ a.post:hover .post__more {
   position: absolute;
   top: -4px;
   left: 0;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
+  width: var(--dot-md);
+  height: var(--dot-md);
+  border-radius: var(--radius-circle);
   background: var(--accent-local, var(--text-accent));
 }
 .stage__head {
