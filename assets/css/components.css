@@ -362,7 +362,8 @@
   background: var(--header-cta-bg);
   color: var(--header-cta-ink);
   border-color: var(--header-cta-bg);
-  padding: 9px 18px;
+  /* 92×44(사령관 관리자 모드 실측 2026-09-06) — 좌우를 한 단 넓혀 글자가 덜 조여 보인다. */
+  padding: 9px 20px;
   font-size: var(--fs-sm);
   font-weight: 600;
 }
@@ -644,7 +645,9 @@
   /* 세로 리듬(11차 판정 2026-09-04) — 헤더 아래 숨 → 킥커 16 제목 24 리드 → 44 → 띠 20 카드.
      글 덩어리와 [띠 + 카드] 덩어리 사이가 가장 넓고, 띠는 카드의 탭이라 카드에 붙는다.
      1440×1000 에서 카드 아래 30px 남는다(실측). */
-  padding-top: clamp(48px, 5.5vw, 80px);
+  /* 사령관 관리자 모드 실측(2026-09-06): 제목 캡 상단이 헤더 아래 143px(1588·1776), 129px(1435),
+     79px(494). 제목이 64px 로 줄면서 위 숨을 크게 둔다. */
+  padding-top: clamp(80px, 9vw, 132px);
   padding-bottom: var(--sp-7);
   /* 왼쪽 정렬 — 디자이너 예시의 제목 문법(5차 판정 2026-09-04). 가운데 정렬은 오브젝트와 함께 갔다. */
   text-align: left;
@@ -659,7 +662,8 @@
   justify-content: flex-start;
   align-items: center;
   row-gap: var(--sp-2);
-  margin-bottom: var(--sp-4);
+  /* 띠와 카드 사이 22px — 사령관 관리자 모드 실측(2026-09-06: 띠 밑 404 → 카드 432). */
+  margin-bottom: var(--sp-5);
   padding: 0;
   font-size: var(--fs-label-caps);
   font-weight: 600;
@@ -706,9 +710,13 @@
   /* 예시의 크기로 — 첫 화면에서 제목이 먼저 들어온다(10차 판정 "더 확 들어오게").
      폭뿐 아니라 높이도 본다 — 낮은 노트북 화면(1440×800)에서 제목이 카드 자리를 먹지 않게.
      --fs-hero 토큰을 안 쓰는 이유: 벤토 대표 숫자가 같이 쓴다. */
-  font-size: clamp(30px, min(5.2vw, 7.4svh), 74px);
+  /* 사령관 관리자 모드 실측(2026-09-06): 폭과 무관하게 64px 고정 — 494·781·1435·1588·1776 전부
+     캡 높이 46px. 폭 360 에서만 "AI-NATIVE." 한 단어가 넘쳐 16vw 로 받친다. 단어 사이는 좁혔다
+     ("띄어쓰기") — 한 줄 폭 753px 를 5개 줄 폭으로 역산한 값. 자간은 그대로. */
+  font-size: min(64px, 16vw);
   line-height: 1.04;
   letter-spacing: -0.045em;
+  word-spacing: -0.2em;
   font-weight: 700;
 }
 /* 첫 줄만 그라디언트. 둘째 줄은 흰색으로 남는다(레퍼런스 실측). */
@@ -723,7 +731,8 @@
   color: transparent;
 }
 .hero--home .hero__lede {
-  max-width: 52ch;
+  /* 76ch — 데스크톱에서 두 줄로 떨어진다(사령관 관리자 모드 실측 2026-09-06). */
+  max-width: 76ch;
   margin-top: var(--sp-2);
   font-size: var(--fs-lede);
   line-height: 1.6;
@@ -769,7 +778,8 @@
      하한 260 — 세로 카드 폭 = (컨테이너 − 간격 5) / 5.42 단위. */
   flex: 1 1 auto;
   min-height: 260px;
-  max-height: calc((100cqw - 5 * var(--sp-4)) / 5.42 * 1.455 * 1.25);
+  /* 상한 1.25→1.5(사령관 관리자 모드 실측 2026-09-06: 975px 창에서 카드 500px). */
+  max-height: calc((100cqw - 5 * var(--sp-4)) / 5.42 * 1.455 * 1.5);
 }
 .hcard {
   position: relative;
@@ -1943,19 +1953,19 @@ a.bg__asset:hover {
     grid-template-columns: 1fr;
     gap: var(--sp-2);
   }
-  /* 모바일은 리드가 5줄로 늘어 위 여백을 줄여 수납한다(실측 390). */
-  .hero--home {
-    padding-top: var(--sp-6);
-  }
+  /* 모바일 상단 여백은 데스크톱 clamp 의 하한(80px)을 그대로 쓴다 — 사령관 관리자 모드 실측(494: 79px).
+     예전엔 리드 5줄 수납용으로 32px 까지 줄였다. */
   .hero__center {
     gap: var(--sp-3);
   }
-  /* 층 띠는 두 줄로 접히며 연결선이 줄 머리에 매달렸다(실측) — 선을 접고 격자로 둔다.
+  /* 층 띠는 두 줄로 접히며 연결선이 줄 머리에 매달렸다(실측) — 선을 접는다.
+     3열 격자는 열 폭이 가장 긴 이름(Orchestration)에 맞춰져 AI 옆이 뻥 비었다(사령관 지적
+     2026-09-06 "글자 수가 달라서 깨져 보여") — 이름 폭대로 흐르는 flex-wrap 으로 둔다.
      리드와는 한 단 띄운다 — 붙이면 리드의 마지막 줄로 읽힌다(실측 390). */
   .hero__layers {
-    display: grid;
-    grid-template-columns: repeat(3, auto);
-    justify-content: start;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
     column-gap: var(--sp-4);
     row-gap: var(--sp-2);
     margin-top: var(--sp-6);
