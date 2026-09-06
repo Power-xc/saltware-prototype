@@ -2219,6 +2219,10 @@ a.tile:hover .tile__glyph {
     width: 28px;
     height: 28px;
   }
+  /* 아홉 장이 두 열이면 마지막 한 장이 외톨이다 — 전체 산업이 한 줄을 다 쓴다. */
+  .tile:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
 }
 
 /* 문제 기준 탐색(§11.5) — 이미지 카드 가로 레일. 목록이 아니라 골라 넘기는
@@ -2342,7 +2346,7 @@ a.tile:hover .tile__glyph {
 .sol {
   position: relative;
   display: grid;
-  grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+  grid-template-rows: auto auto minmax(0, 1fr) auto;
   gap: var(--sp-2);
   min-height: 400px;
   padding: var(--sp-6);
@@ -2355,12 +2359,6 @@ a.tile:hover .tile__glyph {
 .sol:hover {
   transform: translateY(-4px);
 }
-.sol__eyebrow {
-  font-size: var(--fs-label-caps);
-  font-weight: 600;
-  letter-spacing: var(--tracking-label);
-  color: var(--text-accent-on-inverse);
-}
 .sol__title {
   font-size: var(--fs-h3);
   font-weight: 700;
@@ -2370,6 +2368,10 @@ a.tile:hover .tile__glyph {
   font-size: var(--fs-sm);
   line-height: 1.55;
   color: var(--text-on-inverse-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 .sol__mark {
   align-self: center;
@@ -3172,16 +3174,6 @@ a.post:hover .post__more {
 }
 .section--focus .cta-row {
   justify-content: center;
-  margin-bottom: var(--sp-7);
-}
-/* 마지막 줄이 두 칸만 남아도 가운데로 모인다. 격자로 두면 왼쪽에 붙는다. */
-.section--focus .tiles {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-.section--focus .tile {
-  flex: 0 1 clamp(180px, 15vw, 220px);
 }
 
 /* 메인의 대표 사례 자리도 같은 색면으로 둔다. 회색 빈 액자 하나만 다른 언어로
