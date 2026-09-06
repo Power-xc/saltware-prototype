@@ -61,7 +61,8 @@
 /* 항목 전체 높이를 버튼이 차지해야 hover 로 메가가 열릴 때 커서가 빠지지 않는다. */
 .gnb__item {
   font-size: var(--fs-body);
-  font-weight: 500;
+  /* 본문과 굵기가 같으면(500) 스크롤 중 배경 콘텐츠에 묻혀 눈에 안 띈다 — 600 으로 분리. */
+  font-weight: 600;
   letter-spacing: -0.01em;
   color: var(--header-ink);
   padding: 0;
@@ -961,7 +962,9 @@
     grid-template-rows: minmax(0, 1fr) auto;
     align-items: stretch;
     min-height: calc(260px + 56px + var(--sp-4));
-    max-height: calc((100cqw - 2 * var(--sp-4)) / 4.34 * 1.455 * 1.25 + 56px + var(--sp-4));
+    max-height: calc(
+      (100cqw - 2 * var(--sp-4)) / 4.34 * 1.455 * 1.25 + 56px + var(--sp-4)
+    );
   }
   .hcard {
     grid-row: 1;
@@ -2876,7 +2879,11 @@ a.quiet:hover {
   background: linear-gradient(140deg, var(--bg-inverse), var(--accent-cloud));
 }
 .cases__media--databricks {
-  background: linear-gradient(140deg, var(--bg-inverse), var(--accent-databricks));
+  background: linear-gradient(
+    140deg,
+    var(--bg-inverse),
+    var(--accent-databricks)
+  );
 }
 .cases__body {
   display: grid;

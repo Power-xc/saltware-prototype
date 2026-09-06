@@ -153,11 +153,13 @@
      1240 은 그보다 좁아 6열 타일이 서지 않았다. */
   --container: 1400px;
   --header-h: 64px;
-  /* 헤더 표면 — 전 페이지 라이트 한 벌(흰 메인 전환 2026-09-01). */
-  --header-bg: rgba(255, 255, 255, 0.82);
+  /* 헤더 표면 — 전 페이지 라이트 한 벌(흰 메인 전환 2026-09-01).
+     불투명도·경계선을 GNB 시인성 판정(2026-09-06)에서 한 단 올렸다 —
+     0.82/0.08 로는 스크롤 중 배경 콘텐츠에 헤더가 묻혔다. */
+  --header-bg: rgba(255, 255, 255, 0.92);
   --header-ink: var(--c-neutral-700);
   --header-ink-strong: var(--c-neutral-900);
-  --header-line: rgba(0, 0, 0, 0.08);
+  --header-line: rgba(0, 0, 0, 0.14);
   --header-cta-bg: var(--c-neutral-900);
   --header-cta-ink: var(--c-white);
   /* 메가 패널 면 — 완전 불투명. 프로스트(0.97→0.99)로도 다크 히어로의 흰
