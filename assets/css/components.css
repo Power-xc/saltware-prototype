@@ -740,10 +740,6 @@
   color: var(--hero-ink-soft);
   opacity: 0.78;
 }
-.hero--home .eyebrow--muted {
-  color: var(--hero-ink-soft);
-  opacity: 0.66;
-}
 .hero__feature {
   position: relative;
   z-index: 1;
@@ -865,6 +861,13 @@
 }
 .hcard--mini .hcard__side {
   opacity: 1;
+  /* 접힌 카드의 세로 이름은 카드 가운데에 세운다. 바닥(--sp-5)에 붙이면 마지막 카드가
+     우하단 플로팅 문의 CTA(.floating — 같은 --sp-5 바닥 앵커, z-index 45) 뒤로 들어가
+     라벨이 잘린다. 라벨 길이에 따라 잘리는 정도만 달라질 뿐 항상 겹친다
+     ("AI" 는 "A" 만, "HARDWARE" 는 "ARE" 만 남았다 — 실측 1440·1280 2026-09-06). */
+  top: 50%;
+  bottom: auto;
+  transform: translate(-50%, -50%) rotate(180deg);
 }
 /* 카피는 흐름 밖에 둔다 — 접힌 폭에서 카드를 밀어 넓히지 않게. */
 .hcard__text {
@@ -1309,8 +1312,9 @@ html.js-reveal .reveal.is-in {
   gap: var(--sp-2);
   background: var(--bg-inverse);
   color: var(--text-on-inverse);
+  border: 2px solid var(--floating-line);
   border-radius: var(--radius-pill);
-  padding: 13px 20px;
+  padding: 11px 18px;
   font-size: var(--fs-sm);
   font-weight: 600;
   box-shadow: var(--shadow-mega);
