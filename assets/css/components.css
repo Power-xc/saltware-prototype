@@ -2348,7 +2348,7 @@ a.tile:hover .tile__glyph {
   display: grid;
   grid-template-rows: auto auto minmax(0, 1fr) auto;
   gap: var(--sp-2);
-  min-height: 400px;
+  min-height: 300px;
   padding: var(--sp-6);
   border-radius: var(--radius-lg);
   background: var(--bg-inverse);
@@ -2373,11 +2373,12 @@ a.tile:hover .tile__glyph {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+/* 상형은 작게 왼쪽 아래 — 여백선에 맞춰 자세히 보기 위에 앉는다(사령관 2026-09-07 "가운데 말고 왼쪽 아래"). */
 .sol__mark {
-  align-self: center;
-  justify-self: center;
-  width: 96px;
-  height: 96px;
+  align-self: end;
+  justify-self: start;
+  width: 40px;
+  height: 40px;
   color: var(--text-accent-on-inverse);
 }
 .sol__mark svg {
@@ -2386,14 +2387,14 @@ a.tile:hover .tile__glyph {
   height: 100%;
 }
 .sol__more {
-  margin-top: var(--sp-2);
+  margin-top: var(--sp-4);
   font-size: var(--fs-xs);
   font-weight: 600;
   color: var(--text-accent-on-inverse);
 }
 @media (max-width: 860px) {
   .sol {
-    min-height: 340px;
+    min-height: 280px;
   }
 }
 
