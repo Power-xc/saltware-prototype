@@ -610,31 +610,31 @@
   max-width: 42ch;
 }
 .hero--media.hero--m-cloud {
-  --hero-media: url("/saltware-prototype/media/business/hero-cloud.jpg?v=143932ba87d0");
+  --hero-media: url("/saltware-prototype/media/business/hero-cloud.jpg?v=5e88e834e115");
 }
 .hero--media.hero--m-databricks {
-  --hero-media: url("/saltware-prototype/media/business/hero-databricks.jpg?v=143932ba87d0");
+  --hero-media: url("/saltware-prototype/media/business/hero-databricks.jpg?v=5e88e834e115");
 }
 .hero--media.hero--m-identity {
-  --hero-media: url("/saltware-prototype/media/business/hero-identity.jpg?v=143932ba87d0");
+  --hero-media: url("/saltware-prototype/media/business/hero-identity.jpg?v=5e88e834e115");
 }
 .hero--media.hero--m-redhat {
-  --hero-media: url("/saltware-prototype/media/business/hero-redhat.jpg?v=143932ba87d0");
+  --hero-media: url("/saltware-prototype/media/business/hero-redhat.jpg?v=5e88e834e115");
 }
 .hero--media.hero--m-enview {
-  --hero-media: url("/saltware-prototype/media/business/hero-enview.jpg?v=143932ba87d0");
+  --hero-media: url("/saltware-prototype/media/business/hero-enview.jpg?v=5e88e834e115");
 }
 .hero--media.hero--m-smart-farm {
-  --hero-media: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=143932ba87d0");
+  --hero-media: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=5e88e834e115");
 }
 .hero--media.hero--m-hub-business {
-  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=143932ba87d0");
+  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=5e88e834e115");
 }
 .hero--media.hero--m-hub-insights {
-  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=143932ba87d0");
+  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=5e88e834e115");
 }
 .hero--media.hero--m-hub-company {
-  --hero-media: url("/saltware-prototype/media/hub/hub-company.jpg?v=143932ba87d0");
+  --hero-media: url("/saltware-prototype/media/hub/hub-company.jpg?v=5e88e834e115");
 }
 
 .hero--home {
@@ -2148,7 +2148,8 @@ a.bg__asset:hover {
 .stk__card {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr);
+  /* 사진이 아니라 마크가 들어간다 — 0.42fr 은 도트 옆으로 회색 여백만 남겼다. */
+  grid-template-columns: minmax(0, 0.3fr) minmax(0, 1fr);
   border-radius: var(--radius-lg);
   overflow: hidden;
   background: var(--bg-card);
@@ -2167,25 +2168,38 @@ a.stk__card:hover {
 .stk__card--top {
   border-color: var(--border-accent);
 }
-/* 아트는 카드 높이를 그대로 채운다 — 그림의 주제가 가운데라 좌우를 잘라도 산다. */
+/* 층 마크가 앉는 판 — 카드 높이를 그대로 받고 마크는 가운데에 선다. */
 .stk__media {
   position: relative;
+  display: grid;
+  place-items: center;
   min-height: 176px;
   background: var(--bg-band);
 }
 /* 홈의 생성 이미지(층 타일·의도 카드·현장 표지·솔루션 면)도 같은 톤 — 파란 3D 세트가 첫 화면과 따로 놀았다. */
-.stk__art,
 .rail__img,
 .post__cover img,
 .cases__media img {
   filter: var(--art-tone);
 }
-.stk__art {
-  position: absolute;
-  inset: 0;
+/* 도트 글리프 — 소금 결정 마크(design-resources/05-icon). 평소엔 옅은 회색으로 두고,
+   스택의 결론인 맨 위층과 마우스가 얹힌 카드에서만 주황이 켜진다. 주황은 포인트로만 쓴다. */
+.stk__glyph {
+  display: block;
+  /* 폭 상한을 px 로 두지 않는다 — 브레이크포인트 검사가 max-width 를 전부 센다.
+     아트 칸이 0.3fr 이라 컨테이너 상한(1400)에서도 마크는 60px대에 머문다. */
+  width: 62%;
+  color: var(--text-faint);
+  transition: color var(--dur-hover) var(--ease);
+}
+.stk__glyph svg {
+  display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+}
+.stk__card--top .stk__glyph,
+a.stk__card:hover .stk__glyph {
+  color: var(--text-accent);
 }
 .stk__n {
   position: absolute;
@@ -2521,13 +2535,13 @@ a.tile:hover {
   transform: translateY(-4px);
 }
 .sol--art-data-ai {
-  background-image: url("/saltware-prototype/media/home/mosaic-data-ai.jpg?v=143932ba87d0");
+  background-image: url("/saltware-prototype/media/home/mosaic-data-ai.jpg?v=5e88e834e115");
 }
 .sol--art-databricks {
-  background-image: url("/saltware-prototype/media/home/mosaic-databricks.jpg?v=143932ba87d0");
+  background-image: url("/saltware-prototype/media/home/mosaic-databricks.jpg?v=5e88e834e115");
 }
 .sol--art-cloud {
-  background-image: url("/saltware-prototype/media/home/mosaic-cloud.jpg?v=143932ba87d0");
+  background-image: url("/saltware-prototype/media/home/mosaic-cloud.jpg?v=5e88e834e115");
 }
 .sol__eyebrow {
   font-size: var(--fs-label-caps);
@@ -3293,8 +3307,9 @@ a.post:hover .post__more {
     border-left: 0;
     padding-left: 0;
   }
-  /* 스택 — 카드 한 열, 아트 위 · 글 아래(폰 폭에선 옆에 둘 자리가 없다).
-     아트는 21:9 로 눕혀 여섯 장이 먹는 세로를 줄인다(17차 판정 "모바일 높이 살짝"). */
+  /* 스택 — 카드 한 열, 마크 위 · 글 아래(폰 폭에선 옆에 둘 자리가 없다).
+     사진이던 시절 21:9 였다. 마크 하나에는 과해 더 낮게 눕히고, 번호 칩이 top-left 에
+     고정이라 마크는 가운데에 둬야 겹치지 않는다. */
   .stk__grid {
     grid-template-columns: minmax(0, 1fr);
     gap: var(--sp-2);
@@ -3304,7 +3319,15 @@ a.post:hover .post__more {
   }
   .stk__media {
     min-height: 0;
-    aspect-ratio: 21 / 9;
+    aspect-ratio: 32 / 9;
+  }
+  .stk__glyph {
+    width: auto;
+    height: 56%;
+  }
+  .stk__glyph svg {
+    width: auto;
+    height: 100%;
   }
   .stk__text {
     padding: var(--sp-3) var(--sp-4) var(--sp-4);
