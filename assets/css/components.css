@@ -591,31 +591,31 @@
   max-width: 42ch;
 }
 .hero--media.hero--m-cloud {
-  background-image: url("/saltware-prototype/media/business/hero-cloud.jpg?v=511fb9d37064");
+  background-image: url("/saltware-prototype/media/business/hero-cloud.jpg?v=143932ba87d0");
 }
 .hero--media.hero--m-databricks {
-  background-image: url("/saltware-prototype/media/business/hero-databricks.jpg?v=511fb9d37064");
+  background-image: url("/saltware-prototype/media/business/hero-databricks.jpg?v=143932ba87d0");
 }
 .hero--media.hero--m-identity {
-  background-image: url("/saltware-prototype/media/business/hero-identity.jpg?v=511fb9d37064");
+  background-image: url("/saltware-prototype/media/business/hero-identity.jpg?v=143932ba87d0");
 }
 .hero--media.hero--m-redhat {
-  background-image: url("/saltware-prototype/media/business/hero-redhat.jpg?v=511fb9d37064");
+  background-image: url("/saltware-prototype/media/business/hero-redhat.jpg?v=143932ba87d0");
 }
 .hero--media.hero--m-enview {
-  background-image: url("/saltware-prototype/media/business/hero-enview.jpg?v=511fb9d37064");
+  background-image: url("/saltware-prototype/media/business/hero-enview.jpg?v=143932ba87d0");
 }
 .hero--media.hero--m-smart-farm {
-  background-image: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=511fb9d37064");
+  background-image: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=143932ba87d0");
 }
 .hero--media.hero--m-hub-business {
-  background-image: url("/saltware-prototype/media/hub/hub-business.jpg?v=511fb9d37064");
+  background-image: url("/saltware-prototype/media/hub/hub-business.jpg?v=143932ba87d0");
 }
 .hero--media.hero--m-hub-insights {
-  background-image: url("/saltware-prototype/media/hub/hub-insights.jpg?v=511fb9d37064");
+  background-image: url("/saltware-prototype/media/hub/hub-insights.jpg?v=143932ba87d0");
 }
 .hero--media.hero--m-hub-company {
-  background-image: url("/saltware-prototype/media/hub/hub-company.jpg?v=511fb9d37064");
+  background-image: url("/saltware-prototype/media/hub/hub-company.jpg?v=143932ba87d0");
 }
 
 .hero--home {
@@ -2422,13 +2422,13 @@ a.tile:hover {
   transform: translateY(-4px);
 }
 .sol--art-data-ai {
-  background-image: url("/saltware-prototype/media/home/mosaic-data-ai.jpg?v=511fb9d37064");
+  background-image: url("/saltware-prototype/media/home/mosaic-data-ai.jpg?v=143932ba87d0");
 }
 .sol--art-databricks {
-  background-image: url("/saltware-prototype/media/home/mosaic-databricks.jpg?v=511fb9d37064");
+  background-image: url("/saltware-prototype/media/home/mosaic-databricks.jpg?v=143932ba87d0");
 }
 .sol--art-cloud {
-  background-image: url("/saltware-prototype/media/home/mosaic-cloud.jpg?v=511fb9d37064");
+  background-image: url("/saltware-prototype/media/home/mosaic-cloud.jpg?v=143932ba87d0");
 }
 .sol__eyebrow {
   font-size: var(--fs-label-caps);
@@ -2568,12 +2568,6 @@ a.tile:hover {
 }
 .logos__item--claude img {
   height: 20px;
-}
-/* xabyss 원본이 연회색 저해상 PNG 라 단색 벨트에서 사라진다 — 대비만 끌어올린다. */
-.logos__item--xabyss img {
-  height: 26px;
-  filter: grayscale(1) contrast(2.2);
-  opacity: 0.75;
 }
 .logos__item--ibm img {
   height: 22px;
