@@ -92,7 +92,9 @@
 
   --fs-display: clamp(30px, 4vw, 45px);
   --fs-hero: clamp(38px, 6.4vw, 88px);
-  --fs-h2: 29px;
+  /* 섹션 제목 — 고정 29px 는 64px 메인 제목 옆에서 작게 읽혔다(전 페이지 패스 2026-09-06).
+     1440 에서 34px, 좁은 화면은 28px 아래로 안 내려간다. */
+  --fs-h2: clamp(28px, 2.4vw, 34px);
   --fs-h3: 22px;
   --fs-h4: 17px;
   --fs-lede: 17px;
@@ -187,6 +189,9 @@
      겹치면 경계가 사라진다 — 흰 테두리로 항상 분리한다(밝은 페이지 위에선
      배경과 거의 같은 흰색이라 안 보인다). */
   --floating-line: var(--c-white);
+  /* 생성 이미지(파란 3D 렌더) 톤 — 채도를 30% 로 내려 주황·그레이·블랙 팔레트 안으로 들인다
+     (전 페이지 패스 2026-09-06 "AI 느낌 다 빼고", §30 cyber aesthetic). 실사 세트로 바뀌면 none 으로. */
+  --art-tone: saturate(0.3) contrast(1.04);
   --shadow-mega: 0 12px 28px rgba(0, 0, 0, 0.08);
   --shadow-lift: 0 10px 24px rgba(16, 20, 28, 0.07);
 
