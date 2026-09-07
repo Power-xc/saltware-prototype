@@ -753,6 +753,13 @@
   line-height: 1.6;
   color: var(--hero-ink-soft);
 }
+/* 리드 안 부분 강조 — 색만 잉크로 올린다(사령관 2026-09-07 "블랙처리").
+   굵기까지 올리면 회색 문단이 키워드 나열로 읽혀 강조가 안 남는다. 회색 연결어 위에
+   #6e6e73 → #1d1d1f 한 단이면 스캔이 강조만 짚고 지나간다. */
+.hero--home .hero__lede strong {
+  color: var(--hero-ink);
+  font-weight: inherit;
+}
 .hero--home .hero__lede .br-soft {
   display: none;
 }
