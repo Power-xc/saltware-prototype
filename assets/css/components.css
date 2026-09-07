@@ -2227,10 +2227,10 @@ a.tile:hover .tile__glyph {
 
 /* 문제 기준 탐색(§11.5) — 이미지 카드 가로 레일. 목록이 아니라 골라 넘기는
    선반이다. 스크롤바는 숨기되 스크롤 자체는 살린다. */
-/* 홈의 생성 이미지(의도 카드)와 실사 표지(수행 영역·인사이트)는 같은 톤 — 세트가 갈리지 않게. */
+/* 홈의 생성 이미지(의도 카드)와 실사 컷(수행 영역·인사이트)은 같은 톤 — 세트가 갈리지 않게. */
 .rail__img,
 .post__cover img,
-.cases__media img {
+.case__art img {
   filter: var(--art-tone);
 }
 
@@ -2777,108 +2777,108 @@ a.quiet:hover {
   color: var(--text-muted);
 }
 
-/* 대표 수행 영역 — 왼쪽 컷 하나, 오른쪽은 선택 목록 + 그 아래 본문.
-   두 열의 키가 맞아야 다음 섹션과의 여백이 어긋나지 않는다(사령관 지적 2026-09-01).
-   컷은 원본 이미지가 올 때까지 사업 액센트 색면이다. */
+/* 대표 수행 영역 — 가로 카드 여섯이 3열 두 줄(사령관 레퍼런스 2026-09-07).
+   예전엔 왼쪽 컷 하나 + 오른쪽 탭이라 한 번에 한 건만 보였다. 여섯을 한눈에 두는 게
+   이 섹션의 일이다. 카드는 산업 타일과 같은 면(--bg-band)이라 두 섹션이 한 벌로 읽힌다. */
 .cases {
   display: grid;
-  gap: var(--sp-5);
-  grid-template-areas:
-    "stage"
-    "panel"
-    "nav";
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap-tile);
 }
-@media (min-width: 1080px) {
-  .cases {
-    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
-    grid-template-rows: auto 1fr;
-    grid-template-areas:
-      "stage nav"
-      "stage panel";
-    align-items: start;
-    column-gap: var(--sp-7);
-  }
+.case {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: var(--sp-4);
+  min-height: 156px;
+  padding: var(--sp-5);
+  border-radius: var(--radius-lg);
+  background: var(--bg-band);
+  color: var(--text-primary);
+  text-decoration: none;
+  transition:
+    background-color var(--dur-hover) var(--ease),
+    transform var(--dur-hover) var(--ease);
 }
-.cases__stage {
-  grid-area: stage;
+a.case:hover {
+  transform: translateY(-3px);
 }
-.cases__nav {
-  grid-area: nav;
+.case__body {
+  display: grid;
+  align-content: start;
+  gap: 2px;
+  min-width: 0;
 }
-.cases__panel {
-  grid-area: panel;
+.case__kicker {
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-accent);
 }
-/* display 를 명시한 요소는 UA 의 [hidden] display:none 을 눌러 이긴다 —
-   숨김을 다시 명시하지 않으면 셋이 다 보인다(실측). */
-.cases__media[hidden],
-.cases__body[hidden] {
-  display: none;
+.case__title {
+  font-size: var(--fs-h4);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
 }
-.cases__media {
-  aspect-ratio: 16 / 10;
+.case__desc {
+  margin-top: var(--sp-2);
+  font-size: var(--fs-xs);
+  line-height: 1.55;
+  color: var(--text-secondary);
+}
+/* 화살표는 카드 바닥에 붙는다 — 설명 길이가 달라도 여섯 장의 화살표 줄이 맞는다. */
+.case__more {
+  align-self: end;
+  margin-top: var(--sp-4);
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.55;
+  position: relative;
+  transition: width var(--dur-hover) var(--ease);
+}
+.case__more::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: -3px;
+  width: 7px;
+  height: 7px;
+  border-top: 1px solid currentColor;
+  border-right: 1px solid currentColor;
+  transform: rotate(45deg);
+}
+a.case:hover .case__more {
+  width: 40px;
+}
+/* 컷은 정사각 — 레퍼런스가 그렇고, 원본 비율이 제각각이라 잘라 맞춘다. */
+.case__art {
+  flex: none;
+  width: 92px;
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
   overflow: hidden;
+  background: var(--bg-card);
 }
-/* 컷이 있으면 면을 채운다 — 없는 사례는 아래 사업 톤의 면으로 남는다. */
-.cases__media img {
+.case__art img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
-.cases__media--cloud {
-  background: linear-gradient(140deg, var(--bg-inverse), var(--accent-cloud));
-}
-.cases__media--databricks {
-  background: linear-gradient(
-    140deg,
-    var(--bg-inverse),
-    var(--accent-databricks)
-  );
-}
-.cases__body {
+/* 전용 컷이 없는 항목 — 도트 마크로 받는다. 페이지의 다른 마크와 같은 어휘다.
+   면을 깔지 않는다 — 흰 상자가 회색 카드 위에서 빈 자리처럼 떴다(실측 1440·390). */
+.case__art--mark {
   display: grid;
-  gap: var(--sp-2);
-  justify-items: start;
+  place-items: center;
+  background: none;
 }
-.cases__title {
-  font-size: var(--fs-h3);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-.cases__desc {
-  color: var(--text-muted);
-  max-width: 52ch;
-  line-height: 1.65;
-}
-.cases__nav {
-  display: grid;
-  border-top: 1px solid var(--border-hair);
-}
-.cases__tab {
-  text-align: left;
-  display: grid;
-  gap: 4px;
-  padding: var(--sp-4) var(--sp-3);
-  border-bottom: 1px solid var(--border-hair);
-  border-radius: 0;
-  transition: background var(--dur-hover) var(--ease);
-}
-.cases__tab:hover {
-  background: var(--bg-band);
-  color: var(--text-primary);
-}
-.cases__tab.is-active {
-  background: var(--bg-band);
-  box-shadow: inset 2px 0 0 var(--c-accent-500);
-}
-.cases__tab-kicker {
-  font-size: var(--fs-xs);
-  font-weight: 600;
-  color: var(--text-accent);
-}
-.cases__tab-title {
-  font-weight: 600;
-  letter-spacing: -0.015em;
+.case__art--mark svg {
+  display: block;
+  width: 46%;
+  height: auto;
+  color: var(--text-faint);
 }
 
 /* 표지 · 분류 · 제목 · 링크. 글 목록의 생김새 — 데이터브릭스 스포트라이트의
@@ -3101,11 +3101,14 @@ a.post:hover .post__more {
   .home .section__head {
     margin-bottom: var(--sp-5);
   }
-  .cases__media {
-    aspect-ratio: 2 / 1;
+  .cases {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 @media (max-width: 640px) {
+  .cases {
+    grid-template-columns: minmax(0, 1fr);
+  }
   .quiets {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
