@@ -610,31 +610,31 @@
   max-width: 42ch;
 }
 .hero--media.hero--m-cloud {
-  --hero-media: url("/saltware-prototype/media/business/hero-cloud.jpg?v=aa865649b87c");
+  --hero-media: url("/saltware-prototype/media/business/hero-cloud.jpg?v=ee018da91bf7");
 }
 .hero--media.hero--m-databricks {
-  --hero-media: url("/saltware-prototype/media/business/hero-databricks.jpg?v=aa865649b87c");
+  --hero-media: url("/saltware-prototype/media/business/hero-databricks.jpg?v=ee018da91bf7");
 }
 .hero--media.hero--m-identity {
-  --hero-media: url("/saltware-prototype/media/business/hero-identity.jpg?v=aa865649b87c");
+  --hero-media: url("/saltware-prototype/media/business/hero-identity.jpg?v=ee018da91bf7");
 }
 .hero--media.hero--m-redhat {
-  --hero-media: url("/saltware-prototype/media/business/hero-redhat.jpg?v=aa865649b87c");
+  --hero-media: url("/saltware-prototype/media/business/hero-redhat.jpg?v=ee018da91bf7");
 }
 .hero--media.hero--m-enview {
-  --hero-media: url("/saltware-prototype/media/business/hero-enview.jpg?v=aa865649b87c");
+  --hero-media: url("/saltware-prototype/media/business/hero-enview.jpg?v=ee018da91bf7");
 }
 .hero--media.hero--m-smart-farm {
-  --hero-media: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=aa865649b87c");
+  --hero-media: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=ee018da91bf7");
 }
 .hero--media.hero--m-hub-business {
-  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=aa865649b87c");
+  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=ee018da91bf7");
 }
 .hero--media.hero--m-hub-insights {
-  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=aa865649b87c");
+  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=ee018da91bf7");
 }
 .hero--media.hero--m-hub-company {
-  --hero-media: url("/saltware-prototype/media/hub/hub-company.jpg?v=aa865649b87c");
+  --hero-media: url("/saltware-prototype/media/hub/hub-company.jpg?v=ee018da91bf7");
 }
 
 .hero--home {
@@ -2226,8 +2226,7 @@ a.tile:hover .tile__glyph {
    선반이다. 스크롤바는 숨기되 스크롤 자체는 살린다. */
 /* 홈의 생성 이미지(의도 카드)와 실사 컷(수행 영역·인사이트)은 같은 톤 — 세트가 갈리지 않게. */
 .rail__img,
-.post__cover img,
-.case__art img {
+.post__cover img {
   filter: var(--art-tone);
 }
 
@@ -2777,108 +2776,34 @@ a.quiet:hover {
   color: var(--text-muted);
 }
 
-/* 대표 수행 영역 — 가로 카드 여섯이 3열 두 줄(사령관 레퍼런스 2026-09-07).
-   예전엔 왼쪽 컷 하나 + 오른쪽 탭이라 한 번에 한 건만 보였다. 여섯을 한눈에 두는 게
-   이 섹션의 일이다. 카드는 산업 타일과 같은 면(--bg-band)이라 두 섹션이 한 벌로 읽힌다. */
-.cases {
+/* 대표 수행 영역 — 그룹 제목 하나에 레일 하나(사령관 지시 2026-09-07 "그룹으로 분리해서
+   쭉 볼 수 있게"). 3열 격자 + 92px 정사각 컷은 사진을 뭉갰다 — 목표 카드와 같은 16:10
+   사진 카드를 그대로 쓰고, 그룹 사이는 면이 아니라 머리 선 하나로 나눈다. */
+.workgroups {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--gap-tile);
+  gap: var(--sp-8);
 }
-.case {
+.workgroup {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: start;
   gap: var(--sp-4);
-  min-height: 156px;
-  padding: var(--sp-5);
-  border-radius: var(--radius-lg);
-  background: var(--bg-band);
-  color: var(--text-primary);
-  text-decoration: none;
-  transition:
-    background-color var(--dur-hover) var(--ease),
-    transform var(--dur-hover) var(--ease);
 }
-a.case:hover {
-  transform: translateY(-3px);
+.workgroup__title {
+  padding-top: var(--sp-3);
+  border-top: 1px solid var(--border-hair);
+  font-size: var(--fs-h4);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
 }
-.case__body {
-  display: grid;
-  align-content: start;
-  gap: 2px;
-  min-width: 0;
+/* 목표 카드(여덟 장)는 넘쳐서 좁아도 되지만, 수행 그룹은 세 장이라 좁으면 오른쪽이 빈다.
+   넷째 장이 붙으면 그때부터 넘쳐 ‹ › 가 산다. */
+.workgroup .rail__card {
+  width: clamp(260px, 27vw, 384px);
 }
-.case__kicker {
+.rail__kicker {
   font-size: var(--fs-label);
   font-weight: 600;
   letter-spacing: var(--tracking-label);
   color: var(--text-accent);
-}
-.case__title {
-  font-size: var(--fs-h4);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.25;
-}
-.case__desc {
-  margin-top: var(--sp-2);
-  font-size: var(--fs-xs);
-  line-height: 1.55;
-  color: var(--text-secondary);
-}
-/* 화살표는 카드 바닥에 붙는다 — 설명 길이가 달라도 여섯 장의 화살표 줄이 맞는다. */
-.case__more {
-  align-self: end;
-  margin-top: var(--sp-4);
-  width: 28px;
-  height: 1px;
-  background: currentColor;
-  opacity: 0.55;
-  position: relative;
-  transition: width var(--dur-hover) var(--ease);
-}
-.case__more::after {
-  content: "";
-  position: absolute;
-  right: 0;
-  top: -3px;
-  width: 7px;
-  height: 7px;
-  border-top: 1px solid currentColor;
-  border-right: 1px solid currentColor;
-  transform: rotate(45deg);
-}
-a.case:hover .case__more {
-  width: 40px;
-}
-/* 컷은 정사각 — 레퍼런스가 그렇고, 원본 비율이 제각각이라 잘라 맞춘다. */
-.case__art {
-  flex: none;
-  width: 92px;
-  aspect-ratio: 1;
-  border-radius: var(--radius-md);
-  overflow: hidden;
-  background: var(--bg-card);
-}
-.case__art img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-/* 전용 컷이 없는 항목 — 도트 마크로 받는다. 페이지의 다른 마크와 같은 어휘다.
-   면을 깔지 않는다 — 흰 상자가 회색 카드 위에서 빈 자리처럼 떴다(실측 1440·390). */
-.case__art--mark {
-  display: grid;
-  place-items: center;
-  background: none;
-}
-.case__art--mark svg {
-  display: block;
-  width: 46%;
-  height: auto;
-  color: var(--text-faint);
 }
 
 /* 표지 · 분류 · 제목 · 링크. 글 목록의 생김새 — 데이터브릭스 스포트라이트의
@@ -2890,7 +2815,10 @@ a.case:hover .case__more {
    "깨지고 이상한"). 지금은 모든 표지가 16:9 이고 보조는 표지 옆에 글을 가운데 세운다. */
 .posts {
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  /* 2fr:1fr 이면 대표 표지가 800px(16:9 → 450px 높이)라 보조 둘보다 다섯 배 컸고
+     오른쪽 열이 한참 위에서 끝났다(사령관 2026-09-07 "제일 큰 거 좀 줄여서 비율 맞춰라").
+     1.45fr 로 좁히고 보조 표지를 키워 두 열이 비슷한 높이에서 끝난다. */
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
   gap: var(--sp-6);
   align-items: start;
 }
@@ -2925,7 +2853,7 @@ a.case:hover .case__more {
 }
 .posts__side .post {
   width: 100%;
-  grid-template-columns: minmax(0, 0.42fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
   column-gap: var(--sp-4);
   align-items: center;
 }
@@ -3030,8 +2958,25 @@ a.post:hover .post__more {
   border-radius: var(--radius-xl);
   padding: var(--sp-6);
   display: grid;
-  gap: var(--sp-2);
+  gap: var(--sp-4);
   align-content: start;
+}
+/* lead 만 2행이라 start 로 두면 아래 절반이 빈 채로 남는다(실측 1440) — 수는 위, 글은 바닥.
+   나머지 칸은 start 그대로다. 한 줄짜리 칸까지 벌리면 수와 이름 사이가 도리어 벌어졌다. */
+.bento__cell--0 {
+  align-content: space-between;
+}
+/* 가장 큰 수 하나만 검은 면을 받는다(사령관 벤치마킹 2026-09-07 — 애플은 한 장만 어둡다).
+   여섯 칸이 다 같은 회색이면 격자만 보이고 수가 안 보인다. */
+.bento__cell--0 {
+  background: var(--bg-inverse);
+  color: var(--text-on-inverse);
+}
+.bento__cell--0 .bento__unit {
+  color: var(--text-accent-on-inverse);
+}
+.bento__cell--0 .bento__desc {
+  color: var(--text-on-inverse-muted);
 }
 .bento__cell--0 {
   grid-area: lead;
@@ -3056,6 +3001,12 @@ a.post:hover .post__more {
   font-weight: 700;
   letter-spacing: var(--tracking-tight);
   line-height: 1;
+  /* 2003 · 2022 · 200 이 같은 자릿폭으로 서야 여섯 칸이 한 표로 읽힌다. */
+  font-variant-numeric: tabular-nums;
+}
+.bento__foot {
+  display: grid;
+  gap: var(--sp-1);
 }
 .bento__cell--0 .bento__num {
   font-size: var(--fs-hero);
@@ -3101,14 +3052,8 @@ a.post:hover .post__more {
   .home .section__head {
     margin-bottom: var(--sp-5);
   }
-  .cases {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
 }
 @media (max-width: 640px) {
-  .cases {
-    grid-template-columns: minmax(0, 1fr);
-  }
   .quiets {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
