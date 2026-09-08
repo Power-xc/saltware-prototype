@@ -430,16 +430,7 @@
    --band 와 --card 는 페이지 모듈이 쓰는 이름이라 남기되 시각은 통일한다. */
 .section {
   padding-bottom: var(--section-py);
-}
-.section--wide {
-  padding-block: var(--section-py-lg);
-}
-.section--wide + .section > .container,
-.section--wide > .container {
-  padding-top: var(--section-py-lg);
-  margin-top: calc(var(--section-py-lg) * -1);
-}
-.section > .container {
+}.section > .container {
   border-top: 1px solid var(--border-section);
   padding-top: var(--section-py);
 }
@@ -654,31 +645,31 @@
   max-width: 42ch;
 }
 .hero--media.hero--m-cloud {
-  --hero-media: url("/saltware-prototype/media/business/hero-cloud.jpg?v=58d86782872f");
+  --hero-media: url("/saltware-prototype/media/business/hero-cloud.jpg?v=6310f6672894");
 }
 .hero--media.hero--m-databricks {
-  --hero-media: url("/saltware-prototype/media/business/hero-databricks.jpg?v=58d86782872f");
+  --hero-media: url("/saltware-prototype/media/business/hero-databricks.jpg?v=6310f6672894");
 }
 .hero--media.hero--m-identity {
-  --hero-media: url("/saltware-prototype/media/business/hero-identity.jpg?v=58d86782872f");
+  --hero-media: url("/saltware-prototype/media/business/hero-identity.jpg?v=6310f6672894");
 }
 .hero--media.hero--m-redhat {
-  --hero-media: url("/saltware-prototype/media/business/hero-redhat.jpg?v=58d86782872f");
+  --hero-media: url("/saltware-prototype/media/business/hero-redhat.jpg?v=6310f6672894");
 }
 .hero--media.hero--m-enview {
-  --hero-media: url("/saltware-prototype/media/business/hero-enview.jpg?v=58d86782872f");
+  --hero-media: url("/saltware-prototype/media/business/hero-enview.jpg?v=6310f6672894");
 }
 .hero--media.hero--m-smart-farm {
-  --hero-media: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=58d86782872f");
+  --hero-media: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=6310f6672894");
 }
 .hero--media.hero--m-hub-business {
-  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=58d86782872f");
+  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=6310f6672894");
 }
 .hero--media.hero--m-hub-insights {
-  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=58d86782872f");
+  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=6310f6672894");
 }
 .hero--media.hero--m-hub-company {
-  --hero-media: url("/saltware-prototype/media/hub/hub-company.jpg?v=58d86782872f");
+  --hero-media: url("/saltware-prototype/media/hub/hub-company.jpg?v=6310f6672894");
 }
 
 .hero--home {
@@ -806,15 +797,6 @@
 }
 .hero--home .hero__lede .br-soft {
   display: none;
-}
-/* 리드 아래 부연 — 리드보다 한 단 작고 옅게 두어 읽는 순서가 제목→리드→부연으로
-   내려간다. 첫 화면 예산을 세 줄만큼 먹으므로 행간은 본문보다 조인다. */
-.hero--home .hero__note {
-  max-width: 64ch;
-  font-size: var(--fs-body);
-  line-height: 1.62;
-  color: var(--hero-ink-soft);
-  opacity: 0.78;
 }
 .hero__feature {
   position: relative;
@@ -1101,18 +1083,6 @@
   }
 }
 
-/* 물방울 오브젝트 — 로고의 원에서 온 브랜드 오브젝트. 콘텐츠 뒤, 고스트 글자 앞. */
-.hero__drops {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-.hero__drops svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
 .hero--home .hero__center,
 .hero--home .hero__feature,
 .hero--home .hero__layers {
@@ -1354,23 +1324,6 @@
   border-color: var(--state-danger);
   background: var(--state-danger-bg);
   color: var(--state-danger);
-}
-
-/* ── 등장 애니메이션 — Guardian feature-rows.js 패턴 ──── */
-.reveal {
-  transition:
-    opacity 0.5s ease,
-    transform 0.5s ease;
-}
-/* JS 가 살아 있을 때만 숨긴다. 스크립트가 실패하면 본문이 그냥 보인다 —
-   현행 AJAX 헤더와 같은 실패 모드를 만들지 않기 위한 것이다. */
-html.js-reveal .reveal {
-  opacity: 0;
-  transform: translateY(12px);
-}
-html.js-reveal .reveal.is-in {
-  opacity: 1;
-  transform: none;
 }
 
 /* ── 플로팅 ───────────────────────────────────────────── */
@@ -2557,10 +2510,6 @@ a.tile:hover .tile__glyph {
   color: var(--text-on-inverse);
   text-decoration: none;
   overflow: hidden;
-  transition: transform var(--dur-hover) var(--ease);
-}
-.sol:hover {
-  transform: translateY(-4px);
 }
 .sol__area {
   font-size: var(--fs-xs);
@@ -2734,20 +2683,7 @@ a.tile:hover .tile__glyph {
 }
 .logos__item--claude {
   --logo-h: 26px;
-}
-.logos__item--ibm {
-  --logo-h: 28px;
-}
-.logos__item--oracle {
-  --logo-h: 24px;
-}
-.logos__item--cisco {
-  --logo-h: 36px;
-}
-.logos__item--citrix {
-  --logo-h: 26px;
-}
-@media (max-width: 860px) {
+}@media (max-width: 860px) {
   .logos {
     --logo-k: 0.78;
   }
@@ -3435,17 +3371,6 @@ a.brief:hover {
 .home .section--band > .container {
   padding-top: 0;
 }
-/* wide 변형의 큰 패딩과 다음 섹션 당김(-py-lg 음수 마진)은 서브페이지
-   헤어라인 정렬용이다 — 홈 리듬에선 다음 섹션 머리가 컷 밑으로 파고든다
-   (실측 -152px, INSIGHTS 고아 노출). 홈에서는 보통 섹션과 같게 눕힌다. */
-.home .section--wide {
-  padding-block: 0 var(--home-gap);
-}
-.home .section--wide > .container,
-.home .section--wide + .section > .container {
-  margin-top: 0;
-  padding-top: var(--home-gap);
-}
 /* 마무리는 가운데로 모은다. 레퍼런스의 밴드가 그렇게 생겼다. */
 .section--focus > .container {
   text-align: center;
@@ -3910,5 +3835,79 @@ a.brief:hover {
   }
   .uc__scope {
     grid-column: 1;
+  }
+}
+
+/* ── 모션 — 등장과 hover 한 벌 ─────────────────────────────
+   토스 메인 실측(2026-09-08): 제목 → 설명 → 카드가 70ms 씩 뒤따라 들어오고, 사진은 살짝
+   큰 채로 왔다가 자리를 잡고, 카드는 손을 대면 3px 뜬다. 등장은 opacity·translate 로,
+   hover 는 transform 으로 — 같은 속성을 쓰면 늦춤(--d)이 hover 까지 늦춘다.
+   숨김은 html.js-reveal 아래서만이다. 스크립트가 죽으면 본문이 그냥 보인다(reveal.mjs).
+   맨 끝에 있는 이유: 카드마다 갖고 있던 transition 을 이 한 줄이 덮어야 한다. */
+.reveal,
+[data-reveal] > * {
+  --d: calc(var(--i, 0) * 70ms);
+  transition:
+    opacity 0.6s var(--ease) var(--d),
+    translate 0.6s var(--ease) var(--d);
+}
+html.js-reveal .reveal:not(.is-in),
+html.js-reveal [data-reveal]:not(.is-in) > * {
+  opacity: 0;
+  translate: 0 20px;
+}
+.story__cover img,
+.brief__cover img,
+.rail__img {
+  transition: scale 0.9s var(--ease);
+}
+html.js-reveal [data-reveal]:not(.is-in) :is(.story__cover img, .brief__cover img, .rail__img) {
+  scale: 1.06;
+}
+.sol,
+.story,
+.brief,
+.tile,
+.rail__card {
+  transition:
+    opacity 0.6s var(--ease) var(--d, 0s),
+    translate 0.6s var(--ease) var(--d, 0s),
+    transform var(--dur-hover) var(--ease),
+    box-shadow var(--dur-hover) var(--ease);
+}
+:is(.sol, .story, .brief, .tile, .rail__card):hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lift);
+}
+:is(.story, .brief, .rail__card):hover :is(.story__cover img, .brief__cover img, .rail__img) {
+  scale: 1.04;
+}
+/* 히어로 제목은 구절 단위로, 리드가 그 뒤를 잇는다. 카드(hcard)는 제 규칙대로 온다. */
+.hero__w {
+  display: inline-block;
+  animation: hero-in 0.7s var(--ease) both;
+}
+.hero__w:nth-of-type(2) {
+  animation-delay: 110ms;
+}
+.hero__w:nth-of-type(3) {
+  animation-delay: 220ms;
+}
+.hero--home .hero__lede {
+  animation: hero-in 0.7s var(--ease) 260ms both;
+}
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    translate: 0 18px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero__w,
+  .hero--home .hero__lede {
+    animation: none;
+  }
+  :is(.sol, .story, .brief, .tile, .rail__card):hover {
+    transform: none;
   }
 }
