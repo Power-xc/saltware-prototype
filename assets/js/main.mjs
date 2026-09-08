@@ -1,17 +1,18 @@
-import { initAnalytics } from "./analytics.mjs?v=4d9cbd73286c";
-import { initNav } from "./nav.mjs?v=4d9cbd73286c";
-import { initReveal } from "./reveal.mjs?v=4d9cbd73286c";
+import { initAnalytics } from "./analytics.mjs?v=499e575bfc44";
+import { initNav } from "./nav.mjs?v=499e575bfc44";
+import { initReveal } from "./reveal.mjs?v=499e575bfc44";
 import {
   initFaq,
   initCaseFilter,
   initFooterGroups,
-} from "./disclosure.mjs?v=4d9cbd73286c";
-import { initContactForm } from "./contact-form.mjs?v=4d9cbd73286c";
-import { initAttribution } from "./attribution.mjs?v=4d9cbd73286c";
-import { initHeroObject } from "./hero-object.mjs?v=4d9cbd73286c";
-import { initNewsletter } from "./newsletter.mjs?v=4d9cbd73286c";
-import { initDroplets } from "./droplets.mjs?v=4d9cbd73286c";
-import { initRails } from "./rail.mjs?v=4d9cbd73286c";
+} from "./disclosure.mjs?v=499e575bfc44";
+import { initContactForm } from "./contact-form.mjs?v=499e575bfc44";
+import { initAttribution } from "./attribution.mjs?v=499e575bfc44";
+import { initHeroObject } from "./hero-object.mjs?v=499e575bfc44";
+import { initNewsletter } from "./newsletter.mjs?v=499e575bfc44";
+import { initDroplets } from "./droplets.mjs?v=499e575bfc44";
+import { initRails } from "./rail.mjs?v=499e575bfc44";
+import { initSlates } from "./slate.mjs?v=499e575bfc44";
 
 try {
   initAnalytics();
@@ -69,12 +70,9 @@ try {
   console.warn("Droplets failed:", e);
 }
 try {
+  initSlates();
 } catch (e) {
-  console.warn("Assistant failed:", e);
-}
-try {
-} catch (e) {
-  console.warn("Cases failed:", e);
+  console.warn("Slates failed:", e);
 }
 try {
   initRails();
