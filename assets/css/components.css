@@ -2991,65 +2991,6 @@ a.post:hover .post__more {
   }
 }
 
-/* 회사 소식 — 인사이트 글 아래 한 줄짜리 목록. 글은 표지로 읽히고 소식은 날짜로 읽힌다.
-   섹션 머리가 가운데(section--center)라 이 줄만 왼쪽으로 두면 축이 갈린다 — 목록은 가운데 폭을
-   그대로 쓰되 각 줄은 왼쪽 정렬이다. 날짜 열은 고정폭이라 넉 줄의 제목 머리가 한 줄에 선다. */
-.news {
-  margin-top: var(--sp-8);
-  padding-top: var(--sp-6);
-  border-top: 1px solid var(--border-section);
-  display: grid;
-  gap: var(--sp-4);
-  justify-items: start;
-  text-align: left;
-}
-.news__head {
-  font-size: var(--fs-label);
-  font-weight: 600;
-  letter-spacing: var(--tracking-label);
-  color: var(--text-accent);
-}
-.news__list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  display: grid;
-}
-.news__row {
-  display: grid;
-  grid-template-columns: calc(var(--sp-9) + var(--sp-7)) minmax(0, 1fr);
-  gap: var(--sp-4);
-  align-items: baseline;
-  padding: var(--sp-4) 0;
-  border-top: 1px solid var(--border-hair);
-}
-.news__row:first-child {
-  border-top: 0;
-}
-.news__date {
-  font-size: var(--fs-sm);
-  font-variant-numeric: tabular-nums;
-  color: var(--text-muted);
-}
-.news__body {
-  display: grid;
-  gap: var(--sp-1);
-}
-.news__title {
-  font-weight: 600;
-  letter-spacing: -0.015em;
-}
-.news__desc {
-  font-size: var(--fs-sm);
-  color: var(--text-muted);
-}
-.news__all {
-  font-size: var(--fs-sm);
-  font-weight: 600;
-  color: var(--text-accent);
-}
-
 /* 칸마다 크기가 다른 격자. 대표 숫자가 두 칸을 먹는다. */
 .bento {
   display: grid;
