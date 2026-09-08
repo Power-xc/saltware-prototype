@@ -645,31 +645,31 @@
   max-width: 42ch;
 }
 .hero--media.hero--m-cloud {
-  --hero-media: url("/saltware-prototype/media/business/hero-cloud.jpg?v=6310f6672894");
+  --hero-media: url("/saltware-prototype/media/business/hero-cloud.jpg?v=4e5944f17651");
 }
 .hero--media.hero--m-databricks {
-  --hero-media: url("/saltware-prototype/media/business/hero-databricks.jpg?v=6310f6672894");
+  --hero-media: url("/saltware-prototype/media/business/hero-databricks.jpg?v=4e5944f17651");
 }
 .hero--media.hero--m-identity {
-  --hero-media: url("/saltware-prototype/media/business/hero-identity.jpg?v=6310f6672894");
+  --hero-media: url("/saltware-prototype/media/business/hero-identity.jpg?v=4e5944f17651");
 }
 .hero--media.hero--m-redhat {
-  --hero-media: url("/saltware-prototype/media/business/hero-redhat.jpg?v=6310f6672894");
+  --hero-media: url("/saltware-prototype/media/business/hero-redhat.jpg?v=4e5944f17651");
 }
 .hero--media.hero--m-enview {
-  --hero-media: url("/saltware-prototype/media/business/hero-enview.jpg?v=6310f6672894");
+  --hero-media: url("/saltware-prototype/media/business/hero-enview.jpg?v=4e5944f17651");
 }
 .hero--media.hero--m-smart-farm {
-  --hero-media: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=6310f6672894");
+  --hero-media: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=4e5944f17651");
 }
 .hero--media.hero--m-hub-business {
-  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=6310f6672894");
+  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=4e5944f17651");
 }
 .hero--media.hero--m-hub-insights {
-  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=6310f6672894");
+  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=4e5944f17651");
 }
 .hero--media.hero--m-hub-company {
-  --hero-media: url("/saltware-prototype/media/hub/hub-company.jpg?v=6310f6672894");
+  --hero-media: url("/saltware-prototype/media/hub/hub-company.jpg?v=4e5944f17651");
 }
 
 .hero--home {
