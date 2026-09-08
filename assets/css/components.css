@@ -72,16 +72,19 @@
   align-items: center;
   transition: color var(--dur-hover) var(--ease);
 }
-/* 헤더가 검정이다. 여기에 --text-primary(#1d1d1f)를 쓰면 눌린 항목이 사라진다.
-   그리고 마크업이 내보내는 값은 aria-current="page" 다 — "true" 로 적으면 규칙이 죽는다. */
+/* 마크업이 내보내는 값은 aria-current="page" 다 — "true" 로 적으면 규칙이 죽는다. */
 .gnb__item:hover,
-.gnb__item[aria-expanded="true"],
 .gnb__item[aria-current="page"] {
   color: var(--header-ink-strong);
 }
-/* 세 상태를 구분한다 — 지금 페이지는 밑줄, 열린 메뉴는 점, hover 는 색만.
-   밑줄을 셋 다 쓰면 무엇이 현재 위치인지 알 수 없다. */
-.gnb__item[aria-current="page"]::after {
+/* 열린 메뉴는 주황 글자 + 주황 언더바다(시안 2026-09-08). 점으로 찍던 걸 걷었다 —
+   점은 메뉴 이름 아래 따로 떠서 무엇이 열렸는지 한눈에 안 잡혔다.
+   지금 페이지는 잉크 언더바로 남긴다. 색이 두 상태를 가른다. */
+.gnb__item[aria-expanded="true"] {
+  color: var(--text-accent);
+}
+.gnb__item[aria-current="page"]::after,
+.gnb__item[aria-expanded="true"]::after {
   content: "";
   position: absolute;
   inset-inline: 0;
@@ -91,23 +94,7 @@
   background: var(--header-ink-strong);
 }
 .gnb__item[aria-expanded="true"]::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  translate: -50% 0;
-  bottom: calc(50% - 0.95em);
-  width: var(--dot-sm);
-  height: var(--dot-sm);
-  border-radius: var(--radius-circle);
-  background: var(--header-ink-strong);
-}
-.gnb__item[aria-current="page"][aria-expanded="true"]::after {
-  inset-inline: 0;
-  left: auto;
-  translate: none;
-  width: auto;
-  height: 2px;
-  border-radius: var(--radius-xs);
+  background: var(--c-accent-500);
 }
 
 .mega {
@@ -135,22 +122,51 @@
     animation: none;
   }
 }
-.mega__item-name {
-  color: var(--text-primary);
-  font-weight: 600;
-}
 /* 메가존 실측 구조 — 왼쪽 앵커 존(제목·설명·전체 보기)이 시선의 진입점을
    만들고, 링크는 호버 필 행으로 묶는다. 구역 경계는 세로 헤어라인. */
 .mega__grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.8fr) minmax(0, 0.9fr);
-  gap: var(--sp-7);
+  /* 앵커 한 칸만 명시하고 나머지는 열 방향 자동 트랙이 균등하게 나눠 갖는다.
+     패널마다 열 수가 달라(사업 6 · 인사이트 3 · 회사소개 4) 고정 3열을 걷었다 —
+     이렇게 두면 데이터에서 열이 늘고 줄어도 CSS 를 안 고친다. */
+  grid-auto-flow: column;
+  grid-template-columns: minmax(0, 1.4fr);
+  grid-auto-columns: minmax(0, 1fr);
+  /* 이름 · 설명 · 목록 세 줄. 열마다 이름이 한 줄이거나 두 줄이라(Cloud vs
+     Security & Operations) 열 안에서 흐르게 두면 목록 첫 항목의 높이가 다 어긋난다.
+     부모가 줄을 잡고 열은 subgrid 로 얹혀 세 줄이 열 전체에서 맞는다. */
+  grid-template-rows: auto auto minmax(0, 1fr);
+  /* 줄 간격은 0 이고 자식이 margin 으로 잡는다 — 설명이 없는 패널(인사이트)에서
+     빈 줄의 gap 이 두 번 쌓여 이름과 목록이 86px 벌어졌다(실측). */
+  column-gap: var(--sp-5);
+  row-gap: 0;
   padding-block: var(--sp-7);
   align-items: stretch;
 }
 .mega__grid > * + * {
   border-left: 1px solid var(--border-hair);
-  padding-left: var(--sp-7);
+  padding-left: var(--sp-5);
+}
+.mega__col {
+  display: grid;
+  grid-row: span 3;
+  grid-template-rows: subgrid;
+}
+.mega__col--intro {
+  display: block;
+  grid-row: 1 / -1;
+}
+/* 관계사 열은 사업이 아니다 — 앞 열과 고랑을 한 단 벌려 묶음이 끊긴 걸 보여준다
+   (시안 "브랜드·계열사 영역 축소"). 폭을 줄이면 자동 트랙이 다 흐트러진다. */
+.mega__grid > .mega__col--aside {
+  margin-left: var(--sp-4);
+}
+.mega__eyebrow {
+  font-size: var(--fs-label-caps);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--text-faint);
+  margin-bottom: var(--sp-2);
 }
 .mega__title {
   font-size: var(--fs-h3);
@@ -169,26 +185,26 @@
   margin-top: var(--sp-5);
   color: var(--text-accent);
 }
-/* 사업 목록 — 위에서 아래로 채우는 2열. Databricks 가 상위 항목 바로 밑에 온다. */
-.mega__list--flat {
-  grid-template-rows: repeat(4, auto);
-  grid-auto-flow: column;
-  column-gap: var(--sp-6);
-  row-gap: var(--sp-1);
-}
-.mega__grid--list {
-  /* 브랜드 열이 없는 패널 — 앵커 + 목록 두 구역만. */
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 2.7fr);
-}
 .mega__label {
-  font-size: var(--fs-label-caps);
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  color: var(--text-faint);
-  margin-bottom: var(--sp-5);
+  grid-row: 1;
+  font-size: var(--fs-body);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-primary);
+}
+/* 열 이름 밑 한 줄 — 그 묶음이 무엇을 맡는지 말한다(시안). 없으면 이름만 선다. */
+.mega__coldesc {
+  grid-row: 2;
+  margin-top: var(--sp-1);
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  line-height: 1.5;
 }
 .mega__list {
+  grid-row: 3;
+  margin-top: var(--sp-4);
   display: grid;
+  align-content: start;
   gap: var(--sp-1);
   font-size: var(--fs-sm);
 }
@@ -196,7 +212,7 @@
    상시 배경은 여전히 두지 않는다 — 카드 벽 금지 원칙은 hover 에만 예외다. */
 .mega__item {
   display: block;
-  padding: 9px var(--sp-3);
+  padding: var(--sp-2) var(--sp-3);
   border-radius: var(--radius-sm);
   color: var(--text-primary);
   transition:
@@ -209,6 +225,33 @@
 .mega__item:hover .mega__item-name {
   color: var(--text-accent);
 }
+/* 이름 줄 — 이름은 왼쪽, 화살표는 오른쪽 끝. 설명이 있으면 그 아래로 내려온다. */
+.mega__item-name {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  /* 열 이름과 같은 굵기·크기면 묶음이 안 읽힌다 — 항목을 한 단 낮춘다. */
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+}
+.mega__chev {
+  margin-left: auto;
+  color: var(--text-faint);
+  flex: none;
+  opacity: 0;
+  transition: opacity var(--dur-hover) var(--ease);
+}
+.mega__item:hover .mega__chev {
+  opacity: 1;
+}
+.mega__item-sum {
+  display: block;
+  margin-top: 2px;
+  font-size: var(--fs-xs);
+  line-height: 1.5;
+  color: var(--text-muted);
+}
 /* 목적지가 아직 없는 항목 — 눌리지 않는다는 것이 보여야 한다(1차 피드백 신설 사업 4종). */
 .mega__item--pending,
 .footer__list [aria-disabled="true"] {
@@ -218,20 +261,11 @@
 .mega__item--pending .mega__item-name::after {
   content: "준비 중";
   margin-left: var(--sp-2);
+  flex: none;
   font-size: var(--fs-2xs);
   font-weight: 600;
   letter-spacing: var(--tracking-label);
   opacity: 0.75;
-}
-/* 상위 사업 아래 기술·솔루션 — 들여쓰기 + 왼쪽 헤어라인으로 종속을 드러낸다. */
-.mega__item--sub {
-  margin-left: var(--sp-3);
-  border-left: 2px solid var(--border-hair);
-  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-}
-.mega__item--sub .mega__item-name {
-  font-weight: 500;
-  color: var(--text-secondary);
 }
 .mega__all {
   font-weight: 600;
@@ -288,6 +322,16 @@
   display: grid;
   gap: var(--sp-3);
   padding-bottom: var(--sp-4);
+}
+.drawer__label {
+  margin-top: var(--sp-2);
+  font-size: var(--fs-label-caps);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-faint);
+}
+.drawer__label:first-child {
+  margin-top: 0;
 }
 .drawer__panel a {
   display: flex;
@@ -610,31 +654,31 @@
   max-width: 42ch;
 }
 .hero--media.hero--m-cloud {
-  --hero-media: url("/saltware-prototype/media/business/hero-cloud.jpg?v=ee018da91bf7");
+  --hero-media: url("/saltware-prototype/media/business/hero-cloud.jpg?v=744fdd2dcb7c");
 }
 .hero--media.hero--m-databricks {
-  --hero-media: url("/saltware-prototype/media/business/hero-databricks.jpg?v=ee018da91bf7");
+  --hero-media: url("/saltware-prototype/media/business/hero-databricks.jpg?v=744fdd2dcb7c");
 }
 .hero--media.hero--m-identity {
-  --hero-media: url("/saltware-prototype/media/business/hero-identity.jpg?v=ee018da91bf7");
+  --hero-media: url("/saltware-prototype/media/business/hero-identity.jpg?v=744fdd2dcb7c");
 }
 .hero--media.hero--m-redhat {
-  --hero-media: url("/saltware-prototype/media/business/hero-redhat.jpg?v=ee018da91bf7");
+  --hero-media: url("/saltware-prototype/media/business/hero-redhat.jpg?v=744fdd2dcb7c");
 }
 .hero--media.hero--m-enview {
-  --hero-media: url("/saltware-prototype/media/business/hero-enview.jpg?v=ee018da91bf7");
+  --hero-media: url("/saltware-prototype/media/business/hero-enview.jpg?v=744fdd2dcb7c");
 }
 .hero--media.hero--m-smart-farm {
-  --hero-media: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=ee018da91bf7");
+  --hero-media: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=744fdd2dcb7c");
 }
 .hero--media.hero--m-hub-business {
-  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=ee018da91bf7");
+  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=744fdd2dcb7c");
 }
 .hero--media.hero--m-hub-insights {
-  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=ee018da91bf7");
+  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=744fdd2dcb7c");
 }
 .hero--media.hero--m-hub-company {
-  --hero-media: url("/saltware-prototype/media/hub/hub-company.jpg?v=ee018da91bf7");
+  --hero-media: url("/saltware-prototype/media/hub/hub-company.jpg?v=744fdd2dcb7c");
 }
 
 .hero--home {
@@ -798,7 +842,23 @@
      남는 높이를 카드에 먹이면 폭이 그대로라 카드만 길쭉해지고, 안 먹이면 구멍이 됐다.
      1336 컨테이너에서 506px — 사령관 실측(975px 창에서 카드 500px)과 같은 자리다. */
   flex: none;
-  height: max(260px, (100cqw - 5 * var(--sp-4)) / 5.42 * 1.455 * 1.5);
+  --hcard-scale: 1.5;
+  height: max(
+    260px,
+    (100cqw - 5 * var(--sp-4)) / 5.42 * 1.455 * var(--hcard-scale)
+  );
+}
+/* 노트북 — 히어로가 한 화면을 통째로 먹어 다음 섹션이 안 비친다(실측: 1280×800 105% ·
+   1440×900 101%. 1920×1080 은 89%, 2560×1440 은 77% 라 큰 화면은 그대로 둔다).
+   폭이 아니라 화면 높이 문제라 높이로 조인다 — max-width 를 늘리면 브레이크포인트 4종을 넘는다.
+   카드 비율과 머리 여백만 줄이고 구성은 건드리지 않는다. */
+@media (max-height: 1000px) {
+  .hero--home {
+    padding-top: clamp(60px, 6.5vh, 92px);
+  }
+  .hcards {
+    --hcard-scale: 1.2;
+  }
 }
 .hcard {
   position: relative;
@@ -2231,17 +2291,58 @@ a.tile:hover .tile__glyph {
 }
 
 /* 가로 레일 — 애플식(사령관 2026-09-06 "옆으로 어떻게 넘기는데"). 카드는 컨테이너 안쪽 선에서
-   서고 오른쪽은 화면 끝까지 흘러 "더 있다" 가 보인다. 넘김은 ‹ › 버튼 — 스크롤은 브라우저가
-   스냅으로 하고 버튼은 카드 하나만큼 민다(rail.mjs). 버튼은 JS 가 is-ready 를 붙여야 보이고,
-   넘칠 것이 없으면(is-static) 버튼 줄이 접힌다. 100vw 는 세로 스크롤바 폭만큼 넓을 수 있어
-   섹션이 가로로 잘라 낸다(.section:has(.rail)). */
+   서고 컨테이너 선에서 끝난다. 넘김은 트랙 밖 ‹ › 버튼 — 스크롤은 브라우저가 스냅으로 하고
+   버튼은 카드 하나만큼 민다(rail.mjs). 버튼은 JS 가 is-ready 를 붙여야 보이고,
+   넘칠 것이 없으면(is-static) 버튼도 눈금도 접힌다. */
+/* 분류 칩 — 여덟 장을 다 밀지 않고 내 과제부터 좁힌다(사령관 UX 시안 2026-09-08
+   "네비게이션 바 제작"). 칩은 누르는 것이라 pill, 담는 테두리도 같은 결로 간다. */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-1);
+  margin-bottom: var(--sp-5);
+  padding: var(--sp-1);
+  border: 1px solid var(--border-hair);
+  border-radius: var(--radius-pill);
+  width: max-content;
+  max-width: 100%;
+}
+.chip {
+  border: 0;
+  border-radius: var(--radius-pill);
+  padding: var(--sp-2) var(--sp-4);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background var(--dur-hover) var(--ease),
+    color var(--dur-hover) var(--ease);
+}
+.chip:hover {
+  color: var(--text-primary);
+}
+.chip[aria-pressed="true"] {
+  background: var(--bg-inverse);
+  color: var(--text-on-inverse);
+}
+
+/* 트랙과 눈금이 한 격자를 쓴다. 잘린 카드를 흐리는 덮개(::before·::after)가 트랙과
+   같은 칸에 얹히므로 격자가 필요하다 — 화살표는 이 격자 밖, 제목 줄 오른쪽에 선다. */
 .rail-wrap {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--sp-4);
+}
+.rail-wrap > .rail {
+  grid-area: 1 / 1;
 }
 /* 레일은 컨테이너 선에서 시작해 컨테이너 선에서 끝난다(사령관 2026-09-08 "깔끔하게 떨어지게끔").
    예전엔 오른쪽을 화면 끝까지 흘려 "더 있다"를 보였는데, 페이지의 다른 섹션과 오른쪽 선이
-   어긋났다. 지금은 ‹ › 가 제목 줄에 붙어 있어 넘길 수 있다는 신호를 그쪽이 맡는다. */
+   어긋났다. 대신 다음 장의 앞부분만 컨테이너 선 안에서 걸치게 둔다(같은 날 "옆에 살짝 보이게
+   해서 컨텐츠 더 있는건 살짝 보여줘야할 듯") — 선은 지키고 신호는 남는다.
+   --rail-peek 은 [간격 + 보일 조각] 이다. 조각만 따로 재려면 여기서 --gap-tile 을 빼면 된다. */
 .rail {
   display: flex;
   gap: var(--gap-tile);
@@ -2253,14 +2354,23 @@ a.tile:hover .tile__glyph {
 .rail::-webkit-scrollbar {
   display: none;
 }
-/* 한 번에 넉 장이 정확히 들어간다 — clamp 폭이면 마지막 장이 컨테이너 선에 반쯤 걸려 잘렸다. */
+/* 넉 장 + 다섯째 장의 앞 조각(--sp-8 - 간격 = 48px)이 컨테이너 폭에 들어간다.
+   clamp 폭이던 시절엔 마지막 장이 아무 데서나 잘려 조각 크기가 폭마다 달랐다. */
 .rail__card {
   flex: none;
-  width: calc((100% - 3 * var(--gap-tile)) / 4);
-  display: grid;
+  --rail-peek: var(--sp-8);
+  width: calc((100% - 3 * var(--gap-tile) - var(--rail-peek)) / 4);
+  /* 세로 플렉스라 '자세히 보기'가 카드 바닥에 붙는다 — 격자로 두면 글 길이만큼 줄이
+     들쭉날쭉했다(사령관 UX 시안 2026-09-08 "텍스트 길이에 따라 UI 길이가 달라짐"). */
+  display: flex;
+  flex-direction: column;
   gap: var(--sp-1);
-  align-content: start;
   scroll-snap-align: start;
+}
+/* 작성자 display 가 UA 의 [hidden]{display:none} 을 이긴다 — 걸러 낸 카드가 그대로 보였다
+   (슬레이트 판에서도 같은 함정을 밟았다). 명시해서 끈다. */
+.rail__card[hidden] {
+  display: none;
 }
 .rail__img {
   width: 100%;
@@ -2280,7 +2390,8 @@ a.tile:hover .tile__glyph {
   line-height: 1.55;
 }
 .rail__more {
-  margin-top: var(--sp-1);
+  margin-top: auto;
+  padding-top: var(--sp-2);
   font-size: var(--fs-xs);
   font-weight: 600;
   color: var(--text-accent);
@@ -2288,34 +2399,108 @@ a.tile:hover .tile__glyph {
 .rail__card:hover .rail__q {
   color: var(--text-accent);
 }
-/* ‹ › 는 트랙 아래가 아니라 제목 줄 오른쪽에 고정한다(사령관 2026-09-08 "화살표 우측으로
-   통일 하자 위에다가"). 레일마다 자리가 다르면 같은 동작을 매번 다시 찾아야 한다.
-   앵커는 섹션 컨테이너다 — 제목 줄 오른쪽 끝에 붙는다.
-   버튼 줄이 아래에서 사라지므로 트랙 밑 여백도 같이 걷힌다. */
-.rail__foot {
+/* ‹ › 는 트랙 아래·옆이 아니라 제목 줄 오른쪽에 고정한다(사령관 2026-09-08 "화살표 우측으로
+   통일 하자 위에다가" · "기존꺼 써라 옆으로 넘어가는 거 애플꺼"). 레일마다 자리가 다르면 같은
+   동작을 매번 다시 찾아야 한다. 앵커는 섹션 컨테이너다 — 제목 줄 오른쪽 끝에 붙는다.
+   "전체 보기"도 같은 줄에 온다 — 트랙 눈금 밑에 홀로 두면 무엇에 걸린 버튼인지 애매하다. */
+.sec-side {
   position: absolute;
   /* 절대배치의 기준상자는 컨테이너의 padding box 다 — top:0 이면 홈 세로 리듬(--home-gap)만큼
      제목 위로 떠서 붙박이 헤더 자리까지 올라갔다(실측 1440: 60px). 같은 값을 되돌려 제목 줄에 세운다. */
   top: var(--home-gap, 0px);
-  right: 0;
+  /* 절대배치는 컨테이너의 padding box 를 기준으로 잡는다 — right:0 이면 컨테이너의 좌우
+     여백(padding-inline: --sp-6)을 지나쳐 화면 끝에 붙는다. 데스크톱은 여백이 auto 마진이라
+     안 보였지만 430 에서 링크가 화면 선에 딱 붙었다(실측). 같은 값을 되돌린다. */
+  right: var(--sp-6);
   display: flex;
   align-items: center;
   gap: var(--sp-4);
+}
+.sec-side__all {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-accent);
+  white-space: nowrap;
 }
 .rail__nav {
   display: none;
   gap: var(--sp-2);
 }
-/* 버튼 두 개 + 사이 간격 — 제목이 그 아래로 흘러 들어가지 않게 머리에 자리를 비운다. */
-.section:has(.rail-wrap) > .container {
+/* 버튼 두 개 + 전체 보기 — 제목이 그 아래로 흘러 들어가지 않게 머리에 자리를 비운다. */
+.section:has(.sec-side) > .container {
   position: relative;
 }
 .section:has(.rail-wrap) > .container > .section__head {
   padding-right: calc(var(--sp-9) + var(--sp-3));
 }
+/* 곁줄이 링크만일 때와 링크 + 화살표일 때가 다르다 — 화살표가 없는 섹션(인사이트)에
+   버튼 두 개 자리까지 비우면 리드가 억지로 두 줄로 접힌다(실측 1440). */
+.section:has(.sec-side__all) > .container > .section__head {
+  padding-right: calc(var(--sp-9) + var(--sp-6));
+}
+.section:has(.rail-wrap):has(.sec-side__all) > .container > .section__head {
+  padding-right: calc(var(--sp-9) + var(--sp-9) + var(--sp-4));
+}
 .rail-wrap.is-ready:not(.is-static) .rail__nav {
   display: flex;
 }
+/* 잘린 카드는 흐리게 — 반쯤 읽히는 글이 다음 장을 재촉하는 것보다 산만했다(같은 시안
+   "잘리는 카드는 블러 효과로 처리"). 끝에 닿으면 걷힌다. */
+.rail-wrap::before,
+.rail-wrap::after {
+  content: "";
+  grid-area: 1 / 1;
+  width: var(--rail-peek, var(--sp-8));
+  pointer-events: none;
+  backdrop-filter: blur(3px);
+  opacity: 1;
+  transition: opacity var(--dur-hover) var(--ease);
+}
+.rail-wrap::before {
+  justify-self: start;
+  mask-image: linear-gradient(to left, transparent, #000);
+}
+.rail-wrap::after {
+  justify-self: end;
+  mask-image: linear-gradient(to right, transparent, #000);
+}
+.rail-wrap.is-start::before,
+.rail-wrap.is-end::after,
+.rail-wrap.is-static::before,
+.rail-wrap.is-static::after {
+  opacity: 0;
+}
+/* 눈금 줄 — 왼쪽에 장 수만큼 짧은 막대, 오른쪽에 01 / 08(같은 시안 "번호 체크"). */
+.rail__meter {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+}
+.rail-wrap.is-static .rail__meter {
+  display: none;
+}
+.rail__ticks {
+  flex: 1;
+  display: flex;
+  gap: var(--sp-2);
+}
+.rail__tick {
+  flex: 1;
+  height: 2px;
+  border-radius: var(--radius-xs);
+  background: var(--border-hair);
+  transition: background var(--dur-hover) var(--ease);
+}
+.rail__tick.is-on {
+  background: var(--text-primary);
+}
+.rail__count {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted);
+}
+/* 아이콘만 있는 원형 버튼 — 맨 위로(.floating__top)와 같은 부류. 면은 밴드색, 누르면 잉크. */
 /* 아이콘만 있는 원형 버튼 — 맨 위로(.floating__top)와 같은 부류. 면은 밴드색, 누르면 잉크. */
 .rail__btn {
   width: 40px;
@@ -2345,7 +2530,7 @@ a.tile:hover .tile__glyph {
    여덟 장이라 격자 대신 레일(‹ ›)로 흐른다. 그림은 소금 결정 글리프 — 사진·렌더 없이 한 벌이 된다.
    사진 세트에 솔루션 컷은 셋뿐이라 여덟에 셋만 사진이면 세트가 깨진다. */
 .rail--sols .rail__card {
-  width: calc((100% - 3 * var(--gap-tile)) / 4);
+  width: calc((100% - 3 * var(--gap-tile) - var(--rail-peek)) / 4);
 }
 /* 칸 수만 줄인다 — 폭은 늘 "100% 에서 간격 빼고 나눈 값"이라 어느 폭에서도 선이 맞는다.
    브레이크포인트는 기존 4종(1279·1080·860·640) 안에서만 쓴다. 이 블록은 기본 규칙 뒤에
@@ -2353,13 +2538,24 @@ a.tile:hover .tile__glyph {
 @media (max-width: 1080px) {
   .rail__card,
   .rail--sols .rail__card {
-    width: calc((100% - 2 * var(--gap-tile)) / 3);
+    width: calc((100% - 2 * var(--gap-tile) - var(--rail-peek)) / 3);
   }
 }
 @media (max-width: 640px) {
+  /* 칩 일곱이 두 줄로 접히면 둥근 테두리가 커다란 덩어리가 된다 — 한 줄로 두고 옆으로 민다. */
+  .chips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .chip {
+    flex: none;
+  }
+  /* 한 장짜리에서는 조각을 줄인다 — 390 에서 sp-8 을 빼면 카드가 278px 로 좁아진다. */
   .rail__card,
   .rail--sols .rail__card {
-    width: 100%;
+    --rail-peek: var(--sp-7);
+    width: calc(100% - var(--rail-peek));
   }
 }
 .sol {
@@ -2863,24 +3059,15 @@ a.tile:hover .tile__glyph {
    위에서부터 쌓인다 — 예전엔 대표가 두 행을 차지해 보조가 그 높이를 반씩 받아 위아래로 벌어졌고,
    가로 원본(736×412)이 96×104 세로 상자에 잘려 알아볼 수 없는 조각이 됐다(사령관 2026-09-06
    "깨지고 이상한"). 지금은 모든 표지가 16:9 이고 보조는 표지 옆에 글을 가운데 세운다. */
+/* 인사이트 — 셋을 같은 카드로 한 줄에 세운다(사령관 2026-09-08 "뭔가 정리 안된 느낌임").
+   대표 하나를 크게 두고 옆에 가로 카드 둘을 붙이던 비대칭을 걷었다: 카드 문법이 둘로 갈려
+   (세로 표지 / 가로 썸네일) 어디에 눈을 둘지가 매번 달랐고, 두 열의 바닥이 250px 어긋났다.
+   "전체 보기"도 오른쪽 열 한가운데 떠 있어 무엇에 걸린 링크인지 안 읽혔다 — 제목 줄로 올렸다. */
 .posts {
   display: grid;
-  /* 2fr:1fr 이면 대표 표지가 800px(16:9 → 450px 높이)라 보조 둘보다 다섯 배 컸고
-     오른쪽 열이 한참 위에서 끝났다(사령관 2026-09-07 "제일 큰 거 좀 줄여서 비율 맞춰라").
-     1.45fr 로 좁히고 보조 표지를 키워 두 열이 비슷한 높이에서 끝난다. */
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-  gap: var(--sp-6);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--gap-tile);
   align-items: start;
-}
-.posts__side {
-  display: grid;
-  gap: var(--sp-5);
-  justify-items: start;
-}
-.posts__all {
-  font-size: var(--fs-sm);
-  font-weight: 600;
-  color: var(--text-accent);
 }
 .post {
   display: grid;
@@ -2893,23 +3080,6 @@ a.tile:hover .tile__glyph {
   display: grid;
   gap: var(--sp-2);
   justify-items: start;
-}
-.post--lead .post__cover {
-  border-radius: var(--radius-lg);
-}
-.post--lead .post__title {
-  font-size: var(--fs-h3);
-  letter-spacing: var(--tracking-tight);
-}
-.posts__side .post {
-  width: 100%;
-  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
-  column-gap: var(--sp-4);
-  align-items: center;
-}
-.posts__side .post + .post {
-  padding-top: var(--sp-5);
-  border-top: 1px solid var(--border-section);
 }
 .post__cover {
   aspect-ratio: var(--cover-ratio);
@@ -2973,21 +3143,16 @@ a.post:hover .post__more {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
-/* 좁은 폭 — 한 열. 보조는 표지 옆 글 그대로(표지 ~137px, 3줄 제목이 옆에 선다 — 실측 390). */
-@media (max-width: 860px) {
+/* 좁은 폭 — 둘씩, 폰은 한 열. 카드 문법은 그대로다(세로 표지 + 글). */
+@media (max-width: 1080px) {
+  .posts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 640px) {
   .posts {
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--sp-5);
-  }
-  .post--lead .post__cover {
-    border-radius: var(--radius-md);
-  }
-  .post--lead .post__title {
-    font-size: var(--fs-h4);
-    letter-spacing: -0.025em;
-  }
-  .posts__side .post__title {
-    font-size: var(--fs-body);
+    gap: var(--sp-6);
   }
 }
 
