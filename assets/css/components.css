@@ -654,31 +654,31 @@
   max-width: 42ch;
 }
 .hero--media.hero--m-cloud {
-  --hero-media: url("/saltware-prototype/media/business/hero-cloud.jpg?v=744fdd2dcb7c");
+  --hero-media: url("/saltware-prototype/media/business/hero-cloud.jpg?v=58d86782872f");
 }
 .hero--media.hero--m-databricks {
-  --hero-media: url("/saltware-prototype/media/business/hero-databricks.jpg?v=744fdd2dcb7c");
+  --hero-media: url("/saltware-prototype/media/business/hero-databricks.jpg?v=58d86782872f");
 }
 .hero--media.hero--m-identity {
-  --hero-media: url("/saltware-prototype/media/business/hero-identity.jpg?v=744fdd2dcb7c");
+  --hero-media: url("/saltware-prototype/media/business/hero-identity.jpg?v=58d86782872f");
 }
 .hero--media.hero--m-redhat {
-  --hero-media: url("/saltware-prototype/media/business/hero-redhat.jpg?v=744fdd2dcb7c");
+  --hero-media: url("/saltware-prototype/media/business/hero-redhat.jpg?v=58d86782872f");
 }
 .hero--media.hero--m-enview {
-  --hero-media: url("/saltware-prototype/media/business/hero-enview.jpg?v=744fdd2dcb7c");
+  --hero-media: url("/saltware-prototype/media/business/hero-enview.jpg?v=58d86782872f");
 }
 .hero--media.hero--m-smart-farm {
-  --hero-media: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=744fdd2dcb7c");
+  --hero-media: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=58d86782872f");
 }
 .hero--media.hero--m-hub-business {
-  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=744fdd2dcb7c");
+  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=58d86782872f");
 }
 .hero--media.hero--m-hub-insights {
-  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=744fdd2dcb7c");
+  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=58d86782872f");
 }
 .hero--media.hero--m-hub-company {
-  --hero-media: url("/saltware-prototype/media/hub/hub-company.jpg?v=744fdd2dcb7c");
+  --hero-media: url("/saltware-prototype/media/hub/hub-company.jpg?v=58d86782872f");
 }
 
 .hero--home {
@@ -1337,24 +1337,6 @@
   color: var(--state-danger);
 }
 
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--sp-2);
-}
-.chip {
-  border: 1px solid var(--border-hair);
-  background: var(--bg-card);
-  border-radius: var(--radius-sm);
-  padding: 6px 13px;
-  font-size: var(--fs-xs);
-}
-.chip[aria-pressed="true"] {
-  background: var(--text-primary);
-  color: var(--bg-page);
-  border-color: var(--text-primary);
-  font-weight: 600;
-}
 
 /* ── 상태 화면 — 현행에 없던 것 ───────────────────────── */
 /* 빈 화면 안내용. 폼 제출 결과처럼 한 줄짜리에도 쓰여서 여백을 크게 잡지 않는다. */
@@ -2284,9 +2266,9 @@ a.tile:hover .tile__glyph {
 
 /* 문제 기준 탐색(§11.5) — 이미지 카드 가로 레일. 목록이 아니라 골라 넘기는
    선반이다. 스크롤바는 숨기되 스크롤 자체는 살린다. */
-/* 홈의 생성 이미지(의도 카드)와 실사 컷(수행 영역·인사이트)은 같은 톤 — 세트가 갈리지 않게. */
-.rail__img,
-.post__cover img {
+/* 홈의 생성 이미지(의도 카드)와 실사 컷(뉴스·인사이트)은 같은 톤 — 세트가 갈리지 않게.
+   .story__cover img 도 같은 값을 쓴다(카드 규칙 안에 적혀 있다). */
+.rail__img {
   filter: var(--art-tone);
 }
 
@@ -2558,48 +2540,70 @@ a.tile:hover .tile__glyph {
     width: calc(100% - var(--rail-peek));
   }
 }
+/* 대표 솔루션 카드 — 애플 iPhone 기능 레일의 세로 카드를 기준으로 다시 세웠다
+   (사령관 2026-09-08 "애플꺼 참고해바", 시안 3장 실측 372×540 · 0.69 비율).
+   위에 작은 아이브로 · 굵은 제품명 한 줄 · 핵심 한 줄, 그 아래를 오브젝트 하나가 크게 차지하고
+   오른쪽 아래에 원형 화살표. 앞 안은 300px 정사각 카드에 56px 마크를 구석에 붙인 것이라
+   오브젝트가 스티커로 읽혔다 — 문제는 종류가 아니라 크기와 자리였다. */
 .sol {
   position: relative;
   display: grid;
-  grid-template-rows: auto auto minmax(0, 1fr) auto;
+  grid-template-rows: auto auto auto minmax(0, 1fr) auto;
   gap: var(--sp-2);
-  min-height: 300px;
+  aspect-ratio: 0.9;
   padding: var(--sp-6);
   border-radius: var(--radius-lg);
   background: var(--bg-inverse);
   color: var(--text-on-inverse);
   text-decoration: none;
+  overflow: hidden;
   transition: transform var(--dur-hover) var(--ease);
 }
 .sol:hover {
   transform: translateY(-4px);
 }
+.sol__area {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--text-on-inverse-muted);
+}
 .sol__title {
   font-size: var(--fs-h3);
   font-weight: 700;
   letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 .sol__desc {
   font-size: var(--fs-sm);
-  line-height: 1.55;
+  line-height: 1.5;
   color: var(--text-on-inverse-muted);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-/* 상형은 작게 왼쪽 아래 — 여백선에 맞춰 자세히 보기 위에 앉는다(사령관 2026-09-07 "가운데 말고 왼쪽 아래"). */
+/* 상형은 왼쪽 아래 — "자세히 보기" 바로 위에 선다(사령관 2026-09-07 "가운데 말고 왼쪽 아래" ·
+   2026-09-08 "그 영역 위에다가 · 더 도트 크기해서"). 가운데에 크게 놓아 봤지만 여덟 장이
+   나란히 서면 상형이 카드를 먹었다 — 가운데는 비워 둔다.
+   커서를 얹으면 조금 커진다: 카드가 통째로 뜨는 동작과 같은 결이다. */
 .sol__mark {
   align-self: end;
   justify-self: start;
-  width: 40px;
-  height: 40px;
-  color: var(--text-accent-on-inverse);
+  width: 48px;
+  /* 문양 상자에는 사방 4/48 만큼 여백이 붙어 있다 — 왼쪽만 당겨 글 축에 맞춘다. */
+  margin-left: -4px;
+  /* 흰색 하나뿐이다(사령관 2026-09-08 "흰색으로만 딱 핵심만") — 앰버는 자세히 보기가 갖는다. */
+  color: var(--text-on-inverse);
+  transition: scale var(--dur-hover) var(--ease);
+  transform-origin: left bottom;
+}
+.sol:hover .sol__mark {
+  scale: 1.06;
 }
 .sol__mark svg {
   display: block;
   width: 100%;
-  height: 100%;
+  height: auto;
 }
 .sol__more {
   margin-top: var(--sp-4);
@@ -2609,34 +2613,22 @@ a.tile:hover .tile__glyph {
 }
 @media (max-width: 860px) {
   .sol {
-    min-height: 280px;
+    aspect-ratio: 0.76;
+  }
+  .sol__mark {
+    width: 44px;
+    margin-left: -3.5px;
   }
 }
 
-/* 파트너·기술 로고 2단 — 위는 핵심 파트너 정적 줄, 아래는 기술 로고 롤링 벨트
-   (메가존 Partners 실측, 사령관 지정: 캡션 없이 로고만). */
+/* 파트너·기술 한 줄 — 2단(정적 파트너 + 롤링 기술)을 한 벨트로 합쳤다
+   (사령관 2026-09-08 "한 줄로 좀 더 키워서 마우스 호버시 보여지게").
+   기본은 무채색 한 결이다: 원색이 열 개 섞이면 줄 전체가 소음이 된다(2단 시절 실측).
+   커서를 얹으면 벨트가 멎고 그 로고만 원색으로 서면서 아래에 "이름 · 파트너/기술"이 뜬다 —
+   층 라벨을 없앤 자리를 이 캡션이 받는다. 캡션 자리는 늘 비워 둔다(뜰 때 줄이 안 흔들리게). */
 .logos {
   display: grid;
-  gap: var(--sp-8);
-}
-/* 층 라벨 — 회사·기술·자격이 각각 무엇의 목록인지 한 줄로 밝힌다. */
-.logos__tier {
-  display: grid;
-  gap: var(--sp-5);
-  justify-items: center;
-}
-.logos__tier-label {
-  font-size: var(--fs-label-caps);
-  font-weight: 600;
-  letter-spacing: 0.14em;
-  color: var(--text-faint);
-}
-.logos__prime {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: var(--sp-6) clamp(44px, 6vw, 90px);
+  gap: var(--sp-6);
 }
 .logos__belt {
   display: flex;
@@ -2646,18 +2638,34 @@ a.tile:hover .tile__glyph {
 .logos__group {
   flex: none;
   display: flex;
-  align-items: center;
-  gap: clamp(40px, 5vw, 80px);
-  padding-inline-end: clamp(40px, 5vw, 80px);
-  animation: logos-roll 36s linear infinite;
+  align-items: flex-start;
+  gap: clamp(48px, 6vw, 96px);
+  padding-inline-end: clamp(48px, 6vw, 96px);
+  animation: logos-roll 46s linear infinite;
 }
 .logos__belt:hover .logos__group {
   animation-play-state: paused;
 }
 .logos__item {
+  display: grid;
+  justify-items: center;
+  gap: var(--sp-2);
+  filter: grayscale(1);
+  opacity: 0.5;
+  transition:
+    filter var(--dur-hover) var(--ease),
+    opacity var(--dur-hover) var(--ease);
+}
+.logos__item:hover {
+  filter: none;
+  opacity: 1;
+}
+/* 로고마다 높이가 다르니 눈높이는 이 상자가 맞춘다. */
+.logos__mark {
   display: flex;
   align-items: center;
   gap: var(--sp-2);
+  height: 56px;
 }
 /* 심볼-단독 브랜드의 활자 이름 — 로고 흉내(전용 서체·색)를 내지 않는다. */
 .logos__name {
@@ -2667,71 +2675,104 @@ a.tile:hover .tile__glyph {
   color: var(--text-secondary);
   white-space: nowrap;
 }
-/* 로고별 광학 보정 — 원본 비율이 달라 같은 height 면 크기가 널뛴다(실측).
-   워드마크 캡하이트가 비슷해 보이는 값으로 하나씩 맞춘다. */
-.logos__item img {
-  height: 30px;
-  width: auto;
+.logos__tag {
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity var(--dur-hover) var(--ease);
 }
-.logos__item--aws img {
-  height: 34px;
-}
-.logos__item--red-hat img {
-  height: 34px;
-}
-.logos__item--sailpoint img {
-  height: 26px;
-}
-/* databricks 공식 배포본은 심볼이 워드마크 위에 얹힌 스택형이라 더 키워야 눈높이가 맞는다. */
-.logos__item--databricks img {
-  height: 44px;
-}
-.logos__item--anthropic img {
-  height: 20px;
-}
-/* 벨트(기술 로고)는 한 단계 작게, 단색으로 돈다 — 원색 혼재가 층 전체를
-   소음으로 만든다(실측: Starburst 짙은 워드마크 옆 OpenShift 원색 심볼).
-   커서를 얹으면 벨트가 멈추면서 원색이 돌아온다. */
-.logos__group .logos__item img {
-  height: 24px;
-  filter: grayscale(1);
-  opacity: 0.55;
-  transition:
-    filter var(--dur-hover) var(--ease),
-    opacity var(--dur-hover) var(--ease);
-}
-.logos__belt:hover .logos__item img {
-  filter: none;
+.logos__item:hover .logos__tag {
   opacity: 1;
 }
-.logos__item--starburst img {
-  height: 19px;
+/* 손가락으로 보는 화면엔 호버가 없다 — 거기서는 처음부터 원색으로 서 있는다. */
+@media (hover: none) {
+  .logos__item {
+    filter: none;
+    opacity: 1;
+  }
+  .logos__tag {
+    opacity: 1;
+  }
 }
-.logos__item--snowflake img {
-  height: 24px;
+/* 로고별 광학 보정 — 원본 비율이 달라 같은 height 면 크기가 널뛴다(실측).
+   워드마크 캡하이트가 비슷해 보이는 값으로 하나씩 맞추고, 좁은 화면에서는 --logo-k 하나로
+   벌 전체를 같은 비율로 줄인다(430 에서 40px 그대로면 두 장 반만 들어가고 잘린다). */
+.logos__item img {
+  height: calc(var(--logo-h, 40px) * var(--logo-k, 1));
+  width: auto;
+}
+.logos__item--aws {
+  --logo-h: 44px;
+}
+.logos__item--red-hat {
+  --logo-h: 44px;
+}
+.logos__item--sailpoint {
+  --logo-h: 34px;
+}
+/* databricks 공식 배포본은 심볼이 워드마크 위에 얹힌 스택형이라 더 키워야 눈높이가 맞는다. */
+.logos__item--databricks {
+  --logo-h: 56px;
+}
+.logos__item--anthropic {
+  --logo-h: 26px;
+}
+.logos__item--starburst {
+  --logo-h: 25px;
+}
+.logos__item--snowflake {
+  --logo-h: 32px;
 }
 /* openshift·ansible 은 워드마크 없는 심볼 단독 — 활자 이름을 병기하므로
    아이콘은 살짝만 키운다. */
-.logos__item--openshift img {
-  height: 26px;
+.logos__item--openshift {
+  --logo-h: 34px;
 }
-.logos__item--ansible img {
-  height: 26px;
+.logos__item--ansible {
+  --logo-h: 34px;
 }
-.logos__item--claude img {
-  height: 20px;
+.logos__item--claude {
+  --logo-h: 26px;
 }
-.logos__item--ibm img {
-  height: 22px;
+.logos__item--ibm {
+  --logo-h: 28px;
 }
-.logos__item--oracle img {
-  height: 18px;
+.logos__item--oracle {
+  --logo-h: 24px;
 }
-.logos__item--cisco img {
-  height: 28px;
+.logos__item--cisco {
+  --logo-h: 36px;
 }
-.logos__item--citrix img {
-  height: 20px;
+.logos__item--citrix {
+  --logo-h: 26px;
+}
+@media (max-width: 860px) {
+  .logos {
+    --logo-k: 0.78;
+  }
+  .logos__mark {
+    height: 46px;
+  }
+  .logos__group {
+    gap: clamp(32px, 5vw, 64px);
+    padding-inline-end: clamp(32px, 5vw, 64px);
+  }
+}
+@media (max-width: 640px) {
+  .logos {
+    --logo-k: 0.6;
+  }
+  .logos__mark {
+    height: 38px;
+  }
+  .logos__name {
+    font-size: var(--fs-sm);
+  }
+  .logos__group {
+    gap: var(--sp-7);
+    padding-inline-end: var(--sp-7);
+  }
 }
 @keyframes logos-roll {
   to {
@@ -2741,6 +2782,8 @@ a.tile:hover .tile__glyph {
 @media (prefers-reduced-motion: reduce) {
   .logos__belt {
     flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--sp-5);
   }
   .logos__group {
     animation: none;
@@ -2962,89 +3005,6 @@ a.tile:hover .tile__glyph {
 .section--center .footnote {
   text-align: center;
 }
-/* 대표 수행 영역 — 사업 탭 줄 + 판 하나(사령관 2026-09-08 "사업별로 탭으로 나눠서
-   슬레이트 구조로"). 탭은 알약 버튼이 아니라 밑줄 하나다 — 알약은 동작 버튼(.btn)의 어휘라
-   구획 전환에 쓰면 두 어휘가 섞인다(§4-3 Soft Geometry). 판은 면을 깔지 않는다.
-   그룹 레일(2026-09-07)을 대체한다 — 사업이 다른 건을 옆으로 밀어 섞지 않는 게 요점이다. */
-.slate {
-  display: grid;
-  gap: var(--sp-6);
-}
-.slate__tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--sp-5);
-  border-bottom: 1px solid var(--border-hair);
-}
-.slate__tab {
-  appearance: none;
-  border: 0;
-  background: none;
-  padding: 0 0 var(--sp-3);
-  margin-bottom: -1px;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--sp-2);
-  font: inherit;
-  font-size: var(--fs-h4);
-  font-weight: 600;
-  letter-spacing: var(--tracking-tight);
-  color: var(--text-muted);
-  border-bottom: 2px solid transparent;
-  cursor: pointer;
-  transition:
-    color var(--dur-hover) var(--ease),
-    border-color var(--dur-hover) var(--ease);
-}
-.slate__tab:hover {
-  color: var(--text-primary);
-}
-.slate__tab[aria-selected="true"] {
-  color: var(--text-primary);
-  border-bottom-color: var(--c-accent-500);
-}
-/* 건수는 탭 이름 뒤 작은 수 — 어느 사업에 몇 건이 있는지 누르기 전에 보인다. */
-.slate__count {
-  font-size: var(--fs-xs);
-  font-weight: 600;
-  color: var(--text-muted);
-}
-.slate__panel {
-  display: grid;
-  gap: var(--sp-5);
-  justify-items: start;
-}
-/* UA 의 [hidden]{display:none} 은 작성자 규칙에 진다 — display 를 준 순간 숨김이 풀린다.
-   서버가 첫 판만 열고 내보내므로 이 한 줄이 없으면 세 판이 한꺼번에 보인다(실측). */
-.slate__panel[hidden] {
-  display: none;
-}
-/* 칸은 늘 셋이다 — 건수에 맞춰 열을 줄이면 탭을 바꿀 때마다 카드 크기가 달라진다. */
-.slate__grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--gap-tile);
-  width: 100%;
-}
-.slate__grid .rail__card {
-  width: auto;
-}
-@media (max-width: 1080px) {
-  .slate__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-@media (max-width: 640px) {
-  .slate__grid {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-.slate__all {
-  font-size: var(--fs-sm);
-  font-weight: 600;
-  color: var(--text-accent);
-}
-
 .rail__kicker {
   font-size: var(--fs-label);
   font-weight: 600;
@@ -3055,104 +3015,268 @@ a.tile:hover .tile__glyph {
 /* 표지 · 분류 · 제목 · 링크. 글 목록의 생김새 — 데이터브릭스 스포트라이트의
    문법(사령관 요청 2026-09-04): 상자 없이 표지가 위, 작은 분류, 제목, 화살표 링크.
    제목은 섹션 머리가 가운데(section--center)라 격자만 전폭이다. */
-/* 인사이트 — 큰 대표 1 + 작은 2(§11.9 비대칭, 2차 판정 2026-09-04). 보조 둘은 오른쪽 열에
-   위에서부터 쌓인다 — 예전엔 대표가 두 행을 차지해 보조가 그 높이를 반씩 받아 위아래로 벌어졌고,
-   가로 원본(736×412)이 96×104 세로 상자에 잘려 알아볼 수 없는 조각이 됐다(사령관 2026-09-06
-   "깨지고 이상한"). 지금은 모든 표지가 16:9 이고 보조는 표지 옆에 글을 가운데 세운다. */
-/* 인사이트 — 셋을 같은 카드로 한 줄에 세운다(사령관 2026-09-08 "뭔가 정리 안된 느낌임").
-   대표 하나를 크게 두고 옆에 가로 카드 둘을 붙이던 비대칭을 걷었다: 카드 문법이 둘로 갈려
-   (세로 표지 / 가로 썸네일) 어디에 눈을 둘지가 매번 달랐고, 두 열의 바닥이 250px 어긋났다.
-   "전체 보기"도 오른쪽 열 한가운데 떠 있어 무엇에 걸린 링크인지 안 읽혔다 — 제목 줄로 올렸다. */
-.posts {
+/* 대표 하나 + 줄 카드 — 프로젝트 뉴스와 인사이트가 같이 쓴다(사령관 시안 2026-09-08).
+   왼쪽 대표가 오른쪽 줄 전체와 같은 높이로 선다: 대표는 세로로 늘고 남는 높이는 표지가 먹는다.
+   그래서 줄 수가 둘이든 넷이든 두 열의 바닥이 어긋나지 않는다.
+   카드 마크업은 대표와 줄이 같다 — 거를 때 클래스만 바꿔 첫 장을 대표로 올린다(filters.mjs). */
+.stories {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
   gap: var(--gap-tile);
-  align-items: start;
+  align-items: stretch;
 }
-.post {
+/* 줄 카드는 따로 담는다 — 한 격자에 평평하게 두고 대표에 grid-row:1/-1 을 주면
+   암시 행에서 -1 이 첫 행을 가리켜 첫 줄 카드가 대표 높이만큼 늘어난다(실측). */
+.stories__side {
   display: grid;
-  gap: var(--sp-3);
   align-content: start;
+  gap: var(--gap-tile);
+  min-width: 0;
+}
+/* 남은 줄이 둘 이상일 때만 남는 높이를 나눠 갖는다 — 위로 몰아 두면 오른쪽 바닥이 대표보다
+   186px 먼저 끝나고(인사이트, 실측 1440), 한 장만 남았을 때 늘리면 그 한 장이 700px 로
+   길어져 글 밑이 통째로 빈다(칩으로 거른 뒤). 줄이 넷이면 반대로 대표 표지가 늘어난다. */
+.stories__side:has(.story:not([hidden]) ~ .story:not([hidden])) {
+  align-content: stretch;
+}
+.story {
+  display: flex;
+  min-width: 0;
+  border: 1px solid var(--border-hair);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  overflow: hidden;
   color: inherit;
   text-decoration: none;
+  transition:
+    transform var(--dur-hover) var(--ease),
+    border-color var(--dur-hover) var(--ease);
 }
-.post__body {
-  display: grid;
-  gap: var(--sp-2);
-  justify-items: start;
+.story[hidden] {
+  display: none;
 }
-.post__cover {
-  aspect-ratio: var(--cover-ratio);
-  border-radius: var(--radius-md);
-  background: linear-gradient(140deg, var(--bg-inverse), var(--accent-cloud));
-  transition: transform var(--dur-hover) var(--ease);
+a.story:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-accent);
+}
+.story--lead {
+  flex-direction: column;
+}
+.story__cover {
+  display: block;
   overflow: hidden;
+  background: var(--bg-band);
+  flex: none;
 }
-/* 실물 표지가 있는 글 — 그라디언트 면은 걷는다. 비율 반올림으로 남는
-   1px 틈에 파란 선이 비쳤다(실측 390·2x). */
-.post__cover:has(img) {
-  background: none;
+.story--lead .story__cover {
+  flex: 1 1 auto;
+  min-height: 200px;
+  /* 남는 높이를 표지가 먹되 카드의 78% 를 넘지 않는다 — 비율로 고정하면 글 칸 밑이 통째로
+     비었고(실측 1440, 줄 넷), 상한이 없으면 사진만 660px 로 길어졌다. */
+  max-height: 78%;
 }
-.post__cover img {
+.story--row .story__cover {
+  width: 38%;
+  align-self: stretch;
+}
+.story__cover img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  filter: var(--art-tone);
 }
-.post__cover--1 {
-  background: linear-gradient(140deg, var(--bg-inverse), var(--accent-data-ai));
-}
-.post__cover--2 {
-  background: linear-gradient(
-    140deg,
-    var(--bg-inverse),
-    var(--accent-identity)
-  );
-}
-a.post:hover .post__cover {
-  transform: translateY(-3px);
-}
-.post__meta {
+.story__body {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: var(--sp-2);
+  padding: var(--sp-5);
+  min-width: 0;
+  flex: 1 1 auto;
 }
-.post__tag {
+.story--row .story__body {
+  padding: var(--sp-4) var(--sp-5);
+}
+/* 대표는 글 칸을 안 늘린다 — 표지와 글 칸이 남는 높이를 반씩 나눠 먹어서
+   글 밑에 빈 칸이 70px 남았다(실측 1440). 남는 높이는 표지 몫이다. */
+.story--lead .story__body {
+  flex: 0 0 auto;
+}
+.story__tag {
   font-size: var(--fs-label);
   font-weight: 600;
   letter-spacing: var(--tracking-label);
-  color: var(--text-faint);
+  color: var(--text-accent);
 }
-.post__title {
-  font-size: var(--fs-h4);
-  font-weight: 600;
-  letter-spacing: -0.025em;
+.story__title {
+  font-size: var(--fs-body);
+  font-weight: 700;
   line-height: 1.4;
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-primary);
 }
-.post__desc {
+.story--lead .story__title {
+  font-size: var(--fs-h4);
+  line-height: 1.35;
+}
+.story__desc {
   font-size: var(--fs-sm);
+  line-height: 1.55;
   color: var(--text-muted);
+  /* 두 줄로 자른다 — 글 길이가 제각각이라 그대로 두면 줄 카드 높이가 들쭉날쭉해진다. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
-.post__more {
-  margin-top: var(--sp-1);
-  font-size: var(--fs-sm);
+/* 날짜는 왼쪽, 행동은 오른쪽 끝 — 카드 바닥에 붙는다. */
+.story__foot {
+  margin-top: auto;
+  padding-top: var(--sp-2);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}
+.story__date {
+  font-size: var(--fs-xs);
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+.story__more {
+  margin-left: auto;
+  font-size: var(--fs-xs);
   font-weight: 600;
   color: var(--text-accent);
 }
-a.post:hover .post__more {
+a.story:hover .story__more {
   text-decoration: underline;
   text-underline-offset: 3px;
 }
-/* 좁은 폭 — 둘씩, 폰은 한 열. 카드 문법은 그대로다(세로 표지 + 글). */
-@media (max-width: 1080px) {
-  .posts {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+/* 좁은 폭 — 한 열, 전부 세로 카드. 줄 카드의 38% 표지는 여기서 너무 작아진다. */
+@media (max-width: 860px) {
+  .stories {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-4);
+  }
+  .stories__side {
+    gap: var(--sp-4);
+  }
+  .story--row .story__cover {
+    width: 34%;
+  }
+  .story--lead .story__cover {
+    min-height: 0;
+    aspect-ratio: var(--cover-ratio);
   }
 }
 @media (max-width: 640px) {
-  .posts {
+  .story--row {
+    flex-direction: column;
+  }
+  .story--row .story__cover {
+    width: 100%;
+    aspect-ratio: var(--cover-ratio);
+  }
+  .story--lead .story__title {
+    font-size: var(--fs-body);
+  }
+}
+
+/* 표지를 위에 얹은 같은 크기 카드 여러 장 — 인사이트(사령관 시안 2026-09-08 두 번째 장).
+   대표를 두지 않는다: 인사이트는 서열이 아니라 갈래라 무엇부터 읽으라고 말할 것이 없다.
+   장 수를 세지 않는다 — auto-fit 이 아니라 셋·넷 어느 쪽이든 한 줄로 세운다. */
+.briefs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: var(--gap-tile);
+  align-items: stretch;
+}
+.brief {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid var(--border-hair);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  overflow: hidden;
+  color: inherit;
+  text-decoration: none;
+  transition:
+    transform var(--dur-hover) var(--ease),
+    border-color var(--dur-hover) var(--ease);
+}
+a.brief:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-accent);
+}
+.brief__cover {
+  display: block;
+  aspect-ratio: var(--cover-ratio);
+  overflow: hidden;
+  background: var(--bg-band);
+}
+.brief__cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: var(--art-tone);
+}
+.brief__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  padding: var(--sp-5);
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.brief__tag {
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-accent);
+}
+.brief__title {
+  font-size: var(--fs-body);
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-primary);
+}
+.brief__desc {
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+  color: var(--text-muted);
+  /* 세 줄로 자른다 — 글 길이가 제각각이라 그대로 두면 배지 줄이 카드마다 어긋난다. */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+/* 그 카드가 내놓는 숫자·자격 한 마디. 태그라 각지게 간다(§4-3 pill 은 동작 버튼에만). */
+.brief__badge {
+  align-self: start;
+  margin-top: auto;
+  padding: var(--sp-1) var(--sp-3);
+  border-radius: var(--radius-sm);
+  background: var(--bg-accent);
+  color: var(--text-accent);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+}
+@media (max-width: 860px) {
+  .briefs {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--sp-4);
+  }
+}
+@media (max-width: 640px) {
+  .briefs {
     grid-template-columns: minmax(0, 1fr);
-    gap: var(--sp-6);
   }
 }
 

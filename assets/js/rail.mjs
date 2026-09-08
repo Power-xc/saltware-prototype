@@ -1,4 +1,4 @@
-// 가로 레일 — 트랙 밖 ‹ ›, 아래 눈금·번호, 그리고 분류 칩(사령관 UX 시안 2026-09-08).
+// 가로 레일 — 제목 줄 오른쪽 ‹ › 와 트랙 아래 눈금·번호(사령관 UX 시안 2026-09-08).
 // 스크롤은 브라우저가 스냅으로 하고 버튼은 카드 하나만큼 민다. 서버는 버튼을 숨긴 채 내보내고
 // (is-ready 전) 여기서 켠다 — JS 가 없으면 손가락·트랙패드로 넘기고 카드는 전부 읽힌다.
 // 넘칠 것이 없으면 is-static 으로 버튼·눈금을 접는다(넓은 화면의 세 장짜리 레일).
@@ -27,10 +27,6 @@ function wire(wrap) {
   if (!track || !prev || !next) return;
   const ticks = [...wrap.querySelectorAll(".rail__tick")];
   const count = wrap.querySelector("[data-rail-count]");
-  const chips = [
-    ...(wrap.previousElementSibling?.querySelectorAll?.("[data-rail-filter]") ??
-      []),
-  ];
 
   // 걸러진 뒤에도 남아 있는 카드만 센다 — 번호가 화면과 어긋나면 눈금이 거짓말이 된다.
   const shown = () =>
@@ -71,18 +67,12 @@ function wire(wrap) {
   track.addEventListener("scroll", sync, { passive: true });
   addEventListener("resize", sync);
 
-  for (const chip of chips) {
-    chip.addEventListener("click", () => {
-      const key = chip.dataset.railFilter;
-      for (const c of chips) c.setAttribute("aria-pressed", String(c === chip));
-      for (const card of track.querySelectorAll(".rail__card")) {
-        card.hidden = key !== "all" && card.dataset.railGroup !== key;
-      }
-      // 거른 뒤에는 처음으로 돌아간다 — 남은 두 장을 스크롤 끝에서 만나면 빈 판으로 보인다.
-      track.scrollTo({ left: 0, behavior: "auto" });
-      sync();
-    });
-  }
+  // 거르는 건 filters.mjs 가 한다 — 여기서는 남은 장 수로 눈금·번호를 다시 센다.
+  // 거른 뒤에는 처음으로 돌아간다: 남은 두 장을 스크롤 끝에서 만나면 빈 판으로 보인다.
+  wrap.addEventListener("filterchange", () => {
+    track.scrollTo({ left: 0, behavior: "auto" });
+    sync();
+  });
 
   wrap.classList.add("is-ready");
   sync();

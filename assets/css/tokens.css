@@ -53,6 +53,8 @@
   --bg-band: var(--c-neutral-100);
   --bg-card: var(--c-white);
   --bg-inverse: var(--c-neutral-900);
+  /* 어두운 면 위에 얹는 면 — 잉크 카드 안의 원형 버튼처럼 한 단만 밝힌다. */
+  --bg-on-inverse: var(--c-neutral-700);
   --bg-accent: var(--c-accent-50);
 
   /* 시맨틱 — text */
