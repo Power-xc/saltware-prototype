@@ -76,6 +76,10 @@
   --border-soft: rgba(0, 0, 0, 0.055);
   --border-strong: var(--c-neutral-400);
   --border-inverse: rgba(255, 255, 255, 0.18);
+  /* 어두운 면 위의 결정 입자 밭과 그 위를 비추는 빛 — 결정 숫자(.bento__dots)가 앉는 바탕.
+     밭은 질감이지 격자가 아니다 — 0.12 를 넘으면 눈이 점을 세기 시작한다. */
+  --bg-inverse-field: rgba(255, 255, 255, 0.085);
+  --bg-inverse-glow: rgba(255, 255, 255, 0.07);
 
   /* 상태 */
   --state-danger: var(--c-danger-600);

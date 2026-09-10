@@ -12,19 +12,38 @@ export function initCounters() {
   // 숫자 노드만 바꾼다 — 단위 첨자(<span>)는 마크업 그대로 둔다.
   const numText = (el) => [...el.childNodes].find((n) => n.nodeType === 3);
 
+  // 결정 숫자(dot-numerals.mjs)는 자리마다 <use> 가 0~9 심볼을 가리킨다 — 입자를 다시 그리지 않고
+  // href 만 바꾼다. 자릿수가 모자라면 오른쪽 정렬로 앞자리를 비운다(LED 계수기처럼 "  7+" → "200+").
+  const dotWriter = (el) => {
+    const g = el.querySelector("[data-dot-digits]");
+    if (!g) return null;
+    const key = g.dataset.dotDigits;
+    const slots = [...g.querySelectorAll("use")];
+    return (v) => {
+      const s = String(v).padStart(slots.length, " ");
+      slots.forEach((u, i) => {
+        const ch = s[i];
+        u.style.visibility = ch === " " ? "hidden" : "";
+        if (ch !== " ") u.setAttribute("href", `#dn-${key}-${ch}`);
+      });
+    };
+  };
+
   const run = (el) => {
     const end = Number(el.dataset.count);
+    if (!Number.isFinite(end)) return;
     const text = numText(el);
-    if (!Number.isFinite(end) || !text) return;
+    const write = dotWriter(el) ?? (text && ((v) => (text.nodeValue = String(v))));
+    if (!write) return;
     const t0 = performance.now();
     const step = (now) => {
       const p = Math.min(1, (now - t0) / DUR);
       // 끝에서 감속 — 마지막 한 자리가 천천히 멎어야 "도달"로 읽힌다.
       const eased = 1 - (1 - p) ** 3;
-      text.nodeValue = String(Math.round(end * eased));
+      write(Math.round(end * eased));
       if (p < 1) requestAnimationFrame(step);
     };
-    text.nodeValue = "0";
+    write(0);
     requestAnimationFrame(step);
   };
 
