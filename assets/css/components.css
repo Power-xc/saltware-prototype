@@ -645,31 +645,31 @@
   max-width: 42ch;
 }
 .hero--media.hero--m-cloud {
-  --hero-media: url("/saltware-prototype/media/business/hero-cloud.jpg?v=f61eaae9ff78");
+  --hero-media: url("/saltware-prototype/media/business/hero-cloud.jpg?v=d86dfb0b2846");
 }
 .hero--media.hero--m-databricks {
-  --hero-media: url("/saltware-prototype/media/business/hero-databricks.jpg?v=f61eaae9ff78");
+  --hero-media: url("/saltware-prototype/media/business/hero-databricks.jpg?v=d86dfb0b2846");
 }
 .hero--media.hero--m-identity {
-  --hero-media: url("/saltware-prototype/media/business/hero-identity.jpg?v=f61eaae9ff78");
+  --hero-media: url("/saltware-prototype/media/business/hero-identity.jpg?v=d86dfb0b2846");
 }
 .hero--media.hero--m-redhat {
-  --hero-media: url("/saltware-prototype/media/business/hero-redhat.jpg?v=f61eaae9ff78");
+  --hero-media: url("/saltware-prototype/media/business/hero-redhat.jpg?v=d86dfb0b2846");
 }
 .hero--media.hero--m-enview {
-  --hero-media: url("/saltware-prototype/media/business/hero-enview.jpg?v=f61eaae9ff78");
+  --hero-media: url("/saltware-prototype/media/business/hero-enview.jpg?v=d86dfb0b2846");
 }
 .hero--media.hero--m-smart-farm {
-  --hero-media: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=f61eaae9ff78");
+  --hero-media: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=d86dfb0b2846");
 }
 .hero--media.hero--m-hub-business {
-  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=f61eaae9ff78");
+  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=d86dfb0b2846");
 }
 .hero--media.hero--m-hub-insights {
-  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=f61eaae9ff78");
+  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=d86dfb0b2846");
 }
 .hero--media.hero--m-hub-company {
-  --hero-media: url("/saltware-prototype/media/hub/hub-company.jpg?v=f61eaae9ff78");
+  --hero-media: url("/saltware-prototype/media/hub/hub-company.jpg?v=d86dfb0b2846");
 }
 
 .hero--home {
@@ -867,26 +867,20 @@
   padding: var(--sp-5);
   border-radius: var(--radius-xl);
   overflow: hidden;
-  /* 밝은 그림 + 잉크 받침(2026-09-10). 여섯 층 그림이 전부 밝은 스튜디오 한 벌이라 위쪽은
-     그림이 그대로 보이고, 카피가 앉는 아래쪽만 잉크 스크림이 받친다 — 면 전체를 흰색으로
-     두면 페이지와 녹아 "너무 하얗다". 번호만 그림 위 잉크 활자다(.hcard__n).
-     그림 바탕(휘도 ~200)이 페이지(#fbfbfd)와 가까워 헤어라인으로 가장자리를 세운다. */
-  background: var(--bg-card);
+  /* 잉크 바탕 위 밝은 스튜디오 그림(2026-09-10). 그림이 위쪽을 채우고 아래로 갈수록 비네트에
+     잠겨 흰 카피가 앉는다. 면을 흰색으로 뒤집은 것(페이지와 녹음)과 잉크 띠로 받친 것(흙빛
+     안개) 둘 다 이보다 나빴다 — 사령관이 "나쁘지 않았다"고 한 조합이다. 번호만 그림 위
+     잉크 활자다(.hcard__n). */
+  background: var(--bg-inverse);
   color: var(--text-on-inverse);
-  border: 1px solid var(--border-hair);
-  transition:
-    flex-grow var(--dur-content) var(--ease),
-    background-color var(--dur-content) var(--ease);
+  transition: flex-grow var(--dur-content) var(--ease);
 }
 .hcard--wide {
   flex-grow: 2.34;
 }
-/* 접힌 셋은 잉크 면이다 — 밝은 카드 셋 옆에 어두운 칸 셋이 서야 줄에 무게가 생긴다.
-   펼치면 .hcard 의 밝은 면으로 돌아오고 그림이 전부 드러난다(배경색 전환은 .hcard transition). */
 .hcard--mini {
   flex-grow: 0.36;
   cursor: pointer;
-  background: var(--bg-inverse);
 }
 @media (hover: hover) {
   .hcard--mini:hover {
@@ -921,12 +915,12 @@
 .hcard::after {
   content: "";
   position: absolute;
-  inset: 30% 0 0;
+  inset: 18% 0 0;
   z-index: -1;
   /* 텍스트 블록이 시작되는 높이(카드의 약 63%)까지 스크림이 다 올라와 있어야 한다 —
-     램프가 바닥에서야 끝나면 본문 첫 줄이 맨 이미지 위에 놓인다. 30%→60% 의 짧은 램프다:
-     18% 에서 시작하면 밝은 그림의 가운데가 회색 안개로 덮인다(실측 2026-09-10). */
-  background: linear-gradient(to bottom, transparent, var(--scrim-card) 43%);
+     램프가 바닥에서야 끝나면 본문 첫 줄이 맨 이미지 위에 놓인다. 길게 내려오는 비네트다:
+     30%→60% 로 조이면 밝은 그림 위에서 띠처럼 보인다(사령관 2026-09-10). */
+  background: linear-gradient(to bottom, transparent, var(--scrim-card) 60%);
   pointer-events: none;
 }
 .hcard--mini::after {
