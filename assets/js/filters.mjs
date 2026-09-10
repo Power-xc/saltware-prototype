@@ -3,6 +3,8 @@
 // 같은 코드를 쓴다 — 레일은 걸린 뒤 눈금·번호를 다시 세야 하므로 filterchange 로 알린다.
 // 대표 카드가 있는 묶음(data-stories)은 남은 첫 장을 대표로 올린다 — 대표가 걸러지면
 // 왼쪽 큰 칸이 통째로 비어 고장으로 보인다.
+import { markFirstVisible } from "./rows.mjs?v=1eb58a17050c";
+
 export function initFilters() {
   for (const row of document.querySelectorAll("[data-filter]")) {
     const box = row.nextElementSibling;
@@ -36,6 +38,10 @@ export function initFilters() {
           el.hidden = key !== "all" && el.dataset.filterGroup !== key;
         }
         promote();
+        // 줄 목록(.presses)에서는 감춘 뒤 맨 윗줄 표시를 다시 매긴다 — 그러지 않으면
+        // 걸러낸 목록 맨 위에 실선 하나가 뜬다(rows.mjs). 카드 묶음은 그 규칙이 없고,
+        // 대표를 옮기느라 자식이 행이 아닐 수도 있어 줄 목록만 손댄다.
+        if (box.classList.contains("presses")) markFirstVisible(box);
         box.dispatchEvent(new CustomEvent("filterchange", { bubbles: true }));
       });
     }
