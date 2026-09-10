@@ -645,31 +645,31 @@
   max-width: 42ch;
 }
 .hero--media.hero--m-cloud {
-  --hero-media: url("/saltware-prototype/media/business/hero-cloud.jpg?v=9d45a815e359");
+  --hero-media: url("/saltware-prototype/media/business/hero-cloud.jpg?v=f61eaae9ff78");
 }
 .hero--media.hero--m-databricks {
-  --hero-media: url("/saltware-prototype/media/business/hero-databricks.jpg?v=9d45a815e359");
+  --hero-media: url("/saltware-prototype/media/business/hero-databricks.jpg?v=f61eaae9ff78");
 }
 .hero--media.hero--m-identity {
-  --hero-media: url("/saltware-prototype/media/business/hero-identity.jpg?v=9d45a815e359");
+  --hero-media: url("/saltware-prototype/media/business/hero-identity.jpg?v=f61eaae9ff78");
 }
 .hero--media.hero--m-redhat {
-  --hero-media: url("/saltware-prototype/media/business/hero-redhat.jpg?v=9d45a815e359");
+  --hero-media: url("/saltware-prototype/media/business/hero-redhat.jpg?v=f61eaae9ff78");
 }
 .hero--media.hero--m-enview {
-  --hero-media: url("/saltware-prototype/media/business/hero-enview.jpg?v=9d45a815e359");
+  --hero-media: url("/saltware-prototype/media/business/hero-enview.jpg?v=f61eaae9ff78");
 }
 .hero--media.hero--m-smart-farm {
-  --hero-media: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=9d45a815e359");
+  --hero-media: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=f61eaae9ff78");
 }
 .hero--media.hero--m-hub-business {
-  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=9d45a815e359");
+  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=f61eaae9ff78");
 }
 .hero--media.hero--m-hub-insights {
-  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=9d45a815e359");
+  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=f61eaae9ff78");
 }
 .hero--media.hero--m-hub-company {
-  --hero-media: url("/saltware-prototype/media/hub/hub-company.jpg?v=9d45a815e359");
+  --hero-media: url("/saltware-prototype/media/hub/hub-company.jpg?v=f61eaae9ff78");
 }
 
 .hero--home {
@@ -867,8 +867,11 @@
   padding: var(--sp-5);
   border-radius: var(--radius-xl);
   overflow: hidden;
-  background: var(--bg-inverse);
-  color: var(--text-on-inverse);
+  /* 밝은 면이다(2026-09-10) — 여섯 층 그림이 전부 밝은 스튜디오 한 벌로 바뀌어 다크 면을
+     걷었다. 그림 바탕(휘도 ~200)이 페이지(#fbfbfd)와 가까워 헤어라인으로 가장자리를 세운다. */
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border-hair);
   transition: flex-grow var(--dur-content) var(--ease);
 }
 .hcard--wide {
@@ -903,10 +906,10 @@
   scale: 1.11;
 }
 /* 작은 카드도 제 그림을 보인다 — 층마다 그림이 하나씩이라 반복이 없다(2026-09-10).
-   0.45 에서는 Hardware 의 은색 랙이 밝아 세로 이름이 묻혔다(실측 1440) — 밝은 그림에
-   맞춰 낮춘다. 여기서 읽혀야 하는 건 번호와 층 이름이고 그림은 기척만 남기면 된다. */
+   흰 면 위라 0.3 은 그림이 사라진다(휘도 238). 0.6 이면 오브젝트가 기척으로 남고
+   잉크 번호·세로 이름은 그 위에서 읽힌다. */
 .hcard--mini .hcard__art {
-  opacity: 0.3;
+  opacity: 0.6;
 }
 .hcard::after {
   content: "";
@@ -923,8 +926,8 @@
 }
 /* 번호는 유리 알약이었다 — 카드마다 회색 상자가 하나씩 떠 그림을 가리고 누를 것처럼 읽혔다
    (사령관 2026-09-10 "숫자 1~6 이상한 것 같은데"). 테두리·바탕·블러를 걷고 활자만 남긴다.
-   밝은 그림 위(02 의 흰 지구본)에서도 읽히게 그림자 한 겹만 두고 상자는 다시 만들지 않는다.
-   가로폭이 고정이라야 01→06 이 같은 자리에 선다 — tabular-nums. */
+   밝은 그림 위 잉크 활자라 그림자도 없다 — 스크림 밖(좌상단)인데 흰 글자였을 때 1.3:1 로
+   안 보이던 자리다(실측 2026-09-10). 가로폭이 고정이라야 01→06 이 같은 자리에 선다 — tabular-nums. */
 .hcard__n {
   position: absolute;
   top: var(--sp-5);
@@ -933,8 +936,7 @@
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   letter-spacing: var(--tracking-label);
-  color: var(--text-on-inverse);
-  text-shadow: 0 1px 8px var(--scrim-bottom);
+  color: var(--text-primary);
   transition: left var(--dur-content) var(--ease);
 }
 .hcard--mini .hcard__n {
@@ -999,14 +1001,14 @@
   font-size: var(--fs-label);
   font-weight: 600;
   letter-spacing: var(--tracking-label);
-  color: var(--text-on-inverse-muted);
+  color: var(--text-secondary);
 }
 .hcard__title {
   font-size: clamp(20px, 1.7vw, 26px);
   font-weight: 700;
   line-height: 1.25;
   letter-spacing: var(--tracking-tight);
-  color: var(--text-on-inverse);
+  color: var(--text-primary);
   text-wrap: balance;
 }
 .hcard--wide .hcard__title {
@@ -1019,7 +1021,7 @@
    기술·제품군 줄은 같은 날 걷었다 — 히어로에 제품명까지 오면 내용이 너무 많다.
    접힌 카드만 블록을 통째로 감춘다(.hcard--mini .hcard__text). */
 .hcard__desc {
-  color: var(--text-on-inverse-muted);
+  color: var(--text-secondary);
 }
 /* 설명은 두 줄로 자른다 — 층마다 문장 길이가 달라 블록 높이가 들쭉날쭉해진다. */
 .hcard__desc {
@@ -1039,7 +1041,7 @@
   margin-top: var(--sp-1);
   font-size: var(--fs-sm);
   font-weight: 600;
-  color: var(--text-on-inverse);
+  color: var(--text-primary);
 }
 .hcard:hover .hcard__more {
   text-decoration: underline;
