@@ -645,31 +645,31 @@
   max-width: 42ch;
 }
 .hero--media.hero--m-cloud {
-  --hero-media: url("/saltware-prototype/media/business/hero-cloud.jpg?v=4e5944f17651");
+  --hero-media: url("/saltware-prototype/media/business/hero-cloud.jpg?v=2387f643aed3");
 }
 .hero--media.hero--m-databricks {
-  --hero-media: url("/saltware-prototype/media/business/hero-databricks.jpg?v=4e5944f17651");
+  --hero-media: url("/saltware-prototype/media/business/hero-databricks.jpg?v=2387f643aed3");
 }
 .hero--media.hero--m-identity {
-  --hero-media: url("/saltware-prototype/media/business/hero-identity.jpg?v=4e5944f17651");
+  --hero-media: url("/saltware-prototype/media/business/hero-identity.jpg?v=2387f643aed3");
 }
 .hero--media.hero--m-redhat {
-  --hero-media: url("/saltware-prototype/media/business/hero-redhat.jpg?v=4e5944f17651");
+  --hero-media: url("/saltware-prototype/media/business/hero-redhat.jpg?v=2387f643aed3");
 }
 .hero--media.hero--m-enview {
-  --hero-media: url("/saltware-prototype/media/business/hero-enview.jpg?v=4e5944f17651");
+  --hero-media: url("/saltware-prototype/media/business/hero-enview.jpg?v=2387f643aed3");
 }
 .hero--media.hero--m-smart-farm {
-  --hero-media: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=4e5944f17651");
+  --hero-media: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=2387f643aed3");
 }
 .hero--media.hero--m-hub-business {
-  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=4e5944f17651");
+  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=2387f643aed3");
 }
 .hero--media.hero--m-hub-insights {
-  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=4e5944f17651");
+  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=2387f643aed3");
 }
 .hero--media.hero--m-hub-company {
-  --hero-media: url("/saltware-prototype/media/hub/hub-company.jpg?v=4e5944f17651");
+  --hero-media: url("/saltware-prototype/media/hub/hub-company.jpg?v=2387f643aed3");
 }
 
 .hero--home {
@@ -868,7 +868,7 @@
     flex-grow: 0.6;
   }
 }
-.hcard__video {
+.hcard__art {
   position: absolute;
   inset: 0;
   z-index: -2;
@@ -879,12 +879,13 @@
     transform var(--dur-content) var(--ease),
     opacity var(--dur-content) var(--ease);
 }
-.hcard:hover .hcard__video {
+.hcard:hover .hcard__art {
   transform: scale(1.03);
 }
-/* 작은 카드는 영상을 감춘다 — 03 ~ 06 이 셋째 영상을 함께 쓰므로 보이면 반복이 읽힌다. */
-.hcard--mini .hcard__video {
-  opacity: 0;
+/* 작은 카드도 제 그림을 보인다 — 층마다 그림이 하나씩이라 반복이 없다(2026-09-10).
+   폭이 좁아 오브젝트가 잘리므로 눌러서 번호·세로 이름이 먼저 읽히게 둔다. */
+.hcard--mini .hcard__art {
+  opacity: 0.45;
 }
 .hcard::after {
   content: "";
@@ -1024,7 +1025,7 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .hcard,
-  .hcard__video,
+  .hcard__art,
   .hcard__n,
   .hcard__side,
   .hcard__text {
