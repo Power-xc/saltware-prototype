@@ -2937,18 +2937,10 @@ a.tile:hover .tile__glyph {
 }
 /* 대표 솔루션 카드 — 애플 iPhone 기능 레일의 세로 카드를 기준으로 다시 세웠다
    (사령관 2026-09-08 "애플꺼 참고해바", 시안 3장 실측 372×540 · 0.69 비율).
-   위에 작은 아이브로 · 굵은 제품명 한 줄 · 핵심 한 줄, 그 아래를 오브젝트 하나가 크게 차지한다.
-
-   면을 밝게 뒤집었다(2026-09-13). 히어로가 밝은 면 + 유리판으로 바뀌자 검정 카드 여덟 장이
-   같은 지면에서 딴 벌로 읽혔다. "흰 카드는 밋밋하다"(2026-08-31)는 판정은 그대로라 흰 면으로
-   돌아가지 않는다 — 히어로와 같은 원색 두 겹이 카드 아래를 물들이고(--sol-field) 문양이
-   그 위에 앉는다. 칠한 실루엣은 밝은 면에서 검정 덩어리가 되어 선으로 다시 그렸다. */
+   위에 작은 아이브로 · 굵은 제품명 한 줄 · 핵심 한 줄, 그 아래를 오브젝트 하나가 크게 차지하고
+   오른쪽 아래에 원형 화살표. 앞 안은 300px 정사각 카드에 56px 마크를 구석에 붙인 것이라
+   오브젝트가 스티커로 읽혔다 — 문제는 종류가 아니라 크기와 자리였다. */
 .sol {
-  /* 잉크 한 벌을 카드가 정하고 글 칸들이 물려받는다 — 같은 어휘(.sol__*)를 인사이트 허브의
-     사진 카드가 같이 쓰는데 그쪽은 잉크 스크림 위라 흰 글자여야 한다(.hub-card 가 되뒤집는다). */
-  --sol-ink: var(--text-primary);
-  --sol-ink-soft: var(--text-muted);
-  --sol-ink-accent: var(--text-accent);
   position: relative;
   display: grid;
   grid-template-rows: auto auto auto minmax(0, 1fr) auto;
@@ -2956,17 +2948,15 @@ a.tile:hover .tile__glyph {
   aspect-ratio: 0.9;
   padding: var(--sp-6);
   border-radius: var(--radius-lg);
-  background: var(--sol-field);
-  border: 1px solid var(--border-hair);
-  box-shadow: var(--shadow-rest);
-  color: var(--sol-ink);
+  background: var(--bg-inverse);
+  color: var(--text-on-inverse);
   text-decoration: none;
   overflow: hidden;
 }
 .sol__area {
   font-size: var(--fs-xs);
   font-weight: 600;
-  color: var(--sol-ink-soft);
+  color: var(--text-on-inverse-muted);
 }
 .sol__title {
   font-size: var(--fs-h3);
@@ -2977,7 +2967,7 @@ a.tile:hover .tile__glyph {
 .sol__desc {
   font-size: var(--fs-sm);
   line-height: 1.5;
-  color: var(--sol-ink-soft);
+  color: var(--text-on-inverse-muted);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -2990,15 +2980,11 @@ a.tile:hover .tile__glyph {
 .sol__mark {
   align-self: end;
   justify-self: start;
-  /* 304×338 카드의 남는 자리는 70px 이고 설명이 두 줄로 늘면 48px 이다(1440 실측).
-     96 은 그 안이면서 카드 폭의 1/3 이라 스티커가 아니라 그림으로 읽힌다 —
-     더 키우면 설명이 두 줄인 폭에서 overflow:hidden 에 잘린다. */
-  width: 96px;
-  /* 문양 상자에는 사방 5/48 만큼 여백이 붙어 있다 — 왼쪽만 당겨 글 축에 맞춘다.
-     획 굵기가 문양마다 달리 걸려 정확히는 못 맞춘다. 한 칸 들여쓴 쪽이 여덟 장에서 고르다. */
-  margin-left: calc(var(--sp-1) * -1);
-  /* 잉크 하나뿐이다(사령관 2026-09-08 "딱 핵심만") — 앰버는 자세히 보기가 갖는다. */
-  color: var(--sol-ink);
+  width: 48px;
+  /* 문양 상자에는 사방 4/48 만큼 여백이 붙어 있다 — 왼쪽만 당겨 글 축에 맞춘다. */
+  margin-left: -4px;
+  /* 흰색 하나뿐이다(사령관 2026-09-08 "흰색으로만 딱 핵심만") — 앰버는 자세히 보기가 갖는다. */
+  color: var(--text-on-inverse);
   transition: scale var(--dur-hover) var(--ease);
   transform-origin: left bottom;
 }
@@ -3014,22 +3000,15 @@ a.tile:hover .tile__glyph {
   margin-top: var(--sp-4);
   font-size: var(--fs-xs);
   font-weight: 600;
-  color: var(--sol-ink-accent);
+  color: var(--text-accent-on-inverse);
 }
 @media (max-width: 860px) {
   .sol {
     aspect-ratio: 0.76;
   }
-  /* 231×305 로 좁아지는 구간만 남는 자리가 17px 이다 — 96 을 두면 설명이 두 줄로 늘 때 잘린다. */
   .sol__mark {
-    width: 72px;
-  }
-}
-@media (max-width: 640px) {
-  /* 카드가 한 장이 되면 자리가 다시 넉넉해진다(390 실측 81px) — 기본 크기로 돌아온다.
-     위 블록보다 뒤에 있어야 이긴다(순서로 한 번 졌다 — .rail--sols 폭 규칙과 같은 함정). */
-  .sol__mark {
-    width: 96px;
+    width: 44px;
+    margin-left: -3.5px;
   }
 }
 
@@ -3265,14 +3244,6 @@ a.tile:hover .tile__glyph {
    화면 한 장을 통째로 먹었다 — 정사각이면 같은 폭에 342 로 앉아 아래 것이 같이 보인다.
    .sol 의 0.9 는 레일에서 여덟 장이 흐를 때의 비율이라 여기서 쓰지 않는다. */
 .hub-card {
-  /* 사진 + 잉크 스크림 위라 .sol 의 밝은 한 벌을 통째로 되뒤집는다 — 글 칸은 안 건드린다.
-     테두리와 쉬는 그림자도 걷는다: 사진 카드는 제 사진으로 이미 서 있다. */
-  --sol-ink: var(--text-on-inverse);
-  --sol-ink-soft: var(--text-on-inverse-muted);
-  --sol-ink-accent: var(--text-accent-on-inverse);
-  background: var(--bg-inverse);
-  border-color: transparent;
-  box-shadow: none;
   aspect-ratio: 1;
   isolation: isolate;
   /* 342 폭에 44px 여백을 물리면 글 자리가 254px 밖에 안 남는다 — 한 단 줄인다. */
