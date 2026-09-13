@@ -31,7 +31,7 @@
   font-size: var(--fs-body);
   font-weight: 600;
   line-height: 1.55;
-  letter-spacing: -0.02em;
+  letter-spacing: var(--tracking-snug);
 }
 .bu--cloud a.il:hover .il__title {
   color: var(--text-accent);

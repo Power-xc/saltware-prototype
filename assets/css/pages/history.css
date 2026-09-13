@@ -68,7 +68,7 @@
 /* 밝은 일러스트라 흰 숫자를 얹을 수 없다 — 바닥색 위에서 흰 글씨는 2:1 로
    묻힌다(실측). 어둠 덮개를 걷고 숫자를 진한 쪽으로 뒤집었다. */
 .hyr__stage--company {
-  --stage-media: url("/saltware-prototype/media/company/history.jpg?v=74ed784af28c");
+  --stage-media: url("/saltware-prototype/media/company/history.jpg?v=12db900ad0f5");
   /* 실물 그대로다(1600×898). 그림을 갈면 이 값도 같이 간다 — 어긋나면 잘린다. */
   --stage-ratio: 1600 / 898;
   /* 그림이 브랜드 주황으로 갈렸는데 바닥만 파랑 계열(#a1b0cf)로 남아 판이 보라로
@@ -106,7 +106,9 @@
   flex: 1;
   height: 2px;
   border-radius: var(--radius-pill);
-  background: rgb(0 0 0 / 0.22);
+  /* 순수 검정은 알파를 낮춰도 잉크(#141413)보다 진하다 — 지면의 스크림을 전부
+     --c-neutral-900-rgb 로 옮긴 날(2026-09-13) 이 시트만 빠져 있었다. */
+  background: rgb(var(--c-neutral-900-rgb) / 0.22);
 }
 /* 점은 칸 수로 움직인다(year-stage.mjs 가 --at 을 준다). 연도 값의 크기로 재면
    2003 과 2011 사이 빈 구간에서 점이 한참 멈춰 있는다. */

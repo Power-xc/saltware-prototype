@@ -40,7 +40,7 @@ body[data-route="/company/careers"] {
 .crx__title {
   font-size: clamp(1.625rem, 1.1rem + 2.1vw, 2.5rem);
   line-height: 1.25;
-  letter-spacing: -0.02em;
+  letter-spacing: var(--tracking-snug);
   margin: 0;
 }
 .crx__lede {
@@ -60,6 +60,35 @@ body[data-route="/company/careers"] {
 .crval {
   border-top: 2px solid var(--rule-track);
   padding-top: 1.25rem;
+}
+/* 선 아래 첫 자리는 문양이다 — 대표 솔루션·아키텍처와 같은 윤곽선 한 벌이고,
+   판이 들어올 때 순번대로 그려진다(sol-draw, components.css). */
+.crval__mark {
+  display: block;
+  width: 26px;
+  height: 26px;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+  opacity: 0.4;
+  transition:
+    opacity var(--dur-hover) var(--ease),
+    color var(--dur-hover) var(--ease);
+}
+.crval__mark svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.crval:hover .crval__mark {
+  color: var(--text-accent);
+  opacity: 1;
+}
+.crval__mark svg > * {
+  stroke-dasharray: 1;
+}
+.crvals.is-in .crval__mark svg > * {
+  animation: sol-draw 0.8s var(--ease) both;
+  animation-delay: calc(var(--i, 0) * 70ms + 160ms);
 }
 .crval__kicker {
   font-size: var(--fs-label-caps);
@@ -171,57 +200,72 @@ a.cropen__row:focus-visible .cropen__title {
    굽는 쪽도 같은 값이다(design-resources/23-careers-photo/bake.mjs 의 PLATES) —
    한쪽만 갈면 판과 액자가 어긋난다.
    목록과 붙이지 않고 한 칸 띄운다. */
-.crcult__art {
-  margin: 0 0 clamp(1.75rem, 1rem + 2vw, 2.75rem);
+/* ── 회사가 해주는 것 — 서랍 목록 ─────────────────────────
+   앞판은 큰 사진 한 장 아래 세 단이었다(.crcult__art · .crcult). 둘 다 걷었다:
+   사진은 히어로와 같은 복도였고, 세 단은 3 · 6 · 15 로 갈려 복리후생이 혼자 벽이
+   됐다(좁은 폭에서 두 칸을 내주고 다시 2단으로 쪼개는 규칙까지 달려 있었다).
+   안트로픽 채용 지면의 "How we support you" 와 같은 조판이다 — 상자 없이
+   머리카락 선으로만 나뉜 줄, 누르면 열린다. 펼침은 .faq__q/.faq__a 계약을 그대로 쓴다. */
+.crsup {
+  border-top: 1px solid var(--border-soft);
 }
-.crcult__art img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
-  border-radius: var(--radius-md);
-  background: var(--bg-band);
+.crsup__row {
+  border-bottom: 1px solid var(--border-soft);
 }
-.crcult__art figcaption {
-  margin-top: 0.6rem;
-  font-size: 0.875rem;
-  color: var(--text-muted);
-}
-
-/* ── 문화 · 제도 세 단 ────────────────────────────────────
-   레퍼런스의 학습문화 / 조직문화 / 복지제도 자리다. 단마다 제목 하나에 목록 하나.
-   불릿은 · 한 글자다 — 목록 표식을 그리지 않으면 스물여섯 줄이 문단처럼 붙어 보인다. */
-.crcult {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(2rem, 0.5rem + 4vw, 4rem);
-  align-items: start;
-}
-.crcult__label {
-  font-size: 1.125rem;
-  font-weight: 700;
+/* .faq__q 는 상자 안에 있던 줄이라 14px 에 좁은 여백이다. 이 자리는 묶음 이름이
+   제목처럼 서야 해서 활자와 여백만 키운다 — 동작(aria·+ 회전)은 그대로 물려받는다. */
+.crsup__q {
+  padding: 1.1rem 0;
+  font-size: clamp(1rem, 0.92rem + 0.35vw, 1.125rem);
   letter-spacing: -0.01em;
-  margin: 0 0 1.25rem;
-  padding-top: 0.9rem;
-  border-top: 2px solid var(--rule-track);
 }
-.crcult__list {
+.crsup__q .faq__icon {
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+.crsup__q:hover {
+  color: var(--text-accent);
+}
+.crsup__a {
+  padding: 0 0 1.1rem;
+}
+/* 항목은 폭이 허락하는 만큼 옆으로 깐다 — 복리후생 열다섯 줄이 한 줄씩 내려가면
+   서랍이 지면을 다시 길게 먹는다. columns 가 아니라 격자인 이유는 세 줄짜리 묶음
+   때문이다: columns 는 셋을 2 · 1 로 갈라 한쪽만 길어지는데, 격자는 폭에 맞는
+   칸 수로 고르게 선다. */
+.crsup__list {
   list-style: none;
   margin: 0;
   padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  column-gap: clamp(1.5rem, 0.5rem + 2.5vw, 3rem);
 }
-.crcult__list li {
+.crsup__list li {
   position: relative;
-  padding: 0.45rem 0 0.45rem 0.9rem;
+  padding: 0.3rem 0 0.3rem 0.9rem;
   font-size: 0.9375rem;
   line-height: 1.7;
   color: var(--text-secondary);
+  break-inside: avoid;
 }
-.crcult__list li::before {
+.crsup__list li::before {
   content: "·";
   position: absolute;
   left: 0;
   color: var(--text-faint);
+}
+
+/* 제목을 옆에 세우는 덩이 — 서랍이 접혀 있어 세로로 짧다. 제목이 위에 통째로
+   서면 그 아래가 텅 빈다(레퍼런스도 좌 제목 · 우 목록이다). */
+.crx--split {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+  gap: clamp(2rem, 1rem + 3vw, 4.5rem);
+  align-items: start;
+}
+.crx--split .crx__head {
+  margin-bottom: 0;
 }
 
 /* ── 절차 리본 ─────────────────────────────────────────────
@@ -244,7 +288,10 @@ a.cropen__row:focus-visible .cropen__title {
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.03em;
-  color: var(--c-neutral-300);
+  /* [정정 2026-09-14] 300 은 크림 위에서 1.52 였다 — 큰 활자 기준(3:1)의 절반이라
+     순번이 사실상 안 보였다. 500 으로 내리면 3.37 이고, 잉크(16.4) 옆에서는 여전히
+     옅은 회색이다 — "검정으로 두면 네 덩이가 검은 벽이 된다"는 판단은 그대로 지킨다. */
+  color: var(--c-neutral-500);
   margin: 0 0 0.75rem;
 }
 .crstep__title {
@@ -265,17 +312,10 @@ a.cropen__row:focus-visible .cropen__title {
   .crvals {
     grid-template-columns: repeat(2, 1fr);
   }
-  /* 세 단이 좁아지면 복리후생 열다섯 줄이 실처럼 가늘어진다. 두 단으로 접고
-     복리후생만 두 칸을 쓴다 — 목록이 가장 길어 혼자 한 줄을 받는 것이 맞다. */
-  .crcult {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .crcult__col:last-child {
-    grid-column: 1 / -1;
-  }
-  .crcult__col:last-child .crcult__list {
-    columns: 2;
-    column-gap: clamp(2rem, 0.5rem + 4vw, 4rem);
+  /* 제목을 옆에 세울 만한 폭이 아니다 — 위로 올린다. */
+  .crx--split {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
   }
   .crstep {
     grid-template-columns: repeat(2, 1fr);
@@ -294,17 +334,12 @@ a.cropen__row:focus-visible .cropen__title {
 }
 
 @media (max-width: 640px) {
-  /* 좁은 폭에서는 다른 판으로 갈아 끼운다(pages/company.mjs 의 <picture> — 경계도
-     같은 640px 다). 그쪽은 4:3 이라 사람이 더 크게 들어온다. */
-  .crcult__art img {
-    aspect-ratio: 4 / 3;
-  }
   .crvals,
-  .crstep,
-  .crcult {
+  .crstep {
     grid-template-columns: 1fr;
   }
-  .crcult__col:last-child .crcult__list {
-    columns: 1;
+  /* 한 칸 폭에서는 한 줄씩 내려간다. */
+  .crsup__list {
+    grid-template-columns: 1fr;
   }
 }

@@ -59,22 +59,8 @@ function validate(form) {
   return bad;
 }
 
-export function initContactForm() {
-  const form = document.querySelector("[data-contact-form]");
-  if (!form) return;
-
-  // 브라우저 기본 말풍선 대신 한국어 인라인 오류를 쓴다. JS 가 죽으면
-  // novalidate 가 걸리지 않아 required 속성이 그대로 남는다.
+function setupForm(form) {
   form.setAttribute("novalidate", "");
-
-  const endpoint = form.dataset.endpoint || "";
-  const submit = form.querySelector("[data-submit]");
-  const state = form.querySelector("[data-form-state]");
-  const chips = [...form.querySelectorAll("[data-topic]")];
-  let busy = false;
-
-  // CTA 가 붙여 보낸 attribution 을 폼 상태로 옮긴다 — 어느 사업·어느 버튼에서
-  // 온 문의인지 payload 까지 살아남는다(사령관 지시 2026-08-31).
   const params = new URLSearchParams(location.search);
   const buSelect = form.querySelector('[name="business_unit"]');
   const wanted = params.get("business");
@@ -89,8 +75,28 @@ export function initContactForm() {
   if (srcPage) srcPage.value = params.get("from") ?? "";
   const ctaPos = form.querySelector('[name="cta_position"]');
   if (ctaPos) ctaPos.value = params.get("source") ?? "";
-  const business = () => buSelect?.value ?? "";
 
+  form.querySelector('[name="phone"]')?.addEventListener("input", (e) => {
+    e.target.value = formatPhone(e.target.value);
+  });
+}
+
+function setupTopics(form) {
+  const chips = [...form.querySelectorAll("[data-topic]")];
+  for (const chip of chips) {
+    chip.addEventListener("click", () => {
+      for (const c of chips) c.setAttribute("aria-pressed", "false");
+      chip.setAttribute("aria-pressed", "true");
+    });
+  }
+  return () =>
+    form.querySelector('[data-topic][aria-pressed="true"]')?.dataset.topic ??
+    "";
+}
+
+function setupSubmission(form, endpoint, topic, buSelect, submit, state) {
+  let busy = false;
+  const business = () => buSelect?.value ?? "";
   const say = (text, kind = "") => {
     if (!state) return;
     state.textContent = text;
@@ -98,28 +104,14 @@ export function initContactForm() {
     state.hidden = !text;
   };
 
-  form.querySelector('[name="phone"]')?.addEventListener("input", (e) => {
-    e.target.value = formatPhone(e.target.value);
-  });
-
-  for (const chip of chips) {
-    chip.addEventListener("click", () => {
-      for (const c of chips) c.setAttribute("aria-pressed", "false");
-      chip.setAttribute("aria-pressed", "true");
-    });
-  }
-
-  const topic = () =>
-    form.querySelector('[data-topic][aria-pressed="true"]')?.dataset.topic ??
-    "";
-
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (busy) return;
 
     const bad = validate(form);
     if (bad.length) {
-      say("입력하지 않은 항목이 있습니다.", "error");
+      const missing = bad.some((i) => !i.value.trim());
+      say(missing ? "입력하지 않은 항목이 있습니다." : "입력 내용을 확인해 주세요.", "error");
       track("contact_validation_error");
       bad[0].focus();
       return;
@@ -134,7 +126,6 @@ export function initContactForm() {
     say("보내는 중…");
 
     if (!endpoint) {
-      // 엔드포인트 배선 전에는 흐름만 확인한다. 아무 데도 보내지 않는다.
       track("generate_lead", {
         lead_category: topic(),
         lead_business: business(),
@@ -170,4 +161,18 @@ export function initContactForm() {
       submit?.removeAttribute("aria-disabled");
     }
   });
+}
+
+export function initContactForm() {
+  const form = document.querySelector("[data-contact-form]");
+  if (!form) return;
+
+  setupForm(form);
+  const topic = setupTopics(form);
+  const submit = form.querySelector("[data-submit]");
+  const state = form.querySelector("[data-form-state]");
+  const buSelect = form.querySelector('[name="business_unit"]');
+  const endpoint = form.dataset.endpoint || "";
+
+  setupSubmission(form, endpoint, topic, buSelect, submit, state);
 }
