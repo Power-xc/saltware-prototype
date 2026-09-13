@@ -729,13 +729,16 @@
 .hero__layer.is-active {
   color: var(--text-accent);
 }
+/* 구분자는 점이다 — 바탕에 헤어라인이 생겼으므로(.hero--home::after) 24px 선을 그대로
+   두면 둘이 같은 결로 섞여 띠가 지저분해진다(2026-09-11). 점은 로고 도트와도 같은 어휘다. */
 .hero__layer + .hero__layer::before {
   content: "";
-  width: 24px;
-  height: 1px;
+  width: var(--dot-sm);
+  height: var(--dot-sm);
+  border-radius: var(--radius-circle);
   margin-inline: var(--sp-3);
   background: currentColor;
-  opacity: 0.35;
+  opacity: 0.32;
 }
 .hero__center {
   position: relative;
@@ -867,12 +870,13 @@
   padding: var(--sp-5);
   border-radius: var(--radius-xl);
   overflow: hidden;
-  /* 잉크 바탕 위 밝은 스튜디오 그림(2026-09-10). 그림이 위쪽을 채우고 아래로 갈수록 비네트에
-     잠겨 흰 카피가 앉는다. 면을 흰색으로 뒤집은 것(페이지와 녹음)과 잉크 띠로 받친 것(흙빛
-     안개) 둘 다 이보다 나빴다 — 사령관이 "나쁘지 않았다"고 한 조합이다. 번호만 그림 위
-     잉크 활자다(.hcard__n). */
-  background: var(--bg-inverse);
-  color: var(--text-on-inverse);
+  /* 밝은 스튜디오 그림이 면을 통째로 채우고, 카피는 그 위에 뜬 유리판에 앉는다(2026-09-11).
+     이전 세 번은 전부 "면을 어떻게 어둡게 하느냐" 였다 — 잉크 바탕+비네트(현행), 흰 면,
+     잉크 띠. 흰 면은 페이지와 녹았고 잉크 띠는 흙빛 안개가 됐다(17-hero-object README).
+     판은 그림을 덮지 않는다. 그래서 그림이 온전히 보이면서 대비가 오히려 오른다 —
+     실측 최저 6.93:1(흰 글자를 쓰던 때는 1.3:1 구간이 있었다). */
+  background: var(--bg-panel);
+  color: var(--text-primary);
   transition: flex-grow var(--dur-content) var(--ease);
 }
 .hcard--wide {
@@ -906,24 +910,16 @@
 .hcard:hover .hcard__art {
   scale: 1.11;
 }
-/* 작은 카드도 제 그림을 보인다 — 층마다 그림이 하나씩이라 반복이 없다(2026-09-10).
-   잉크 면 위의 기척이라 0.3 — 그림이 완전한 흰색이어도 합성 휘도 97 이라 흰 번호·세로 이름이
-   5.0:1 을 지킨다. 더 올리면 좁은 칸을 지나는 은색 오브젝트가 글자를 삼킨다. */
+/* 접힌 칸도 제 그림을 보인다 — 층마다 그림이 하나씩이라 반복이 없다(2026-09-10).
+   밝은 면 위 기척이라 0.46: 오브젝트 윤곽은 남고 잉크 번호·세로 이름이 12:1 위에 선다.
+   더 올리면 좁은 칸을 지나는 은색 덩어리가 글자를 삼킨다(잉크 면일 때의 값은 0.3 이었다). */
 .hcard--mini .hcard__art {
-  opacity: 0.3;
+  opacity: 0.46;
 }
+/* 덮개는 없다 — 펼친 카드는 유리판이 카피를 받고, 접힌 칸은 그림 자체를 묽게 쓴다.
+   접힌 칸에 흰 유리를 덮어 봤더니 흰 스튜디오 오브젝트와 흰끼리 겹쳐 백지가 됐다
+   (실측 2026-09-11). 덮는 대신 그림을 내린다. */
 .hcard::after {
-  content: "";
-  position: absolute;
-  inset: 18% 0 0;
-  z-index: -1;
-  /* 텍스트 블록이 시작되는 높이(카드의 약 63%)까지 스크림이 다 올라와 있어야 한다 —
-     램프가 바닥에서야 끝나면 본문 첫 줄이 맨 이미지 위에 놓인다. 길게 내려오는 비네트다:
-     30%→60% 로 조이면 밝은 그림 위에서 띠처럼 보인다(사령관 2026-09-10). */
-  background: linear-gradient(to bottom, transparent, var(--scrim-card) 60%);
-  pointer-events: none;
-}
-.hcard--mini::after {
   content: none;
 }
 /* 번호는 유리 알약이었다 — 카드마다 회색 상자가 하나씩 떠 그림을 가리고 누를 것처럼 읽혔다
@@ -945,7 +941,6 @@
 .hcard--mini .hcard__n {
   left: 50%;
   transform: translateX(-50%);
-  color: var(--text-on-inverse);
 }
 /* 작은 카드의 이름 — 아래에서 위로 읽는 세로 활자. 펼치면 카피에 자리를 내준다. */
 .hcard__side {
@@ -972,16 +967,33 @@
   bottom: auto;
   transform: translate(-50%, -50%) rotate(180deg);
 }
-/* 카피는 흐름 밖에 둔다 — 접힌 폭에서 카드를 밀어 넓히지 않게. */
+/* 카피는 흐름 밖에 둔다 — 접힌 폭에서 카드를 밀어 넓히지 않게.
+   판이 안쪽 여백을 가져가므로 바깥 오프셋을 --sp-5 에서 --sp-2 로 줄인다.
+   안 줄이면 글 폭이 32px 좁아져 두 줄 설명이 잘린다(실측 02 카드). */
 .hcard__text {
   position: absolute;
-  left: var(--sp-5);
-  right: var(--sp-5);
-  bottom: var(--sp-5);
+  left: var(--sp-3);
+  right: var(--sp-3);
+  bottom: var(--sp-3);
   display: grid;
   gap: var(--sp-2);
   justify-items: start;
-  transition: opacity var(--dur-hover) var(--ease);
+  padding: var(--sp-4) var(--sp-3);
+  border-radius: var(--radius-lg);
+  background: var(--surface-glass);
+  -webkit-backdrop-filter: blur(var(--blur-glass)) saturate(1.8);
+  backdrop-filter: blur(var(--blur-glass)) saturate(1.8);
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--shadow-glass);
+  transition:
+    opacity var(--dur-hover) var(--ease),
+    translate var(--dur-hover) var(--ease),
+    background var(--dur-hover) var(--ease);
+}
+/* 판이 살짝 떠오른다 — 카드를 누를 수 있다는 기척. 그림은 이미 scale 로 움직인다. */
+.hcard:hover .hcard__text {
+  translate: 0 -2px;
+  background: var(--surface-glass-strong);
 }
 .hcard--mini .hcard__text {
   opacity: 0;
@@ -1005,14 +1017,14 @@
   font-size: var(--fs-label);
   font-weight: 600;
   letter-spacing: var(--tracking-label);
-  color: var(--text-on-inverse-muted);
+  color: var(--text-secondary);
 }
 .hcard__title {
   font-size: clamp(20px, 1.7vw, 26px);
   font-weight: 700;
   line-height: 1.25;
   letter-spacing: var(--tracking-tight);
-  color: var(--text-on-inverse);
+  color: var(--text-primary);
   text-wrap: balance;
 }
 .hcard--wide .hcard__title {
@@ -1025,7 +1037,7 @@
    기술·제품군 줄은 같은 날 걷었다 — 히어로에 제품명까지 오면 내용이 너무 많다.
    접힌 카드만 블록을 통째로 감춘다(.hcard--mini .hcard__text). */
 .hcard__desc {
-  color: var(--text-on-inverse-muted);
+  color: var(--text-secondary);
 }
 /* 설명은 두 줄로 자른다 — 층마다 문장 길이가 달라 블록 높이가 들쭉날쭉해진다. */
 .hcard__desc {
@@ -1045,7 +1057,7 @@
   margin-top: var(--sp-1);
   font-size: var(--fs-sm);
   font-weight: 600;
-  color: var(--text-on-inverse);
+  color: var(--text-primary);
 }
 .hcard:hover .hcard__more {
   text-decoration: underline;
@@ -1118,6 +1130,48 @@
 .hero--home .hero__layers {
   position: relative;
   z-index: 1;
+}
+/* 첫 화면 바탕 — 평면 한 색에서 색면으로(2026-09-11). 유리판은 뒤에 굴절할 것이 있어야
+   유리로 읽힌다: 평평한 바탕 위에서는 그냥 반투명 상자다(실측 v2). 색은 네 점이 서로
+   스며 왼쪽이 차고 오른쪽이 따뜻하다 — 카드의 은색 오브젝트와 싸우지 않을 만큼만 넣는다. */
+.hero--home {
+  position: relative;
+  isolation: isolate;
+}
+.hero--home::before {
+  content: "";
+  position: absolute;
+  inset: -2% -6% -8%;
+  z-index: -2;
+  background: var(--hero-field);
+  /* 아래에서 페이지로 녹는다 — 마스크가 없으면 섹션 끝에 가로선이 하나 생겨
+     "색 있는 띠를 얹은 것"으로 읽힌다(실측 2026-09-11). 섹션을 배경색으로
+     나누지 않는다는 규칙(CLAUDE.md 4-3)을 지키는 방법이기도 하다. */
+  -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 97%);
+  mask-image: linear-gradient(to bottom, #000 62%, transparent 97%);
+  pointer-events: none;
+}
+/* 카드 뒤를 지나는 헤어라인 둘. 유리가 선을 끊어 보이게 해 재질이 드러난다 —
+   위쪽(리드 문단 자리)은 비운다: 선이 본문을 가로지르면 읽기를 방해한다. */
+.hero--home::after {
+  content: "";
+  position: absolute;
+  inset: 44% 0 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(to right, var(--hero-rule-accent) 0 100%),
+    linear-gradient(to right, var(--hero-rule-hair) 0 100%);
+  background-size:
+    100% 1.5px,
+    100% 1px;
+  background-position:
+    0 18%,
+    0 46%;
+  background-repeat: no-repeat;
+  /* 선도 같이 녹는다 — 카드 오른쪽 끝에서 툭 끊기면 그어 놓은 티가 난다. */
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 6% 84%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 6% 84%, transparent);
+  pointer-events: none;
 }
 .nb {
   white-space: nowrap;
@@ -2883,10 +2937,18 @@ a.tile:hover .tile__glyph {
 }
 /* 대표 솔루션 카드 — 애플 iPhone 기능 레일의 세로 카드를 기준으로 다시 세웠다
    (사령관 2026-09-08 "애플꺼 참고해바", 시안 3장 실측 372×540 · 0.69 비율).
-   위에 작은 아이브로 · 굵은 제품명 한 줄 · 핵심 한 줄, 그 아래를 오브젝트 하나가 크게 차지하고
-   오른쪽 아래에 원형 화살표. 앞 안은 300px 정사각 카드에 56px 마크를 구석에 붙인 것이라
-   오브젝트가 스티커로 읽혔다 — 문제는 종류가 아니라 크기와 자리였다. */
+   위에 작은 아이브로 · 굵은 제품명 한 줄 · 핵심 한 줄, 그 아래를 오브젝트 하나가 크게 차지한다.
+
+   면을 밝게 뒤집었다(2026-09-13). 히어로가 밝은 면 + 유리판으로 바뀌자 검정 카드 여덟 장이
+   같은 지면에서 딴 벌로 읽혔다. "흰 카드는 밋밋하다"(2026-08-31)는 판정은 그대로라 흰 면으로
+   돌아가지 않는다 — 히어로와 같은 원색 두 겹이 카드 아래를 물들이고(--sol-field) 문양이
+   그 위에 앉는다. 칠한 실루엣은 밝은 면에서 검정 덩어리가 되어 선으로 다시 그렸다. */
 .sol {
+  /* 잉크 한 벌을 카드가 정하고 글 칸들이 물려받는다 — 같은 어휘(.sol__*)를 인사이트 허브의
+     사진 카드가 같이 쓰는데 그쪽은 잉크 스크림 위라 흰 글자여야 한다(.hub-card 가 되뒤집는다). */
+  --sol-ink: var(--text-primary);
+  --sol-ink-soft: var(--text-muted);
+  --sol-ink-accent: var(--text-accent);
   position: relative;
   display: grid;
   grid-template-rows: auto auto auto minmax(0, 1fr) auto;
@@ -2894,15 +2956,17 @@ a.tile:hover .tile__glyph {
   aspect-ratio: 0.9;
   padding: var(--sp-6);
   border-radius: var(--radius-lg);
-  background: var(--bg-inverse);
-  color: var(--text-on-inverse);
+  background: var(--sol-field);
+  border: 1px solid var(--border-hair);
+  box-shadow: var(--shadow-rest);
+  color: var(--sol-ink);
   text-decoration: none;
   overflow: hidden;
 }
 .sol__area {
   font-size: var(--fs-xs);
   font-weight: 600;
-  color: var(--text-on-inverse-muted);
+  color: var(--sol-ink-soft);
 }
 .sol__title {
   font-size: var(--fs-h3);
@@ -2913,7 +2977,7 @@ a.tile:hover .tile__glyph {
 .sol__desc {
   font-size: var(--fs-sm);
   line-height: 1.5;
-  color: var(--text-on-inverse-muted);
+  color: var(--sol-ink-soft);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -2926,11 +2990,15 @@ a.tile:hover .tile__glyph {
 .sol__mark {
   align-self: end;
   justify-self: start;
-  width: 48px;
-  /* 문양 상자에는 사방 4/48 만큼 여백이 붙어 있다 — 왼쪽만 당겨 글 축에 맞춘다. */
-  margin-left: -4px;
-  /* 흰색 하나뿐이다(사령관 2026-09-08 "흰색으로만 딱 핵심만") — 앰버는 자세히 보기가 갖는다. */
-  color: var(--text-on-inverse);
+  /* 304×338 카드의 남는 자리는 70px 이고 설명이 두 줄로 늘면 48px 이다(1440 실측).
+     96 은 그 안이면서 카드 폭의 1/3 이라 스티커가 아니라 그림으로 읽힌다 —
+     더 키우면 설명이 두 줄인 폭에서 overflow:hidden 에 잘린다. */
+  width: 96px;
+  /* 문양 상자에는 사방 5/48 만큼 여백이 붙어 있다 — 왼쪽만 당겨 글 축에 맞춘다.
+     획 굵기가 문양마다 달리 걸려 정확히는 못 맞춘다. 한 칸 들여쓴 쪽이 여덟 장에서 고르다. */
+  margin-left: calc(var(--sp-1) * -1);
+  /* 잉크 하나뿐이다(사령관 2026-09-08 "딱 핵심만") — 앰버는 자세히 보기가 갖는다. */
+  color: var(--sol-ink);
   transition: scale var(--dur-hover) var(--ease);
   transform-origin: left bottom;
 }
@@ -2946,15 +3014,22 @@ a.tile:hover .tile__glyph {
   margin-top: var(--sp-4);
   font-size: var(--fs-xs);
   font-weight: 600;
-  color: var(--text-accent-on-inverse);
+  color: var(--sol-ink-accent);
 }
 @media (max-width: 860px) {
   .sol {
     aspect-ratio: 0.76;
   }
+  /* 231×305 로 좁아지는 구간만 남는 자리가 17px 이다 — 96 을 두면 설명이 두 줄로 늘 때 잘린다. */
   .sol__mark {
-    width: 44px;
-    margin-left: -3.5px;
+    width: 72px;
+  }
+}
+@media (max-width: 640px) {
+  /* 카드가 한 장이 되면 자리가 다시 넉넉해진다(390 실측 81px) — 기본 크기로 돌아온다.
+     위 블록보다 뒤에 있어야 이긴다(순서로 한 번 졌다 — .rail--sols 폭 규칙과 같은 함정). */
+  .sol__mark {
+    width: 96px;
   }
 }
 
@@ -3190,6 +3265,14 @@ a.tile:hover .tile__glyph {
    화면 한 장을 통째로 먹었다 — 정사각이면 같은 폭에 342 로 앉아 아래 것이 같이 보인다.
    .sol 의 0.9 는 레일에서 여덟 장이 흐를 때의 비율이라 여기서 쓰지 않는다. */
 .hub-card {
+  /* 사진 + 잉크 스크림 위라 .sol 의 밝은 한 벌을 통째로 되뒤집는다 — 글 칸은 안 건드린다.
+     테두리와 쉬는 그림자도 걷는다: 사진 카드는 제 사진으로 이미 서 있다. */
+  --sol-ink: var(--text-on-inverse);
+  --sol-ink-soft: var(--text-on-inverse-muted);
+  --sol-ink-accent: var(--text-accent-on-inverse);
+  background: var(--bg-inverse);
+  border-color: transparent;
+  box-shadow: none;
   aspect-ratio: 1;
   isolation: isolate;
   /* 342 폭에 44px 여백을 물리면 글 자리가 254px 밖에 안 남는다 — 한 단 줄인다. */
