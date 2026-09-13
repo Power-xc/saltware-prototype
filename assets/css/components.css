@@ -430,7 +430,8 @@
    --band 와 --card 는 페이지 모듈이 쓰는 이름이라 남기되 시각은 통일한다. */
 .section {
   padding-bottom: var(--section-py);
-}.section > .container {
+}
+.section > .container {
   border-top: 1px solid var(--border-section);
   padding-top: var(--section-py);
 }
@@ -453,17 +454,106 @@
   border-top: 0;
   margin-top: 0;
 }
-.section--inverse {
-  background: var(--bg-inverse);
-  color: var(--text-on-inverse);
-  border-top: 0;
-}
+/* ── 색면 ──────────────────────────────────────────────
+   섹션을 전폭 색면으로 갈아 끼운다(사령관 확정 2026-09-13, 레퍼런스 NETSPA).
+   핵심은 컴포넌트를 고치지 않는 것이다 — 색면 안에서 **시맨틱 토큰을 다시 가리키면**
+   흰 카드가 유리가 되고 글자가 뒤집힌다. 카드마다 다크 규칙을 따로 쓰면 카드가 늘 때마다
+   같은 일을 반복해야 한다(다크 한 벌을 걷어낸 이유가 그것이었다).
 
+   톤은 둘이다: --inverse 가 잉크, --stone 이 짙은 스톤(이름이 --deep 이 아닌 이유는
+   그 이름을 사업 페이지의 짙은 기술 면이 이미 쓰고 있어서다 — components.css 아래쪽). 색면끼리 붙으면 한 장으로 뭉치므로
+   사이는 크림이 끊는다(페이지 쪽에서 정한다).
+   선은 긋지 않는다 — 카드는 테두리가 아니라 한 겹 뜬 면으로 자기를 말한다
+   ("얇은 실선은 걷는다" 2026-09-11 와 같은 결). */
+.section--inverse,
+.section--stone {
+  border-top: 0;
+  position: relative;
+  padding-block: clamp(76px, 8.4vw, 120px);
+  color: var(--text-on-inverse);
+  --text-primary: var(--text-on-inverse);
+  --text-secondary: var(--text-on-inverse-muted);
+  --text-muted: var(--text-on-inverse-muted);
+  --text-faint: var(--text-on-inverse-muted);
+  --text-accent: var(--c-brand-dot);
+  /* 카드가 앉는 면 셋을 한 값으로 모은다 — 흰 카드(--bg-card), 벤토 칸(--bg-band),
+     잉크 카드(--bg-inverse)가 색면 위에서는 전부 같은 유리다. */
+  --bg-card: var(--field-glass);
+  --bg-band: var(--field-glass);
+  --bg-inverse: var(--field-glass);
+  --bg-page: transparent;
+  --border-control: rgba(255, 255, 255, 0.28);
+  --rule-track: rgba(255, 255, 255, 0.16);
+  --shadow-lift: none;
+  --shadow-mega: none;
+}
+.section--inverse {
+  background: var(--c-neutral-800);
+  --field-glass: rgba(255, 255, 255, 0.06);
+  --field-glass-hi: rgba(255, 255, 255, 0.13);
+}
+.section--stone {
+  background: var(--c-neutral-700);
+  --field-glass: rgba(255, 255, 255, 0.08);
+  --field-glass-hi: rgba(255, 255, 255, 0.16);
+  /* 스톤은 잉크보다 밝다 — 그 위에 유리 카드가 한 겹 더 뜨면 바탕이 rgb(84,81,76) 까지
+     올라와 흐린 글자가 3.86:1 로 내려앉는다(실측). 잉크에서는 7.78:1 이라 손대지 않는다.
+     카드 위 작은 글자만 한 단 밝혀 4.62:1 로 올린다. */
+  --text-muted: var(--c-neutral-300);
+  --text-faint: var(--c-neutral-300);
+}
+/* 색면 위의 타일은 호버 배경이 사라진다 — 평소 면(--bg-band)도 호버 면(--bg-inverse)도
+   같은 유리 한 장으로 다시 가리켜지기 때문이다. 눌리는 자리라는 표시가 3px 들림만 남으므로
+   유리를 한 겹 더 밝힌다. 값을 색면마다 따로 두는 이유는 스톤이 잉크보다 밝아 같은 알파로는
+   차이가 보이지 않아서다. */
+.section--inverse a.tile:hover,
+.section--stone a.tile:hover {
+  background: var(--field-glass-hi);
+}
+.section--inverse > .container,
+.section--stone > .container {
+  border-top: 0;
+  padding-top: 0;
+  position: relative;
+  z-index: 1;
+}
+/* 1차 버튼은 색면 위에서 흰 알약이다 — 잉크 필은 색면에 먹혀 사라진다. */
+.section--inverse .btn--solid,
+.section--stone .btn--solid {
+  background: var(--c-white);
+  color: var(--c-neutral-900);
+  border-color: var(--c-white);
+}
+.section--inverse .btn--solid:hover,
+.section--stone .btn--solid:hover {
+  background: var(--c-neutral-150);
+  border-color: var(--c-neutral-150);
+}
+/* 라벨 한 벌 — 머리말도 카드의 분류표도 같은 글자다(사령관 2026-09-13 "라벨 통일 해야할 듯,
+   잘 안보임"). 이전엔 같은 라벨이 지면에서 네 색으로 갈렸다: 크림 위 짙은 주황(5.43),
+   크림 위 회색(5.02), 잉크 위 밝은 주황(8.63), 스톤 위 밝은 회색(5.86). 회색으로 간 둘은
+   고른 게 아니라 사고였다 — 아래 `.section__head p` 가 특이성에서 `.eyebrow` 를 이겨,
+   머리가 2단(--split)인 구획만 주황이 남았다.
+   색은 빼고 잉크로 세운다. 라벨을 라벨로 만드는 건 색이 아니라 크기와 자간이고,
+   `--text-primary` 는 색면 안에서 밝은 잉크를 가리키므로 규칙 하나가 세 바탕을 다 덮는다
+   (크림 15.87 · 잉크 16.05 · 스톤 11.2). 주황은 글자색에서 물러나 가리키는 자리에만 남는다
+   — 마침표 한 점, 층 띠의 현재 항목, 링크. */
 .eyebrow {
   font-size: var(--fs-label);
   font-weight: 600;
   letter-spacing: var(--tracking-label);
-  color: var(--text-accent);
+  color: var(--text-primary);
+}
+/* 카드의 분류표도 같은 라벨이다 — 머리말과 한 벌로 둔다. */
+.story__tag,
+.brief__tag,
+.il__tag,
+.press__tag,
+.nl__tag {
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-primary);
 }
 .section__head {
   display: grid;
@@ -471,7 +561,7 @@
   margin-bottom: var(--sp-6);
   max-width: 62ch;
 }
-.section__head p {
+.section__head p:not(.eyebrow) {
   color: var(--text-muted);
 }
 /* 제목 좌 · 표 우 — 기획의 PARTNERSHIP 패턴. */
@@ -481,6 +571,21 @@
 }
 .section__aside .section__head {
   margin-bottom: 0;
+}
+/* 옆으로 선 알맹이의 행동은 표에 붙지 않는다 — 표 테두리와 단추가 맞닿으면 표의
+   마지막 행처럼 읽힌다. 색면·2단 지면이 제 간격을 갖는 것과 같다(.section--inverse,
+   .pressled__aside). */
+.section__aside .cta-row {
+  margin-top: var(--sp-5);
+}
+/* 같은 갈래의 표가 연달아 설 때는 띠 사이를 좁힌다 — 섹션마다 두 줄뿐인 지면에서
+   기본 간격(--section-py 두 벌, 208px)은 표 사이가 페이지처럼 벌어진다. 부르는 쪽이
+   명시할 때만 적용한다(IR). 다른 지면의 리듬은 건드리지 않는다. */
+.section--tight {
+  padding-bottom: var(--sp-7);
+}
+.section--tight > .container {
+  padding-top: var(--sp-7);
 }
 @media (min-width: 860px) {
   .section__aside {
@@ -544,10 +649,11 @@
 .card--band {
   background: transparent;
 }
-/* 상자가 없으니 열 사이는 글줄 하나만큼 넓게, 행 사이는 머리선이 나누므로 좁게. */
+/* 상자도 머리선도 없으니 가르는 건 여백뿐이다. 행 사이를 열 사이만큼 벌린다 —
+   좁으면 윗 카드의 설명과 아랫 카드의 제목이 한 덩이로 읽힌다. */
 .grid:has(> .card) {
   column-gap: var(--sp-7);
-  row-gap: var(--sp-5);
+  row-gap: var(--sp-8);
 }
 .card__title {
   font-size: var(--fs-h4);
@@ -558,6 +664,19 @@
 .card__desc {
   font-size: var(--fs-body);
   color: var(--text-muted);
+}
+/* 행동 한 벌 — "자세히 보기 →" 는 어느 카드에 있든 그 면의 잉크다(사령관 2026-09-14
+   "자세히보기 흰색이나 적당히 블랙인 색상으로 통일"). 이전엔 다섯 색이었다: 잉크(#141413) ·
+   스톤(#45423c) · 짙은 주황(#8f5419) · 더 짙은 주황(#8a4400) · 밝은 주황(#f49f20) · 크림.
+   `--text-primary` 는 색면 안에서 밝은 잉크를, 어두운 카드(.hcard · .sol) 안에서 그 카드의
+   잉크를 가리키므로 규칙 하나가 전부를 덮는다. 크기와 자리는 카드마다 달라 손대지 않는다.
+   링크임은 색이 아니라 화살표와 hover 밑줄이 말한다 — 주황은 여기서도 물러난다. */
+.card__more,
+.sol__more,
+.rail__more,
+.story__more,
+.hcard__more {
+  color: var(--text-primary);
 }
 .card__more {
   font-size: var(--fs-sm);
@@ -582,12 +701,6 @@
   padding-top: var(--hero-pt);
   padding-bottom: var(--hero-pb);
 }
-.hero__grid {
-  display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: var(--sp-8);
-  align-items: center;
-}
 .hero__body {
   display: grid;
   gap: var(--sp-4);
@@ -603,9 +716,10 @@
 /* 첫 화면은 뷰포트를 꽉 채우고, 내리면 일반 스크롤로 넘어간다.
    svh 를 쓰는 이유는 모바일 브라우저 UI 가 접혔다 펴져도 높이가 튀지 않게 하기 위해서다.
    min-height 라 내용이 길어지면 화면보다 커진다 — 잘리지 않는다. */
-/* v3 미디어 히어로 — 자산이 실재하는 페이지만 빌더가 클래스를 붙인다(.hero--m-*).
-   이미지는 좌측을 비워 생성되어 텍스트가 그 위에 앉는다. 인라인 style 금지 테스트와
-   호환되도록 배경은 전부 클래스로 맵핑한다. */
+/* 미디어 히어로 — 허브 셋(사업·인사이트·회사소개)의 머리다. 자산이 실재하는 페이지만
+   빌더가 클래스를 붙인다(.hero--m-*). 이미지는 좌측을 비워 생성되어 텍스트가 그 위에
+   앉는다. 인라인 style 금지 테스트와 호환되도록 배경은 전부 클래스로 맵핑한다.
+   사업 상세 일곱은 2026-09-14 에 표지 무대(.bhero — styles/pages/business.css)로 옮겼다. */
 /* 그림은 ::before 에 깔아 --art-tone(채도 30%)을 받는다 — 요소 background 에는 filter 가 안 걸린다.
    파란 3D 렌더가 제목 뒤에서 네온으로 빛나던 것이 무채색 질감으로 물러난다(2026-09-06). */
 .hero.hero--media {
@@ -635,490 +749,27 @@
   color: var(--text-on-inverse-muted);
 }
 .hero--media .eyebrow {
-  color: var(--text-accent-on-inverse);
+  color: var(--text-on-inverse);
 }
-/* 자산은 왼쪽 42–55% 를 카피 여백으로 비워 생성된다(생성 계약).
-   본문 열은 hero__grid--solo(490px)가 이미 잡고 있다 — 여기에 %를 겹치면
-   폭이 중첩 축소돼 제목이 4줄로 쪼개진다(실측 255px, 사령관 보고).
-   경계를 스치던 것은 리드 폭만 한 뼘 줄여 해결한다. */
+/* 자산은 왼쪽 42–55% 를 카피 여백으로 비워 생성된다(생성 계약). 그림 위에 리드를
+   폭 제한 없이 두면 오른쪽 피사체와 겹친다 — 폭만 한 뼘 줄여 경계 안에 세운다. */
 .hero--media .hero__lede {
   max-width: 42ch;
 }
-.hero--media.hero--m-cloud {
-  --hero-media: url("/saltware-prototype/media/business/hero-cloud.jpg?v=f940a625bc4d");
-}
-.hero--media.hero--m-databricks {
-  --hero-media: url("/saltware-prototype/media/business/hero-databricks.jpg?v=f940a625bc4d");
-}
-.hero--media.hero--m-identity {
-  --hero-media: url("/saltware-prototype/media/business/hero-identity.jpg?v=f940a625bc4d");
-}
-.hero--media.hero--m-redhat {
-  --hero-media: url("/saltware-prototype/media/business/hero-redhat.jpg?v=f940a625bc4d");
-}
-.hero--media.hero--m-enview {
-  --hero-media: url("/saltware-prototype/media/business/hero-enview.jpg?v=f940a625bc4d");
-}
-.hero--media.hero--m-smart-farm {
-  --hero-media: url("/saltware-prototype/media/business/hero-smart-farm.jpg?v=f940a625bc4d");
-}
 .hero--media.hero--m-hub-business {
-  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=f940a625bc4d");
+  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=74ed784af28c");
 }
 .hero--media.hero--m-hub-insights {
-  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=f940a625bc4d");
+  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=74ed784af28c");
 }
 .hero--media.hero--m-hub-company {
-  --hero-media: url("/saltware-prototype/media/hub/hub-company.jpg?v=f940a625bc4d");
-}
-
-.hero--home {
-  position: relative;
-  overflow: hidden;
-  background: var(--hero-bg);
-  color: var(--hero-ink);
-  display: grid;
-  /* 히어로는 화면을 채우지 않는다 — 자기 내용 높이만 쓴다(사령관 판정 2026-09-07
-     "무조건 한 화면에 다 들어오게 하지 말고"). 100svh 로 늘이던 시절엔 남는 높이가
-     전부 리드와 카드 사이로 몰려 구멍이 됐다(실측 2560×1440 에서 549px, 3440 에서 549px).
-     크기는 폭이 정하고(.hcards), 남는 높이는 다음 섹션이 비쳐 드는 데 쓴다 —
-     아래가 보이는 편이 스크롤을 부른다. */
-  grid-template-rows: auto auto;
-  /* 세로 리듬 — 헤더 아래 숨 → 제목 16 리드 → 44 → 띠 22 카드. 글 덩어리와 [띠 + 카드]
-     덩어리 사이가 가장 넓고, 띠는 카드의 탭이라 카드에 붙는다(11차 판정 2026-09-04).
-     사령관 관리자 모드 실측(2026-09-06): 제목 캡 상단이 헤더 아래 143px(1588·1776),
-     129px(1435), 79px(494). 제목이 64px 로 줄면서 위 숨을 크게 둔다. */
-  padding-top: clamp(80px, 9vw, 132px);
-  padding-bottom: var(--sp-7);
-  /* 왼쪽 정렬 — 디자이너 예시의 제목 문법(5차 판정 2026-09-04). 가운데 정렬은 오브젝트와 함께 갔다. */
-  text-align: left;
-}
-/* 리드 아래 층 띠 — 스택의 여섯 층을 한 줄로 적는다(2026-09-02).
-   여섯 층이 선으로 이어지고 맨 끝 AI 만 액센트를 받는다. 통째로 스택 섹션 앵커다.
-   왼쪽 정렬 제목 블록의 마지막 줄이다(5차 판정). */
-.hero__layers {
-  justify-self: start;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  align-items: center;
-  row-gap: var(--sp-2);
-  /* 띠와 카드 사이 22px — 사령관 관리자 모드 실측(2026-09-06: 띠 밑 404 → 카드 432). */
-  margin-bottom: var(--sp-5);
-  padding: 0;
-  /* 카드의 탭이라 카드와 같이 자란다 — 1795 아래는 11px 그대로. */
-  font-size: clamp(var(--fs-label-caps), 0.62vw, 14px);
-  font-weight: 600;
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-  color: var(--hero-ink-soft);
-  text-decoration: none;
-  transition: color var(--dur-hover) var(--ease);
-}
-.hero__layers:hover {
-  color: var(--hero-ink);
-}
-.hero__layer {
-  display: inline-flex;
-  align-items: center;
-  white-space: nowrap;
-  color: inherit;
-  transition: color var(--dur-hover) var(--ease);
-}
-.hero__layer:hover,
-.hero__layer.is-active {
-  color: var(--text-accent);
-}
-.hero__layer + .hero__layer::before {
-  content: "";
-  width: 24px;
-  height: 1px;
-  margin-inline: var(--sp-3);
-  background: currentColor;
-  opacity: 0.35;
-}
-.hero__center {
-  position: relative;
-  z-index: 1;
-  /* .container 의 auto 마진이 그리드 항목의 stretch 를 끄고 내용 폭(제목 폭)으로
-     줄인다 — 왼쪽 정렬이 되자 제목 블록이 858px 로 가운데 몰렸다(실측 1440). 폭을 채운다. */
-  width: 100%;
-  display: grid;
-  align-content: start;
-  gap: var(--sp-4);
-  justify-items: start;
-}
-.hero--home h1 {
-  /* 예시의 크기로 — 첫 화면에서 제목이 먼저 들어온다(10차 판정 "더 확 들어오게").
-     폭뿐 아니라 높이도 본다 — 낮은 노트북 화면(1440×800)에서 제목이 카드 자리를 먹지 않게.
-     --fs-hero 토큰을 안 쓰는 이유: 벤토 대표 숫자가 같이 쓴다. */
-  /* 사령관 관리자 모드 실측(2026-09-06): 폭과 무관하게 64px 고정 — 494·781·1435·1588·1776 전부
-     캡 높이 46px. 폭 360 에서만 "AI-NATIVE." 한 단어가 넘쳐 16vw 로 받친다.
-     단어 사이는 좁히되 붙지는 않게 둔다. -0.2em 은 64px 에서 간격을 2.1px 로 만들어
-     "FULLSTACKFOR" 로 붙어버렸다(실측 1440) — 스페이스 17.8px 에서 word-spacing 12.8px 와
-     letter-spacing 2.9px 가 함께 깎이기 때문이다. 753px 역산은 성립하지 않는다:
-     스페이스 3개로 94px 를 빼려면 스페이스당 31.2px 가 필요해 실폭 17.8px 를 넘는다. */
-  /* 1795 아래는 그 실측대로 64px 고정이다. 그 위로는 컨테이너와 같은 배율로 따라간다
-     (2026-09-07) — 컨테이너만 1336→1736 으로 늘리자 제목이 콘텐츠 폭의 59%→45% 로 쪼그라들어
-     "큰 종이에 같은 그림"이 됐다. 83 은 64 × (1736 / 1336) 이다. */
-  /* 좁은 폭의 상한은 가장 긴 낱말이 정한다. v6 는 "AI-NATIVE."(10자)라 16vw 였고,
-     v7 은 "ARCHITECTURE"(12자)다 — 16 × 10/12 ≈ 13.3, 여유를 두어 12.5vw. 390 에서 49px,
-     360 에서 45px. 실측: 16vw 그대로면 390·360 에서 컨테이너가 503·470px 로 밀려 넘쳤다(2026-09-10). */
-  font-size: min(clamp(64px, 3.58vw, 83px), 12.5vw);
-  line-height: 1.04;
-  letter-spacing: -0.045em;
-  word-spacing: -0.06em;
-  font-weight: 700;
-}
-/* 첫 줄만 그라디언트. 둘째 줄은 흰색으로 남는다(레퍼런스 실측). */
-.hero__accent {
-  background: linear-gradient(
-    90deg,
-    var(--hero-accent-from),
-    var(--hero-accent-to)
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-/* 한국어 한 줄(v7) — 제목 64px 과 리드 17px 사이의 계단(64 → 28 → 17). 잉크로 세우되 제목만큼
-   조이지 않는다. 1440 에서 28px, 좁은 폭은 22px 아래로 안 내려간다. 1.55vw 는 1440 에서 22px 라
-   리드와 붙어 계단이 안 섰다(실측 2026-09-10). */
-.hero__sub {
-  margin-top: var(--sp-4);
-  font-size: clamp(22px, 1.95vw, 36px);
-  font-weight: 600;
-  line-height: 1.3;
-  letter-spacing: var(--tracking-tight);
-  color: var(--hero-ink);
-  text-wrap: balance;
-}
-.hero--home .hero__lede {
-  /* 76ch — 데스크톱에서 두 줄로 떨어진다(사령관 관리자 모드 실측 2026-09-06).
-     ch 라 글자가 커지면 블록도 같이 넓어져 두 줄이 유지된다. */
-  max-width: 76ch;
-  margin-top: var(--sp-2);
-  /* 제목과 같은 규칙 — 1795 아래는 17px 그대로, 위로만 컨테이너 배율(×1.30)을 따른다. */
-  font-size: clamp(var(--fs-lede), 0.95vw, 22px);
-  line-height: 1.6;
-  color: var(--hero-ink-soft);
-}
-/* 리드 안 부분 강조 — 색만 잉크로 올린다(사령관 2026-09-07 "블랙처리").
-   굵기까지 올리면 회색 문단이 키워드 나열로 읽혀 강조가 안 남는다. 회색 연결어 위에
-   #6e6e73 → #1d1d1f 한 단이면 스캔이 강조만 짚고 지나간다. */
-.hero--home .hero__lede strong {
-  color: var(--hero-ink);
-  font-weight: inherit;
-}
-.hero--home .hero__lede .br-soft {
-  display: none;
-}
-.hero__feature {
-  position: relative;
-  z-index: 1;
-  /* .container 의 auto 마진이 그리드 항목의 stretch 를 끈다 — 카드 여섯이 내용 폭으로
-     오그라들어 가운데 몰렸다(실측 1440). 제목 블록과 같이 폭을 채운다. */
-  width: 100%;
-  margin-top: var(--sp-7);
-  /* 띠 + 카드 덩어리. 카드 높이는 컨테이너 폭이 정하므로(cqw) 여기서 폭을 잰다. */
-  display: flex;
-  flex-direction: column;
-  container-type: inline-size;
-}
-/* 히어로 카드 — 여섯 층이 번호 순서대로 한 줄. 01 · 02 는 디자이너 예시 비율(888×1292)의
-   세로 카드로 고정, 03 ~ 06 중 하나가 가로(2.34) 나머지가 작은 카드(0.36)다(9차 판정
-   2026-09-04). 줄 높이는 세로 카드의 비율이 정한다. 작은 카드를 누르면 제자리에서
-   flex-grow 전환으로 펼쳐지고 있던 가로 카드가 접힌다 — 번호와 내용은 자리를 지킨다.
-   호버는 살짝 벌어지는 예고만(펼침은 클릭 — 사령관 "누르면"). */
-.hcards {
-  display: flex;
-  align-items: stretch;
-  gap: var(--sp-4);
-  /* 높이는 폭이 정한다 — 예시 비율(세로 카드 888 : 1292)의 1.5배. 세로 카드 폭 =
-     (컨테이너 − 간격 5) / 5.42 단위다. 화면 높이를 따라 늘이지 않는다(2026-09-07):
-     남는 높이를 카드에 먹이면 폭이 그대로라 카드만 길쭉해지고, 안 먹이면 구멍이 됐다.
-     1336 컨테이너에서 506px — 사령관 실측(975px 창에서 카드 500px)과 같은 자리다. */
-  flex: none;
-  --hcard-scale: 1.5;
-  height: max(
-    260px,
-    (100cqw - 5 * var(--sp-4)) / 5.42 * 1.455 * var(--hcard-scale)
-  );
+  --hero-media: url("/saltware-prototype/media/hub/hub-company.jpg?v=74ed784af28c");
 }
 /* 노트북 — 히어로가 한 화면을 통째로 먹어 다음 섹션이 안 비친다(실측: 1280×800 105% ·
    1440×900 101%. 1920×1080 은 89%, 2560×1440 은 77% 라 큰 화면은 그대로 둔다).
    폭이 아니라 화면 높이 문제라 높이로 조인다 — max-width 를 늘리면 브레이크포인트 4종을 넘는다.
    카드 비율과 머리 여백만 줄이고 구성은 건드리지 않는다. */
-@media (max-height: 1000px) {
-  .hero--home {
-    padding-top: clamp(60px, 6.5vh, 92px);
-  }
-  .hcards {
-    --hcard-scale: 1.2;
-  }
-}
-.hcard {
-  position: relative;
-  isolation: isolate;
-  flex: 1 1 0;
-  min-width: 0;
-  display: grid;
-  align-content: end;
-  padding: var(--sp-5);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  /* 잉크 바탕 위 밝은 스튜디오 그림(2026-09-10). 그림이 위쪽을 채우고 아래로 갈수록 비네트에
-     잠겨 흰 카피가 앉는다. 면을 흰색으로 뒤집은 것(페이지와 녹음)과 잉크 띠로 받친 것(흙빛
-     안개) 둘 다 이보다 나빴다 — 사령관이 "나쁘지 않았다"고 한 조합이다. 번호만 그림 위
-     잉크 활자다(.hcard__n). */
-  background: var(--bg-inverse);
-  color: var(--text-on-inverse);
-  transition: flex-grow var(--dur-content) var(--ease);
-}
-.hcard--wide {
-  flex-grow: 2.34;
-}
-.hcard--mini {
-  flex-grow: 0.36;
-  cursor: pointer;
-}
-@media (hover: hover) {
-  .hcard--mini:hover {
-    flex-grow: 0.6;
-  }
-}
-.hcard__art {
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  /* 시차로 밀려도 모서리가 드러나지 않게 미리 키워 둔다 — 미는 폭(12·9px)보다 여유가 커야 한다.
-     transform 이 아니라 scale·translate 를 따로 쓴다: 둘이 겹쳐도 서로를 지우지 않는다. */
-  scale: 1.07;
-  translate: calc(var(--px, 0) * 12px) calc(var(--py, 0) * 9px);
-  transition:
-    scale var(--dur-content) var(--ease),
-    translate 260ms var(--ease),
-    opacity var(--dur-content) var(--ease);
-}
-.hcard:hover .hcard__art {
-  scale: 1.11;
-}
-/* 작은 카드도 제 그림을 보인다 — 층마다 그림이 하나씩이라 반복이 없다(2026-09-10).
-   잉크 면 위의 기척이라 0.3 — 그림이 완전한 흰색이어도 합성 휘도 97 이라 흰 번호·세로 이름이
-   5.0:1 을 지킨다. 더 올리면 좁은 칸을 지나는 은색 오브젝트가 글자를 삼킨다. */
-.hcard--mini .hcard__art {
-  opacity: 0.3;
-}
-.hcard::after {
-  content: "";
-  position: absolute;
-  inset: 18% 0 0;
-  z-index: -1;
-  /* 텍스트 블록이 시작되는 높이(카드의 약 63%)까지 스크림이 다 올라와 있어야 한다 —
-     램프가 바닥에서야 끝나면 본문 첫 줄이 맨 이미지 위에 놓인다. 길게 내려오는 비네트다:
-     30%→60% 로 조이면 밝은 그림 위에서 띠처럼 보인다(사령관 2026-09-10). */
-  background: linear-gradient(to bottom, transparent, var(--scrim-card) 60%);
-  pointer-events: none;
-}
-.hcard--mini::after {
-  content: none;
-}
-/* 번호는 유리 알약이었다 — 카드마다 회색 상자가 하나씩 떠 그림을 가리고 누를 것처럼 읽혔다
-   (사령관 2026-09-10 "숫자 1~6 이상한 것 같은데"). 테두리·바탕·블러를 걷고 활자만 남긴다.
-   스크림 밖(좌상단)이라 밝은 그림 위 잉크 활자다 — 흰 글자였을 때 1.3:1 로 안 보이던 자리다
-   (실측 2026-09-10). 접힌 잉크 칸에서만 흰 글자로 돌아온다. 가로폭이 고정이라야 01→06 이
-   같은 자리에 선다 — tabular-nums. */
-.hcard__n {
-  position: absolute;
-  top: var(--sp-5);
-  left: var(--sp-5);
-  font-size: var(--fs-sm);
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: var(--tracking-label);
-  color: var(--text-primary);
-  transition: left var(--dur-content) var(--ease);
-}
-.hcard--mini .hcard__n {
-  left: 50%;
-  transform: translateX(-50%);
-  color: var(--text-on-inverse);
-}
-/* 작은 카드의 이름 — 아래에서 위로 읽는 세로 활자. 펼치면 카피에 자리를 내준다. */
-.hcard__side {
-  position: absolute;
-  left: 50%;
-  bottom: var(--sp-5);
-  transform: translateX(-50%) rotate(180deg);
-  writing-mode: vertical-rl;
-  font-size: var(--fs-sm);
-  font-weight: 600;
-  letter-spacing: var(--tracking-label);
-  text-transform: uppercase;
-  white-space: nowrap;
-  opacity: 0;
-  transition: opacity var(--dur-hover) var(--ease);
-}
-.hcard--mini .hcard__side {
-  opacity: 1;
-  /* 접힌 카드의 세로 이름은 카드 가운데에 세운다. 바닥(--sp-5)에 붙이면 마지막 카드가
-     우하단 플로팅 문의 CTA(.floating — 같은 --sp-5 바닥 앵커, z-index 45) 뒤로 들어가
-     라벨이 잘린다. 라벨 길이에 따라 잘리는 정도만 달라질 뿐 항상 겹친다
-     ("AI" 는 "A" 만, "HARDWARE" 는 "ARE" 만 남았다 — 실측 1440·1280 2026-09-06). */
-  top: 50%;
-  bottom: auto;
-  transform: translate(-50%, -50%) rotate(180deg);
-}
-/* 카피는 흐름 밖에 둔다 — 접힌 폭에서 카드를 밀어 넓히지 않게. */
-.hcard__text {
-  position: absolute;
-  left: var(--sp-5);
-  right: var(--sp-5);
-  bottom: var(--sp-5);
-  display: grid;
-  gap: var(--sp-2);
-  justify-items: start;
-  transition: opacity var(--dur-hover) var(--ease);
-}
-.hcard--mini .hcard__text {
-  opacity: 0;
-  pointer-events: none;
-}
-/* 제자리에서 펼쳐진 카피는 아래에서 떠오른다. */
-.hcard__text.is-in {
-  animation: hcard-in var(--dur-content) var(--ease) 120ms backwards;
-}
-@keyframes hcard-in {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-.hcard__kicker {
-  font-size: var(--fs-label);
-  font-weight: 600;
-  letter-spacing: var(--tracking-label);
-  color: var(--text-on-inverse-muted);
-}
-.hcard__title {
-  font-size: clamp(20px, 1.7vw, 26px);
-  font-weight: 700;
-  line-height: 1.25;
-  letter-spacing: var(--tracking-tight);
-  color: var(--text-on-inverse);
-  text-wrap: balance;
-}
-.hcard--wide .hcard__title {
-  font-size: clamp(24px, 2.4vw, 36px);
-  max-width: 18ch;
-}
-/* 카드 안 텍스트 구조는 전부 같다 — 킥커 · 제목 · 설명 · 행동
-   (사령관 2026-09-06 "카드 안에 있는 텍스트 구조는 통일"). 예전에는 설명을
-   가로 카드에만 두어 같은 줄의 카드가 서로 다른 단수로 갈라져 읽혔다.
-   기술·제품군 줄은 같은 날 걷었다 — 히어로에 제품명까지 오면 내용이 너무 많다.
-   접힌 카드만 블록을 통째로 감춘다(.hcard--mini .hcard__text). */
-.hcard__desc {
-  color: var(--text-on-inverse-muted);
-}
-/* 설명은 두 줄로 자른다 — 층마다 문장 길이가 달라 블록 높이가 들쭉날쭉해진다. */
-.hcard__desc {
-  font-size: var(--fs-sm);
-  line-height: 1.55;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.hcard--wide .hcard__desc {
-  font-size: var(--fs-body);
-  line-height: 1.6;
-  max-width: 44ch;
-}
-.hcard__more {
-  margin-top: var(--sp-1);
-  font-size: var(--fs-sm);
-  font-weight: 600;
-  color: var(--text-on-inverse);
-}
-.hcard:hover .hcard__more {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-@media (prefers-reduced-motion: reduce) {
-  .hcard,
-  .hcard__art,
-  .hcard__n,
-  .hcard__side,
-  .hcard__text {
-    transition: none;
-  }
-  /* 스크립트가 시차를 안 걸지만 CSS 도 제 몫을 한다 — 스타일만 남고 JS 가 죽어도 안 움직인다. */
-  .hcard__art {
-    translate: none;
-  }
-  .hcard__text.is-in {
-    animation: none;
-  }
-}
-/* 1280 아래 — 여섯을 한 줄에 두면 세로 카드가 200px 밑으로 내려가 카피가 번호 칩을 덮는다
-   (실측 1080 · 900). 큰 셋은 윗줄에 예시 비율 그대로, 작은 셋은 아랫줄 가로 막대.
-   작은 카드를 누르면 윗줄 가로 자리로 올라오고 있던 가로 카드가 아랫줄로 내려간다. */
-@media (max-width: 1279px) {
-  .hcards {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 2.34fr);
-    grid-template-rows: minmax(0, 1fr) auto;
-    align-items: stretch;
-    /* 두 줄이라 아랫줄 막대(56)와 간격을 윗줄 높이에 더한다. 상한이 아니라 값이다 —
-       히어로가 화면을 안 채우므로(2026-09-07) 늘어날 높이가 없다. */
-    height: max(
-      calc(260px + 56px + var(--sp-4)),
-      (100cqw - 2 * var(--sp-4)) / 4.34 * 1.455 * 1.25 + 56px + var(--sp-4)
-    );
-  }
-  .hcard {
-    grid-row: 1;
-    transition: none;
-  }
-  .hcard--wide {
-    grid-row: 1;
-    grid-column: 3;
-  }
-  .hcard--mini {
-    grid-row: 2;
-    grid-column: auto;
-    aspect-ratio: auto;
-    min-height: 56px;
-    padding: var(--sp-3) var(--sp-4);
-    display: flex;
-    align-items: center;
-    gap: var(--sp-3);
-  }
-  .hcard--mini .hcard__n,
-  .hcard--mini .hcard__side {
-    position: static;
-    transform: none;
-  }
-  .hcard--mini .hcard__side {
-    writing-mode: horizontal-tb;
-    font-size: var(--fs-2xs);
-    white-space: normal;
-  }
-}
 
-.hero--home .hero__center,
-.hero--home .hero__feature,
-.hero--home .hero__layers {
-  position: relative;
-  z-index: 1;
-}
 .nb {
   white-space: nowrap;
 }
@@ -1213,22 +864,15 @@
 }
 
 /* 이름 왼쪽 · 설명 오른쪽의 한 장짜리 표. 기획의 "보유 기반" 패턴이다. */
-.proof {
-  background: var(--bg-card);
-  border: 1px solid var(--border-hair);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-}
+/* 액자도 줄도 긋지 않는다(사령관 지시 2026-09-11). 칸을 그리면 카드처럼 읽히고,
+   옆에 선 제목과 결이 갈렸다. 이름과 값의 열이 이미 나뉘어 있어 선이 없어도 표다.
+   행을 가르는 건 이제 선이 아니라 여백이다. */
 .proof__row {
   display: grid;
   grid-template-columns: 0.8fr 1.4fr;
   gap: var(--sp-5);
   align-items: baseline;
-  padding: var(--sp-4) 24px;
-  border-top: 1px solid var(--border-hair);
-}
-.proof__row:first-child {
-  border-top: 0;
+  padding: var(--sp-4) 0;
 }
 .proof__row .card__title {
   font-size: var(--fs-body);
@@ -1314,7 +958,7 @@
 .field select,
 .field textarea {
   width: 100%;
-  border: 1px solid var(--border-hair);
+  border: 1px solid var(--border-control);
   border-radius: var(--radius-sm);
   background: var(--bg-card);
   padding: 11px 14px;
@@ -1336,7 +980,6 @@
   font-size: 12px;
   color: var(--state-danger);
 }
-
 
 /* ── 상태 화면 — 현행에 없던 것 ───────────────────────── */
 /* 빈 화면 안내용. 폼 제출 결과처럼 한 줄짜리에도 쓰여서 여백을 크게 잡지 않는다. */
@@ -1385,10 +1028,23 @@
   background: var(--c-neutral-700);
   color: var(--text-on-inverse);
 }
-/* ✦ 별표는 AI 기능 아이콘의 관용이라 걷었다(2026-09-06) — 로고의 점(●)이 브랜드 포인트다. */
-.floating__spark {
+/* 문의 진입 마크 — 사분원 넷으로 깎은 네 꼭짓점 별(사령관 요청 2026-09-13).
+   2026-09-06 에 "별표는 AI 기능 아이콘의 관용"이라며 걷었던 자리인데, 그때 걷은 건
+   글리프(✦)였다 — 이번 것은 브랜드 주황을 입은 도형이라 워드마크 점과 한 벌로 읽힌다.
+   크기는 글자의 0.8 로 한 곳에만 적는다. 헤더와 부동 CTA 의 바탕 글자가 둘 다
+   --fs-sm 이라, 같은 값이면 두 진입점의 마크가 픽셀까지 같은 크기로 선다
+   (전에는 0.62/0.8 로 갈려 아래 것만 작았다 — 사령관 2026-09-13). */
+.spark {
+  flex: none;
   color: var(--c-accent-500);
-  font-size: 0.55em;
+  font-size: 0.8em;
+}
+/* 마크는 currentColor 를 안 쓴다 — 잉크 버튼의 흰 글자색을 따라가면 같이 하얘진다.
+   라벨과의 간격은 버튼의 gap 이 맡는다(.floating__ask 는 제 gap 을 이미 갖고 있다). */
+.btn--spark {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-2);
 }
 
 .floating__top {
@@ -1398,7 +1054,7 @@
   display: grid;
   place-items: center;
   background: var(--bg-card);
-  border: 1px solid var(--border-hair);
+  border: 1px solid var(--border-control);
   color: var(--text-primary);
   box-shadow: var(--shadow-mega);
 }
@@ -1471,6 +1127,22 @@
 }
 .doc__body p + p {
   margin-top: var(--sp-4);
+}
+/* 문단을 받는 그림. 다음 마디의 소제목과 붙지 않게 아래 여백을 두되, 위쪽은 앞 문단과
+   가깝게 둔다 — 이 그림은 그 문단에 딸린 것이라 소제목보다 가까이 서야 한다.
+   액자 비율은 그림 자체가 16:10 으로 구워져 있어 따로 고정하지 않는다(24-industry-photo).
+   --art-tone 은 이 저장소의 실사진이 공통으로 받는 채도 조절이다. */
+.doc__figure {
+  margin: var(--sp-5) 0 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--bg-band);
+}
+.doc__figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: var(--art-tone);
 }
 /* 근거 줄 — 이 글이 어느 사업 지면의 사실로 쓰였는지. 본문과 나가는 문 사이에
    실선 하나로 끼운다. 조용하지만 링크는 링크로 보여야 한다. */
@@ -1672,7 +1344,10 @@
   display: block;
   flex: none;
   width: clamp(180px, 17vw, 260px);
-  aspect-ratio: 16 / 10;
+  /* 표지 원본과 같은 비율이다(1200×630). 16/10 을 걸었더니 object-fit:cover 가 좌우를
+     12% 씩 잘라 "SALTWARE" 가 "ALTWARE" 로, 제목 첫 글자가 잘려 나갔다(실측 2026-09-13).
+     표지는 글자가 들어 있는 그래픽이라 액자가 원본을 따라간다 — 반대로 하지 않는다. */
+  aspect-ratio: 1200 / 630;
   border-radius: var(--radius-md);
   overflow: hidden;
   background: var(--bg-band);
@@ -1704,12 +1379,6 @@ a.press:hover .press__cover img {
    사이트가 이미 쓰는 아이브로 결(액센트 글자 + 자간)을 그대로 쓴다. 알약을 두르지
    않는 이유는 §4-3(pill 은 동작 버튼에만)이고, 어두운 면 배지가 먼저 읽히던 판정
    (2026-09-09)과도 같은 결이다 — 색만으로 충분하다. */
-.press__tag {
-  font-size: var(--fs-label);
-  font-weight: 600;
-  letter-spacing: var(--tracking-label);
-  color: var(--text-accent);
-}
 .press__title {
   font-size: var(--fs-h4);
   font-weight: 700;
@@ -1926,10 +1595,17 @@ a.dl:hover .dl__act {
   gap: var(--sp-1);
   align-content: start;
 }
+/* 스와치는 색을 **가리키는** 표지지 색면이 아니다. 판 폭을 다 쓰는 16:10 한 칸은
+   아무것도 담기지 않은 채로 200px 넘게 서서 지면에서 가장 큰 덩어리가 됐다
+   (사령관 2026-09-13 "아무것도 없는데 색상만 너무 크게 보여줘서 어색함").
+   정사각 한 뼘으로 줄이면 무게가 옆의 값·쓰임 글로 넘어간다. */
 .bg__chip {
-  aspect-ratio: 16 / 10;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-hair);
+  width: 72px;
+  aspect-ratio: 1;
+  border-radius: var(--radius-sm);
+  /* --border-hair 가 아니라 --border-control 이다. 머리카락 선은 투명이라(2026-09-11
+     구분선을 전부 걷었다) 바탕색 스와치가 지면과 같은 크림이면 통째로 사라진다. */
+  border: 1px solid var(--border-control);
 }
 .bg__chip--dot {
   background: var(--c-brand-dot);
@@ -1941,7 +1617,7 @@ a.dl:hover .dl__act {
   background: var(--c-accent-550);
 }
 .bg__chip--ground {
-  background: var(--c-neutral-50);
+  background: var(--bg-page);
 }
 .bg__color-name {
   font-weight: 600;
@@ -2164,8 +1840,8 @@ a.bg__asset:hover {
 /* 아래 바 — 저작권과 법적 고지가 한 줄, 전부 왼쪽. 오른쪽 아래는 부동 UI
    (문의 · 맨 위로)가 차지하는 자리라 거기 두면 가려진다(실측 1440). */
 .footer__bottom {
-  border-top: 1px solid var(--border-inverse);
-  padding-top: var(--sp-5);
+  /* 선 대신 여백으로 띄운다 — 어두운 면 위 실선도 걷는 대상이다. */
+  padding-top: var(--sp-7);
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
@@ -2179,7 +1855,6 @@ a.bg__asset:hover {
   gap: var(--sp-3);
 }
 .footer__legal > * + * {
-  border-left: 1px solid var(--border-inverse);
   padding-left: var(--sp-3);
 }
 .footer__legal [aria-disabled="true"] {
@@ -2244,10 +1919,12 @@ a.bg__asset:hover {
   font-size: var(--fs-xs);
   font-weight: 600;
 }
-/* 마지막 단계가 결과다 — 기획이 여기만 채워서 강조한다. */
+/* 마지막 단계가 결과다 — 기획이 여기만 채워서 강조한다.
+   면·글자를 --bg-inverse/--text-on-inverse 짝으로 잡는다. 리터럴 흰색이면 색면 위에서
+   --text-primary 가 흰색으로 뒤집혀 흰 알약에 흰 글자가 된다(§3-4 "토큰을 다시 가리킨다"). */
 .flow__step--last {
-  background: var(--text-primary);
-  color: var(--c-white);
+  background: var(--bg-inverse);
+  color: var(--text-on-inverse);
 }
 .flow__arrow {
   color: var(--text-faint);
@@ -2357,8 +2034,7 @@ a.bg__asset:hover {
     display: none !important;
   }
   .grid--3,
-  .grid--4,
-  .hero__grid {
+  .grid--4 {
     grid-template-columns: 1fr;
   }
   .steps {
@@ -2367,71 +2043,6 @@ a.bg__asset:hover {
   .proof__row {
     grid-template-columns: 1fr;
     gap: var(--sp-2);
-  }
-  /* 모바일 상단 여백은 데스크톱 clamp 의 하한(80px)을 그대로 쓴다 — 사령관 관리자 모드 실측(494: 79px).
-     예전엔 리드 5줄 수납용으로 32px 까지 줄였다. */
-  .hero__center {
-    gap: var(--sp-3);
-  }
-  /* 층 띠는 두 줄로 접히며 연결선이 줄 머리에 매달렸다(실측) — 선을 접는다.
-     3열 격자는 열 폭이 가장 긴 이름(Orchestration)에 맞춰져 AI 옆이 뻥 비었다(사령관 지적
-     2026-09-06 "글자 수가 달라서 깨져 보여") — 이름 폭대로 흐르는 flex-wrap 으로 둔다.
-     리드와는 한 단 띄운다 — 붙이면 리드의 마지막 줄로 읽힌다(실측 390). */
-  .hero__layers {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    column-gap: var(--sp-4);
-    row-gap: var(--sp-2);
-    margin-top: var(--sp-6);
-  }
-  .hero__layer + .hero__layer::before {
-    content: none;
-  }
-  /* 히어로 카드 — 세로 아코디언. 큰 카드(01 · 02 · 펼친 것)는 태블릿 2:1(셋을 3:2 로 쌓으면
-     1400px 을 넘긴다 — 실측 768), 폰은 3:2. 작은 카드는 번호 + 가로 이름 한 줄. */
-  .hcards {
-    display: flex;
-    flex-direction: column;
-    gap: var(--sp-2);
-    /* 세로로 쌓으므로 높이는 카드들이 정한다 — 폭에서 뽑은 값을 걷는다. */
-    height: auto;
-  }
-  .hcard,
-  .hcard--wide {
-    flex: none;
-    aspect-ratio: 2 / 1;
-    padding: var(--sp-4);
-    transition: none;
-  }
-  .hcard--mini {
-    aspect-ratio: auto;
-    min-height: 56px;
-    padding: var(--sp-3) var(--sp-4);
-    display: flex;
-    align-items: center;
-    gap: var(--sp-3);
-  }
-  .hcard--mini .hcard__n,
-  .hcard--mini .hcard__side {
-    position: static;
-    transform: none;
-  }
-  .hcard--mini .hcard__side {
-    writing-mode: horizontal-tb;
-    font-size: var(--fs-2xs);
-    white-space: normal;
-  }
-  .hcard__text {
-    left: var(--sp-4);
-    right: var(--sp-4);
-    bottom: var(--sp-4);
-  }
-  /* 이 폭의 큰 카드는 2:1(태블릿) · 3:2(폰)라 5단을 담지 못한다 — 설명·기술을 두면
-     텍스트 블록 상단이 번호 배지까지 올라와 킥커와 겹친다(실측 390 2026-09-06).
-     데스크톱과 달리 여기서는 카드 전부를 킥커·제목·행동 3단으로 맞춘다. */
-  .hcard__desc {
-    display: none;
   }
 }
 @media (max-width: 640px) {
@@ -2444,13 +2055,6 @@ a.bg__asset:hover {
   /* 부연의 사령관 줄바꿈은 이 폭에서 고아 줄을 만든다 — 접고 자연 줄바꿈에 맡긴다. */
   .br-soft {
     display: none;
-  }
-  /* 폰은 큰 카드를 3:2 로 — 2:1 은 두 줄 제목이 칩에 닿는다.
-     :not(--mini) 가 필요하다 — 이 블록이 860 블록보다 뒤라 작은 카드까지 3:2 가 되어
-     번호 한 줄이어야 할 것이 270px 로 두꺼워졌다(사령관 실측 2026-09-04). */
-  .hcard:not(.hcard--mini),
-  .hcard--wide {
-    aspect-ratio: 3 / 2;
   }
   /* 390 에서 필 라벨이 슬라이더 도트와 문의 입력칸을 덮는다(실측) —
      라벨을 접고 스파크만 남긴 원형으로 줄인다. */
@@ -2506,12 +2110,6 @@ a.bg__asset:hover {
 .nl__ch:first-child {
   padding-top: 0;
   border-top: 0;
-}
-.nl__tag {
-  font-size: var(--fs-label-caps);
-  font-weight: 600;
-  letter-spacing: var(--tracking-label);
-  color: var(--text-accent);
 }
 .nl__name {
   font-size: var(--fs-h4);
@@ -2570,11 +2168,19 @@ a.tile:hover {
   color: var(--text-faint);
   line-height: 1.5;
 }
+/* 결정 글리프 — 쉴 때는 잉크의 옅은 결이다. 색이 나는 건 커서가 얹혔을 때뿐이다
+   (사령관 2026-09-14 "도트로도 뭔가 인터랙션 주고 더 깔끔하게"). 아홉 칸이 늘 주황이면
+   지면에서 이 격자만 색을 갖고, 라벨에서 주황을 물린 결정과도 어긋난다 — 주황은
+   가리키는 자리에만 남긴다. */
 .tile__glyph {
   justify-self: end;
-  width: 36px;
-  height: 36px;
-  color: var(--text-accent);
+  width: 32px;
+  height: 32px;
+  color: var(--text-primary);
+  opacity: 0.22;
+  transition:
+    opacity var(--dur-hover) var(--ease),
+    color var(--dur-hover) var(--ease);
 }
 .tile__glyph svg {
   display: block;
@@ -2583,6 +2189,52 @@ a.tile:hover {
 }
 a.tile:hover .tile__glyph {
   color: var(--text-accent-on-inverse);
+  opacity: 1;
+}
+/* 입자가 하나씩 맺힌다 — 소금 결정이 앉는 모양이다. 점마다 제 자리에서 커지므로
+   transform-box 를 칠한 상자로 돌린다(기본값 view-box 는 뷰포트 0,0 을 기준으로 삼아
+   점이 왼쪽 위로 빨려 들어간다). 점은 최대 아홉이다(글리프 작도 규칙, 05-icon). */
+.tile__glyph svg circle {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+a.tile:hover .tile__glyph svg circle {
+  animation: dot-crystal 0.36s var(--ease) both;
+}
+a.tile:hover .tile__glyph svg circle:nth-child(2) {
+  animation-delay: 26ms;
+}
+a.tile:hover .tile__glyph svg circle:nth-child(3) {
+  animation-delay: 52ms;
+}
+a.tile:hover .tile__glyph svg circle:nth-child(4) {
+  animation-delay: 78ms;
+}
+a.tile:hover .tile__glyph svg circle:nth-child(5) {
+  animation-delay: 104ms;
+}
+a.tile:hover .tile__glyph svg circle:nth-child(6) {
+  animation-delay: 130ms;
+}
+a.tile:hover .tile__glyph svg circle:nth-child(7) {
+  animation-delay: 156ms;
+}
+a.tile:hover .tile__glyph svg circle:nth-child(8) {
+  animation-delay: 182ms;
+}
+a.tile:hover .tile__glyph svg circle:nth-child(9) {
+  animation-delay: 208ms;
+}
+@keyframes dot-crystal {
+  from {
+    scale: 0.2;
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  a.tile:hover .tile__glyph svg circle {
+    animation: none;
+  }
 }
 @media (max-width: 640px) {
   .tiles {
@@ -2592,21 +2244,13 @@ a.tile:hover .tile__glyph {
     min-height: 120px;
   }
   .tile__glyph {
-    width: 28px;
-    height: 28px;
+    width: 26px;
+    height: 26px;
   }
   /* 아홉 장이 두 열이면 마지막 한 장이 외톨이다 — 전체 산업이 한 줄을 다 쓴다. */
   .tile:last-child:nth-child(odd) {
     grid-column: 1 / -1;
   }
-}
-
-/* 문제 기준 탐색(§11.5) — 이미지 카드 가로 레일. 목록이 아니라 골라 넘기는
-   선반이다. 스크롤바는 숨기되 스크롤 자체는 살린다. */
-/* 홈의 생성 이미지(의도 카드)와 실사 컷(뉴스·인사이트)은 같은 톤 — 세트가 갈리지 않게.
-   .story__cover img 도 같은 값을 쓴다(카드 규칙 안에 적혀 있다). */
-.rail__img {
-  filter: var(--art-tone);
 }
 
 /* 가로 레일 — 애플식(사령관 2026-09-06 "옆으로 어떻게 넘기는데"). 카드는 컨테이너 안쪽 선에서
@@ -2615,14 +2259,15 @@ a.tile:hover .tile__glyph {
    넘칠 것이 없으면(is-static) 버튼도 눈금도 접힌다. */
 /* 분류 칩 — 여덟 장을 다 밀지 않고 내 과제부터 좁힌다(사령관 UX 시안 2026-09-08
    "네비게이션 바 제작"). 칩은 누르는 것이라 pill, 담는 테두리도 같은 결로 간다. */
+/* 분류 줄 — 알약을 두른 알약이었다. 상자 하나에 알약 일곱이 들어앉아 iOS 분절 컨트롤처럼
+   읽혔고, 색면 위에서는 상자 테두리와 켜진 칸이 둘 다 흐린 유리라 무엇이 켜졌는지 안 보였다
+   (사령관 2026-09-13 "탭 디자인 바꿔 이상함"). 상자를 걷는다 — 이 저장소가 선을 걷어 온
+   방향 그대로다. 남는 건 낱말 줄 하나와, 채워진 칸 하나다. */
 .chips {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--sp-1);
+  gap: var(--sp-2);
   margin-bottom: var(--sp-5);
-  padding: var(--sp-1);
-  border: 1px solid var(--border-hair);
-  border-radius: var(--radius-pill);
   /* max-content 는 그리드 셀 안에서 줄바꿈 전 폭(662px)을 최소 폭으로 밀어 올려 폼 전체가
      가로로 넘쳤다(실측 /contact 390). fit-content 는 같은 shrink-wrap 이되 가용 폭에서 접힌다. */
   width: fit-content;
@@ -2648,222 +2293,22 @@ a.tile:hover .tile__glyph {
   background: var(--bg-inverse);
   color: var(--text-on-inverse);
 }
-
-/* 트랙과 눈금이 한 격자를 쓴다. 잘린 카드를 흐리는 덮개(::before·::after)가 트랙과
-   같은 칸에 얹히므로 격자가 필요하다 — 화살표는 이 격자 밖, 제목 줄 오른쪽에 선다. */
-.rail-wrap {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--sp-4);
-}
-.rail-wrap > .rail {
-  grid-area: 1 / 1;
-}
-/* 레일은 컨테이너 선에서 시작해 컨테이너 선에서 끝난다(사령관 2026-09-08 "깔끔하게 떨어지게끔").
-   예전엔 오른쪽을 화면 끝까지 흘려 "더 있다"를 보였는데, 페이지의 다른 섹션과 오른쪽 선이
-   어긋났다. 대신 다음 장의 앞부분만 컨테이너 선 안에서 걸치게 둔다(같은 날 "옆에 살짝 보이게
-   해서 컨텐츠 더 있는건 살짝 보여줘야할 듯") — 선은 지키고 신호는 남는다.
-   --rail-peek 은 [간격 + 보일 조각] 이다. 조각만 따로 재려면 여기서 --gap-tile 을 빼면 된다. */
-.rail {
-  display: flex;
-  gap: var(--gap-tile);
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding-bottom: var(--sp-2);
-  scrollbar-width: none;
-}
-.rail::-webkit-scrollbar {
-  display: none;
-}
-/* 넉 장 + 다섯째 장의 앞 조각(--sp-8 - 간격 = 48px)이 컨테이너 폭에 들어간다.
-   clamp 폭이던 시절엔 마지막 장이 아무 데서나 잘려 조각 크기가 폭마다 달랐다. */
-.rail__card {
-  flex: none;
-  --rail-peek: var(--sp-8);
-  width: calc((100% - 3 * var(--gap-tile) - var(--rail-peek)) / 4);
-  /* 세로 플렉스라 '자세히 보기'가 카드 바닥에 붙는다 — 격자로 두면 글 길이만큼 줄이
-     들쭉날쭉했다(사령관 UX 시안 2026-09-08 "텍스트 길이에 따라 UI 길이가 달라짐"). */
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-1);
-  scroll-snap-align: start;
+/* 색면 위에서는 --bg-inverse 가 유리로 바뀐다 — 켜진 칸이 배경에 먹힌다.
+   1차 버튼과 같은 처방이다: 색면 위의 채움은 흰 면이다. */
+.section--inverse .chip[aria-pressed="true"],
+.section--stone .chip[aria-pressed="true"] {
+  background: var(--c-white);
+  color: var(--c-neutral-900);
 }
 /* 작성자 display 가 UA 의 [hidden]{display:none} 을 이긴다 — 걸러 낸 카드가 그대로 보였다
    (슬레이트 판에서도 같은 함정을 밟았다). 명시해서 끈다. */
 .rail__card[hidden] {
   display: none;
 }
-.rail__img {
-  width: 100%;
-  aspect-ratio: 16 / 10;
-  object-fit: cover;
-  border-radius: var(--radius-md);
-  margin-bottom: var(--sp-2);
-}
-.rail__q {
-  font-weight: 600;
-  letter-spacing: -0.015em;
-  transition: color var(--dur-hover) var(--ease);
-}
-.rail__a {
-  font-size: var(--fs-sm);
-  color: var(--text-muted);
-  line-height: 1.55;
-}
-.rail__more {
-  margin-top: auto;
-  padding-top: var(--sp-2);
-  font-size: var(--fs-xs);
-  font-weight: 600;
-  color: var(--text-accent);
-}
-.rail__card:hover .rail__q {
-  color: var(--text-accent);
-}
-/* ‹ › 는 트랙 아래·옆이 아니라 제목 줄 오른쪽에 고정한다(사령관 2026-09-08 "화살표 우측으로
-   통일 하자 위에다가" · "기존꺼 써라 옆으로 넘어가는 거 애플꺼"). 레일마다 자리가 다르면 같은
-   동작을 매번 다시 찾아야 한다. 앵커는 섹션 컨테이너다 — 제목 줄 오른쪽 끝에 붙는다.
-   "전체 보기"도 같은 줄에 온다 — 트랙 눈금 밑에 홀로 두면 무엇에 걸린 버튼인지 애매하다. */
-.sec-side {
-  position: absolute;
-  /* 절대배치의 기준상자는 컨테이너의 padding box 다 — top:0 이면 홈 세로 리듬(--home-gap)만큼
-     제목 위로 떠서 붙박이 헤더 자리까지 올라갔다(실측 1440: 60px). 같은 값을 되돌려 제목 줄에 세운다.
-     되돌림값은 하위 페이지의 같은 값(--section-py)이다 — 0px 이면 하위 페이지에서 제목 위
-     hairline 자리로 올라간다. 어느 쪽이든 "컨테이너의 위 패딩만큼" 이라는 규칙은 하나다. */
-  top: var(--home-gap, var(--section-py));
-  /* 절대배치는 컨테이너의 padding box 를 기준으로 잡는다 — right:0 이면 컨테이너의 좌우
-     여백(padding-inline: --sp-6)을 지나쳐 화면 끝에 붙는다. 데스크톱은 여백이 auto 마진이라
-     안 보였지만 430 에서 링크가 화면 선에 딱 붙었다(실측). 같은 값을 되돌린다. */
-  right: var(--sp-6);
-  display: flex;
-  align-items: center;
-  gap: var(--sp-4);
-}
-.sec-side__all {
-  font-size: var(--fs-sm);
-  font-weight: 600;
-  color: var(--text-accent);
-  white-space: nowrap;
-}
-.rail__nav {
-  display: none;
-  gap: var(--sp-2);
-}
-/* 버튼 두 개 + 전체 보기 — 제목이 그 아래로 흘러 들어가지 않게 머리에 자리를 비운다. */
-.section:has(.sec-side) > .container {
-  position: relative;
-}
-.section:has(.rail-wrap) > .container > .section__head {
-  padding-right: calc(var(--sp-9) + var(--sp-3));
-}
-/* 곁줄이 링크만일 때와 링크 + 화살표일 때가 다르다 — 화살표가 없는 섹션(인사이트)에
-   버튼 두 개 자리까지 비우면 리드가 억지로 두 줄로 접힌다(실측 1440). */
-.section:has(.sec-side__all) > .container > .section__head {
-  padding-right: calc(var(--sp-9) + var(--sp-6));
-}
-.section:has(.rail-wrap):has(.sec-side__all) > .container > .section__head {
-  padding-right: calc(var(--sp-9) + var(--sp-9) + var(--sp-4));
-}
-.rail-wrap.is-ready:not(.is-static) .rail__nav {
-  display: flex;
-}
-/* 잘린 카드는 흐리게 — 반쯤 읽히는 글이 다음 장을 재촉하는 것보다 산만했다(같은 시안
-   "잘리는 카드는 블러 효과로 처리"). 끝에 닿으면 걷힌다. */
-.rail-wrap::before,
-.rail-wrap::after {
-  content: "";
-  grid-area: 1 / 1;
-  width: var(--rail-peek, var(--sp-8));
-  pointer-events: none;
-  backdrop-filter: blur(3px);
-  opacity: 1;
-  transition: opacity var(--dur-hover) var(--ease);
-}
-.rail-wrap::before {
-  justify-self: start;
-  mask-image: linear-gradient(to left, transparent, #000);
-}
-.rail-wrap::after {
-  justify-self: end;
-  mask-image: linear-gradient(to right, transparent, #000);
-}
-.rail-wrap.is-start::before,
-.rail-wrap.is-end::after,
-.rail-wrap.is-static::before,
-.rail-wrap.is-static::after {
-  opacity: 0;
-}
-/* 눈금 줄 — 왼쪽에 장 수만큼 짧은 막대, 오른쪽에 01 / 08(같은 시안 "번호 체크"). */
-.rail__meter {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-4);
-}
-.rail-wrap.is-static .rail__meter {
-  display: none;
-}
-.rail__ticks {
-  flex: 1;
-  display: flex;
-  gap: var(--sp-2);
-}
-.rail__tick {
-  flex: 1;
-  height: 2px;
-  border-radius: var(--radius-xs);
-  background: var(--border-hair);
-  transition: background var(--dur-hover) var(--ease);
-}
-.rail__tick.is-on {
-  background: var(--text-primary);
-}
-.rail__count {
-  font-size: var(--fs-xs);
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-  color: var(--text-muted);
-}
-/* 아이콘만 있는 원형 버튼 — 맨 위로(.floating__top)와 같은 부류. 면은 밴드색, 누르면 잉크. */
-/* 아이콘만 있는 원형 버튼 — 맨 위로(.floating__top)와 같은 부류. 면은 밴드색, 누르면 잉크. */
-.rail__btn {
-  width: 40px;
-  height: 40px;
-  border: 0;
-  border-radius: var(--radius-circle);
-  display: inline-grid;
-  place-items: center;
-  background: var(--bg-band);
-  color: var(--text-primary);
-  cursor: pointer;
-  transition:
-    background var(--dur-hover) var(--ease),
-    color var(--dur-hover) var(--ease),
-    opacity var(--dur-hover) var(--ease);
-}
-.rail__btn:hover:not(:disabled) {
-  background: var(--bg-inverse);
-  color: var(--text-on-inverse);
-}
-.rail__btn:disabled {
-  opacity: 0.3;
-  cursor: default;
-}
-
-/* 솔루션 레일 — 다크 카드에 글 위 · 글리프 아래(애플 "알면 알수록" 카드 문법, 사령관 2026-09-06).
-   여덟 장이라 격자 대신 레일(‹ ›)로 흐른다. 그림은 소금 결정 글리프 — 사진·렌더 없이 한 벌이 된다.
-   사진 세트에 솔루션 컷은 셋뿐이라 여덟에 셋만 사진이면 세트가 깨진다. */
-.rail--sols .rail__card {
-  width: calc((100% - 3 * var(--gap-tile) - var(--rail-peek)) / 4);
-}
 /* 칸 수만 줄인다 — 폭은 늘 "100% 에서 간격 빼고 나눈 값"이라 어느 폭에서도 선이 맞는다.
    브레이크포인트는 기존 4종(1279·1080·860·640) 안에서만 쓴다. 이 블록은 기본 규칙 뒤에
    있어야 이긴다 — 앞선 @media 에 넣었다가 순서에서 져 390 에서 넉 장이 그대로 섰다(실측). */
-@media (max-width: 1080px) {
-  .rail__card,
-  .rail--sols .rail__card {
-    width: calc((100% - 2 * var(--gap-tile) - var(--rail-peek)) / 3);
-  }
-}
+
 @media (max-width: 640px) {
   /* 칩 일곱이 두 줄로 접히면 둥근 테두리가 커다란 덩어리가 된다 — 한 줄로 두고 옆으로 민다. */
   .chips {
@@ -2874,12 +2319,6 @@ a.tile:hover .tile__glyph {
   .chip {
     flex: none;
   }
-  /* 한 장짜리에서는 조각을 줄인다 — 390 에서 sp-8 을 빼면 카드가 278px 로 좁아진다. */
-  .rail__card,
-  .rail--sols .rail__card {
-    --rail-peek: var(--sp-7);
-    width: calc(100% - var(--rail-peek));
-  }
 }
 /* 대표 솔루션 카드 — 애플 iPhone 기능 레일의 세로 카드를 기준으로 다시 세웠다
    (사령관 2026-09-08 "애플꺼 참고해바", 시안 3장 실측 372×540 · 0.69 비율).
@@ -2889,6 +2328,8 @@ a.tile:hover .tile__glyph {
 .sol {
   position: relative;
   display: grid;
+  /* 눈금 · 제목 · 설명 · 문양 · 행동. 넷째 줄이 남는 높이를 먹는다 —
+     글과 행동 사이에 비던 그 칸이 문양의 자리다(사령관 2026-09-14). */
   grid-template-rows: auto auto auto minmax(0, 1fr) auto;
   gap: var(--sp-2);
   aspect-ratio: 0.9;
@@ -2898,6 +2339,68 @@ a.tile:hover .tile__glyph {
   color: var(--text-on-inverse);
   text-decoration: none;
   overflow: hidden;
+}
+/* 문양 — 한 굵기의 윤곽선 하나가 글과 행동 사이의 빈 칸 오른쪽 아래에 앉는다
+   (사령관 2026-09-14 "아래에 빈공간 있을텐데 거기에 배치하고", 레퍼런스 안트로픽).
+   카드보다 먼저 읽히면 안 되므로 아주 흐리게 두고, 커서가 얹혔을 때 제 잉크로 서면서
+   획을 다시 긋는다. 크기는 52 고정이다 — 레일에서 카드 폭이 달라져도 문양은 같은 크기여야
+   여덟이 한 줄로 읽힌다. */
+.sol__mark {
+  display: block;
+  align-self: end;
+  justify-self: end;
+  width: 52px;
+  height: 52px;
+  margin-block: var(--sp-3);
+  color: var(--text-on-inverse);
+  opacity: 0.3;
+  transition:
+    opacity var(--dur-content) var(--ease),
+    scale var(--dur-content) var(--ease);
+}
+.sol__mark svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.sol:hover .sol__mark {
+  opacity: 0.9;
+  scale: 1.06;
+}
+/* 획을 그어 놓는다 — 판이 화면에 들어올 때 한 번. 모든 획에 pathLength="1" 이 붙어 있어
+   실제 길이를 몰라도 1→0 으로 그려지고, 획마다 속도가 같다. 기본값은 '다 그린 상태'라
+   모션을 끄거나 스크립트가 죽어도 문양은 완성형이다. 순번(--i)은 reveal.mjs 가 준다. */
+.sol__mark svg > * {
+  stroke-dasharray: 1;
+}
+.rail--sols.is-in .sol__mark svg > * {
+  animation: sol-draw 0.8s var(--ease) both;
+  animation-delay: calc(var(--i, 0) * 60ms + 140ms);
+}
+/* 커서가 얹히면 다시 긋는다. 같은 이름으로는 애니메이션이 다시 시작하지 않아(브라우저가
+   같은 애니메이션으로 보고 이어 간다) 이름만 다른 한 벌을 둔다 — 키프레임은 같다. */
+.sol:hover .sol__mark svg > * {
+  animation: sol-redraw 0.7s var(--ease) both;
+  animation-delay: 0s;
+}
+@keyframes sol-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+@keyframes sol-redraw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rail--sols.is-in .sol__mark svg > *,
+  .sol:hover .sol__mark svg > * {
+    animation: none;
+  }
+  .sol:hover .sol__mark {
+    scale: 1;
+  }
 }
 .sol__area {
   font-size: var(--fs-xs);
@@ -2919,42 +2422,15 @@ a.tile:hover .tile__glyph {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-/* 상형은 왼쪽 아래 — "자세히 보기" 바로 위에 선다(사령관 2026-09-07 "가운데 말고 왼쪽 아래" ·
-   2026-09-08 "그 영역 위에다가 · 더 도트 크기해서"). 가운데에 크게 놓아 봤지만 여덟 장이
-   나란히 서면 상형이 카드를 먹었다 — 가운데는 비워 둔다.
-   커서를 얹으면 조금 커진다: 카드가 통째로 뜨는 동작과 같은 결이다. */
-.sol__mark {
-  align-self: end;
-  justify-self: start;
-  width: 48px;
-  /* 문양 상자에는 사방 4/48 만큼 여백이 붙어 있다 — 왼쪽만 당겨 글 축에 맞춘다. */
-  margin-left: -4px;
-  /* 흰색 하나뿐이다(사령관 2026-09-08 "흰색으로만 딱 핵심만") — 앰버는 자세히 보기가 갖는다. */
-  color: var(--text-on-inverse);
-  transition: scale var(--dur-hover) var(--ease);
-  transform-origin: left bottom;
-}
-.sol:hover .sol__mark {
-  scale: 1.06;
-}
-.sol__mark svg {
-  display: block;
-  width: 100%;
-  height: auto;
-}
 .sol__more {
+  align-self: end;
   margin-top: var(--sp-4);
   font-size: var(--fs-xs);
   font-weight: 600;
-  color: var(--text-accent-on-inverse);
 }
 @media (max-width: 860px) {
   .sol {
     aspect-ratio: 0.76;
-  }
-  .sol__mark {
-    width: 44px;
-    margin-left: -3.5px;
   }
 }
 
@@ -2971,11 +2447,15 @@ a.tile:hover .tile__glyph {
    구획선(hairline)은 전부 걷는다(사령관 2026-09-10 "작대기 없애고"). 맨 위 선은 위에
    아무것도 없는데 그어져 잘린 지면으로 보였고, 판과 카드 사이 선도 같은 일을 한다 —
    회색 판이 이미 자기 경계를 갖고 있어 그 아래 선은 경계를 두 번 긋는다. */
-.insights-hub .section > .container {
+/* 맺음 띠는 이 리듬에서 뺀다(:not) — 그 띠는 어느 지면에서나 같은 크기여야 하고,
+   여기 규칙을 같이 받으면 허브에서만 위아래가 104 → 45/22 로 납작해진다
+   (실측 2026-09-13, 사령관 "아래쪽 배너 정렬 맞춰주고"). 이 리듬이 다루는 것은
+   판과 카드 사이이지 지면의 맺음이 아니다. */
+.insights-hub .section:not(.section--inverse) > .container {
   padding-top: var(--sp-5);
   border-top: 0;
 }
-.insights-hub .section {
+.insights-hub .section:not(.section--inverse) {
   padding-bottom: 45px;
 }
 .insights-hub .section:first-of-type > .container {
@@ -3064,7 +2544,7 @@ a.tile:hover .tile__glyph {
    파일이 아직 없어도 카드가 깨지지 않는다 — CSS 배경이라 깨진 그림 아이콘이 뜨지 않고,
    ::before 가 빈 채로 어두운 면만 남는다. 그래서 클래스를 미리 붙여 둔다. */
 .feat--art {
-  --card-media: url("/saltware-prototype/media/insight/feature.jpg?v=f940a625bc4d");
+  --card-media: url("/saltware-prototype/media/insight/feature.jpg?v=74ed784af28c");
 }
 .feat[class*="feat--"] .feat__lead::before {
   content: "";
@@ -3228,15 +2708,20 @@ a.tile:hover .tile__glyph {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  /* --art-tone(채도 30%)을 그대로 걸지 않는다. 그 값은 어두운 실사 히어로용이다 —
-     이 그림들은 흰 바탕 3D 일러스트라 30% 로 누르면 파랑이 죽고 회색 뭉치만 남는다.
-     사이트 쪽으로 한 뼘만 당겨 파랑은 살리고 원색 그대로는 두지 않는다. */
-  filter: saturate(0.82) contrast(1.02);
+  /* --art-tone(채도 30%)을 그대로 걸지 않는다 — 이유는 --art-tone-illus 주석에 있다. */
+  filter: var(--art-tone-illus);
 }
-/* 흰 글이 그림 위에서 읽히게 하는 것이 이 층의 유일한 임무다. 글은 위(머리 줄·제목·설명)와
-   맨 아래(자세히 보기)에 있고 가운데가 그림 자리다.
-   바탕이 밝은 그림이라 어두운 실사보다 더 눌러야 흰 글이 선다 — 글이 앉는 위쪽을 짙게 깔고,
-   그림이 드러날 가운데만 연다. */
+/* 흰 글이 그림 위에서 읽히게 하는 것이 이 층의 유일한 임무다. 글은 위쪽 세 줄
+   (머리 줄·제목·설명)이 전부다 — 카드 아래쪽에는 아무 글도 없다.
+
+   멈춤 자리를 백분율이 아니라 **px** 로 적는다. 글 세 줄의 실제 높이는 카드가 어떻게
+   서든 140~152px 로 거의 같은데(실측 2026-09-13, 폭 1425·1080·900·420), 그 높이가
+   카드 높이에서 차지하는 비율은 32%에서 81%까지 벌어진다. 백분율로 적으면 한쪽을
+   맞출 때 다른 쪽이 깨지므로, 앞 판은 넉넉히 잡아 카드 전체를 눌렀고 — 그래서 밝은
+   3D 렌더가 통째로 흙빛이 됐다(사령관 2026-09-13 "너무 탁해서 좀 맑고 깨끗한 느낌?
+   그리고 대신 가독성은 있어야 함").
+   px 로 적으면 글 자리만 정확히 덮고 그 아래는 연다 — 위 두 단(0.87·0.73)은 손대지
+   않아 글의 대비는 앞 판 그대로다. */
 .hub-card[class*="hub-card--"]::after {
   content: "";
   position: absolute;
@@ -3244,186 +2729,106 @@ a.tile:hover .tile__glyph {
   z-index: -1;
   background: linear-gradient(
     to bottom,
-    var(--scrim-ink-90) 0%,
-    var(--scrim-ink-70) 34%,
-    var(--scrim-ink-40) 62%,
-    var(--scrim-ink-65) 100%
+    var(--scrim-ink-90) 0,
+    var(--scrim-ink-80) 152px,
+    var(--scrim-ink-20) 280px,
+    var(--scrim-ink-12) 100%
   );
 }
 /* 갈래별 배경 사진. 인라인 style 금지(spec 테스트)라 히어로(.hero--m-*)와 같이 클래스 맵이다.
    여기 규칙이 있어도 페이지가 수식 클래스를 붙이지 않으면 켜지지 않는다 —
    자산 반입 여부는 insights.mjs 의 ART 가 안다. */
 .hub-card--industry {
-  --card-media: url("/saltware-prototype/media/insight/card-industry.jpg?v=f940a625bc4d");
+  --card-media: url("/saltware-prototype/media/insight/card-industry.jpg?v=74ed784af28c");
 }
 .hub-card--report {
-  --card-media: url("/saltware-prototype/media/insight/card-report.jpg?v=f940a625bc4d");
+  --card-media: url("/saltware-prototype/media/insight/card-report.jpg?v=74ed784af28c");
 }
 .hub-card--library {
-  --card-media: url("/saltware-prototype/media/insight/card-library.jpg?v=f940a625bc4d");
+  --card-media: url("/saltware-prototype/media/insight/card-library.jpg?v=74ed784af28c");
 }
 .hub-card--news {
-  --card-media: url("/saltware-prototype/media/insight/card-news.jpg?v=f940a625bc4d");
+  --card-media: url("/saltware-prototype/media/insight/card-news.jpg?v=74ed784af28c");
 }
 
-/* 파트너·기술 한 줄 — 2단(정적 파트너 + 롤링 기술)을 한 벨트로 합쳤다
-   (사령관 2026-09-08 "한 줄로 좀 더 키워서 마우스 호버시 보여지게").
-   기본은 무채색 한 결이다: 원색이 열 개 섞이면 줄 전체가 소음이 된다(2단 시절 실측).
-   커서를 얹으면 벨트가 멎고 그 로고만 원색으로 서면서 아래에 "이름 · 파트너/기술"이 뜬다 —
-   층 라벨을 없앤 자리를 이 캡션이 받는다. 캡션 자리는 늘 비워 둔다(뜰 때 줄이 안 흔들리게). */
-.logos {
+/* AWS 자격 뱃지. 로고월(.logos)과 다르다 — 획득한 자격의 실물이고 이름이 함께 붙는다.
+   쓰는 지면이 둘이다: 클라우드 사업 지면과 기술 역량 지면(/company/capabilities).
+   그래서 지면 파일이 아니라 여기 있다 — 예전에는 cloud.css 안에 `.bu--cloud .bgs` 로
+   갇혀 있었고, 기술 역량 지면이 같은 마크업을 쓰면서 규칙이 하나도 안 걸려 목록이
+   글머리표 달린 한 줄로 쏟아졌다(2026-09-11).
+   ul 의 기본 여백까지 여기서 지운다 — 격자로 세우는 목록이라 왼쪽 들여쓰기가 남으면
+   칸이 한쪽으로 밀린다. */
+/* 칸마다 흰 면을 깐다(사령관 2026-09-14 "뱃지 키우고 좀 더 깔끔하게 인터랙션도").
+   크림 지면 위에 투명 SVG 를 그냥 놓으면 뱃지의 밝은 테두리가 바탕에 묻어 열 개가
+   흐릿한 얼룩으로 읽혔다. 면을 한 겹 깔면 뱃지가 자기 자리를 갖고, 이름 줄도 그 면에
+   묶여 어느 이름이 어느 뱃지의 것인지가 붙는다. 선은 긋지 않는다 — 면이 그 일을 한다(§4-3). */
+.bgs {
   display: grid;
-  gap: var(--sp-6);
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: var(--sp-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
-.logos__belt {
-  display: flex;
-  overflow: hidden;
-  width: 100%;
-}
-.logos__group {
-  flex: none;
-  display: flex;
-  align-items: flex-start;
-  gap: clamp(48px, 6vw, 96px);
-  padding-inline-end: clamp(48px, 6vw, 96px);
-  animation: logos-roll 46s linear infinite;
-}
-.logos__belt:hover .logos__group {
-  animation-play-state: paused;
-}
-.logos__item {
+.bg__item {
   display: grid;
+  align-content: start;
   justify-items: center;
-  gap: var(--sp-2);
-  filter: grayscale(1);
-  opacity: 0.5;
+  gap: var(--sp-4);
+  padding: var(--sp-6) var(--sp-4) var(--sp-5);
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  text-align: center;
   transition:
-    filter var(--dur-hover) var(--ease),
-    opacity var(--dur-hover) var(--ease);
+    background-color var(--dur-hover) var(--ease),
+    transform var(--dur-hover) var(--ease),
+    box-shadow var(--dur-hover) var(--ease);
 }
-.logos__item:hover {
-  filter: none;
-  opacity: 1;
+/* 누르는 자리가 아니다 — AWS 파트너 디렉터리 주소가 이 저장소에 없어 링크를 걸지
+   않는다(§4-4 추측 URL 금지). 그래서 커서도 바꾸지 않는다: 면이 한 단 떠오르고 이름이
+   진해질 뿐이라 "반응하는 면"으로 읽히고 "눌리는 것"으로 읽히지 않는다.
+   뱃지 그림에는 손대지 않는다 — 회색으로 깔았다가 호버에 원색으로 켜는 연출은
+   AWS 자산을 덧칠하는 일이다. */
+.bg__item:hover {
+  background: var(--bg-band);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lift);
 }
-/* 로고마다 높이가 다르니 눈높이는 이 상자가 맞춘다. */
-.logos__mark {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-2);
-  height: 56px;
+.bg__item:hover .bg__name {
+  color: var(--text-primary);
 }
-/* 심볼-단독 브랜드의 활자 이름 — 로고 흉내(전용 서체·색)를 내지 않는다. */
-.logos__name {
-  font-size: var(--fs-body);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: var(--text-secondary);
-  white-space: nowrap;
+.bg__img {
+  width: 112px;
+  height: 112px;
+  /* 뱃지는 AWS 자산이다. 색을 바꾸거나 덧칠하지 않는다. */
 }
-.logos__tag {
+.bg__name {
   font-size: var(--fs-xs);
-  color: var(--text-muted);
-  white-space: nowrap;
-  opacity: 0;
-  transition: opacity var(--dur-hover) var(--ease);
+  color: var(--text-secondary);
+  line-height: 1.45;
+  max-width: 16ch;
+  transition: color var(--dur-hover) var(--ease);
 }
-.logos__item:hover .logos__tag {
-  opacity: 1;
-}
-/* 손가락으로 보는 화면엔 호버가 없다 — 거기서는 처음부터 원색으로 서 있는다. */
-@media (hover: none) {
-  .logos__item {
-    filter: none;
-    opacity: 1;
+@media (max-width: 1080px) {
+  .bgs {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
-  .logos__tag {
-    opacity: 1;
-  }
-}
-/* 로고별 광학 보정 — 원본 비율이 달라 같은 height 면 크기가 널뛴다(실측).
-   워드마크 캡하이트가 비슷해 보이는 값으로 하나씩 맞추고, 좁은 화면에서는 --logo-k 하나로
-   벌 전체를 같은 비율로 줄인다(430 에서 40px 그대로면 두 장 반만 들어가고 잘린다). */
-.logos__item img {
-  height: calc(var(--logo-h, 40px) * var(--logo-k, 1));
-  width: auto;
-}
-.logos__item--aws {
-  --logo-h: 44px;
-}
-.logos__item--red-hat {
-  --logo-h: 44px;
-}
-.logos__item--sailpoint {
-  --logo-h: 34px;
-}
-/* databricks 공식 배포본은 심볼이 워드마크 위에 얹힌 스택형이라 더 키워야 눈높이가 맞는다. */
-.logos__item--databricks {
-  --logo-h: 56px;
-}
-.logos__item--anthropic {
-  --logo-h: 26px;
-}
-.logos__item--starburst {
-  --logo-h: 25px;
-}
-.logos__item--snowflake {
-  --logo-h: 32px;
-}
-/* openshift·ansible 은 워드마크 없는 심볼 단독 — 활자 이름을 병기하므로
-   아이콘은 살짝만 키운다. */
-.logos__item--openshift {
-  --logo-h: 34px;
-}
-.logos__item--ansible {
-  --logo-h: 34px;
-}
-.logos__item--claude {
-  --logo-h: 26px;
-}@media (max-width: 860px) {
-  .logos {
-    --logo-k: 0.78;
-  }
-  .logos__mark {
-    height: 46px;
-  }
-  .logos__group {
-    gap: clamp(32px, 5vw, 64px);
-    padding-inline-end: clamp(32px, 5vw, 64px);
+  .bg__img {
+    width: 96px;
+    height: 96px;
   }
 }
 @media (max-width: 640px) {
-  .logos {
-    --logo-k: 0.6;
+  .bgs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--sp-3);
   }
-  .logos__mark {
-    height: 38px;
-  }
-  .logos__name {
-    font-size: var(--fs-sm);
-  }
-  .logos__group {
-    gap: var(--sp-7);
-    padding-inline-end: var(--sp-7);
+  .bg__img {
+    width: 88px;
+    height: 88px;
   }
 }
-@keyframes logos-roll {
-  to {
-    translate: -100% 0;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .logos__belt {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: var(--sp-5);
-  }
-  .logos__group {
-    animation: none;
-  }
-  .logos__group[aria-hidden="true"] {
-    display: none;
-  }
-}
+/* 손가락으로 보는 화면엔 호버가 없다 — 거기서는 처음부터 원색으로 서 있는다. */
 
 /* 대표 1 + 보조 n(§11.7·11.8). 같은 크기로 늘어놓지 않는다. */
 .editorial {
@@ -3446,6 +2851,47 @@ a.tile:hover .tile__glyph {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* ── 실물 화면 한 판(.shot) ───────────────────────────────
+   찍어 온 제품 화면이다. .media 와 달리 잘라내지 않는다(object-fit: cover 없음) —
+   화면은 사진이 아니라 정보라, 가장자리를 자르면 사이드바나 수치가 사라진다.
+   비율도 고정하지 않는다: 그림이 제 비율로 서고 액자가 거기 맞춘다.
+
+   바탕을 옅은 면으로 깔고 안쪽에 여백을 준다. 스크린샷은 대개 흰 바탕이라
+   흰 섹션 위에 그냥 얹으면 어디까지가 화면인지 경계가 사라진다. */
+.shot {
+  margin: var(--sp-6) 0 0;
+  padding: var(--sp-4);
+  border-radius: var(--radius-lg);
+  background: var(--bg-band);
+}
+.shot__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+}
+.shot__cap {
+  margin-top: var(--sp-4);
+  font-size: var(--fs-xs);
+  line-height: 1.6;
+  color: var(--text-faint);
+}
+/* 좁은 화면에서 화면 캡처를 폭에 맞춰 우겨넣으면 사이드바 글자와 수치가 뭉개진다 —
+   읽을 수 없는 그림은 근거가 아니다. 폭을 지켜 두고 액자 안에서 가로로 민다.
+   캡션은 같이 밀리면 안 되므로 스크롤 상자 밖에 남는다. */
+@media (max-width: 640px) {
+  .shot {
+    padding: var(--sp-2);
+  }
+  .shot__img {
+    min-width: 680px;
+  }
+  .shot__pan {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 .lead {
@@ -3509,7 +2955,7 @@ a.tile:hover .tile__glyph {
     inset-inline: 0;
     top: 9px;
     height: 1px;
-    background: var(--border-hair);
+    background: var(--rule-track);
   }
 }
 .tl__step {
@@ -3572,50 +3018,19 @@ a.tile:hover .tile__glyph {
   color: var(--text-muted);
 }
 
-/* ── 사업별 로컬 액센트 — 명세 §7 ────────────────────── */
-/* 파트너 색이 Saltware 브랜드를 침범하지 않게, eyebrow·화살표·얇은 강조선에만 쓴다.
-   버튼과 링크는 브랜드 액센트(주황 글자 · 잉크 버튼)를 유지한다. */
-/* --accent-local 은 글자에만 쓴다. Cloud 의 파랑(#0071e3)은 회색 밴드 위에서
-   4.31:1 이라 글자로는 모자란다 — 색면용 값은 그대로 두고 글자는 브랜드 글자색을 쓴다. */
-.bu--cloud {
-  --accent-local: var(--c-accent-550);
-}
-.bu--data-ai {
-  --accent-local: var(--accent-data-ai);
-}
-.bu--databricks {
-  --accent-local: var(--accent-databricks);
-}
-.bu--identity {
-  --accent-local: var(--accent-identity);
-}
-.bu--redhat {
-  --accent-local: var(--accent-redhat);
-}
-.bu--enview {
-  --accent-local: var(--accent-enview);
-}
-.bu--smart-farm {
-  --accent-local: var(--accent-smart-farm);
-}
-/* 솔루션 상세 두 장은 상위 사업의 색을 물려받는다 —
-   이게 없으면 9개 중 둘만 기본 파랑으로 떨어져 나온다. */
-.bu--sailpoint {
-  --accent-local: var(--accent-identity);
-}
-.bu--cloud-hybrid {
-  --accent-local: var(--c-accent-550);
-}
-
-.bu .eyebrow,
+/* ── 사업 상세의 액센트 ────────────────────────────────
+   명세 §7 의 "사업별 로컬 액센트"(파트너 색을 eyebrow 에 쓰던 벌)를 걷었다
+   (2026-09-13). 회사소개·인사이트·홈이 전부 브랜드 주황 한 색인데 사업 상세 일곱 장만
+   파랑·빨강·초록으로 갈라져 같은 사이트로 읽히지 않았다 — CLAUDE.md §4-3 의
+   "팔레트는 주황 · 그레이 · 블랙 셋"이 이 자리에도 걸린다.
+   --accent-local 을 아무도 주지 않으므로 아래 넷은 --text-accent 로 떨어진다.
+   색면 안에서는 그 토큰이 --c-brand-dot 을 가리켜 어두운 면 위에서도 주황이다. */
 .bu .step__no,
 .bu .flow__label,
 .bu .tl__no {
   color: var(--accent-local, var(--text-accent));
 }
-.bu .section--inverse .eyebrow {
-  color: var(--text-on-inverse);
-}
+
 
 /* 컴포넌트가 display 를 선언하면 hidden 속성이 무시된다.
    파일 맨 끝에 두어 같은 특정도에서 이 규칙이 이긴다. */
@@ -3637,408 +3052,7 @@ a.tile:hover .tile__glyph {
 .section--center .footnote {
   text-align: center;
 }
-.rail__kicker {
-  font-size: var(--fs-label);
-  font-weight: 600;
-  letter-spacing: var(--tracking-label);
-  color: var(--text-accent);
-}
-
-/* 표지 · 분류 · 제목 · 링크. 글 목록의 생김새 — 데이터브릭스 스포트라이트의
-   문법(사령관 요청 2026-09-04): 상자 없이 표지가 위, 작은 분류, 제목, 화살표 링크.
-   제목은 섹션 머리가 가운데(section--center)라 격자만 전폭이다. */
-/* 대표 하나 + 줄 카드 — 프로젝트 뉴스와 인사이트가 같이 쓴다(사령관 시안 2026-09-08).
-   왼쪽 대표가 오른쪽 줄 전체와 같은 높이로 선다: 대표는 세로로 늘고 남는 높이는 표지가 먹는다.
-   그래서 줄 수가 둘이든 넷이든 두 열의 바닥이 어긋나지 않는다.
-   카드 마크업은 대표와 줄이 같다 — 거를 때 클래스만 바꿔 첫 장을 대표로 올린다(filters.mjs). */
-.stories {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
-  gap: var(--gap-tile);
-  align-items: stretch;
-}
-/* 줄 카드는 따로 담는다 — 한 격자에 평평하게 두고 대표에 grid-row:1/-1 을 주면
-   암시 행에서 -1 이 첫 행을 가리켜 첫 줄 카드가 대표 높이만큼 늘어난다(실측). */
-.stories__side {
-  display: grid;
-  align-content: start;
-  gap: var(--gap-tile);
-  min-width: 0;
-}
-/* 남은 줄이 둘 이상일 때만 남는 높이를 나눠 갖는다 — 위로 몰아 두면 오른쪽 바닥이 대표보다
-   186px 먼저 끝나고(인사이트, 실측 1440), 한 장만 남았을 때 늘리면 그 한 장이 700px 로
-   길어져 글 밑이 통째로 빈다(칩으로 거른 뒤). 줄이 넷이면 반대로 대표 표지가 늘어난다. */
-.stories__side:has(.story:not([hidden]) ~ .story:not([hidden])) {
-  align-content: stretch;
-}
-.story {
-  display: flex;
-  min-width: 0;
-  border: 1px solid var(--border-hair);
-  border-radius: var(--radius-lg);
-  background: var(--bg-card);
-  overflow: hidden;
-  color: inherit;
-  text-decoration: none;
-  transition:
-    transform var(--dur-hover) var(--ease),
-    border-color var(--dur-hover) var(--ease);
-}
-.story[hidden] {
-  display: none;
-}
-a.story:hover {
-  transform: translateY(-3px);
-  border-color: var(--border-accent);
-}
-.story--lead {
-  flex-direction: column;
-}
-.story__cover {
-  display: block;
-  overflow: hidden;
-  background: var(--bg-band);
-  flex: none;
-}
-.story--lead .story__cover {
-  flex: 1 1 auto;
-  min-height: 200px;
-  /* 남는 높이를 표지가 먹되 카드의 78% 를 넘지 않는다 — 비율로 고정하면 글 칸 밑이 통째로
-     비었고(실측 1440, 줄 넷), 상한이 없으면 사진만 660px 로 길어졌다. */
-  max-height: 78%;
-}
-.story--row .story__cover {
-  width: 38%;
-  align-self: stretch;
-}
-.story__cover img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  filter: var(--art-tone);
-}
-.story__body {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-2);
-  padding: var(--sp-5);
-  min-width: 0;
-  flex: 1 1 auto;
-}
-.story--row .story__body {
-  padding: var(--sp-4) var(--sp-5);
-}
-/* 대표는 글 칸을 안 늘린다 — 표지와 글 칸이 남는 높이를 반씩 나눠 먹어서
-   글 밑에 빈 칸이 70px 남았다(실측 1440). 남는 높이는 표지 몫이다. */
-.story--lead .story__body {
-  flex: 0 0 auto;
-}
-.story__tag {
-  font-size: var(--fs-label);
-  font-weight: 600;
-  letter-spacing: var(--tracking-label);
-  color: var(--text-accent);
-}
-.story__title {
-  font-size: var(--fs-body);
-  font-weight: 700;
-  line-height: 1.4;
-  letter-spacing: var(--tracking-tight);
-  color: var(--text-primary);
-}
-.story--lead .story__title {
-  font-size: var(--fs-h4);
-  line-height: 1.35;
-}
-.story__desc {
-  font-size: var(--fs-sm);
-  line-height: 1.55;
-  color: var(--text-muted);
-  /* 두 줄로 자른다 — 글 길이가 제각각이라 그대로 두면 줄 카드 높이가 들쭉날쭉해진다. */
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-/* 날짜는 왼쪽, 행동은 오른쪽 끝 — 카드 바닥에 붙는다. */
-.story__foot {
-  margin-top: auto;
-  padding-top: var(--sp-2);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--sp-3);
-}
-.story__date {
-  font-size: var(--fs-xs);
-  color: var(--text-faint);
-  font-variant-numeric: tabular-nums;
-}
-.story__more {
-  margin-left: auto;
-  font-size: var(--fs-xs);
-  font-weight: 600;
-  color: var(--text-accent);
-}
-a.story:hover .story__more {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
 /* 좁은 폭 — 한 열, 전부 세로 카드. 줄 카드의 38% 표지는 여기서 너무 작아진다. */
-@media (max-width: 860px) {
-  .stories {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--sp-4);
-  }
-  .stories__side {
-    gap: var(--sp-4);
-  }
-  .story--row .story__cover {
-    width: 34%;
-  }
-  .story--lead .story__cover {
-    min-height: 0;
-    aspect-ratio: var(--cover-ratio);
-  }
-}
-@media (max-width: 640px) {
-  .story--row {
-    flex-direction: column;
-  }
-  .story--row .story__cover {
-    width: 100%;
-    aspect-ratio: var(--cover-ratio);
-  }
-  .story--lead .story__title {
-    font-size: var(--fs-body);
-  }
-}
-
-/* 표지를 위에 얹은 같은 크기 카드 여러 장 — 인사이트(사령관 시안 2026-09-08 두 번째 장).
-   대표를 두지 않는다: 인사이트는 서열이 아니라 갈래라 무엇부터 읽으라고 말할 것이 없다.
-   장 수를 세지 않는다 — auto-fit 이 아니라 셋·넷 어느 쪽이든 한 줄로 세운다. */
-.briefs {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(0, 1fr);
-  gap: var(--gap-tile);
-  align-items: stretch;
-}
-.brief {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  border: 1px solid var(--border-hair);
-  border-radius: var(--radius-lg);
-  background: var(--bg-card);
-  overflow: hidden;
-  color: inherit;
-  text-decoration: none;
-  transition:
-    transform var(--dur-hover) var(--ease),
-    border-color var(--dur-hover) var(--ease);
-}
-a.brief:hover {
-  transform: translateY(-3px);
-  border-color: var(--border-accent);
-}
-.brief__cover {
-  display: block;
-  aspect-ratio: var(--cover-ratio);
-  overflow: hidden;
-  background: var(--bg-band);
-}
-.brief__cover img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  filter: var(--art-tone);
-}
-.brief__body {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-2);
-  padding: var(--sp-5);
-  flex: 1 1 auto;
-  min-width: 0;
-}
-.brief__tag {
-  font-size: var(--fs-label);
-  font-weight: 600;
-  letter-spacing: var(--tracking-label);
-  color: var(--text-accent);
-}
-.brief__title {
-  font-size: var(--fs-body);
-  font-weight: 700;
-  line-height: 1.4;
-  letter-spacing: var(--tracking-tight);
-  color: var(--text-primary);
-}
-.brief__desc {
-  font-size: var(--fs-sm);
-  line-height: 1.55;
-  color: var(--text-muted);
-  /* 세 줄로 자른다 — 글 길이가 제각각이라 그대로 두면 배지 줄이 카드마다 어긋난다. */
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-/* 그 카드가 내놓는 숫자·자격 한 마디. 태그라 각지게 간다(§4-3 pill 은 동작 버튼에만). */
-.brief__badge {
-  align-self: start;
-  margin-top: auto;
-  padding: var(--sp-1) var(--sp-3);
-  border-radius: var(--radius-sm);
-  background: var(--bg-accent);
-  color: var(--text-accent);
-  font-size: var(--fs-xs);
-  font-weight: 600;
-}
-@media (max-width: 860px) {
-  .briefs {
-    grid-auto-flow: row;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--sp-4);
-  }
-}
-@media (max-width: 640px) {
-  .briefs {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-
-/* 칸마다 크기가 다른 격자. 대표 숫자가 두 칸을 먹는다. */
-.bento {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  grid-template-areas:
-    "lead lead a a"
-    "lead lead b b"
-    "c c d e";
-  gap: var(--gap-tile);
-}
-.bento__cell {
-  position: relative;
-  overflow: hidden;
-  background: var(--bg-band);
-  border-radius: var(--radius-xl);
-  padding: var(--sp-6);
-  display: grid;
-  gap: var(--sp-4);
-  align-content: start;
-}
-/* lead 만 2행이라 start 로 두면 아래 절반이 빈 채로 남는다(실측 1440) — 수는 위, 글은 바닥.
-   나머지 칸은 start 그대로다. 한 줄짜리 칸까지 벌리면 수와 이름 사이가 도리어 벌어졌다. */
-.bento__cell--0 {
-  align-content: space-between;
-}
-/* 가장 큰 수 하나만 검은 면을 받는다(사령관 벤치마킹 2026-09-07 — 애플은 한 장만 어둡다).
-   여섯 칸이 다 같은 회색이면 격자만 보이고 수가 안 보인다. */
-.bento__cell--0 {
-  background: var(--bg-inverse);
-  color: var(--text-on-inverse);
-  isolation: isolate;
-}
-/* 결정 입자 밭 — 검은 면 위에 옅은 입자를 깔고 왼쪽 위에서 빛 한 줄기. 결정 숫자가 이 밭에서
-   맺힌다(감도/ 레퍼런스의 무드를 팔레트 안에서). 밭의 간격(11px)은 숫자 입자 간격(~14px)보다
-   촘촘해 격자가 아니라 질감으로 읽힌다 — 같은 간격이면 어긋난 두 격자가 무늬를 만든다.
-   아래로 갈수록 사라져 라벨은 맨 검정 위에 앉는다. */
-.bento__cell--0::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background-image:
-    radial-gradient(ellipse 70% 55% at 18% 12%, var(--bg-inverse-glow), transparent),
-    radial-gradient(circle, var(--bg-inverse-field) 1.1px, transparent 1.7px);
-  background-size:
-    100% 100%,
-    11px 11px;
-  mask-image: linear-gradient(to bottom, #000 30%, transparent 80%);
-  pointer-events: none;
-}
-.bento__cell--0 .bento__unit {
-  color: var(--text-accent-on-inverse);
-}
-.bento__cell--0 .bento__desc {
-  color: var(--text-on-inverse-muted);
-}
-.bento__cell--0 {
-  grid-area: lead;
-}
-.bento__cell--1 {
-  grid-area: a;
-}
-.bento__cell--2 {
-  grid-area: b;
-}
-.bento__cell--3 {
-  grid-area: c;
-}
-.bento__cell--4 {
-  grid-area: d;
-}
-.bento__cell--5 {
-  grid-area: e;
-}
-.bento__num {
-  font-size: var(--fs-display);
-  font-weight: 700;
-  letter-spacing: var(--tracking-tight);
-  line-height: 1;
-  /* 2003 · 2022 · 200 이 같은 자릿폭으로 서야 여섯 칸이 한 표로 읽힌다. */
-  font-variant-numeric: tabular-nums;
-}
-.bento__foot {
-  display: grid;
-  gap: var(--sp-1);
-}
-.bento__cell--0 .bento__num {
-  font-size: var(--fs-hero);
-}
-/* 결정 숫자 — 소금 입자로 조판한 대표 수(사령관 2026-09-10 "솔트의 분자 로고로 차별화").
-   활자가 아니라 도형이라 font-size 가 안 먹는다 — 높이로 잰다. 72px 아래로는 입자가
-   뭉개져 숫자가 아니라 질감으로 읽혀(크기 사다리 실측) 그 아래로 안 내려간다.
-   앰버 한 덩어리로 세웠더니 카드를 다 먹었다 — 수는 흰색이고 단위(+)만 앰버다.
-   활자 칸(.bento__unit)이 이미 쓰던 문법 그대로다. */
-.bento__num--dots {
-  display: block;
-}
-.bento__dots {
-  display: block;
-  color: var(--text-on-inverse);
-}
-.dotnum__unit {
-  color: var(--text-accent-on-inverse);
-}
-/* 크기는 활자 --fs-hero(88px)보다 한 단 아래 — 입자는 활자보다 크게 보인다(사령관 "좀만 더 줄여").
-   상한 76px 은 사령관 캡처 실측(카드 폭의 18%). 하한 64: 사다리에서 56 은 질감, 72 는 확실한
-   숫자였다 — 폰은 2x 이상이라 그 사이로 둔다. */
-.bento__dots svg {
-  display: block;
-  width: auto;
-  height: clamp(64px, 5.3vw, 76px);
-}
-/* 카카오 임팩트 실측 — 큰 수 옆의 작은 단위 첨자. */
-.bento__unit {
-  font-size: 0.35em;
-  font-weight: 600;
-  margin-left: 0.15em;
-  color: var(--text-secondary);
-}
-.bento__label {
-  font-size: var(--fs-h4);
-  font-weight: 600;
-}
-.bento__desc {
-  font-size: var(--fs-sm);
-  color: var(--text-muted);
-}
 
 /* 왼쪽 제목 + 오른쪽 본체. 벤토와 모자이크가 함께 쓴다. */
 .split {
@@ -4054,13 +3068,6 @@ a.brief:hover {
 @media (max-width: 1080px) {
   .split {
     grid-template-columns: minmax(0, 1fr);
-  }
-  /* 세로 리듬 · 섹션 머리 · 큰 컷은 폰·태블릿에서만 조인다(17차 판정 — 데스크톱은 그대로). */
-  .home {
-    --home-gap: clamp(36px, 3.8vw, 52px);
-  }
-  .home .section__head {
-    margin-bottom: var(--sp-5);
   }
 }
 @media (max-width: 640px) {
@@ -4081,33 +3088,6 @@ a.brief:hover {
     grid-template-columns: minmax(0, 1fr);
     align-items: stretch;
   }
-  .bento {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: "lead" "a" "b" "c" "d" "e";
-  }
-}
-
-/* 레퍼런스는 섹션을 선으로 자르지 않는다. 배경과 여백이 구분을 맡는다.
-   메인에만 적용한다 — 하위 페이지는 지금의 hairline 구분을 유지한다. */
-/* 홈 세로 리듬 — 값 하나(--home-gap)로 통일한다(사령관 "전체 간격 최적화" 2026-09-04).
-   위·아래가 같은 값이라 섹션 사이는 그 두 배(데스크톱 120)다. 이전엔 72+72 에
-   밴드가 컨테이너 패딩까지 겹쳐 248px 로 벌어졌다(실측 1440). */
-.home {
-  --home-gap: clamp(40px, 4.6vw, 60px);
-}
-.home .section > .container {
-  border-top: 0;
-  padding-top: var(--home-gap);
-}
-.home .section {
-  padding-bottom: var(--home-gap);
-}
-/* 밴드는 자기 안쪽 여백만 갖는다 — 바깥 패딩은 앞 섹션의 아래 여백이 맡는다. */
-.home .section--band {
-  padding-block: clamp(56px, 6vw, 80px);
-}
-.home .section--band > .container {
-  padding-top: 0;
 }
 /* 마무리는 가운데로 모은다. 레퍼런스의 밴드가 그렇게 생겼다. */
 .section--focus > .container {
@@ -4121,29 +3101,16 @@ a.brief:hover {
   justify-content: center;
 }
 
-/* 메인의 대표 사례 자리도 같은 색면으로 둔다. 회색 빈 액자 하나만 다른 언어로
-   남으면 페이지가 두 벌로 보인다. 하위 페이지의 media 는 그대로다. */
-.home .media {
-  background: linear-gradient(
-    140deg,
-    var(--bg-inverse),
-    var(--accent-databricks)
-  );
-  color: var(--text-on-inverse);
-  opacity: 0.92;
-}
-
 /* ── 어두운 면 위의 글자 ────────────────────────────────
    라이트 한 벌만 두기 때문에 --text-muted·--text-accent 가
    #1d1d1f 위에 그대로 얹히면 3.3:1 로 가라앉는다. 표면이 뒤집히는
    곳에서만 글자색도 함께 뒤집는다. */
 .section--inverse .lede,
-.section--inverse p,
+.section--inverse p:not(.eyebrow),
 .section--inverse .card__desc,
 .section--inverse .footnote {
   color: var(--text-on-inverse-muted);
 }
-.section--inverse .eyebrow,
 .section--inverse .step__no {
   color: var(--text-accent-on-inverse);
 }
@@ -4157,83 +3124,6 @@ a.brief:hover {
      hover 하는 순간 읽히지 않는다. 어두운 면에서는 배경을 건드리지 않는다. */
   background: transparent;
 }
-/* 채운 버튼은 어두운 면 위에서 흰 바탕으로 뒤집는다 — 파란 채움은 3.6:1 이다. */
-.section--inverse .btn--solid {
-  background: var(--c-white);
-  border-color: var(--c-white);
-  color: var(--text-primary);
-}
-.section--inverse .btn--solid:hover {
-  background: var(--c-neutral-200);
-  border-color: var(--c-neutral-200);
-}
-
-/* ── 사업 상세 — 히어로 비주얼 ──────────────────────────
-   사진도 제품 화면도 없다. 그릴 수 있는 것은 이 페이지가 이미 말하는
-   서비스 구조뿐이라 그것만 그린다. 자산이 들어오면 이 자리를 그대로 내준다. */
-.hero__grid--solo {
-  grid-template-columns: minmax(0, 1fr);
-  max-width: 62ch;
-}
-.hv {
-  margin: 0;
-  display: grid;
-  gap: var(--sp-5);
-}
-.hv__flow {
-  display: grid;
-  gap: var(--sp-3);
-  list-style: none;
-  counter-reset: none;
-}
-.hv__node {
-  position: relative;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  column-gap: var(--sp-4);
-  align-items: baseline;
-  padding: var(--sp-4) var(--sp-5);
-  border-radius: var(--radius-md);
-  background: var(--bg-card);
-  border: 1px solid var(--border-hair);
-}
-/* 단계 사이를 잇는 선. 마지막 마디에는 긋지 않는다. */
-.hv__node::after {
-  content: "";
-  position: absolute;
-  left: calc(var(--sp-5) + 0.9em);
-  top: 100%;
-  height: var(--sp-3);
-  width: 1px;
-  background: var(--border-strong);
-}
-.hv__node:last-child::after {
-  display: none;
-}
-.hv__seq {
-  font-size: var(--fs-2xs);
-  font-weight: 700;
-  letter-spacing: var(--tracking-label);
-  color: var(--accent-local, var(--text-accent));
-  font-variant-numeric: tabular-nums;
-}
-.hv__name {
-  font-size: var(--fs-body);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-.hv__hint {
-  grid-column: 2;
-  font-size: var(--fs-xs);
-  color: var(--text-muted);
-  margin-top: 2px;
-}
-.hv__caption {
-  font-size: var(--fs-xs);
-  color: var(--text-muted);
-  padding-left: var(--sp-5);
-}
-
 /* ── 사업 상세 어휘 — Cloud 에서 먼저 쓴다 ───────────────
    layout 값으로 사업이 골라 쓰므로 다른 사업 화면은 그대로다.
    카드가 아닌 구성을 섞어 흰 사각형이 반복되지 않게 한다. */
@@ -4284,7 +3174,7 @@ a.brief:hover {
   gap: var(--sp-4);
   align-content: start;
   padding-top: var(--sp-5);
-  border-top: 1px solid var(--border-strong);
+  border-top: 1px solid var(--rule-track);
 }
 /* 단계 사이의 진행 표시. 마지막 칸에는 두지 않는다. */
 .stage::before {
@@ -4479,10 +3369,10 @@ a.brief:hover {
 .onward__links .card__more {
   font-size: var(--fs-sm);
   font-weight: 500;
-  color: var(--text-secondary);
 }
 .onward__links .card__more:hover {
-  color: var(--text-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 /* 사업 상세의 마무리. 제목과 설명이 붙어 있어 한 덩어리로 읽히던 것을 띄운다. */
@@ -4508,7 +3398,7 @@ a.brief:hover {
   border-top: 0;
 }
 .section--deep .eyebrow {
-  color: var(--deep-accent, var(--text-accent-on-inverse));
+  color: var(--text-on-inverse);
 }
 .section--deep .lede,
 .section--deep .footnote {
@@ -4594,12 +3484,9 @@ html.js-reveal [data-reveal]:not(.is-in) > * {
   opacity: 0;
   translate: 0 20px;
 }
-.story__cover img,
-.brief__cover img,
-.rail__img {
-  transition: scale 0.9s var(--ease);
-}
-html.js-reveal [data-reveal]:not(.is-in) :is(.story__cover img, .brief__cover img, .rail__img) {
+html.js-reveal
+  [data-reveal]:not(.is-in)
+  :is(.story__cover img, .brief__cover img, .rail__img) {
   scale: 1.06;
 }
 .sol,
@@ -4617,34 +3504,7 @@ html.js-reveal [data-reveal]:not(.is-in) :is(.story__cover img, .brief__cover im
   transform: translateY(-3px);
   box-shadow: var(--shadow-lift);
 }
-:is(.story, .brief, .rail__card):hover :is(.story__cover img, .brief__cover img, .rail__img) {
-  scale: 1.04;
-}
-/* 히어로 제목은 구절 단위로, 리드가 그 뒤를 잇는다. 카드(hcard)는 제 규칙대로 온다. */
-.hero__w {
-  display: inline-block;
-  animation: hero-in 0.7s var(--ease) both;
-}
-.hero__w:nth-of-type(2) {
-  animation-delay: 110ms;
-}
-.hero__w:nth-of-type(3) {
-  animation-delay: 220ms;
-}
-.hero--home .hero__lede {
-  animation: hero-in 0.7s var(--ease) 260ms both;
-}
-@keyframes hero-in {
-  from {
-    opacity: 0;
-    translate: 0 18px;
-  }
-}
 @media (prefers-reduced-motion: reduce) {
-  .hero__w,
-  .hero--home .hero__lede {
-    animation: none;
-  }
   :is(.sol, .story, .brief, .tile, .rail__card):hover {
     transform: none;
   }
@@ -4657,8 +3517,8 @@ html.js-reveal [data-reveal]:not(.is-in) :is(.story__cover img, .brief__cover im
    화면에 있어서 reveal.mjs 가 js-reveal(닫힘)을 붙인 프레임 안에서 IntersectionObserver 가
    is-in(열림)까지 전달한다. IO 콜백은 페인트 직전 렌더링 단계에서 돌기 때문이다. 닫힌 상태가
    한 번도 그려지지 않으니 전이가 출발할 자리가 없다(실측 2026-09-09: 아무 동작 없음).
-   그래서 이 저장소의 첫 화면 모션은 전부 keyframes 다 — 히어로 제목(hero-in), 히어로
-   카드(hcard-in). 같은 문법을 쓴다.
+   그래서 이 저장소의 첫 화면 모션은 전부 keyframes 다 — 히어로 제목(hero-in), 히어로 카드(hcard-in).
+   같은 문법을 쓴다.
 
    both 라서 늦춤 220ms 동안 from 이 유지된다 — 그림이 폭을 다 쓴 채로 잠깐 서 있다가
    열린다. grid-template-columns 를 못 받는 브라우저는 갈린 상태로 곧장 선다. */
@@ -4684,5 +3544,144 @@ html.js-reveal [data-reveal]:not(.is-in) :is(.story__cover img, .brief__cover im
   .feat,
   .feat__side {
     animation: none;
+  }
+}
+
+/* ── 지면 머리 띠 — 기술 역량 · IR · 인재채용 · 찾아오시는 길 ─────────
+   네 지면이 같은 머리를 쓴다(사령관 2026-09-13 "히어로 쪽 레이아웃 공통화").
+   조판은 partials/primitives.mjs 의 pageBanner 다.
+
+     지면 이름(h1)            — 큰 활자 한 줄. 그림 위가 아니라 그림 앞에 선다.
+     모서리 둥근 가로 그림     — 3:1. 왼쪽 아래에 눈썹 + 문장이 흰 글로 얹힌다.
+     리드                     — 그림 아래, 검은 글.
+
+   그림이 없는 판은 .pbanner--bare 다 — 눈썹 → 문장(h1) → 리드 세 줄뿐이다.
+   지금 넉 장이 다 이쪽이다(사령관 2026-09-13 "소개 빼고는 배너 필요 없을 것 같아").
+
+   시트를 지면마다 따로 두지 않고 여기 둔다 — 네 지면이 서로 다른
+   시트를 부르는데(careers.css · location.css · capabilities.css · 없음)
+   한 군데에 있어야 넷이 같이 움직인다.
+
+   행동 버튼은 여기 두지 않는다. 네 지면 모두 맺음 띠에 제 CTA 가 이미 있어서
+   머리에 또 두면 같은 버튼이 한 지면에 둘이 된다. */
+.pbanner {
+  padding-top: var(--hero-pt);
+  padding-bottom: var(--sp-7);
+}
+/* 띠 아래 칸 — 맺음 띠가 없는 지면의 행동 버튼이 여기 앉는다(브랜드 한 장).
+   컨테이너 안이라 지면의 좌우 여백을 그대로 따르고, 띠와는 한 칸 띄운다. */
+.pbanner__after {
+  margin-top: var(--sp-6);
+}
+.pbanner__name {
+  font-size: var(--fs-display);
+  font-weight: 700;
+  letter-spacing: var(--tracking-display);
+  line-height: var(--lh-display);
+  color: var(--text-primary);
+  margin: 0 0 var(--sp-5);
+}
+/* 그림 판. 자산이 아직 임시라(media/hero/banner-*.jpg) 바탕색을 깔아 둔다 —
+   그림이 늦게 뜨는 동안 흰 구멍이 아니라 어두운 판이 보인다. */
+.pbanner__art {
+  position: relative;
+  isolation: isolate;
+  margin: 0;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  aspect-ratio: 3 / 1;
+  background-color: var(--bg-inverse);
+}
+.pbanner__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+/* 가림막 — 글이 앉는 왼쪽 아래만 누른다. 판 전체를 덮으면 그림이 탁해진다. */
+.pbanner__art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    76deg,
+    rgba(12, 12, 14, 0.62) 0%,
+    rgba(12, 12, 14, 0.3) 42%,
+    rgba(12, 12, 14, 0) 72%
+  );
+}
+/* 밝은 판 — 가림막을 걷는다(primitives.mjs 의 scrim: false). 흰 판 위에 가림막을 걸면
+   왼쪽이 회색으로 물들어 얼룩이 된다. 가림막이 없으니 눈썹은 검은 판용 색을 못 쓴다. */
+.pbanner__art--nodim::after {
+  content: none;
+}
+.pbanner__art--nodim .pbanner__eyebrow {
+  color: var(--text-primary);
+}
+.pbanner__say {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+  display: grid;
+  gap: var(--sp-2);
+  padding: clamp(24px, 3.4vw, 48px);
+  max-width: 46ch;
+}
+.pbanner__eyebrow {
+  margin: 0;
+  font-size: var(--fs-label-caps);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-on-inverse);
+}
+.pbanner__line {
+  margin: 0;
+  font-size: clamp(21px, 2.5vw, 34px);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.34;
+  color: var(--c-white);
+}
+/* 그림이 없는 판 — 눈썹이 이름 위로 올라오고, 문장이 h1 자리를 가져간다.
+   흰 글이 앉을 어두운 면이 없으므로 색은 둘 다 검은 판의 것으로 돌아간다. */
+.pbanner--bare .pbanner__eyebrow {
+  color: var(--text-primary);
+  margin-bottom: var(--sp-3);
+}
+.pbanner--bare .pbanner__name {
+  margin-bottom: 0;
+  max-width: 22ch;
+}
+.pbanner__lede {
+  margin: var(--sp-5) 0 0;
+  font-size: var(--fs-lede);
+  line-height: var(--lh-lede);
+  color: var(--text-secondary);
+  max-width: 62ch;
+}
+/* 좁은 화면 — 3:1 을 그대로 두면 판이 손가락 두 마디 높이가 되고 그 안의 글이
+   두 줄을 못 넘긴다. 판을 세로로 키워 문장이 들어갈 자리를 만든다.
+   16:10 까지만 세운다 — 더 세우면 object-fit: cover 가 가로 원본의 좌우를 크게
+   잘라내 오른쪽 무늬가 반만 남는다(390px 실측). */
+@media (max-width: 860px) {
+  .pbanner {
+    padding-top: var(--sp-7);
+  }
+  .pbanner__art {
+    aspect-ratio: 16 / 10;
+    border-radius: var(--radius-lg);
+  }
+  .pbanner__art::after {
+    background: linear-gradient(
+      to top,
+      rgba(12, 12, 14, 0.72) 0%,
+      rgba(12, 12, 14, 0.34) 46%,
+      rgba(12, 12, 14, 0) 78%
+    );
+  }
+  .pbanner__say {
+    max-width: none;
+    right: 0;
   }
 }

@@ -1,0 +1,179 @@
+/* 오시는 길 지면 전용 — /company/location 하나만 받는다(pages/company.mjs 의 styles).
+ *
+ * 결은 kbanknow.com/web/about/kbank/info?tab=location 을 참고했다(사령관 2026-09-13
+ * "이 링크 레이아웃 참고해서 오시는 길 똑같은 와이어프레임"). 그쪽에서 가져온 것은
+ * 형태뿐이다:
+ *   · 전부 왼쪽 정렬이고 글 기둥 하나다(가운데 정렬도 2단도 없다).
+ *   · 판을 흰/회색으로 번갈아 깔지 않는다 — 덩이를 가르는 것은 여백뿐이다.
+ *   · 상자 격자가 없다. 정보는 "라벨│값" 한 줄로 선다.
+ *   · 지도만 전폭이고, 그 아래 얇은 막대에 지도 서비스로 나가는 링크가 붙는다.
+ *
+ * KB 의 본문 기둥은 1080px 이다. 이 사이트의 --container 는 1400~1800px 이라 그대로
+ * 쓰면 라벨과 값이 양끝으로 벌어진다 — 기둥 폭을 따로 접는다(--lo-col).
+ *
+ * 색은 semantic 토큰만 쓴다(primitive 직접 참조 금지 — design-system 규약 2026-09-12,
+ * 반경은 tokens.css 의 단만 쓴다 — spec 시험이 잡는다).
+ */
+
+.lo {
+  --lo-col: 1080px;
+}
+
+/* 머리는 이 파일에 없다. 회사 하위 넉 장(기술 역량 · IR · 인재채용 · 찾아오시는 길)이
+   같은 머리 띠(.pbanner)를 쓰기로 하면서 규칙이 components.css 로 옮겨 갔다
+   (사령관 2026-09-13 "히어로 쪽 레이아웃 공통화"). */
+
+/* ── 덩이 ──────────────────────────────────────────────────
+   세 덩이가 한 면 위에 여백으로만 갈린다(KB 그대로). 덩이 제목은 본문보다 한 단
+   크고, 그 아래 줄 목록이나 지도가 붙는다. */
+.lo {
+  padding-top: 0;
+}
+.lo > .container {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3rem, 1.5rem + 5vw, 5.5rem);
+}
+.lo__block {
+  max-width: var(--lo-col);
+  width: 100%;
+}
+.lo__title {
+  font-size: var(--fs-h3);
+  line-height: 1.3;
+  letter-spacing: var(--tracking-tight);
+  margin: 0 0 var(--sp-5);
+}
+
+/* ── 라벨│값 줄 ───────────────────────────────────────────
+   KB 는 라벨과 값을 flex 로 나란히 둔다. 여기서는 라벨 칸을 고정해 값의 왼쪽 끝을
+   맞춘다 — 줄이 셋 이상이면 값이 들쑥날쑥해 표로 읽히지 않는다(IR 지면에서 같은
+   판정을 받았다). 라벨은 회색, 값은 먹색이고, 누를 수 있는 값만 브랜드 색이다. */
+.lorows {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+.lorow {
+  display: grid;
+  grid-template-columns: minmax(7rem, 11rem) 1fr;
+  gap: var(--sp-4);
+  align-items: baseline;
+}
+.lorow__label {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--text-muted);
+  margin: 0;
+}
+.lorow__value {
+  font-size: var(--fs-lede);
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--text-primary);
+  margin: 0;
+}
+.lorow__link {
+  color: var(--text-accent);
+  text-decoration: none;
+}
+.lorow__link:hover,
+.lorow__link:focus-visible {
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  /* 좁은 화면에서 라벨 칸을 고집하면 값이 두세 글자씩 꺾인다. 줄을 위아래로 접는다. */
+  .lorow {
+    grid-template-columns: 1fr;
+    gap: var(--sp-1);
+  }
+}
+
+/* ── 지도 판 ───────────────────────────────────────────────
+   액자 안은 회사가 쓰던 약도 그림이고, 누르면 네이버 지도의 장소 항목으로 간다
+   (데이터의 map.href — place id 12122811). 살아 있는 지도는 NCP 키가 있어야 붙는다
+   (locked). 그날이 오면 .lomap__frame 안만 바뀌고 판의 형태는 그대로다.
+
+   막대는 KB 의 지도 아래 줄(로드뷰 · 길찾기 · 크게 보기)과 같은 자리다. */
+.lomap {
+  margin: 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--bg-card);
+}
+.lomap__frame {
+  display: grid;
+  place-items: center;
+  background: var(--bg-band);
+  text-align: center;
+}
+/* 약도는 액자를 가로로 꽉 채운다. 앞 장은 700×800 세로 그림이라 가운데 455px 만
+   차지했다(사령관 2026-09-13 "왜 100%가 아니냐") — 1600×620 가로 SVG 로 다시 그렸고,
+   벡터라 1080px 로 늘려도 글자가 뭉개지지 않는다. 비율은 그림이 제 viewBox 로 정한다. */
+.lomap__img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+a.lomap__frame {
+  position: relative;
+  text-decoration: none;
+}
+a.lomap__frame:hover .lomap__img,
+a.lomap__frame:focus-visible .lomap__img {
+  opacity: 0.92;
+}
+/* 나가는 표시. 액자 오른쪽 아래에 떠 있고, 어디로 가는지 글로 적는다(§30).
+   그림 위가 아니라 액자 모서리에 앉으므로 약도의 글자를 가리지 않는다. */
+.lomap__go {
+  position: absolute;
+  right: var(--sp-4);
+  bottom: var(--sp-4);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--sp-1);
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+}
+a.lomap__frame:hover .lomap__go,
+a.lomap__frame:focus-visible .lomap__go {
+  color: var(--text-accent);
+}
+/* 그림이 빠졌을 때의 물러설 자리. 이때만 액자가 제 높이를 갖는다. */
+.lomap__addr {
+  padding: var(--sp-6);
+  min-height: clamp(220px, 26vw, 400px);
+  display: grid;
+  place-items: center;
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: var(--tracking-base);
+  color: var(--text-primary);
+  margin: 0;
+  max-width: 40ch;
+}
+.lomap__bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-5);
+  padding: var(--sp-3) var(--sp-5);
+  border-top: 1px solid var(--rule-track);
+}
+.lomap__act {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+.lomap__act:hover,
+.lomap__act:focus-visible {
+  color: var(--text-accent);
+  text-decoration: underline;
+}

@@ -1,107 +1,16 @@
 /* Databricks · Starburst 전용.
    .bu--databricks 아래로만 건다 — 메인이나 다른 사업 페이지로 새어 나가지 않는다.
-   리듬: 짙은 파랑 히어로 → 흰 본문 → 짙은 파랑 플랫폼 → 흰 본문 → 회색 밴드 → 짙은 마무리. */
+   리듬은 blocks.mjs 가 지면 전체를 보고 칠한다(§3-4 색면) — 여기서는 짙은 기술 면
+   (.section--deep)의 색과 그 위 조판만 맡는다. */
 .bu--databricks {
-  /* 이 페이지의 짙은 면. 데이터브릭스 주황은 로고 안에만 두고 화면을 지배하지 않는다. */
-  --deep-bg: #0a1f3d;
-  --deep-accent: #7cc0ff;
-  --db-line: rgba(255, 255, 255, 0.16);
-}
-
-/* ── 히어로 — 짙은 기술 면 ─────────────────────────── */
-.bu--databricks .hero {
-  background: var(--deep-bg);
-  color: var(--text-on-inverse);
-  padding-top: var(--sp-9);
-  padding-bottom: var(--sp-9);
-}
-.bu--databricks .hero h1 {
-  color: var(--text-on-inverse);
-}
-.bu--databricks .hero .eyebrow {
-  color: var(--deep-accent);
-}
-.bu--databricks .hero__lede,
-.bu--databricks .hero__meta {
-  color: var(--text-on-inverse-muted);
-}
-.bu--databricks .hero .btn {
-  color: var(--deep-accent);
-  border-color: var(--db-line);
-  background: transparent;
-}
-.bu--databricks .hero .btn:hover {
-  border-color: var(--deep-accent);
-}
-.bu--databricks .hero .btn--solid {
-  background: var(--c-white);
-  border-color: var(--c-white);
-  color: var(--deep-bg);
-}
-.bu--databricks .hero .btn--solid:hover {
-  background: var(--c-neutral-200);
-  border-color: var(--c-neutral-200);
-}
-
-/* 히어로 비주얼 — 흩어진 데이터가 하나로 모여 활용으로 이어진다.
-   아키텍처가 아니다. 자세한 구성은 아래 architecture 섹션이 맡는다. */
-.bu--databricks .dv {
-  margin: 0;
-  display: grid;
-  gap: var(--sp-5);
-}
-.bu--databricks .dv__stage {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-  align-items: center;
-  gap: var(--sp-5);
-}
-.bu--databricks .dv__sources,
-.bu--databricks .dv__outputs {
-  display: grid;
-  gap: var(--sp-2);
-  list-style: none;
-}
-.bu--databricks .dv__sources li,
-.bu--databricks .dv__outputs li {
-  font-size: var(--fs-xs);
-  color: var(--text-on-inverse-muted);
-  padding: var(--sp-2) var(--sp-4);
-  border: 1px solid var(--db-line);
-  border-radius: var(--radius-sm);
-  text-align: center;
-}
-/* 가운데로 모이는 선. 순수 CSS 라 이미지 자산이 없어도 성립한다. */
-.bu--databricks .dv__core {
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 148px;
-  height: 148px;
-  border-radius: var(--radius-circle);
-  border: 1px solid var(--deep-accent);
-  background: rgba(124, 192, 255, 0.08);
-  font-size: var(--fs-xs);
-  font-weight: 600;
-  line-height: 1.5;
-  text-align: center;
-  color: var(--text-on-inverse);
-}
-.bu--databricks .dv__core::before,
-.bu--databricks .dv__core::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  width: var(--sp-5);
-  height: 1px;
-  background: var(--db-line);
-}
-.bu--databricks .dv__core::before { right: 100%; }
-.bu--databricks .dv__core::after { left: 100%; }
-.bu--databricks .dv__caption {
-  font-size: var(--fs-xs);
-  color: var(--text-on-inverse-muted);
-  text-align: center;
+  /* 이 페이지의 짙은 면. */
+  /* 파트너 남색(#0a1f3d)과 하늘색(#7cc0ff)을 걷었다(2026-09-13). 사업 상세 일곱 장의
+     색면이 잉크·스톤 둘로 정리되면서 이 지면만 세 번째 어두운 톤에 파란 글자가 남아
+     같은 사이트로 읽히지 않았다 — 파트너 색은 그림(다이어그램 SVG)에만 남긴다.
+     이름은 그대로 둔다: 아래 열다섯 자리가 이 둘을 가리키고, --deep 은 §3-4 가
+     색면(잉크·스톤)과 구분해 부르는 이름이다. */
+  --deep-bg: var(--bg-inverse);
+  --deep-accent: var(--text-accent-on-inverse);
 }
 
 /* ── 문제 — 왼쪽 메시지 + 번호 행 ──────────────────── */
@@ -272,11 +181,6 @@
   line-height: 1.6;
 }
 
-/* 마무리 — 이 페이지에서 가장 강한 면. 메인 히어로를 흉내 내지 않는다. */
-.bu--databricks .section--inverse {
-  background: var(--deep-bg);
-}
-
 @media (max-width: 1080px) {
   .bu--databricks .caps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .bu--databricks .fw { grid-auto-flow: row; }
@@ -300,14 +204,4 @@
 }
 @media (max-width: 640px) {
   .bu--databricks .caps { grid-template-columns: minmax(0, 1fr); }
-  .bu--databricks .dv__stage { grid-template-columns: minmax(0, 1fr); justify-items: center; }
-  .bu--databricks .dv__core::before,
-  .bu--databricks .dv__core::after { display: none; }
-  .bu--databricks .dv__sources,
-  .bu--databricks .dv__outputs {
-    grid-auto-flow: column;
-    grid-auto-columns: max-content;
-    overflow-x: auto;
-    max-width: 100%;
-  }
 }

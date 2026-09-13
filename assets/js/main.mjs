@@ -1,20 +1,24 @@
-import { initAnalytics } from "./analytics.mjs?v=1eb58a17050c";
-import { initNav } from "./nav.mjs?v=1eb58a17050c";
-import { initReveal } from "./reveal.mjs?v=1eb58a17050c";
+import { initAnalytics } from "./analytics.mjs?v=da94ff262031";
+import { initNav } from "./nav.mjs?v=da94ff262031";
+import { initReveal } from "./reveal.mjs?v=da94ff262031";
 import {
   initFaq,
   initCaseFilter,
   initFooterGroups,
-} from "./disclosure.mjs?v=1eb58a17050c";
-import { initContactForm } from "./contact-form.mjs?v=1eb58a17050c";
-import { initAttribution } from "./attribution.mjs?v=1eb58a17050c";
-import { initHeroObject } from "./hero-object.mjs?v=1eb58a17050c";
-import { initNewsletter } from "./newsletter.mjs?v=1eb58a17050c";
-import { initDroplets } from "./droplets.mjs?v=1eb58a17050c";
-import { initRails } from "./rail.mjs?v=1eb58a17050c";
-import { initFilters } from "./filters.mjs?v=1eb58a17050c";
-import { initCounters } from "./counter.mjs?v=1eb58a17050c";
-import { initPagers } from "./pager.mjs?v=1eb58a17050c";
+} from "./disclosure.mjs?v=da94ff262031";
+import { initContactForm } from "./contact-form.mjs?v=da94ff262031";
+import { initAttribution } from "./attribution.mjs?v=da94ff262031";
+import { initHeroObject } from "./hero-object.mjs?v=da94ff262031";
+import { initNewsletter } from "./newsletter.mjs?v=da94ff262031";
+import { initDroplets } from "./droplets.mjs?v=da94ff262031";
+import { initRails } from "./rail.mjs?v=da94ff262031";
+import { initFilters } from "./filters.mjs?v=da94ff262031";
+import { initCounters } from "./counter.mjs?v=da94ff262031";
+import { initPagers } from "./pager.mjs?v=da94ff262031";
+import { initParallax } from "./parallax.mjs?v=da94ff262031";
+import { initYearStage } from "./year-stage.mjs?v=da94ff262031";
+import { initStage } from "./stage.mjs?v=da94ff262031";
+import { initAmbientVideo } from "./ambient-video.mjs?v=da94ff262031";
 
 try {
   initAnalytics();
@@ -87,7 +91,27 @@ try {
   console.warn("Pager failed:", e);
 }
 try {
+  initYearStage();
+} catch (e) {
+  console.warn("Year stage failed:", e);
+}
+try {
   initRails();
 } catch (e) {
   console.warn("Rails failed:", e);
+}
+try {
+  initParallax();
+} catch (e) {
+  console.warn("Parallax failed:", e);
+}
+try {
+  initStage();
+} catch (e) {
+  console.warn("Stage failed:", e);
+}
+try {
+  initAmbientVideo();
+} catch (e) {
+  console.warn("Ambient video failed:", e);
 }

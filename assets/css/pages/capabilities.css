@@ -1,0 +1,379 @@
+/* 기술 역량 지면 전용 — /company/capabilities 하나만 받는다(pages/capabilities.mjs 의 styles).
+ *
+ * 이 파일의 규칙은 두 벌이다.
+ *   1) 기본값 — 스크롤에 반응하지 않는 상태. 글은 다 보이고, 등뼈는 비어 있고, 큰 숫자는
+ *      첫 해에 선다. 이 상태만으로도 읽히는 지면이다.
+ *   2) 스크립트가 값을 줄 때 — 판의 진행률(--p · stage.mjs), 지금 읽는 해(.is-now ·
+ *      year-stage.mjs), 순번(--i · reveal.mjs)이 들어오면 그만큼 더 움직인다.
+ * 그래서 "움직임이 없으면 지면이 깨진다"가 성립하지 않는다.
+ *
+ * 색은 토큰만 쓴다(리터럴 hex 금지 — 시험이 잡는다). 반경 단도 늘리지 않는다.
+ */
+
+/* 머리는 이 파일에 없다. 기술 역량 · IR · 인재채용 · 찾아오시는 길 넉 장이
+   같은 머리 띠(.pbanner)를 쓰기로 하면서(사령관 2026-09-13 "히어로 쪽 레이아웃
+   공통화") 규칙이 components.css 로 옮겨 갔다. */
+
+/* ── 자격의 연대기 ─────────────────────────────────────────
+   왼쪽 머리는 넓은 화면에서만 붙박인다. 좁은 화면에서 붙박이면 제목이 화면을 먹는다. */
+.caps-line__in {
+  display: grid;
+  gap: var(--sp-7);
+}
+.caps-line__head h2 {
+  margin: 0 0 var(--sp-4);
+}
+.caps-line__head .lede {
+  margin: 0;
+}
+
+/* 지금 읽는 해. 연혁 지면(.hyr)과 같은 연출이고 같은 스크립트를 받는다
+   (year-stage.mjs). 장식이라 좁은 화면에서는 통째로 접는다 — 머리가 붙박이지
+   않는 폭에서는 숫자가 맨 위에 멈춰 있어 거짓말이 된다. */
+.caps-line__now {
+  display: none;
+}
+/* 자릿수가 넷으로 고정이라 tabular-nums 로 폭을 묶지 않으면 해가 바뀔 때마다
+   글자가 좌우로 흔들린다. */
+.caps-line__year {
+  margin: 0;
+  font-size: clamp(56px, 6vw, 104px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: var(--tracking-display);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-accent);
+}
+/* 해가 바뀔 때 한 번 깜빡인다 — keyframes yearTurn 은 components.css 의 것을 그대로 쓴다.
+   같은 동작에 같은 곡선이어야 두 지면이 한 손에서 나온 것으로 읽힌다. */
+.caps-line__year.is-turn {
+  animation: yearTurn 0.42s var(--ease);
+}
+/* 몇 해째를 지나고 있는지 — 양 끝 연도와 그 사이 눈금. 숫자 하나만으로는
+   "얼마나 남았는지"가 보이지 않는다. */
+.caps-line__span {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-top: var(--sp-4);
+  max-width: 24ch;
+}
+.caps-line__end {
+  flex: none;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+.caps-line__rail {
+  position: relative;
+  flex: 1;
+  height: 2px;
+  border-radius: var(--radius-pill);
+  background: var(--rule-track);
+}
+/* 점은 칸 수로 움직인다(year-stage.mjs 가 --at 을 준다). 그 스크립트는 최신순 목록
+   (연혁)을 기준으로 값을 매긴다 — 여기 연대기는 오래된 순이라 left 가 아니라
+   right 로 받아 방향만 뒤집는다. 스크립트는 건드리지 않는다. */
+.caps-line__dot {
+  position: absolute;
+  top: 50%;
+  right: var(--at, 100%);
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-circle);
+  background: var(--c-accent-500);
+  translate: 50% -50%;
+  transition: right 0.42s var(--ease);
+}
+
+/* 등뼈에 매달린 해 ─ 세로선 하나가 목록을 꿰고, 판을 지난 만큼(--p) 주황으로 찬다.
+   스크립트가 없으면 --p 가 없어 채워지지 않는다 — 회색 선만 남고 목록은 그대로다. */
+.caps-years {
+  position: relative;
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 var(--sp-6);
+  display: grid;
+  gap: var(--sp-6);
+}
+.caps-years::before,
+.caps-years::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 7px;
+  width: 2px;
+}
+.caps-years::before {
+  bottom: 7px;
+  background: var(--rule-track);
+}
+/* --p 는 판의 위쪽이 화면 위로 지난 비율이라 목록 끝에서도 1 에 못 미친다(판 아래
+   한 화면이 남는다). 1.35 를 곱해 마지막 해에 닿을 때 선이 차게 맞추고, min() 으로
+   넘치지 않게 막는다. */
+.caps-years::after {
+  height: min(calc(100% - 14px), calc(var(--p, 0) * 135%));
+  background: var(--c-accent-500);
+}
+.caps-year {
+  position: relative;
+  display: grid;
+  grid-template-columns: 7ch minmax(0, 1fr);
+  gap: var(--sp-5);
+  padding-bottom: var(--sp-6);
+  border-bottom: 1px solid var(--rule-track);
+}
+.caps-year:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+/* 등뼈 위의 마디. 지금 읽는 해만 채워진 점이 된다(.is-now 는 year-stage.mjs 가 준다). */
+.caps-year__node {
+  position: absolute;
+  left: calc(-1 * var(--sp-6) - 1px);
+  top: 5px;
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--c-neutral-300);
+  border-radius: var(--radius-circle);
+  background: var(--bg-page);
+  transition:
+    background var(--dur-content) var(--ease),
+    border-color var(--dur-content) var(--ease),
+    scale var(--dur-content) var(--ease);
+}
+.caps-year.is-now .caps-year__node {
+  background: var(--c-accent-500);
+  border-color: var(--c-accent-500);
+  scale: 1.3;
+}
+/* 연도는 기본이 흐린 먹이고 지금 읽는 해만 주황으로 선다 — 여섯이 전부 주황이면
+   "지금 어디"가 색으로 안 읽힌다. 본문은 둘 다 같은 농도다(흐리게 하지 않는다). */
+.caps-year__n {
+  margin: 0;
+  font-size: var(--fs-h4);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+  transition: color var(--dur-content) var(--ease);
+}
+.caps-year.is-now .caps-year__n {
+  color: var(--text-accent);
+}
+.caps-year__title {
+  margin: 0 0 var(--sp-2);
+  font-size: var(--fs-h4);
+  line-height: 1.35;
+}
+.caps-year__desc {
+  margin: 0;
+  font-size: var(--fs-sm);
+  line-height: 1.62;
+  color: var(--text-secondary);
+  max-width: 56ch;
+}
+@media (min-width: 1080px) {
+  .caps-line__in {
+    grid-template-columns: minmax(0, 30ch) minmax(0, 1fr);
+    gap: var(--sp-8);
+    align-items: start;
+  }
+  .caps-line__head {
+    position: sticky;
+    top: calc(var(--header-h, 64px) + var(--sp-7));
+  }
+  .caps-line__now {
+    display: block;
+    margin-top: var(--sp-7);
+  }
+  /* 오른쪽이 왼쪽보다 훨씬 길어 항목 사이가 벌어져야 한 해가 한 걸음으로 읽힌다. */
+  .caps-years {
+    gap: var(--sp-7);
+  }
+}
+
+/* ── AWS 자격 배지 ─────────────────────────────────────────
+   어두운 띠 한 판. 히어로부터 여기까지 흰 바탕이 이어져 배지 벽이 앞 판의 꼬리처럼
+   읽혔다 — 결을 한 번 끊어야 "이건 실물이다"가 따로 선다.
+   배지는 AWS 자산이라 색을 건드리지 않는다. 그래서 낱장을 흰 바탕으로 깐다:
+   어두운 면에 배지를 직접 얹으면 배지 안의 검은 글자가 묻힌다. */
+/* 띠의 위아래 여백은 지면 기본값보다 좁다. 배지 벽은 읽는 글이 아니라 훑는 판이라
+   기본 여백(--section-py)을 그대로 받으면 어두운 면만 화면 하나를 더 먹는다
+   (사령관 2026-09-13 "저 부분들만 너무 큰 영역을 차지하는거 같은데"). */
+.caps-cert {
+  padding-bottom: var(--section-py-sm);
+}
+.caps-cert > .container {
+  padding-top: var(--section-py-sm);
+}
+.caps-cert__head h2 {
+  margin: 0 0 var(--sp-4);
+}
+.caps-cert__head .lede {
+  margin: 0;
+  max-width: 62ch;
+}
+/* 보유 수는 목록 길이에서 온다(마크업이 센다). 판이 들어올 때 0 에서 오른다 —
+   counter.mjs 가 data-count 를 보고 한다. 없으면 최종값이 그대로 서 있다.
+   제목 문장 안에 있으므로 크기는 제목을 따라가고 색만 주황으로 든다 — 따로 큰
+   숫자를 세우면 제목에서 800px 떨어진 자리에 글자 하나가 혼자 뜬다(실측 1440px). */
+.caps-cert__tally {
+  white-space: nowrap;
+}
+.caps-cert__num {
+  color: var(--text-accent-on-inverse);
+  font-variant-numeric: tabular-nums;
+}
+.caps-cert__unit {
+  color: var(--text-accent-on-inverse);
+}
+.caps-cert__wall {
+  margin-top: var(--sp-7);
+}
+/* .bgs 의 격자는 components.css 것을 그대로 쓴다(클라우드 사업 지면과 한 벌이다).
+   여기서 더하는 것은 낱장의 바탕과, 배지에 바투 붙인 여백이다 — 흰 칸이 배지보다
+   크면 배지가 아니라 빈 카드가 먼저 보인다(실측 2026-09-13: 250×189 칸에 84px 배지). */
+.caps-cert .bg__item {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: var(--sp-4) var(--sp-3) var(--sp-4);
+  gap: var(--sp-2);
+  align-content: start;
+  transition:
+    translate var(--dur-content) var(--ease),
+    box-shadow var(--dur-content) var(--ease);
+}
+.caps-cert .bg__img {
+  width: 68px;
+  height: 68px;
+}
+/* 이름은 낱장 폭까지만 쓴다. ch 로 묶으면 좁은 화면에서 칸보다 긴 값이 되어
+   글자가 낱장 밖으로 삐져나온다(실측 390px: "AWS Control Tower Delivery"). */
+.caps-cert .bg__name {
+  font-size: var(--fs-2xs);
+  max-width: 100%;
+}
+.caps-cert .bg__item:hover {
+  translate: 0 -4px;
+  box-shadow: var(--shadow-lift);
+}
+
+/* ── 파트너 자격 ───────────────────────────────────────────
+   액자를 걷었다. 폭이 1400px 을 넘는 지면에서 한 줄짜리 설명을 둥근 카드에 담으면
+   오른쪽 절반이 통째로 비고, 그 카드가 다섯 장 이어지면 같은 빈칸이 다섯 번 반복된다
+   (실측 2026-09-13 1440px). 번호 → 로고 → 이름 → 설명이 한 줄로 흐르고 줄 사이는
+   실선 한 오라기다. */
+.caps-parts {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.caps-part {
+  position: relative;
+  display: grid;
+  grid-template-columns: 4ch 160px minmax(0, 1fr);
+  gap: var(--sp-6);
+  align-items: center;
+  padding: var(--sp-6) var(--sp-5);
+  border-top: 1px solid var(--rule-track);
+  transition: background var(--dur-hover) var(--ease);
+}
+.caps-part:last-child {
+  border-bottom: 1px solid var(--rule-track);
+}
+.caps-part:hover {
+  background: var(--bg-band);
+}
+/* 커서를 얹은 줄의 윗선만 주황으로 그어진다 — 줄 전체를 칠하는 것보다 조용하고,
+   어느 줄을 짚고 있는지가 눈에 남는다. */
+.caps-part::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: -1px;
+  width: 0;
+  height: 1px;
+  background: var(--c-accent-500);
+  transition: width 0.5s var(--ease);
+}
+.caps-part:hover::before {
+  width: 100%;
+}
+.caps-part__no {
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+/* 로고는 기본이 무채색이다 — 원색이 다섯 개 동시에 서면 줄 전체가 소음이 된다
+   (파트너 벨트가 이미 쓰는 규칙 · components.css). 커서를 얹은 줄만 원색으로 선다. */
+.caps-part__logo {
+  display: grid;
+  align-items: center;
+  height: 40px;
+  filter: grayscale(1);
+  opacity: 0.75;
+  transition:
+    filter var(--dur-content) var(--ease),
+    opacity var(--dur-content) var(--ease);
+}
+.caps-part:hover .caps-part__logo {
+  filter: none;
+  opacity: 1;
+}
+/* 로고는 칸을 통째로 받고 object-fit 이 안에서 맞춘다. 크기를 max-* 로만 묶으면
+   안 된다 — aws.svg 는 viewBox 만 있고 width/height 가 없어서(고유 크기가 없다)
+   auto 로 재는 칸 안에서 0×0 으로 접혔다(실측 2026-09-13: AWS 줄만 로고가 사라졌다).
+   폭·높이를 못 박고 contain 으로 맞추면 고유 크기가 있든 없든 같은 자리에 선다.
+   왼쪽 맞춤이라 다섯 로고의 시작선이 번호 칸과 나란히 떨어진다. */
+.caps-part__logo img {
+  width: 100%;
+  height: 40px;
+  object-fit: contain;
+  object-position: left center;
+}
+/* 로고가 없어 이름이 로고 자리에 선 줄. 본문의 이름 줄은 지운다(같은 이름이 두 번 찍힌다).
+   글자에는 무채색 걸기가 뜻이 없고 옅기만 하다 — 제 농도로 세운다. */
+.caps-part--nologo .caps-part__name {
+  display: none;
+}
+.caps-part__logo--text {
+  font-size: var(--fs-h4);
+  font-weight: 700;
+  color: var(--text-primary);
+  filter: none;
+  opacity: 1;
+}
+.caps-part__name {
+  margin: 0 0 var(--sp-2);
+  font-size: var(--fs-body);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.caps-part__desc {
+  margin: 0;
+  font-size: var(--fs-sm);
+  line-height: 1.62;
+  color: var(--text-secondary);
+  max-width: 88ch;
+}
+@media (max-width: 860px) {
+  .caps-part {
+    grid-template-columns: 4ch minmax(0, 1fr);
+    gap: var(--sp-3) var(--sp-4);
+    padding: var(--sp-5) var(--sp-2);
+  }
+  .caps-part__logo {
+    grid-column: 2;
+    height: 32px;
+  }
+  .caps-part__logo img {
+    height: 32px;
+  }
+  .caps-part__body {
+    grid-column: 2;
+  }
+}

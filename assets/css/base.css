@@ -111,7 +111,7 @@ a:hover {
   top: -100px;
   z-index: 100;
   background: var(--bg-card);
-  border: 1px solid var(--border-hair);
+  border: 1px solid var(--border-control);
   border-radius: var(--radius-sm);
   padding: var(--sp-2) var(--sp-4);
   font-size: var(--fs-xs);

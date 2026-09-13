@@ -22,12 +22,6 @@
   align-items: center;
   gap: var(--sp-3);
 }
-.bu--cloud .il__tag {
-  font-size: var(--fs-2xs);
-  font-weight: 700;
-  letter-spacing: var(--tracking-label);
-  color: var(--accent-local, var(--text-accent));
-}
 .bu--cloud .il__date {
   font-size: var(--fs-xs);
   color: var(--text-faint);
@@ -43,12 +37,6 @@
   color: var(--text-accent);
 }
 
-/* 마무리 — Cloud 에서 가장 강한 면. 메인 히어로를 흉내 내지 않는다:
-   고스트 글자도 그라디언트 제목도 쓰지 않고 색면 하나로만 끊는다. */
-.bu--cloud .section--inverse {
-  background: var(--cloud-deep);
-}
-
 @media (max-width: 1080px) {
   .bu--cloud .ils {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -60,36 +48,8 @@
   }
 }
 
-/* AWS 자격 뱃지. 로고월과 다르다 — 획득한 자격의 실물이고 이름이 함께 붙는다.
-   바로 아래 자격 목록이 "그 자격이 무엇을 증명하는가" 를 이어서 설명한다. */
-.bu--cloud .bgs {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: var(--sp-6) var(--sp-5);
-  list-style: none;
-}
-.bu--cloud .bg__item {
-  display: grid;
-  justify-items: center;
-  gap: var(--sp-3);
-  text-align: center;
-}
-.bu--cloud .bg__img {
-  width: 84px;
-  height: 84px;
-  /* 뱃지는 AWS 자산이다. 색을 바꾸거나 덧칠하지 않는다. */
-}
-.bu--cloud .bg__name {
-  font-size: var(--fs-xs);
-  color: var(--text-secondary);
-  line-height: 1.45;
-  max-width: 14ch;
-}
-
-@media (max-width: 1080px) {
-  .bu--cloud .bgs { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-}
-@media (max-width: 640px) {
-  .bu--cloud .bgs { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--sp-5) var(--sp-4); }
-  .bu--cloud .bg__img { width: 68px; height: 68px; }
-}
+/* AWS 자격 뱃지(.bgs)는 여기 없다 — components.css 로 옮겼다(2026-09-11).
+   클라우드 지면만 쓰던 것을 기술 역량 지면(/company/capabilities)이 같은 마크업으로
+   함께 쓰기 시작했는데, 규칙이 `.bu--cloud` 안에 갇혀 있어 그쪽에서는 아무것도 걸리지
+   않았다 — 뱃지가 글머리표 달린 한 줄 목록으로 쏟아졌다. 쓰는 지면이 둘이면 지면 파일이
+   아니라 컴포넌트 파일이 그 자리다. */
