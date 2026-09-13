@@ -3,7 +3,7 @@
 // 같은 코드를 쓴다 — 레일은 걸린 뒤 눈금·번호를 다시 세야 하므로 filterchange 로 알린다.
 // 대표 카드가 있는 묶음(data-stories)은 남은 첫 장을 대표로 올린다 — 대표가 걸러지면
 // 왼쪽 큰 칸이 통째로 비어 고장으로 보인다.
-import { markFirstVisible } from "./rows.mjs?v=601d1045b658";
+import { markFirstVisible } from "./rows.mjs?v=1eb58a17050c";
 
 export function initFilters() {
   for (const row of document.querySelectorAll("[data-filter]")) {
