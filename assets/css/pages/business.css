@@ -32,10 +32,8 @@
   border-radius: var(--radius-lg);
   background: var(--bg-inverse);
 }
-/* 표지는 영상 한 편이거나 사진 한 장이다(partials/blocks.mjs 의 businessCover).
-   둘이 같은 자리에 같은 방식으로 앉는다. */
-.bhero__film,
-.bhero__still {
+/* 표지 영상(partials/blocks-hero.mjs 의 businessCover) — 포스터가 같은 자리를 먼저 채운다. */
+.bhero__film {
   width: 100%;
   height: 100%;
   object-fit: cover;

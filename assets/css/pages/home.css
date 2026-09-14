@@ -9,7 +9,6 @@
  * 공용 규칙을 덮어 쓰는 메인 전용 예외(.home .section ...)도 여기에 산다.
  * 페이지 배선은 pages/home.mjs 의 styles 다. */
 
-
 /* 대표 솔루션 줄은 첫 장만 찬다 — 여덟이 모두 유리면 어디서 읽기 시작할지가 없다
    (레퍼런스 PROCESS 4칸이 같은 규칙이다). */
 .section--inverse .rail--sols .sol:first-child,
@@ -31,6 +30,10 @@
   background: var(--hero-bg);
   color: var(--hero-ink);
   display: grid;
+  /* 열 하나를 minmax(0, 1fr) 로 못 박는다 — auto 열은 제목의 가장 긴 낱말(min-content)만큼
+     자라서, 폰 폭에서 "ARCHITECTURE" 가 컨테이너를 407px 로 밀어 카드 오른쪽 여백이 사라졌다
+     (실측 375·390, 2026-09-14). 낱말이 넘치더라도 컨테이너는 화면 폭에 선다. */
+  grid-template-columns: minmax(0, 1fr);
   /* 히어로는 화면을 채우지 않는다 — 자기 내용 높이만 쓴다(사령관 판정 2026-09-07
      "무조건 한 화면에 다 들어오게 하지 말고"). 100svh 로 늘이던 시절엔 남는 높이가
      전부 리드와 카드 사이로 몰려 구멍이 됐다(실측 2560×1440 에서 549px, 3440 에서 549px).
@@ -71,9 +74,14 @@
      (2026-09-07) — 컨테이너만 1336→1736 으로 늘리자 제목이 콘텐츠 폭의 59%→45% 로 쪼그라들어
      "큰 종이에 같은 그림"이 됐다. 83 은 64 × (1736 / 1336) 이다. */
   /* 좁은 폭의 상한은 가장 긴 낱말이 정한다. v6 는 "AI-NATIVE."(10자)라 16vw 였고,
-     v7 은 "ARCHITECTURE"(12자)다 — 16 × 10/12 ≈ 13.3, 여유를 두어 12.5vw. 390 에서 49px,
-     360 에서 45px. 실측: 16vw 그대로면 390·360 에서 컨테이너가 503·470px 로 밀려 넘쳤다(2026-09-10). */
-  font-size: min(clamp(64px, 3.58vw, 83px), 12.5vw);
+     v7 은 "ARCHITECTURE"(12자)다. 실폭은 자간(-0.045em)까지 7.04em(실측 48.75px 에서 343px) —
+     12.5vw 는 390 에서 49px 라 낱말이 326px 자리에 343px 로 넘쳐 오른쪽 여백을 먹었다(2026-09-14).
+     양쪽 여백(--sp-6 × 2)을 뺀 폭을 7.1 로 나누면 낱말이 여백 안에 딱 선다 — 390 에서 46px,
+     360 에서 42px, 518 부터 64px 고정. 실측: 16vw 그대로면 390·360 에서 컨테이너가 503·470px 로 밀려 넘쳤다(2026-09-10). */
+  font-size: min(
+    clamp(64px, 3.58vw, 83px),
+    calc((100vw - var(--sp-6) * 2) / 7.1)
+  );
   line-height: 1.04;
   letter-spacing: -0.045em;
   word-spacing: -0.06em;
@@ -915,9 +923,6 @@
 .logos__item--databricks {
   --logo-h: 56px;
 }
-.logos__item--anthropic {
-  --logo-h: 26px;
-}
 .logos__item--starburst {
   --logo-h: 25px;
 }
@@ -931,9 +936,6 @@
 }
 .logos__item--ansible {
   --logo-h: 34px;
-}
-.logos__item--claude {
-  --logo-h: 26px;
 }
 @media (max-width: 860px) {
   .logos {

@@ -675,7 +675,6 @@
    링크임은 색이 아니라 화살표와 hover 밑줄이 말한다 — 주황은 여기서도 물러난다. */
 .card__more,
 .sol__more,
-.rail__more,
 .story__more,
 .hcard__more {
   color: var(--text-primary);
@@ -753,9 +752,6 @@
 .hero--media .hero__lede {
   color: var(--text-on-inverse-muted);
 }
-.hero--media .hero__meta {
-  color: var(--text-on-inverse-muted);
-}
 .hero--media .eyebrow {
   color: var(--text-on-inverse);
 }
@@ -765,13 +761,10 @@
   max-width: 42ch;
 }
 .hero--media.hero--m-hub-business {
-  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=12db900ad0f5");
+  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=86c906926f49");
 }
 .hero--media.hero--m-hub-insights {
-  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=12db900ad0f5");
-}
-.hero--media.hero--m-hub-company {
-  --hero-media: url("/saltware-prototype/media/hub/hub-company.jpg?v=12db900ad0f5");
+  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=86c906926f49");
 }
 /* 노트북 — 히어로가 한 화면을 통째로 먹어 다음 섹션이 안 비친다(실측: 1280×800 105% ·
    1440×900 101%. 1920×1080 은 89%, 2560×1440 은 77% 라 큰 화면은 그대로 둔다).
@@ -941,10 +934,6 @@
   }
 }
 
-.hero__meta {
-  font-size: var(--fs-xs);
-  color: var(--text-faint);
-}
 .cta-row {
   display: flex;
   flex-wrap: wrap;
@@ -2640,7 +2629,7 @@ a.tile:hover .tile__glyph svg circle:nth-child(9) {
    파일이 아직 없어도 카드가 깨지지 않는다 — CSS 배경이라 깨진 그림 아이콘이 뜨지 않고,
    ::before 가 빈 채로 어두운 면만 남는다. 그래서 클래스를 미리 붙여 둔다. */
 .feat--art {
-  --card-media: url("/saltware-prototype/media/insight/feature.jpg?v=12db900ad0f5");
+  --card-media: url("/saltware-prototype/media/insight/feature.jpg?v=86c906926f49");
 }
 .feat[class*="feat--"] .feat__lead::before {
   content: "";
@@ -2835,16 +2824,16 @@ a.tile:hover .tile__glyph svg circle:nth-child(9) {
    여기 규칙이 있어도 페이지가 수식 클래스를 붙이지 않으면 켜지지 않는다 —
    자산 반입 여부는 insights.mjs 의 ART 가 안다. */
 .hub-card--industry {
-  --card-media: url("/saltware-prototype/media/insight/card-industry.jpg?v=12db900ad0f5");
+  --card-media: url("/saltware-prototype/media/insight/card-industry.jpg?v=86c906926f49");
 }
 .hub-card--report {
-  --card-media: url("/saltware-prototype/media/insight/card-report.jpg?v=12db900ad0f5");
+  --card-media: url("/saltware-prototype/media/insight/card-report.jpg?v=86c906926f49");
 }
 .hub-card--library {
-  --card-media: url("/saltware-prototype/media/insight/card-library.jpg?v=12db900ad0f5");
+  --card-media: url("/saltware-prototype/media/insight/card-library.jpg?v=86c906926f49");
 }
 .hub-card--news {
-  --card-media: url("/saltware-prototype/media/insight/card-news.jpg?v=12db900ad0f5");
+  --card-media: url("/saltware-prototype/media/insight/card-news.jpg?v=86c906926f49");
 }
 
 /* AWS 자격 뱃지. 로고월(.logos)과 다르다 — 획득한 자격의 실물이고 이름이 함께 붙는다.
