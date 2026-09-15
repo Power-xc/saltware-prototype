@@ -95,7 +95,7 @@
   margin: 0;
   padding: 0 0 0 var(--sp-6);
   display: grid;
-  gap: var(--sp-7);
+  gap: var(--sp-6);
 }
 .caps-years::before,
 .caps-years::after {
@@ -116,17 +116,12 @@
   height: min(calc(100% - 14px), calc(var(--p, 0) * 135%));
   background: var(--c-accent-500);
 }
-/* 한 해가 한 칸이다. 칸의 세로 치수가 글 높이에 딱 맞으면(본문 두 줄) 여섯이
-   한 덩어리로 뭉쳐 "해가 바뀌었다"가 눈에 안 걸린다 — 줄 사이 여백이 칸 사이
-   여백과 비슷해지는 탓이다. 아래를 한 단 더 띄워 칸이 글보다 크게 만든다
-   (사령관 2026-09-14 "세로 영역이 너무 짧아서 불편해"). 판이 길어지는 만큼
-   왼쪽 붙박이 머리가 서 있는 구간도 길어져 큰 숫자가 천천히 넘어간다. */
 .caps-year {
   position: relative;
   display: grid;
   grid-template-columns: 7ch minmax(0, 1fr);
   gap: var(--sp-5);
-  padding-bottom: var(--sp-7);
+  padding-bottom: var(--sp-6);
   border-bottom: 1px solid var(--rule-track);
 }
 .caps-year:last-child {
@@ -197,35 +192,73 @@
   .caps-years {
     gap: var(--sp-7);
   }
-  /* 칸의 키를 px 이 아니라 화면 높이로 잡는다(사령관 2026-09-14 "스크롤 이벤트와
-     길이가 더 길어야할 것 같아"). 왜 vh 인가 — 이 판에서 움직이는 것 셋이 전부
-     스크롤 거리로 도는 것이기 때문이다: 왼쪽 큰 숫자는 화면 한가운데를 지나는
-     항목을 따라 바뀌고(year-stage.mjs), 등뼈는 판을 지난 비율(--p · stage.mjs)만큼
-     차고, 눈금의 점은 그 둘을 따라간다. px 으로 잡으면 큰 화면에서 여섯 해가 한
-     화면에 다 들어와 세 연출이 동시에 끝나 버린다. 화면의 1/3 을 한 해로 주면
-     화면 크기와 무관하게 한 해가 한 걸음이 된다 — 여섯이면 두 화면 남짓을 돈다.
-
-     아래 여백(padding)은 글 밑에 붙어 구분선의 자리를 잡을 뿐이고, 칸을 늘리는
-     일은 min-height 가 한다. 그래야 선이 글에서 멀어지지 않는다.
-     본문이 길어 vh 를 넘기는 칸은 제 글 높이대로 선다(min- 이라 잘리지 않는다). */
-  .caps-year {
-    min-height: 34vh;
-    padding-bottom: var(--sp-7);
-  }
 }
 
 /* ── AWS 자격 배지 ─────────────────────────────────────────
-   여기 규칙이 없다. 배지 판은 클라우드 사업 지면과 같은 조판을 그대로 쓴다 —
-   공용 격자는 components.css 의 `.bgs` 한 벌이고 마크업은 partials/blocks-onward.mjs
-   의 awsBadgeGrid() 하나다.
-
-   `[정정 2026-09-15]` 이 자리에 `.caps-cert` 한 덩이가 있었다: 어두운 띠 한 판에
-   흰 낱장을 깔고 배지를 68px 로 줄이고 제목 안의 셈을 주황으로 들던 규칙들이다.
-   결을 끊으려던 것이었는데, 같은 자격 열 개가 두 지면에서 다른 물건으로 읽혔고
-   배지 둘레의 흰 상자는 클라우드 쪽이 이미 걷어낸 조판이었다(components.css
-   2026-09-14 — 배지 자체가 테두리를 가진 그림이라 액자 안의 액자가 된다).
-   사령관 2026-09-15 "다른 곳에서 썼던 틀이랑 똑같이" — 덩이째 걷었다.
-   다시 이 지면만의 결이 필요해지면 여기에 규칙을 먼저 적고 마크업에 이름을 단다. */
+   어두운 띠 한 판. 히어로부터 여기까지 흰 바탕이 이어져 배지 벽이 앞 판의 꼬리처럼
+   읽혔다 — 결을 한 번 끊어야 "이건 실물이다"가 따로 선다.
+   배지는 AWS 자산이라 색을 건드리지 않는다. 그래서 낱장을 흰 바탕으로 깐다:
+   어두운 면에 배지를 직접 얹으면 배지 안의 검은 글자가 묻힌다. */
+/* 띠의 위아래 여백은 지면 기본값보다 좁다. 배지 벽은 읽는 글이 아니라 훑는 판이라
+   기본 여백(--section-py)을 그대로 받으면 어두운 면만 화면 하나를 더 먹는다
+   (사령관 2026-09-13 "저 부분들만 너무 큰 영역을 차지하는거 같은데"). */
+.caps-cert {
+  padding-bottom: var(--section-py-sm);
+}
+.caps-cert > .container {
+  padding-top: var(--section-py-sm);
+}
+.caps-cert__head h2 {
+  margin: 0 0 var(--sp-4);
+}
+.caps-cert__head .lede {
+  margin: 0;
+  max-width: 62ch;
+}
+/* 보유 수는 목록 길이에서 온다(마크업이 센다). 판이 들어올 때 0 에서 오른다 —
+   counter.mjs 가 data-count 를 보고 한다. 없으면 최종값이 그대로 서 있다.
+   제목 문장 안에 있으므로 크기는 제목을 따라가고 색만 주황으로 든다 — 따로 큰
+   숫자를 세우면 제목에서 800px 떨어진 자리에 글자 하나가 혼자 뜬다(실측 1440px). */
+.caps-cert__tally {
+  white-space: nowrap;
+}
+.caps-cert__num {
+  color: var(--text-accent-on-inverse);
+  font-variant-numeric: tabular-nums;
+}
+.caps-cert__unit {
+  color: var(--text-accent-on-inverse);
+}
+.caps-cert__wall {
+  margin-top: var(--sp-7);
+}
+/* .bgs 의 격자는 components.css 것을 그대로 쓴다(클라우드 사업 지면과 한 벌이다).
+   여기서 더하는 것은 낱장의 바탕과, 배지에 바투 붙인 여백이다 — 흰 칸이 배지보다
+   크면 배지가 아니라 빈 카드가 먼저 보인다(실측 2026-09-13: 250×189 칸에 84px 배지). */
+.caps-cert .bg__item {
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  padding: var(--sp-4) var(--sp-3) var(--sp-4);
+  gap: var(--sp-2);
+  align-content: start;
+  transition:
+    translate var(--dur-content) var(--ease),
+    box-shadow var(--dur-content) var(--ease);
+}
+.caps-cert .bg__img {
+  width: 68px;
+  height: 68px;
+}
+/* 이름은 낱장 폭까지만 쓴다. ch 로 묶으면 좁은 화면에서 칸보다 긴 값이 되어
+   글자가 낱장 밖으로 삐져나온다(실측 390px: "AWS Control Tower Delivery"). */
+.caps-cert .bg__name {
+  font-size: var(--fs-2xs);
+  max-width: 100%;
+}
+.caps-cert .bg__item:hover {
+  translate: 0 -4px;
+  box-shadow: var(--shadow-lift);
+}
 
 /* ── 파트너 자격 ───────────────────────────────────────────
    액자를 걷었다. 폭이 1400px 을 넘는 지면에서 한 줄짜리 설명을 둥근 카드에 담으면

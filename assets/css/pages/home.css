@@ -829,57 +829,31 @@
   }
 }
 
-/* 파트너·기술 로고 벽 — 흐르던 벨트를 세웠다(사령관 2026-09-14 "전체를 한 번에").
-   도는 로고가 여덟뿐이라 마키는 "너무 많아 다 못 보여준다"를 거짓으로 냈고, 한 바퀴 46초
-   동안 방문자는 앞의 두어 장만 보고 떠났다 — 움직이는 여덟은 멈춰 선 여덟보다 적어 보인다.
-   기본은 무채색 한 결이다: 원색이 여덟 개 섞이면 줄 전체가 소음이 된다(2단 시절 실측).
-   커서를 얹으면 그 로고만 원색으로 서면서 아래에 "이름 · 파트너/기술"이 뜬다 —
+/* 파트너·기술 한 줄 — 2단(정적 파트너 + 롤링 기술)을 한 벨트로 합쳤다
+   (사령관 2026-09-08 "한 줄로 좀 더 키워서 마우스 호버시 보여지게").
+   기본은 무채색 한 결이다: 원색이 열 개 섞이면 줄 전체가 소음이 된다(2단 시절 실측).
+   커서를 얹으면 벨트가 멎고 그 로고만 원색으로 서면서 아래에 "이름 · 파트너/기술"이 뜬다 —
    층 라벨을 없앤 자리를 이 캡션이 받는다. 캡션 자리는 늘 비워 둔다(뜰 때 줄이 안 흔들리게). */
 .logos {
   display: grid;
   gap: var(--sp-6);
-  /* 로고는 지면 폭에 맞춰 눕고, 크기는 한 단 낮춘다(사령관 2026-09-15 "좀 더 작고
-     전체적인 넓이에 맞춰서"). 배율의 상한은 칸 폭이 정한다: 가장 넓은 로고(Red Hat,
-     배율 1 에서 186px)가 칸 안에 들어와야 한다. vw 로 연속 배율을 만들 수는 없다 —
-     길이를 수로 나눈 값은 길이라 --logo-k 가 px 이 되고 `calc(40px * 0.9px)` 이
-     무효가 된다(실측). 그래서 구간마다 상수다. */
-  --logo-k: 0.72;
 }
-/* 여덟이 한 줄로, 지면 폭 전체에 고르게 선다(사령관 2026-09-15). 두 줄은 파트너/기술의
-   층으로 읽혔지만 층 라벨이 없는 지금은 그냥 끊긴 명단이었다.
-   칸을 여덟으로 못 박는다 — 로고 폭이 73~186px 로 제각각이라 흐름 배치로 모으면 줄이
-   가운데 뭉치고 좌우가 비었다. 균등한 칸은 지면의 세로줄과 맞아떨어지고, 접힐 일이 없다
-   (배율만 칸 폭 안에 들면 된다). 로고 자체는 칸 가운데에 눕는다. */
-.logos__wall {
-  display: grid;
-  grid-template-columns: repeat(8, minmax(0, 1fr));
-  justify-items: center;
-  align-items: center;
-  row-gap: var(--sp-7);
+.logos__belt {
+  display: flex;
+  overflow: hidden;
+  width: 100%;
 }
-/* 지면이 화면에 눌리는 구간 — 칸이 좁아지니 로고도 같이 내려간다. 분기값은 위 히어로
-   카드와 같은 1279 다(§28: 분기 4종). 이 블록은 .logos 기본값 **뒤**에 있어야 한다 —
-   앞에 두면 같은 특이도라 뒤의 기본값이 이긴다(실측 2026-09-15). 1080 아래는 줄을 접는다. */
-@media (max-width: 1279px) {
-  .logos {
-    --logo-k: 0.6;
-  }
+.logos__group {
+  flex: none;
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(48px, 6vw, 96px);
+  padding-inline-end: clamp(48px, 6vw, 96px);
+  animation: logos-roll 46s linear infinite;
 }
-
-/* 줄의 양 끝은 칸이 아니라 지면에 맞춘다 — 칸 가운데에 두면 첫 로고가 57px, 마지막이
-   44px 안으로 들어가 히어로 카드의 세로줄과 어긋난다(실측 1440, 2026-09-15).
-   상자는 이미 지면 폭과 같으니, 어긋나는 것은 상자가 아니라 잉크다. */
-.logos__item:first-child {
-  justify-self: start;
-  /* 칸 안에서도 끝에 붙인다 — 항목 폭은 숨은 캡션이 정하므로(로고보다 넓다)
-     가운데 정렬이면 로고만 10px 더 들어간다(실측). */
-  justify-items: start;
+.logos__belt:hover .logos__group {
+  animation-play-state: paused;
 }
-.logos__item:last-child {
-  justify-self: end;
-  justify-items: end;
-}
-
 .logos__item {
   display: grid;
   justify-items: center;
@@ -945,14 +919,9 @@
 .logos__item--sailpoint {
   --logo-h: 34px;
 }
-/* databricks 공식 배포본은 심볼이 워드마크 위에 얹힌 스택형이라 더 키워야 눈높이가 맞는다.
-   한 줄로 서고 나니 워드마크만 줄 아래로 처져 보였다 — 글자 높이를 옆과 맞추려면
-   상자 가운데가 아니라 글자 가운데를 기준선에 올려야 한다(위로 당긴다). */
+/* databricks 공식 배포본은 심볼이 워드마크 위에 얹힌 스택형이라 더 키워야 눈높이가 맞는다. */
 .logos__item--databricks {
   --logo-h: 56px;
-}
-.logos__item--databricks img {
-  transform: translateY(calc(-11px * var(--logo-k, 1)));
 }
 .logos__item--starburst {
   --logo-h: 25px;
@@ -968,23 +937,16 @@
 .logos__item--ansible {
   --logo-h: 34px;
 }
-@media (max-width: 1080px) {
-  /* 줄을 접는 구간이라고 로고가 커지면 안 된다 — 한 줄 구간(0.72)보다 크면
-     좁은 화면에서 벌이 더 크게 보인다(실측 145 > 134). 한 결로 맞춘다. */
+@media (max-width: 860px) {
   .logos {
-    --logo-k: 0.7;
+    --logo-k: 0.78;
   }
   .logos__mark {
     height: 46px;
   }
-  .logos__wall {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    justify-items: center;
-    align-items: start;
-    max-width: 720px;
-    column-gap: var(--sp-5);
-    row-gap: var(--sp-6);
+  .logos__group {
+    gap: clamp(32px, 5vw, 64px);
+    padding-inline-end: clamp(32px, 5vw, 64px);
   }
 }
 
@@ -998,11 +960,28 @@
   .logos__name {
     font-size: var(--fs-sm);
   }
-  /* 폰에서는 두 칸 네 줄이다 — 네 칸이면 칸이 90px 아래로 내려가 Red Hat 이 잘린다. */
-  .logos__wall {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    column-gap: var(--sp-5);
-    row-gap: var(--sp-6);
+  .logos__group {
+    gap: var(--sp-7);
+    padding-inline-end: var(--sp-7);
+  }
+}
+
+@keyframes logos-roll {
+  to {
+    translate: -100% 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .logos__belt {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--sp-5);
+  }
+  .logos__group {
+    animation: none;
+  }
+  .logos__group[aria-hidden="true"] {
+    display: none;
   }
 }
 
@@ -1248,97 +1227,17 @@ a.brief:hover {
   font-size: var(--fs-xs);
   font-weight: 600;
 }
-/* 세미나·프로모션 한 줄(2026-09-14). 탭을 두지 않기로 했으므로 갈래는 생김새가 말한다:
-   세미나 카드는 표지 자리에 날짜가 크게 서고, 프로모션 카드는 그 자리가 배너다. 날짜 면은
-   표지와 같은 16:9 라 두 갈래의 제목 줄이 한 높이에서 만난다 — 높이가 어긋나면 섞어 둔 것이
-   줄이 아니라 계단으로 보인다. 면 색은 카드 위에 한 겹 더 뜬 유리다(색면 위에서는 --field-glass-hi,
-   크림 지면에서는 옅은 잉크 물). */
-.brief__date {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: var(--sp-1);
-  aspect-ratio: var(--cover-ratio);
-  padding: var(--sp-5);
-  background: var(--field-glass-hi, rgb(var(--c-neutral-900-rgb) / 0.05));
-}
-.brief__date b {
-  font-size: clamp(2rem, 3.4vw, 2.6rem);
-  font-weight: 800;
-  line-height: 1;
-  letter-spacing: var(--tracking-tight);
-  color: var(--text-primary);
-  font-variant-numeric: tabular-nums;
-}
-.brief__date i {
-  font-style: normal;
-  font-size: var(--fs-xs);
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  color: var(--text-muted);
-}
-/* 칩으로 거르면 넷 중 둘만 남는다(2026-09-14). 격자를 줄로 바꾼 것은 폭 때문이다 —
-   격자의 1fr 은 남은 장 수에 맞춰 늘어나서, 둘만 남으면 카드가 배로 커지고 표지 높이까지
-   따라 커져 칩을 누를 때마다 아래 지면이 밀렸다. 폭을 넷이 서던 그 폭으로 고정한다.
-   남는 자리는 오른쪽에 그대로 둔다: 가운데로 모아 봤더니 제목은 왼쪽 축인데 카드만
-   가운데라 한 지면에 축이 둘이 됐다(가운데 정렬은 두 번 반려됐다 — 2026-09-08).
-   칩을 눌러 줄인 직후라 빈 자리는 제가 줄인 결과로 읽힌다. */
-.briefs--agenda {
-  display: flex;
-  flex-wrap: wrap;
-}
-.briefs--agenda .brief {
-  flex: 0 0 calc((100% - var(--gap-tile) * 3) / 4);
-}
-/* 작성자 display 가 [hidden] 을 이긴다 — 걸러 낸 카드가 그대로 보였다. .rail__card 가
-   같은 함정을 밟아 같은 방식으로 껐다(components.css). */
-.brief[hidden] {
-  display: none;
-}
-
-/* 곁줄에 문이 둘인 것은 이 섹션뿐이다(2026-09-14). 제목 줄 오른쪽 여백은 더 비우지
-   않는다 — 제목 기둥(.section__head)은 554px 고정이고 곁줄은 컨테이너 오른쪽 끝에 따로
-   서므로 데스크톱에서 둘은 만나지 않는다(실측 1440·1280). 여백을 더 줬더니 제목만
-   두 줄로 접혔다. 둘이 실제로 만나는 폭에서는 곁줄이 제목 줄에서 내려와 카드 아래
-   제 줄로 눕는다 — 절대배치를 유지하면 제목 위로 겹친다. */
-@media (max-width: 860px) {
-  .section:has(.briefs--agenda) .sec-side {
-    position: static;
-    flex-wrap: wrap;
-    margin-top: var(--sp-5);
-  }
-}
-
-/* 지난 것 — 걷지 않고 남기되 채운 칸을 비운다. 채운 검정 배지 옆에 서면 세기가 확실히 갈린다. */
-.brief__badge--past {
-  background: transparent;
-  color: var(--text-muted);
-  box-shadow: inset 0 0 0 1px currentColor;
-}
-
 @media (max-width: 860px) {
   .briefs {
     grid-auto-flow: row;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--sp-4);
   }
-  .briefs--agenda .brief {
-    flex-basis: calc((100% - var(--sp-4)) / 2);
-  }
 }
 
 @media (max-width: 640px) {
   .briefs {
     grid-template-columns: minmax(0, 1fr);
-  }
-  .briefs--agenda .brief {
-    flex-basis: 100%;
-  }
-  /* 한 칸으로 내려오면 날짜 면의 16:9 는 빈 방이 된다 — 표지와 높이를 맞출 상대가
-     옆에 없으므로 숫자 둘레만 남기고 접는다. */
-  .brief__date {
-    aspect-ratio: auto;
-    padding-block: var(--sp-6);
   }
 }
 
