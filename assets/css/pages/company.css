@@ -39,7 +39,7 @@
    (design-resources/19-company-hub-feature/).
    파일이 없어도 판은 깨지지 않는다(CSS 배경이라 어두운 면만 남는다). */
 .feat--company {
-  --card-media: url("/saltware-prototype/media/company/hub-feature.jpg?v=93f579d19bef");
+  --card-media: url("/saltware-prototype/media/company/hub-feature.jpg?v=04337f3c3558");
 }
 
 /* 카드별 배경 사진. 인라인 style 금지(spec 시험)라 히어로(.hero--m-*)·인사이트 카드와
@@ -48,22 +48,22 @@
    실물이 들어올 때마다 한 줄씩 더한다(design-resources/18-company-card/README.md).
    그림이 없는데 CARD_ART 에 먼저 적으면 검은 칸이 된다 — 반입한 뒤에 적는다. */
 .hub-card--company-capabilities {
-  --card-media: url("/saltware-prototype/media/company/card-capabilities.jpg?v=93f579d19bef");
+  --card-media: url("/saltware-prototype/media/company/card-capabilities.jpg?v=04337f3c3558");
 }
 .hub-card--company-history {
-  --card-media: url("/saltware-prototype/media/company/card-history.jpg?v=93f579d19bef");
+  --card-media: url("/saltware-prototype/media/company/card-history.jpg?v=04337f3c3558");
 }
 .hub-card--company-ir {
-  --card-media: url("/saltware-prototype/media/company/card-ir.jpg?v=93f579d19bef");
+  --card-media: url("/saltware-prototype/media/company/card-ir.jpg?v=04337f3c3558");
 }
 .hub-card--company-careers {
-  --card-media: url("/saltware-prototype/media/company/card-careers.jpg?v=93f579d19bef");
+  --card-media: url("/saltware-prototype/media/company/card-careers.jpg?v=04337f3c3558");
 }
 .hub-card--company-location {
-  --card-media: url("/saltware-prototype/media/company/card-location.jpg?v=93f579d19bef");
+  --card-media: url("/saltware-prototype/media/company/card-location.jpg?v=04337f3c3558");
 }
 .hub-card--company-brand {
-  --card-media: url("/saltware-prototype/media/company/card-brand.jpg?v=93f579d19bef");
+  --card-media: url("/saltware-prototype/media/company/card-brand.jpg?v=04337f3c3558");
 }
 
 /* 카드가 여섯이다 — 인사이트의 넷을 그대로 두면 둘째 줄에 두 장만 남아 줄이 반쯤 빈다.
@@ -865,7 +865,7 @@ html.js-pillars .cpil:not(.is-on) .cpil__desc {
 }
 .cclose--art::before {
   z-index: -2;
-  background-image: url("/saltware-prototype/media/hub/hub-insights.jpg?v=93f579d19bef");
+  background-image: url("/saltware-prototype/media/hub/hub-insights.jpg?v=04337f3c3558");
   background-position: center;
   background-size: cover;
   filter: var(--art-tone);
