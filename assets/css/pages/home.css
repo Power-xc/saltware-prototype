@@ -249,6 +249,8 @@
      transform 이 아니라 scale·translate 를 따로 쓴다: 둘이 겹쳐도 서로를 지우지 않는다. */
   scale: 1.07;
   translate: calc(var(--px, 0) * 12px) calc(var(--py, 0) * 9px);
+  /* 쉴 때는 지면의 등급으로 보이고 짚으면 제 색이 난다 — 근거는 tokens.css 의 --art-rest 주석. */
+  filter: var(--art-rest);
   transition:
     scale var(--dur-content) var(--ease),
     translate 260ms var(--ease),
