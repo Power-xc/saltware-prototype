@@ -829,59 +829,65 @@
   }
 }
 
-/* 파트너·기술 로고 띠 — 한 줄로 흐른다(사령관 2026-09-15 "히어로 롤링이랑 인터랙션 유지해줘").
+/* 파트너·기술 로고 벽 — 여덟이 한 번에 다 선다(사령관 2026-09-15 "흘러가듯이 보여주는
+   형식이 아닌, 전체 리스트를 한 번에"). 위에 라벨 한 줄을 세운다 — 로고만 있으면 이게
+   무엇의 목록인지 말해 주는 것이 없어 지면이 거기서 멈췄다.
    기본은 무채색 한 결이다: 원색이 여덟 개 섞이면 줄 전체가 소음이 된다(2단 시절 실측).
-   커서를 얹으면 띠가 멈추고 그 로고만 원색으로 서면서 아래에 "이름 · 파트너/기술"이 뜬다 —
+   커서를 얹으면 그 로고만 원색으로 서면서 아래에 "이름 · 파트너/기술"이 뜬다 —
    층 라벨을 없앤 자리를 이 캡션이 받는다. 캡션 자리는 늘 비워 둔다(뜰 때 줄이 안 흔들리게). */
 .logos {
   display: grid;
   gap: var(--sp-6);
-  /* 크기는 한 단 낮춘 채로 둔다(사령관 2026-09-15 "좀 더 작고 전체적인 넓이에 맞춰서").
-     vw 로 연속 배율을 만들 수는 없다 — 길이를 수로 나눈 값은 길이라 --logo-k 가 px 이
-     되고 `calc(40px * 0.9px)` 이 무효가 된다(실측). 그래서 구간마다 상수다. */
+  /* 로고는 지면 폭에 맞춰 눕고, 크기는 한 단 낮춘다(사령관 2026-09-15 "좀 더 작고
+     전체적인 넓이에 맞춰서"). 배율의 상한은 칸 폭이 정한다: 가장 넓은 로고(Red Hat,
+     배율 1 에서 186px)가 칸 안에 들어와야 한다. vw 로 연속 배율을 만들 수는 없다 —
+     길이를 수로 나눈 값은 길이라 --logo-k 가 px 이 되고 `calc(40px * 0.9px)` 이
+     무효가 된다(실측). 그래서 구간마다 상수다. */
   --logo-k: 0.72;
 }
-/* 벌 둘이 꼬리를 물고 왼쪽으로 흐른다. 상자는 지면 폭이고 넘치는 쪽은 잘린다. */
-.logos__belt {
-  display: flex;
-  overflow: hidden;
-  width: 100%;
+/* 여덟이 한 줄로, 지면 폭 전체에 고르게 선다(사령관 2026-09-15). 두 줄은 파트너/기술의
+   층으로 읽혔지만 층 라벨이 없는 지금은 그냥 끊긴 명단이었다.
+   칸을 여덟으로 못 박는다 — 로고 폭이 73~186px 로 제각각이라 흐름 배치로 모으면 줄이
+   가운데 뭉치고 좌우가 비었다. 균등한 칸은 지면의 세로줄과 맞아떨어지고, 접힐 일이 없다
+   (배율만 칸 폭 안에 들면 된다). 로고 자체는 칸 가운데에 눕는다. */
+.logos__wall {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  justify-items: center;
+  align-items: center;
+  row-gap: var(--sp-7);
 }
-.logos__group {
-  flex: none;
-  display: flex;
-  align-items: flex-start;
-  /* 여덟이 한 벌로 지면 폭을 채우도록 벌린다 — 간격이 좁으면 로고가 왼쪽에 뭉쳐 흐르고
-     오른쪽이 빈 채로 돈다. 벌 사이 간격도 같은 값이라 이음매에서 리듬이 안 끊긴다. */
-  gap: clamp(48px, 6vw, 96px);
-  padding-inline-end: clamp(48px, 6vw, 96px);
-  animation: logos-roll 46s linear infinite;
-}
-/* 인터랙션 — 커서를 얹으면 멈춘다. 흘러가는 표적은 겨눌 수 없어 호버 캡션이 무용해진다. */
-.logos__belt:hover .logos__group {
-  animation-play-state: paused;
-}
-@keyframes logos-roll {
-  to {
-    translate: -100% 0;
-  }
-}
-/* 전역 감속 규칙은 애니메이션을 0.01ms 로 줄일 뿐이라, 무한 반복이면 끝 프레임에서
-   깜빡인다(벌이 통째로 왼쪽에 붙어 보인다). 여기서는 아예 첫 프레임에 세운다. */
-@media (prefers-reduced-motion: reduce) {
-  .logos__group {
-    animation-play-state: paused;
-  }
-}
-/* 지면이 화면에 눌리는 구간 — 로고도 같이 내려간다. 분기값은 위 히어로 카드와 같은
-   1279 다(§28: 분기 4종). 이 블록은 .logos 기본값 **뒤**에 있어야 한다 — 앞에 두면
-   같은 특이도라 뒤의 기본값이 이긴다(실측 2026-09-15). */
+/* 지면이 화면에 눌리는 구간 — 칸이 좁아지니 로고도 같이 내려간다. 분기값은 위 히어로
+   카드와 같은 1279 다(§28: 분기 4종). 이 블록은 .logos 기본값 **뒤**에 있어야 한다 —
+   앞에 두면 같은 특이도라 뒤의 기본값이 이긴다(실측 2026-09-15). 1080 아래는 줄을 접는다. */
 @media (max-width: 1279px) {
   .logos {
     --logo-k: 0.6;
   }
 }
 
+/* 줄의 양 끝은 칸이 아니라 지면에 맞춘다 — 칸 가운데에 두면 첫 로고가 57px, 마지막이
+   44px 안으로 들어가 히어로 카드의 세로줄과 어긋난다(실측 1440, 2026-09-15).
+   상자는 이미 지면 폭과 같으니, 어긋나는 것은 상자가 아니라 잉크다. */
+.logos__item:first-child {
+  justify-self: start;
+  /* 칸 안에서도 끝에 붙인다 — 항목 폭은 숨은 캡션이 정하므로(로고보다 넓다)
+     가운데 정렬이면 로고만 10px 더 들어간다(실측). */
+  justify-items: start;
+}
+.logos__item:last-child {
+  justify-self: end;
+  justify-items: end;
+}
+/* 로고 위 한 줄 — 제목이 아니라 라벨이다. h1 은 64px 잉크, 이 줄은 12.5px 회색이라
+   첫 화면에 제목이 둘로 읽히지 않는다(§4-3 활자 급수). */
+.logos__label {
+  margin: 0;
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-faint);
+}
 .logos__item {
   display: grid;
   justify-items: center;
@@ -971,17 +977,20 @@
   --logo-h: 34px;
 }
 @media (max-width: 1080px) {
-  /* 좁은 화면이라고 로고가 커지면 안 된다 — 넓은 구간(0.72)보다 크면 벌이 더 크게
-     보인다(실측 145 > 134). 한 결로 맞춘다. */
+  /* 줄을 접는 구간이라고 로고가 커지면 안 된다 — 한 줄 구간(0.72)보다 크면
+     좁은 화면에서 벌이 더 크게 보인다(실측 145 > 134). 한 결로 맞춘다. */
   .logos {
     --logo-k: 0.7;
   }
   .logos__mark {
     height: 46px;
   }
-  .logos__group {
-    gap: clamp(32px, 5vw, 64px);
-    padding-inline-end: clamp(32px, 5vw, 64px);
+  .logos__wall {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: start;
+    max-width: 720px;
+    column-gap: var(--sp-5);
+    row-gap: var(--sp-6);
   }
 }
 
@@ -995,10 +1004,11 @@
   .logos__name {
     font-size: var(--fs-sm);
   }
-  /* 폰에서는 띠 간격만 줄인다 — 좁은 폭에서 96px 이 그대로면 한 화면에 로고가 한 장뿐이다. */
-  .logos__group {
-    gap: var(--sp-7);
-    padding-inline-end: var(--sp-7);
+  /* 폰에서는 두 칸 네 줄이다 — 네 칸이면 칸이 90px 아래로 내려가 Red Hat 이 잘린다. */
+  .logos__wall {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--sp-5);
+    row-gap: var(--sp-6);
   }
 }
 
