@@ -68,7 +68,7 @@
 /* 밝은 일러스트라 흰 숫자를 얹을 수 없다 — 바닥색 위에서 흰 글씨는 2:1 로
    묻힌다(실측). 어둠 덮개를 걷고 숫자를 진한 쪽으로 뒤집었다. */
 .hyr__stage--company {
-  --stage-media: url("/saltware-prototype/media/company/history.jpg?v=86c906926f49");
+  --stage-media: url("/saltware-prototype/media/company/history.jpg?v=7d1d63180e74");
   /* 실물 그대로다(1600×898). 그림을 갈면 이 값도 같이 간다 — 어긋나면 잘린다. */
   --stage-ratio: 1600 / 898;
   /* 그림이 브랜드 주황으로 갈렸는데 바닥만 파랑 계열(#a1b0cf)로 남아 판이 보라로

@@ -265,11 +265,41 @@
   line-height: 1.5;
   color: var(--text-muted);
 }
-/* 목적지가 아직 없는 항목 — 눌리지 않는다는 것이 보여야 한다(1차 피드백 신설 사업 4종). */
+/* 목적지가 아직 없는 항목 — 눌리지 않는다는 것이 보여야 한다(1차 피드백 신설 사업 4종).
+   `[보강 2026-09-15]` 여기까지는 부모의 글자색만 흐리게 했는데, 이름 줄이 제 색
+   (--text-secondary)을 따로 들고 있어 살아 있는 항목과 똑같이 진했다. 게다가 hover 로
+   바탕이 깔리고 이름이 주황으로 물들어 "눌릴 것"처럼 굴었다 — 이름까지 흐리게 내리고
+   hover 반응을 끊는다(사용자 2026-09-15 "클릭이나 호버 할 수 없게"). */
 .mega__item--pending,
 .footer__list [aria-disabled="true"] {
   color: var(--text-faint);
-  cursor: default;
+  cursor: not-allowed;
+}
+.mega__item--pending .mega__item-name,
+.mega__item--pending:hover .mega__item-name {
+  color: var(--text-faint);
+}
+/* hover 로 바탕이 깔리지 않는다 — 배경이 곧 "누를 수 있다"는 신호다. */
+.mega__item--pending:hover {
+  background: none;
+}
+/* 서랍(모바일)의 준비 중 항목도 같은 표시로 세운다 — 여기는 링크가 아니라 span 이라
+   `.drawer__panel a` 규칙이 닿지 않아 줄 높이와 글자색이 통째로 빠져 있었다. */
+.drawer__panel [aria-disabled="true"] {
+  display: flex;
+  align-items: center;
+  min-height: var(--sp-7);
+  font-size: var(--fs-sm);
+  color: var(--text-faint);
+  cursor: not-allowed;
+}
+.drawer__panel [aria-disabled="true"]::after {
+  content: "준비 중";
+  margin-left: var(--sp-2);
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  opacity: 0.75;
 }
 .mega__item--pending .mega__item-name::after {
   content: "준비 중";
@@ -450,6 +480,16 @@
 }
 .section--inverse > .container {
   border-top: 0;
+}
+/* 이음매 — 앞 블록이 끝나는 자리에 이어 눕는 섹션이다(메인의 히어로 밑 로고 줄).
+   섹션 한 벌의 위 여백과 구분선을 두면 "밑에 붙인 띠"로 읽힌다: 선을 지우고 숨만 남긴다.
+   끝을 끊는 것은 이 섹션이 아니라 다음에 오는 색면이다. */
+.section--seam {
+  padding-bottom: var(--sp-8);
+}
+.section--seam > .container {
+  border-top: 0;
+  padding-top: var(--sp-8);
 }
 /* 배경이 바뀌는 지점이 곧 구분이다. 선을 겹쳐 긋지 않는다. */
 .section--band {
@@ -772,10 +812,10 @@
   max-width: 42ch;
 }
 .hero--media.hero--m-hub-business {
-  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=86c906926f49");
+  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=7d1d63180e74");
 }
 .hero--media.hero--m-hub-insights {
-  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=86c906926f49");
+  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=7d1d63180e74");
 }
 /* 노트북 — 히어로가 한 화면을 통째로 먹어 다음 섹션이 안 비친다(실측: 1280×800 105% ·
    1440×900 101%. 1920×1080 은 89%, 2560×1440 은 77% 라 큰 화면은 그대로 둔다).
@@ -977,19 +1017,22 @@
 /* 액자도 줄도 긋지 않는다(사령관 지시 2026-09-11). 칸을 그리면 카드처럼 읽히고,
    옆에 선 제목과 결이 갈렸다. 이름과 값의 열이 이미 나뉘어 있어 선이 없어도 표다.
    행을 가르는 건 이제 선이 아니라 여백이다. */
+/* 목록 표 공용 격자의 두 칸짜리다 — 앞 칸은 이름, 뒷 칸은 값. 비율(0.8fr/1.4fr)로
+   잡혀 있어 같은 지면의 다른 표와 앞 칸 폭이 어긋났다(IR: 주가·재무 표와 공고 목록이
+   서로 다른 자리에서 시작했다, 2026-09-14). 동작 칸은 없다 — 누를 곳이 없는 표다. */
 .proof__row {
   display: grid;
-  grid-template-columns: 0.8fr 1.4fr;
-  gap: var(--sp-5);
+  grid-template-columns: var(--row-lead) minmax(0, 1fr);
+  column-gap: var(--sp-6);
   align-items: baseline;
-  padding: var(--sp-4) 0;
+  padding-block: var(--sp-5);
 }
 .proof__row .card__title {
   font-size: var(--fs-body);
 }
 @media (max-width: 640px) {
   .proof__row {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--sp-2);
   }
 }
@@ -1381,20 +1424,52 @@
   margin-top: var(--sp-4);
 }
 
+/* 고객 사례의 덩이 머리(/insights/cases). 덩이 하나가 사업 하나라, 위 넷과 달리
+   첫 덩이도 제목을 갖는다 — 왼쪽 h1 은 "고객 사례"고 여기는 사업 이름이라 겹치지 않는다.
+   머리가 눈썹·제목 두 줄이라 아래 목록과의 사이를 조금 좁힌다. */
+.cgrp__head {
+  margin-bottom: var(--sp-4);
+}
+.cgrp__head .eyebrow {
+  margin-bottom: var(--sp-1);
+}
+/* 사업 이름이 그대로 그 사업 지면으로 가는 줄이다. 단추를 따로 달지 않는다 —
+   덩이가 일곱이라 같은 단추가 일곱 번 반복된다. 밑줄은 커서를 얹을 때만 선다. */
+.cgrp__go {
+  color: inherit;
+  text-decoration: none;
+}
+.cgrp__go:hover,
+.cgrp__go:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
 /* 소식 목록 — 한 행이 소식 하나다. 카드로 감싸지 않고 실선 하나로 나눈다(§4.2). */
 .presses {
   display: flex;
   flex-direction: column;
 }
-/* 격자가 아니라 플렉스다 — 행마다 칸 수가 다르다(표지 없는 행 셋, 화살표 없는 행 셋).
-   격자로 칸을 고정하면 표지 없는 행에서 글이 첫 칸(auto)에 앉아 쭈그러든다(실측). */
+/* 목록 표 한 벌의 격자다 — 앞 칸(--row-lead) · 본문 · 동작. 사례(.cs) · 자료실(.dl) ·
+   보유 기반(.proof__row)이 같은 격자를 쓴다(2026-09-14). 예전에는 플렉스였고, 표지
+   없는 행에서 글이 왼쪽 끝부터 차 같은 목록 안에서도 본문 시작점이 두 군데였다
+   (산업별 정리 10줄 중 넷이 그랬다). 칸을 고정하면 표지가 없어도 자리가 비워진 채
+   남아 줄이 가지런하다 — 빈 액자를 그리는 것이 아니라 칸만 비운다.
+   동작 칸은 auto 다: 화살표(44)와 알약 단추(128)는 폭이 다르지만, 한 표 안에서는
+   격자가 알아서 같은 폭으로 맞춘다. */
 .press {
-  display: flex;
+  display: grid;
+  grid-template-columns: var(--row-lead) minmax(0, 1fr) auto;
   align-items: center;
-  gap: var(--sp-6);
-  padding-block: var(--sp-6);
+  column-gap: var(--sp-6);
+  padding-block: var(--sp-5);
   color: inherit;
   text-decoration: none;
+}
+/* 앞 칸 — 표지가 있으면 표지가, 없으면 날짜·분류가 여기 선다. */
+.press__lead {
+  display: block;
+  min-width: 0;
 }
 .press + .press {
   border-top: 1px solid var(--border-hair);
@@ -1461,8 +1536,7 @@
 /* 표지가 없는 행은 첫 칸이 통째로 빠져 글이 왼쪽부터 찬다 — 빈 액자를 만들지 않는다. */
 .press__cover {
   display: block;
-  flex: none;
-  width: clamp(180px, 17vw, 260px);
+  width: 100%;
   /* 표지 원본과 같은 비율이다(1200×630). 16/10 을 걸었더니 object-fit:cover 가 좌우를
      12% 씩 잘라 "SALTWARE" 가 "ALTWARE" 로, 제목 첫 글자가 잘려 나갔다(실측 2026-09-13).
      표지는 글자가 들어 있는 그래픽이라 액자가 원본을 따라간다 — 반대로 하지 않는다. */
@@ -1483,7 +1557,6 @@ a.press:hover .press__cover img {
   scale: 1.04;
 }
 .press__body {
-  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
   gap: var(--sp-2);
@@ -1519,7 +1592,6 @@ a.press:hover .press__title {
 }
 /* 갈 곳이 있는 행에만 선다. 원형이라 목록 오른쪽 끝에서 같은 자리에 반복된다. */
 .press__go {
-  flex: none;
   display: grid;
   place-items: center;
   width: var(--sp-7);
@@ -1535,15 +1607,17 @@ a.press:hover .press__go {
   background: var(--bg-accent);
   color: var(--text-accent);
 }
+/* 갈 곳이 없는 줄 — 원을 그리지 않되 칸은 차지한다. 폭을 비워 두면 그 줄만
+   본문이 오른쪽으로 번져 목록 오른쪽 끝이 들쭉날쭉해진다. */
+.press__go--none {
+  background: transparent;
+}
 @media (max-width: 640px) {
   .press {
-    flex-direction: column;
+    grid-template-columns: minmax(0, 1fr);
     align-items: stretch;
     gap: var(--sp-4);
     padding-block: var(--sp-5);
-  }
-  .press__cover {
-    width: 100%;
   }
   /* 좁은 화면에서 화살표는 제 줄을 차지해 낭비가 된다 — 행 전체가 이미 링크다. */
   .press__go {
@@ -1555,12 +1629,16 @@ a.press:hover .press__go {
   display: grid;
   border-top: 1px solid var(--border-hair);
 }
+/* 목록 표 공용 격자(.press 와 같은 세 칸)를 쓴다. 앞 칸은 파일 종류다 —
+   전에는 제목이 맨 왼쪽부터 차고 PDF 가 오른쪽 52px 칸에 끼어 있어, 옆 지면의
+   표들과 본문 시작점이 어긋났다(2026-09-14). 종류를 앞 칸으로 올리면 날짜(공고) ·
+   분류(사례) · 표지(소식)가 서던 자리와 같은 자리에 선다. */
 .dl {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 52px 128px;
+  grid-template-columns: var(--row-lead) minmax(0, 1fr) auto;
   align-items: center;
-  gap: var(--sp-5);
-  padding: var(--sp-4) var(--sp-2);
+  column-gap: var(--sp-6);
+  padding-block: var(--sp-5);
   border-bottom: 1px solid var(--border-hair);
   transition: background var(--dur-hover) var(--ease);
 }
@@ -1584,7 +1662,6 @@ a.dl:hover {
   font-family: var(--font-mono);
   font-size: var(--fs-xs);
   color: var(--text-faint);
-  text-align: center;
 }
 /* 동작 열 — 진짜 버튼. 파일이 있으면 파랑 솔리드, 없으면 무광 비활성. */
 .dl__act {
@@ -1630,6 +1707,36 @@ a.dl:hover .dl__act {
 
 /* ── 브랜드 가이드(/company/brand) ─────────────────────── */
 /* 워드마크 두 벌을 실제 바탕 위에서 보여준다. */
+/* 이름·심벌의 뜻 — 규격 앞에 서는 두 칸. 색면 없이 왼쪽 결선만으로 나눈다:
+   이 지면에서 상자를 더하면 바로 아래 워드마크 시연판과 두 겹으로 읽힌다. */
+.bg__origins {
+  display: grid;
+  gap: var(--gap-tile);
+}
+@media (min-width: 860px) {
+  .bg__origins {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.bg__origin {
+  display: grid;
+  gap: var(--sp-3);
+  align-content: start;
+  padding-left: var(--sp-5);
+  border-left: 2px solid var(--c-brand-dot);
+  max-width: 52ch;
+}
+.bg__origin-label {
+  font-size: var(--fs-label);
+  letter-spacing: var(--tracking-label);
+  color: var(--text-faint);
+}
+.bg__origin-title {
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  letter-spacing: var(--tracking-snug);
+}
+
 .bg__stages {
   display: grid;
   gap: var(--gap-tile);
@@ -1669,20 +1776,89 @@ a.dl:hover .dl__act {
   display: grid;
   gap: var(--sp-6);
 }
-.bg__wordmark-body {
-  display: grid;
-  gap: var(--sp-4);
-  max-width: 62ch;
-}
 .bg__desc {
   color: var(--text-muted);
   line-height: 1.7;
 }
-.bg__dont-label {
+/* 판 바로 아래 한 줄 — 규격에 들어가기 전에 "이게 무엇인가"를 말한다.
+   규격표보다 크게 두어 둘의 층을 가른다. */
+.bg__lead {
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 54ch;
+}
+/* ── 규격표 ────────────────────────────────────────────────────────────
+   워드마크·활자가 같이 쓴다. 한 지면에서 규격을 읽는 방법은 하나여야 한다.
+
+   번호는 CSS 가 센다. 손으로 적으면 항목을 하나 끼워 넣는 날 번호가 어긋나고,
+   그 어긋남은 규격서에서 곧 신뢰의 문제가 된다.
+
+   넓은 화면에서는 번호 · 라벨 · 문장이 세 칸으로 선다. 라벨 칸을 고정 폭으로 두어
+   문장의 왼쪽 끝이 전부 한 줄에 맞는다 — 그 수직선 하나가 이 표를 규격서로 보이게
+   하는 거의 전부다. 좁은 화면에서는 라벨이 문장 위로 올라간다. */
+.bg__spec-block {
+  display: grid;
+  gap: var(--sp-4);
+}
+.bg__spec-head {
   font-size: var(--fs-xs);
   font-weight: 600;
   color: var(--text-faint);
   letter-spacing: var(--tracking-label);
+}
+.bg__spec {
+  counter-reset: spec;
+  display: grid;
+  margin: 0;
+  border-top: 1px solid var(--border-hair);
+}
+.bg__spec-row {
+  counter-increment: spec;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2px var(--sp-4);
+  padding: var(--sp-4) 0;
+  border-bottom: 1px solid var(--border-hair);
+}
+.bg__spec-label {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+/* 좁은 화면이 기본이다 — 번호를 라벨 앞에 붙여 한 줄로 읽는다.
+   여기서 max-width 질의를 쓰지 않는 것은 §28 이 브레이크포인트를 넉 종(640 · 860 ·
+   1080 · 1279)으로 묶어 두기 때문이다. 좁은 쪽을 기본으로 적으면 새 값이 안 생긴다. */
+.bg__spec-label::before {
+  content: counter(spec, decimal-leading-zero) "  ";
+  font-variant-numeric: tabular-nums;
+  color: var(--text-faint);
+  font-weight: 400;
+}
+@media (min-width: 640px) {
+  .bg__spec-row {
+    grid-template-columns: 2.5rem 9rem minmax(0, 1fr);
+    align-items: baseline;
+  }
+  /* 넓어지면 번호가 제 칸으로 나간다. */
+  .bg__spec-row::before {
+    content: counter(spec, decimal-leading-zero);
+    font-size: var(--fs-xs);
+    font-variant-numeric: tabular-nums;
+    color: var(--text-faint);
+  }
+  .bg__spec-label::before {
+    content: none;
+  }
+}
+.bg__spec-text {
+  margin: 0;
+  color: var(--text-muted);
+  line-height: 1.7;
+  max-width: 52ch;
+}
+/* 하지 않는 것 — 규격표와 갈라 세운다. */
+.bg__dont-block {
+  display: grid;
+  gap: var(--sp-3);
 }
 .bg__dont {
   display: flex;
@@ -1755,23 +1931,17 @@ a.dl:hover .dl__act {
 /* 활자 견본 */
 .bg__type {
   display: grid;
-  gap: var(--sp-5);
+  gap: var(--sp-7);
 }
+/* 견본은 커야 견본이다 — 활자 지면에서 실제로 보여 주는 것은 이 한 줄뿐이다.
+   앞 판은 24ch 로 묶어 두 줄로 접히면서 규격표와 비슷한 덩치가 되어, 견본인지
+   본문인지 구분이 안 됐다. 폭을 풀고 한 단 키운다. */
 .bg__specimen {
-  font-size: var(--fs-h1);
+  font-size: var(--fs-display);
   font-weight: 600;
   letter-spacing: var(--tracking-snug);
-  line-height: 1.25;
-  max-width: 24ch;
-}
-.bg__type-name {
-  font-weight: 600;
-  font-size: var(--fs-h4);
-}
-.bg__type-body {
-  display: grid;
-  gap: var(--sp-2);
-  max-width: 62ch;
+  line-height: 1.2;
+  max-width: 38ch;
 }
 /* 자산 다운로드 행 */
 .bg__assets {
@@ -2082,14 +2252,6 @@ a.bg__asset:hover {
   font-size: var(--fs-sm);
   color: var(--text-muted);
   line-height: 1.6;
-}
-
-/* ── 분할 레이아웃 ──────────────────────────────────── */
-.split {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--sp-6);
-  align-items: center;
 }
 
 /* ── 폼 ────────────────────────────────────────────── */
@@ -2640,7 +2802,7 @@ a.tile:hover .tile__glyph svg circle:nth-child(9) {
    파일이 아직 없어도 카드가 깨지지 않는다 — CSS 배경이라 깨진 그림 아이콘이 뜨지 않고,
    ::before 가 빈 채로 어두운 면만 남는다. 그래서 클래스를 미리 붙여 둔다. */
 .feat--art {
-  --card-media: url("/saltware-prototype/media/insight/feature.jpg?v=86c906926f49");
+  --card-media: url("/saltware-prototype/media/insight/feature.jpg?v=7d1d63180e74");
 }
 .feat[class*="feat--"] .feat__lead::before {
   content: "";
@@ -2835,16 +2997,16 @@ a.tile:hover .tile__glyph svg circle:nth-child(9) {
    여기 규칙이 있어도 페이지가 수식 클래스를 붙이지 않으면 켜지지 않는다 —
    자산 반입 여부는 insights.mjs 의 ART 가 안다. */
 .hub-card--industry {
-  --card-media: url("/saltware-prototype/media/insight/card-industry.jpg?v=86c906926f49");
+  --card-media: url("/saltware-prototype/media/insight/card-industry.jpg?v=7d1d63180e74");
 }
 .hub-card--report {
-  --card-media: url("/saltware-prototype/media/insight/card-report.jpg?v=86c906926f49");
+  --card-media: url("/saltware-prototype/media/insight/card-report.jpg?v=7d1d63180e74");
 }
 .hub-card--library {
-  --card-media: url("/saltware-prototype/media/insight/card-library.jpg?v=86c906926f49");
+  --card-media: url("/saltware-prototype/media/insight/card-library.jpg?v=7d1d63180e74");
 }
 .hub-card--news {
-  --card-media: url("/saltware-prototype/media/insight/card-news.jpg?v=86c906926f49");
+  --card-media: url("/saltware-prototype/media/insight/card-news.jpg?v=7d1d63180e74");
 }
 
 /* AWS 자격 뱃지. 로고월(.logos)과 다르다 — 획득한 자격의 실물이고 이름이 함께 붙는다.
@@ -3372,14 +3534,41 @@ a.tile:hover .tile__glyph svg circle:nth-child(9) {
   display: grid;
   gap: 0;
 }
+/* 목록 표 공용 격자. 앞 칸 폭이 15rem 고정이었는데 --row-lead 로 옮겼다 —
+   같은 값이되 소식 표지 · 공고 날짜 · 자료실 종류와 한 토큰을 공유한다(2026-09-14).
+   세 번째 칸은 동작 자리다. 갈 곳이 있는 줄만 화살표가 서고, 없는 줄은 칸만 비운다. */
 .cs {
   display: grid;
-  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  grid-template-columns: var(--row-lead) minmax(0, 1fr) auto;
   gap: var(--sp-2) var(--sp-6);
   align-items: baseline;
   padding-block: var(--sp-5);
   border-top: 1px solid var(--border-hair);
   color: inherit;
+  text-decoration: none;
+}
+a.cs:hover .cs__title {
+  color: var(--text-accent);
+}
+/* 소식 목록의 화살표와 같은 원이다 — 오른쪽 끝에서 같은 자리에 반복된다. */
+.cs__go {
+  grid-row: 1 / -1;
+  grid-column: 3;
+  align-self: center;
+  display: grid;
+  place-items: center;
+  width: var(--sp-7);
+  height: var(--sp-7);
+  border-radius: var(--radius-circle);
+  background: var(--bg-band);
+  color: var(--text-secondary);
+  transition:
+    background var(--dur-hover) var(--ease),
+    color var(--dur-hover) var(--ease);
+}
+a.cs:hover .cs__go {
+  background: var(--bg-accent);
+  color: var(--text-accent);
 }
 .cs:last-child {
   border-bottom: 1px solid var(--border-hair);
@@ -3428,6 +3617,10 @@ a.tile:hover .tile__glyph svg circle:nth-child(9) {
   }
   .cs__desc {
     grid-column: 1;
+  }
+  /* 좁은 화면에서 화살표는 제 줄을 차지한다 — 줄 전체가 이미 링크다(.press__go 와 같다). */
+  .cs__go {
+    display: none;
   }
 }
 
@@ -3702,6 +3895,19 @@ html.js-reveal
    왼쪽이 회색으로 물들어 얼룩이 된다. 가림막이 없으니 눈썹은 검은 판용 색을 못 쓴다. */
 .pbanner__art--nodim::after {
   content: none;
+}
+/* 받침색도 밝은 쪽으로 돌린다. 기본값은 어두운 사진이 늦게 뜰 때를 위한 것이라,
+   밝은 판에 그대로 두면 자산이 실리기 전 한순간 검은 판이 번쩍인다. */
+.pbanner__art--nodim {
+  background-color: var(--c-white);
+}
+/* 밝은 판의 영상은 잘리지 않고 통째로 들어간다. 사진은 잘려도 그만이지만 이 판에 도는
+   것은 워드마크라, cover 로 두면 좁은 화면에서 판이 16:10 으로 서는 순간 좌우가 잘려
+   로고가 토막난다(390px 실측 2026-09-15 — "saltwar" 까지만 남았다).
+   남는 자리는 받침색이 흰색이라 눈에 띄지 않는다. 넓은 화면에서는 판도 영상도 3:1 이라
+   cover 와 결과가 같다. */
+.pbanner__art--nodim video.pbanner__img {
+  object-fit: contain;
 }
 .pbanner__art--nodim .pbanner__eyebrow {
   color: var(--text-primary);
