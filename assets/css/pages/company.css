@@ -39,7 +39,7 @@
    (design-resources/19-company-hub-feature/).
    파일이 없어도 판은 깨지지 않는다(CSS 배경이라 어두운 면만 남는다). */
 .feat--company {
-  --card-media: url("/saltware-prototype/media/company/hub-feature.jpg?v=86c906926f49");
+  --card-media: url("/saltware-prototype/media/company/hub-feature.jpg?v=b983003a9994");
 }
 
 /* 카드별 배경 사진. 인라인 style 금지(spec 시험)라 히어로(.hero--m-*)·인사이트 카드와
@@ -48,22 +48,22 @@
    실물이 들어올 때마다 한 줄씩 더한다(design-resources/18-company-card/README.md).
    그림이 없는데 CARD_ART 에 먼저 적으면 검은 칸이 된다 — 반입한 뒤에 적는다. */
 .hub-card--company-capabilities {
-  --card-media: url("/saltware-prototype/media/company/card-capabilities.jpg?v=86c906926f49");
+  --card-media: url("/saltware-prototype/media/company/card-capabilities.jpg?v=b983003a9994");
 }
 .hub-card--company-history {
-  --card-media: url("/saltware-prototype/media/company/card-history.jpg?v=86c906926f49");
+  --card-media: url("/saltware-prototype/media/company/card-history.jpg?v=b983003a9994");
 }
 .hub-card--company-ir {
-  --card-media: url("/saltware-prototype/media/company/card-ir.jpg?v=86c906926f49");
+  --card-media: url("/saltware-prototype/media/company/card-ir.jpg?v=b983003a9994");
 }
 .hub-card--company-careers {
-  --card-media: url("/saltware-prototype/media/company/card-careers.jpg?v=86c906926f49");
+  --card-media: url("/saltware-prototype/media/company/card-careers.jpg?v=b983003a9994");
 }
 .hub-card--company-location {
-  --card-media: url("/saltware-prototype/media/company/card-location.jpg?v=86c906926f49");
+  --card-media: url("/saltware-prototype/media/company/card-location.jpg?v=b983003a9994");
 }
 .hub-card--company-brand {
-  --card-media: url("/saltware-prototype/media/company/card-brand.jpg?v=86c906926f49");
+  --card-media: url("/saltware-prototype/media/company/card-brand.jpg?v=b983003a9994");
 }
 
 /* 카드가 여섯이다 — 인사이트의 넷을 그대로 두면 둘째 줄에 두 장만 남아 줄이 반쯤 빈다.
@@ -474,44 +474,101 @@
   }
 }
 
-/* ── 사업 기둥 ─────────────────────────────────────────────
-   앞 판은 여섯을 3열 카드 격자로 폈다. 격자를 걷고 여섯 **줄**로 세운다
-   (사령관 2026-09-13). 줄마다 왼쪽에 번호, 가운데에 글, 오른쪽에 작은 표지다.
+/* ── 사업 기둥 ─────────────────────────────
+   1판 3열 카드 격자 → 2판 한 줄씩(줄마다 작은 표지) → 지금은 **왼쪽 붙박이 액자 + 오른쪽 목록**
+   이다(사령관 2026-09-15 — toss.im/company 의 문화 목록 판).
 
-   처음엔 줄 사이를 가는 선으로 갈랐다. 화면에는 아무 선도 나오지 않았다 —
-   이 사이트는 --border-hair 가 transparent 다(tokens.css, 사령관 2026-09-11
-   "행과 행 사이의 선, 글을 감싸는 액자는 긋지 않는다. 여백과 열이 이미 가른다").
-   선에 기대 짠 목록이라 줄이 허공에 떠 있었다. 선을 걷고 그 규칙대로 간다 —
-   여백이 줄을 가르고, 줄 전체가 누를 곳이라는 표시는 hover 때 깔리는 면이 맡는다. */
-/* 줄에 안여백을 주면 번호가 그만큼 안으로 들어가 이 구획만 좌우 선이 다른 구획보다
-   좁아진다(실측 1440 — 번호가 x=83, 다른 구획의 글은 x=52). 목록을 같은 크기만큼
-   밖으로 당겨 글은 컨테이너 선에 맞추고, hover 때 깔리는 면만 글 밖으로 퍼지게 한다.
-   컨테이너의 좌우 여백(--sp-6)이 여기서 당기는 값(--sp-5)보다 커서 화면 밖으로는
-   나가지 않는다. */
+   줄은 번호 · 이름 · 설명 세 열이고, 읽는 줄 하나만 검은 글씨로 선다. 선은 여전히
+   긋지 않는다 — 이 사이트는 --border-hair 가 transparent 다(tokens.css, 사령관 2026-09-11
+   "행과 행 사이의 선, 글을 감싸는 액자는 긋지 않는다"). 줄을 가르는 것은 여백과 색의 단이다.
+
+   흐리기를 opacity 로 하지 않는다. 등장 전이([data-reveal] > *)가 같은 속성을 0.6s 로 잡고
+   있어, 여기서 다시 0.3 같은 값을 주면 줄이 반투명인 채 떠올라 등장이 깨진다. 색으로만 가른다 —
+   쉼는 줄도 --text-muted(5.6:1)이라 그대로 읽힌다. 회색 단을 더 내리면(neutral-500) 3.3:1 이 된다.
+
+   액자는 한 장이 아니라 다섯 장을 겹쳐 두고 활성 장만 드러난다 — src 를 바꾸면 새 장을
+   내려받는 동안 액자가 빈다. 스크립트가 없으면 html.js-pillars 가 안 붙어 첫 장이 걸리고
+   모든 줄이 검은 글씨로 선다. */
 .cpils {
   display: grid;
-  gap: var(--sp-1);
-  margin-inline: calc(var(--sp-5) * -1);
+  grid-template-columns: clamp(240px, 26vw, 340px) minmax(0, 1fr);
+  gap: var(--sp-8);
+  /* 두 열이 같은 높이로 선다 — 액자가 목록 높이를 그대로 받는다(아래 .cpils__frame 주석). */
+  align-items: stretch;
+}
+/* 표지가 한 장도 없는 날에는 목록이 폭을 다 쓴다 — 빈 액자를 남기지 않는다(§29). */
+.cpils--noart {
+  grid-template-columns: minmax(0, 1fr);
+}
+.cpils__art {
+  position: sticky;
+  top: calc(var(--header-h, 64px) + var(--sp-7));
+}
+/* 액자의 높이는 비율이 아니라 **오른쪽 목록**이 정한다 `[실측 2026-09-15]`.
+   정사각(1:1)으로 두었더니 1440 에서 340×340 인데 목록은 492px 였다 — 액자가 04 줄
+   언저리에서 끝나고 그 아래로 150px 가 비었다(사령관 "세로가 너무 짧아"). 반대로 66vh
+   같은 화면 값으로 늘리면 이번엔 목록보다 168px 가 길어져 액자만 아래로 삐져나온다.
+   어느 쪽이든 두 열의 바닥이 어긋난다.
+
+   그래서 격자를 stretch 로 두고 액자가 줄 높이를 그대로 받게 한다 — 줄이 늘거나 설명이
+   두 줄이 되어 목록이 길어지면 액자도 같이 길어진다. 다만 화면보다 키가 커지면 붙박이가
+   따라 붙지 못하고 그냥 흘러가므로 78vh 에서 멈춘다. 그림은 cover 라 어느 높이에서든
+   판을 채운다. */
+.cpils__frame {
+  position: relative;
+  display: block;
+  height: 100%;
+  min-height: 420px;
+  max-height: 78vh;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--bg-band);
+}
+.cpils__shot {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* --art-tone(채도 30%)을 걸지 않는다. 허브 카드와 같은 흰 바탕 3D 일러스트라
+     30% 로 누르면 색이 죽고 회색 뭉치만 남는다(components.css 의 .hub-card::before 와 같은 값). */
+  filter: saturate(0.82) contrast(1.02);
+  opacity: 0;
+  transition: opacity var(--dur-content) var(--ease);
+}
+/* 스크립트 없을 때의 기본화: 첫 장이 걸린다. 있을 때는 is-on 이 정한다. */
+.cpils__shot:first-child {
+  opacity: 1;
+}
+html.js-pillars .cpils__shot {
+  opacity: 0;
+}
+html.js-pillars .cpils__shot.is-on {
+  opacity: 1;
+}
+/* 줄에 안여백을 주면 번호가 그만큼 안으로 들어가 열 선에서 밀린다. 목록을 같은
+   크기만큼 밖으로 당겨 글은 열 선에 맞추고, hover 때 깔리는 면만 글 밖으로 퍼지게 한다. */
+/* 줄 사이를 sp-1(4px)에서 sp-2(8px)로 벌리고 줄 안여백도 한 단 올렸다(아래 .cpil)
+   `[2026-09-15]` — 다섯 줄이 492px 밖에 안 돼 구획 전체가 납작했다(사령관 "세로가
+   너무 짧아"). 눈금을 새로 만들지 않고 있는 간격 단에서 한 칸씩만 올린 것이다. */
+.cpils__list {
+  display: grid;
+  gap: var(--sp-2);
+  margin-inline: calc(var(--sp-4) * -1);
 }
 .cpil {
-  /* 표지 폭을 한 곳에서만 정한다 — 열 너비와 줄의 최소 높이가 같은 수에서 나와야
-     표지가 없는 줄(AI)도 다른 줄과 높이가 같다. 표지를 뺐더니 그 줄만 14px 낮아
-     여섯 줄의 눈금이 한 칸에서 어긋났다(실측 1440 — 줄 간격 151 · 137 · 151). */
-  --cover-w: clamp(120px, 13vw, 184px);
   display: grid;
-  /* 번호 · 글 · 표지 · 가는 곳. 표지 칸은 줄 높이를 지배하지 않을 만큼만 준다. */
-  grid-template-columns: auto minmax(0, 1fr) var(--cover-w) auto;
-  align-items: center;
+  /* 번호 · 이름 · 설명 · 가는 곳. */
+  grid-template-columns: auto minmax(0, 1fr) minmax(0, 1.1fr) auto;
+  align-items: start;
   gap: var(--sp-5);
-  padding: var(--sp-4) var(--sp-5);
-  min-height: calc(var(--cover-w) / 1.6 + var(--sp-4) * 2);
+  padding: var(--sp-6) var(--sp-4);
   border-radius: var(--radius-lg);
   color: inherit;
   text-decoration: none;
   /* 등장(opacity·translate)을 여기서 함께 선언해야 한다 — 이 파일은 components.css 뒤에
      로드되므로 hover 용 transition 만 적으면 [data-reveal] > * 의 등장 전이를 덮어
-     줄이 페이드 없이 튀어 들어온다(components.css 모션 구획의 주석이 경고하는 그 일).
-     늦춤 --d 는 reveal.mjs 가 자식마다 매기는 --i 에서 온다. */
+     줄이 페이드 없이 튀어 들어온다. 늦춤 --d 는 reveal.mjs 가 자식마다 매기는 --i 에서 온다. */
   transition:
     opacity 0.6s var(--ease) var(--d, 0s),
     translate 0.6s var(--ease) var(--d, 0s),
@@ -520,105 +577,319 @@
 a.cpil:hover {
   background: var(--bg-band);
 }
-/* 줄 전체가 과녁이라 테두리를 안으로 그린다 — 밖으로 그으면 옆 줄과 겹친다. */
+/* 줄 전체가 과념이라 테두리를 안으로 그린다 — 밖으로 그으면 옆 줄과 겹친다. */
 a.cpil:focus-visible {
   outline: 2px solid var(--c-accent);
   outline-offset: -2px;
 }
-/* 번호는 글 덩이와 세로 가운데를 맞춘다. 줄 머리에 붙여 두었더니 표지가 있는 줄에서만
-   번호가 위로 뜨고(줄이 표지 높이만큼 길다) 표지 없는 줄에서는 눈금이 맞아, 여섯 줄의
-   번호가 들쭉날쭉했다(실측 1440×900 — 01 은 128px, 03 은 468px 에서 눈금이 어긋났다). */
 .cpil__n {
-  align-self: center;
   font-size: var(--fs-xs);
   font-weight: 700;
   color: var(--text-muted);
   font-variant-numeric: tabular-nums;
+  /* 이름 첫 줄과 눈금을 맞춴 놓는다 — 줄 가운데가 아니라 위쪽 정렬이라 설명이
+     길어져도 번호가 따라 내려가지 않는다. */
+  padding-top: 0.35em;
+  transition: color var(--dur-content) var(--ease);
 }
 .cpil__body {
   display: grid;
-  gap: var(--sp-2);
+  gap: var(--sp-1);
 }
 .cpil__eyebrow {
   font-size: var(--fs-label);
   font-weight: 700;
   letter-spacing: var(--tracking-label);
-  color: var(--text-primary);
+  color: var(--text-muted);
+  transition: color var(--dur-content) var(--ease);
 }
 .cpil__title {
   font-size: var(--fs-h4);
   font-weight: 700;
   color: var(--text-primary);
+  transition: color var(--dur-content) var(--ease);
 }
 .cpil__desc {
   font-size: var(--fs-sm);
   line-height: 1.6;
   color: var(--text-secondary);
-}
-.cpil__cover {
-  display: block;
-  overflow: hidden;
-  border-radius: var(--radius-md);
-  aspect-ratio: 16 / 10;
-  background: var(--bg-band);
-}
-.cpil__cover img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  /* --art-tone(채도 30%)을 걸지 않는다. 그 값은 어두운 실사 히어로용이고, 이 표지는
-     허브 카드와 같은 흰 바탕 3D 일러스트라 30% 로 누르면 색이 죽고 회색 뭉치만 남는다.
-     허브 카드가 같은 이유로 쓰는 값을 그대로 쓴다(components.css 의 .hub-card::before). */
-  filter: saturate(0.82) contrast(1.02);
-  transition: scale var(--dur-content) var(--ease);
-}
-a.cpil:hover .cpil__cover img {
-  scale: 1.05;
+  transition: color var(--dur-content) var(--ease);
 }
 .cpil__go {
   font-size: var(--fs-xs);
   font-weight: 600;
   color: var(--text-accent);
   white-space: nowrap;
-}
-/* 표지 없는 칸(AI)은 글이 표지 자리까지 쓴다 — 회색 빈 액자를 남기지 않는다(§29). */
-.cpil--nocover .cpil__body {
-  grid-column: 2 / 4;
+  padding-top: 0.35em;
+  opacity: 0;
+  transition: opacity var(--dur-hover) var(--ease);
 }
 /* 갈 곳 없는 줄에는 "자세히 보기"도 없다(§30). 마지막 칸까지 글이 쓴다. */
-.cpil--flat .cpil__body {
-  grid-column: 2 / -1;
+.cpil--flat .cpil__desc {
+  grid-column: 3 / -1;
+}
+/* 읽는 줄에만 길이 보인다 — 다만 링크는 다섯 줄 전부 살아 있고 hover·탭이 그것을 드러낸다. */
+a.cpil:hover .cpil__go,
+a.cpil:focus-visible .cpil__go,
+.cpil.is-on .cpil__go {
+  opacity: 1;
+}
+/* 활성이 아닌 줄은 한 단 가라앉는다. 스크립트가 있을 때만 건다 — 없으면 다 검게 선다. */
+html.js-pillars .cpil:not(.is-on) .cpil__title,
+html.js-pillars .cpil:not(.is-on) .cpil__desc {
+  color: var(--text-muted);
+}
+@media (prefers-reduced-motion: reduce) {
+  .cpil__n,
+  .cpil__eyebrow,
+  .cpil__title,
+  .cpil__desc,
+  .cpils__shot {
+    transition-duration: 0.01ms;
+  }
+}
+/* 눈금 둘로 줄인다. §28 이 브레이크포인트를 네 종(640 · 860 · 1080 · 1279)으로 묶어 두고
+   있어 새 수를 놓지 않는다 — 있는 눈금을 쓴다.
+
+   1080: 액자는 살려 두고 줄을 접는다. 네 열은 이때 이미 좁아서 제목이 두 줄로 꺾인다.
+   860: 액자도 걷는다. 이 폭에서 붙박이 그림을 세우면 읽을 자리가 반으로 준다. */
+@media (max-width: 1080px) {
+  /* 액자를 걷는다 `[실측 2026-09-15]`. 좀히기만 하면 막대가 된다 — 높이는 오른쪽
+     목록이 정하는데(위 .cpils__frame 주석) 1024 에서 열은 225px 이고 목록은 640px 라
+     1:3 짜리 띄가 선다. 그 폭을 목록에 넘기면 네 열이 그대로 살아 줄이 더 잘 읽힌다. */
+  .cpils {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .cpils__art {
+    display: none;
+  }
+  /* 액자가 없으면 "활성 줄"이라는 개념도 없다 — 다 검게 읽히고 길도 다 보인다. */
+  html.js-pillars .cpil:not(.is-on) .cpil__title {
+    color: var(--text-primary);
+  }
+  html.js-pillars .cpil:not(.is-on) .cpil__desc {
+    color: var(--text-secondary);
+  }
+  .cpil__go {
+    opacity: 1;
+  }
 }
 @media (max-width: 860px) {
-  /* 좁은 화면에서는 표지를 걷는다 — 120px 짜리 사진은 줄 높이만 먹고 아무 말도 못 한다. */
+  /* 여기서는 네 열도 좁다. 번호만 옆에 남기고 나머지를 세로로 쌓는다. */
   .cpil {
     grid-template-columns: auto minmax(0, 1fr);
     gap: var(--sp-2) var(--sp-4);
+    padding: var(--sp-4);
   }
-  .cpil__cover {
-    display: none;
-  }
-  .cpil__body,
-  .cpil--nocover .cpil__body,
-  .cpil--flat .cpil__body {
-    grid-column: 2;
-  }
+  .cpil__desc,
+  .cpil--flat .cpil__desc,
   .cpil__go {
     grid-column: 2;
   }
 }
 
-/* 조직도 자리 — 자산이 오기 전까지 라벨만 선다(primitives 의 media()).
-   기본 액자는 4:3 이라 가로로 긴 조직도 자리에는 너무 깊다. 납작하게 눕힌다. */
-.corg__chart {
-  margin-bottom: var(--sp-7);
+/* ── CEO 인사말 ────────────────────────────────────────────
+   조판은 toss.im/company 의 "토스 팀을 이끌어 가는 사람들" 구획이다(사령관 2026-09-15).
+   제목이 전폭으로 서고, 가는 줄 하나가 제목과 알맹이를 가르고, 그 아래가 두 열로 갈린다 —
+   왼쪽은 점 하나 붙은 작은 이름표, 오른쪽은 인물 카드.
+
+   줄 하나에 대하여. 이 저장소는 2026-09-11 에 얇은 실선을 전부 걷었고(--border-section
+   은 그래서 transparent 다) 구획을 가르는 일은 여백과 면이 맡는다. 여기 긋는 줄은 그
+   규약을 되돌리는 것이 아니라 레퍼런스가 가진 눈금 하나를 옮겨 온 것이라, 선 색이 아니라
+   --rule-track(연혁 축·진행 눈금이 쓰는 그래픽 값, 알파 0.07)을 쓴다. 이 구획 한 곳뿐이다.
+
+   레퍼런스의 카드는 셋이고 여기는 하나다. 오른쪽 열을 다시 카드와 글로 나누는 이유는
+   partials/company-about-ceo.mjs 의 주석에 적었다.
+
+   원본이 505×499 고 아래가 잘려 있다. 340px 로 묶은 것은 그래서다 — 더 키우면 흐려진다.
+   판에 세로 비율을 강제하지 않는다 `[실측 2026-09-15]`: 레퍼런스의 낱장은 3:4 인데 이 그림은
+   거의 정사각이라, 4:5 틀에 넣으면 머리 위로 빈 칸이 4분의 1 남아 인물이 판 아래로 가라앉는다.
+   판은 그림 높이를 그대로 쓰고 네 모서리만 둥글린다 — 레퍼런스의 낱장과 같은 모양이다.
+   바탕을 흰 면으로 두는 것도 같은 이유다: 받아 온 그림 자체가 흰 판 위의 인물이라,
+   회색을 깔면 그림 가장자리에서 두 면이 갈라져 보인다. */
+.cceo {
+  display: grid;
+  grid-template-columns: minmax(0, 180px) minmax(0, 1fr);
+  gap: var(--sp-5) var(--sp-8);
+  align-items: start;
+  padding-top: var(--sp-6);
+  border-top: 1px solid var(--rule-track);
 }
-.corg__chart .media {
-  aspect-ratio: 21 / 7;
+/* 이름표가 없는 날에는 알맹이가 폭을 다 쓴다 — 빈 열을 남기지 않는다(§29). */
+.cceo--notag {
+  grid-template-columns: minmax(0, 1fr);
 }
-@media (max-width: 640px) {
-  .corg__chart .media {
-    aspect-ratio: 16 / 9;
+/* 왼쪽 이름표 — 제목 위에 서던 눈썹이 내려온 자리다. */
+.cceo__tag {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  margin: 0;
+  font-size: var(--fs-label);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-primary);
+}
+.cceo__dot {
+  flex: none;
+  width: var(--dot-md);
+  height: var(--dot-md);
+  border-radius: var(--radius-circle);
+  background: var(--text-primary);
+}
+/* 오른쪽 열 — 카드와 글. */
+.cceo__set {
+  display: grid;
+  grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+  gap: var(--sp-8);
+  align-items: start;
+}
+/* 사진이 없는 날에는 글이 오른쪽 열을 다 쓴다 — 빈 액자를 남기지 않는다(§29). */
+.cceo--nophoto .cceo__set {
+  grid-template-columns: minmax(0, 1fr);
+}
+.cceo__por {
+  margin: 0;
+}
+.cceo__frame {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  background: var(--bg-card);
+}
+.cceo__frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: var(--art-tone);
+}
+/* 판 아래 이름표 — 레퍼런스가 "이승건 | CEO" 로 두는 줄이다. */
+.cceo__sign {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-2);
+  margin: var(--sp-4) 0 0;
+  font-size: var(--fs-h4);
+  color: var(--text-secondary);
+}
+.cceo__sign b {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.cceo__sign span {
+  color: var(--text-faint);
+}
+/* 사진이 빠진 날의 서명은 글 끝에 한 줄로 눕는다 — 카드가 없으니 이름표도 아니다. */
+.cceo__sign--inline {
+  margin-top: var(--sp-6);
+  font-size: var(--fs-sm);
+}
+/* 리드 한 문단만 크다 — 본문 넷과 같은 크기로 두면 다섯 문단이 한 덩이로 눌린다.
+   표지 리드(.cintro__lede)보다는 한 단 작다. 저쪽은 지면의 첫 문장이고 이쪽은
+   본문을 여는 문장이라, 같은 크기로 두면 지면 안에 큰 활자가 두 번 선다. */
+.cceo__lede {
+  margin: 0 0 var(--sp-6);
+  max-width: 34ch;
+  font-size: clamp(19px, 1.6vw, 25px);
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+.cceo__read p {
+  margin: 0 0 var(--sp-4);
+  font-size: var(--fs-lede);
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+/* "감사합니다." 는 한 낱말이라 앞 문단과 같은 간격으로 두면 문단 넷에 붙어 버린다. */
+.cceo__outro {
+  margin-top: var(--sp-6);
+  margin-bottom: 0;
+  color: var(--text-primary);
+}
+@media (max-width: 1080px) {
+  /* 카드와 글을 먼저 떨어뜨린다. 340px 짜리 판 옆에 남는 글 칸이 40 자 아래로 내려가면
+     문단이 계단처럼 끊긴다 — 왼쪽 이름표 열은 아직 그대로 둔다. */
+  .cceo__set {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-6);
+  }
+  .cceo__por {
+    width: min(280px, 60%);
+  }
+}
+@media (max-width: 860px) {
+  /* 이름표를 글 위로 올린다. 180px 짜리 열이 좁은 화면에서 폭을 먹으면 글이 반만 남는다. */
+  .cceo {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-5);
+  }
+  .cceo__por {
+    width: min(220px, 60%);
+  }
+  .cceo__sign {
+    margin-top: var(--sp-4);
+    font-size: var(--fs-sm);
+  }
+}
+.cceo__por img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  background: var(--bg-card);
+  filter: var(--art-tone);
+}
+.cceo__sign {
+  margin: var(--sp-5) 0 0;
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+}
+.cceo__sign b {
+  display: inline-block;
+  margin-left: var(--sp-2);
+  font-size: var(--fs-h4);
+  font-weight: 700;
+  color: var(--text-primary);
+}
+/* 리드 한 문단만 크다 — 본문 넷과 같은 크기로 두면 다섯 문단이 한 덩이로 눌린다.
+   표지 리드(.cintro__lede)보다는 한 단 작다. 저쪽은 지면의 첫 문장이고 이쪽은
+   본문을 여는 문장이라, 같은 크기로 두면 지면 안에 큰 활자가 두 번 선다. */
+.cceo__lede {
+  margin: 0 0 var(--sp-6);
+  max-width: 34ch;
+  font-size: clamp(19px, 1.6vw, 25px);
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--text-primary);
+}
+.cceo__read p {
+  margin: 0 0 var(--sp-4);
+  font-size: var(--fs-lede);
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+/* "감사합니다." 는 한 낱말이라 앞 문단과 같은 간격으로 두면 문단 넷에 붙어 버린다. */
+.cceo__outro {
+  margin-top: var(--sp-6);
+  margin-bottom: 0;
+  color: var(--text-primary);
+}
+@media (max-width: 860px) {
+  /* 한 열로 떨어뜨리고 초상을 위로 올린다. 320px 짜리가 좁은 화면에서 폭을 다 먹으면
+     얼굴만 나오고 글이 한참 아래로 밀린다 — 220px 로 줄여 왼쪽에 세운다. */
+  .cceo {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-6);
+    align-items: start;
+  }
+  .cceo__por {
+    width: min(220px, 60%);
+  }
+  .cceo__sign {
+    margin-top: var(--sp-4);
   }
 }
 
@@ -642,7 +913,7 @@ a.cpil:hover .cpil__cover img {
 }
 .cclose--art::before {
   z-index: -2;
-  background-image: url("/saltware-prototype/media/hub/hub-insights.jpg?v=86c906926f49");
+  background-image: url("/saltware-prototype/media/hub/hub-insights.jpg?v=b983003a9994");
   background-position: center;
   background-size: cover;
   filter: var(--art-tone);
@@ -681,11 +952,11 @@ a.cpil:hover .cpil__cover img {
   /* 어두운 면 위 보조 글 — 옅은 회색은 이 면에서 대비가 죽는다. */
   color: var(--text-on-inverse-muted);
 }
-/* 사진 띠라 푸터와 색이 겹치지는 않지만, 닫는 띠는 어느 지면에서나 같은 틈을 두고
-   푸터와 끊긴다(components.css 의 .section--inverse 주석). */
-.cclose--art {
-  margin-bottom: var(--sp-8);
-}
+/* 푸터와 붙인다(사령관 2026-09-14 "애매하게 띄워져 있다"). 앞서 64px 틈을 뒀던 것은
+   다른 지면의 닫는 띠와 결을 맞추려던 것인데, 정작 그쪽(.section--inverse)은 틈 없이
+   푸터에 닿는다 — 이 한 장에만 어두운 사진과 검은 푸터 사이에 크림 띠가 하나 끼어
+   있었다(실측 1440: 띠 아래 9002 · 푸터 위 9066). 그래서 아래 여백 규칙을 걷었다 —
+   되살리려면 여기에 margin-bottom 을 다시 준다. */
 /* 버튼을 어두운 면 위에서 뒤집는다. 이 띠는 .section--inverse 가 아니라서
    components.css 의 그 규칙이 닿지 않았고, 채운 버튼이 잉크 바탕 그대로 나와
    **어두운 사진 위에 어두운 버튼**이 되어 있었다(실측 2026-09-13 — 바탕 rgb(29,29,31),
@@ -706,169 +977,6 @@ a.cpil:hover .cpil__cover img {
 .cclose .btn--solid:hover {
   background: var(--c-neutral-200);
   border-color: var(--c-neutral-200);
-}
-
-/* ── 핵심 기술 세 장 ───────────────────────────────────────
-   그림 · 설명 · 키워드를 한 장에 쌓는다. 카드 테두리를 두르지 않는다 — 세 장 다
-   테두리를 두르면 아래 사업 기둥의 줄 목록과 두 구획이 같은 옷을 입는다.
-
-   한때 세 장을 한 단씩 내려 어긋나게 세웠다(2026-09-13 첫 판 — 격자를 한 번 덜
-   쓰려고). 걷었다: 글 길이가 달라 아래가 들쭉날쭉해지고, 구획 왼쪽 아래에 빈 자리가
-   크게 남았다(실측 1440×900). 격자를 피하는 일은 이미 아래 사업 기둥이 줄 목록으로
-   맡고 있으므로 여기서 한 번 더 비틀 이유가 없다 — 세 장은 가지런히 선다. */
-.ccores {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--sp-6);
-  align-items: start;
-}
-.ccore__fig {
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  border-radius: var(--radius-md);
-  background: var(--bg-band);
-  margin-bottom: var(--sp-4);
-}
-.ccore__fig img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  filter: var(--art-tone);
-}
-/* 실물 자료 액자 — 찍어 온 도표·화면이 들어온다. 색조(--art-tone)를 걸지 않는다:
-   지면 결에 맞추자고 실제 자료의 색을 돌리면 그 그림은 더 이상 근거가 아니다. */
-.ccore__fig--real img {
-  filter: none;
-}
-.ccore__src {
-  margin: calc(var(--sp-4) * -1) 0 var(--sp-4);
-  font-size: var(--fs-2xs);
-  color: var(--text-faint);
-}
-.ccore h3 {
-  margin: 0 0 var(--sp-2);
-  font-size: var(--fs-h4);
-}
-.ccore p {
-  margin: 0 0 var(--sp-4);
-  font-size: var(--fs-sm);
-  line-height: 1.62;
-  color: var(--text-secondary);
-}
-/* 키워드 — 태그이지 버튼이 아니다. 알약(pill)을 쓰지 않는다(§30). */
-.ccore__tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--sp-2);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-/* 채운 배지 — 공용 벌과 같다(components.css `.brief__badge` 주석 참조, 2026-09-14). */
-.ccore__tags li {
-  padding: var(--sp-1) var(--sp-3);
-  border-radius: var(--radius-sm);
-  background: var(--c-neutral-900);
-  color: var(--text-on-inverse);
-  font-size: var(--fs-2xs);
-  font-weight: 600;
-}
-@media (max-width: 860px) {
-  .ccores {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--sp-7);
-  }
-}
-
-/* ── 조직과 자회사 ─────────────────────────────────────────
-   조직도 그림이 없으니 왼쪽에 조직, 오른쪽에 브랜드·자회사를 둔다.
-   다만 두 덩이가 늘 다 있는 것은 아니다 — 지금 전담 조직 목록은 어느 데이터에도
-   없어서(기술 역량 지면에 "전문 인력" 구획이 없다) 왼쪽이 통째로 비고, 자회사
-   카드 셋이 지면의 왼쪽 절반에만 서고 오른쪽 절반이 빈 칸이었다(실측 1440×900).
-   한쪽만 있는 날은 두 칸으로 가르지 않는다 — pages/company.mjs 의 orgBand 가
-   corg--one 을 붙여 알려 준다. */
-.corg {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: var(--sp-7);
-  align-items: start;
-}
-.corg--one {
-  grid-template-columns: minmax(0, 1fr);
-}
-/* 한쪽만 설 때 카드를 세로로 길게 늘어놓으면 지면이 아래로만 길어진다 — 셋씩 편다. */
-.corg--one .cbrands {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-@media (max-width: 860px) {
-  .corg--one .cbrands {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-.corg__teams {
-  display: grid;
-  gap: var(--sp-4);
-}
-.corg__team {
-  padding: var(--sp-5);
-  border-radius: var(--radius-lg);
-  background: var(--bg-band);
-}
-.corg__name {
-  margin: 0;
-  font-size: var(--fs-h4);
-  font-weight: 700;
-  color: var(--text-primary);
-}
-.corg__role {
-  margin: var(--sp-2) 0 0;
-  font-size: var(--fs-sm);
-  color: var(--text-secondary);
-}
-.cbrands {
-  display: grid;
-  gap: var(--sp-3);
-}
-.cbrand {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--sp-4);
-  padding: var(--sp-5);
-  border: 1px solid var(--border-hair);
-  border-radius: var(--radius-lg);
-  background: var(--bg-card);
-  text-decoration: none;
-  /* .cpil 과 같은 이유로 등장 전이를 함께 적는다. */
-  transition:
-    opacity 0.6s var(--ease) var(--d, 0s),
-    translate 0.6s var(--ease) var(--d, 0s),
-    border-color var(--dur-hover) var(--ease),
-    transform var(--dur-hover) var(--ease);
-}
-.cbrand:hover {
-  border-color: var(--c-accent);
-  transform: translateY(-1px);
-}
-.cbrand:focus-visible {
-  outline: 2px solid var(--c-accent);
-  outline-offset: 2px;
-}
-.cbrand__name {
-  font-size: var(--fs-body);
-  font-weight: 700;
-  color: var(--text-primary);
-}
-.cbrand__go {
-  flex: none;
-  color: var(--text-accent);
-  font-weight: 600;
-}
-@media (max-width: 860px) {
-  .corg {
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--sp-5);
-  }
 }
 
 /* ── 스크롤 움직임 한 단 더 ────────────────────────────────
@@ -892,10 +1000,9 @@ html.js-reveal [data-reveal]:not(.is-in) > * {
 /* 카드는 살짝 작게 왔다가 제 크기로 선다 — 판이 큰 구획에서 등장이 눈에 들어온다.
    사업 기둥(.cpil)은 빠졌다. 카드였을 때는 작아졌다 서는 것이 보였지만, 가로로 긴
    줄이 되면서 같은 3% 가 선 하나가 좌우로 늘었다 줄어드는 것으로 보인다. */
-.ccore,
 .cstat {
   transition-property: opacity, translate, scale, border-color, box-shadow, transform;
 }
-html.js-reveal [data-reveal]:not(.is-in) > :is(.ccore, .cstat) {
+html.js-reveal [data-reveal]:not(.is-in) > .cstat {
   scale: 0.97;
 }
