@@ -847,20 +847,27 @@
      읽힌다. 실측하고 한 단 줄였다(사령관 2026-09-15 "존나 어색함"). */
   gap: var(--sp-5);
   /* 로고는 지면 폭에 맞춰 눕고, 크기는 한 단 낮춘다(사령관 2026-09-15 "좀 더 작고
-     전체적인 넓이에 맞춰서"). 배율의 상한은 칸 폭이 정한다: 가장 넓은 로고(Red Hat,
-     배율 1 에서 186px)가 칸 안에 들어와야 한다. vw 로 연속 배율을 만들 수는 없다 —
-     길이를 수로 나눈 값은 길이라 --logo-k 가 px 이 되고 `calc(40px * 0.9px)` 이
-     무효가 된다(실측). 그래서 구간마다 상수다. */
+     전체적인 넓이에 맞춰서"). 배율의 상한을 정하는 것은 칸 하나가 아니라 **여덟의 잉크 폭
+     합**이다(칸이 내용에 붙은 뒤로 그렇다): 합이 지면 폭에 가까워질수록 사이가 좁아진다.
+     1080~1279 에서 0.72 를 그대로 두면 잉크 합 753px 에 사이가 38px 까지 좁아져 여덟이
+     서로 붙는다 — 그래서 이 구간만 한 단 더 내린다(0.6 에서 사이 56px).
+     vw 로 연속 배율을 만들 수는 없다 — 길이를 수로 나눈 값은 길이라 --logo-k 가 px 이 되고
+     `calc(40px * 0.9px)` 이 무효가 된다(실측). 그래서 구간마다 상수다. */
   --logo-k: 0.72;
 }
 /* 여덟이 한 줄로, 지면 폭 전체에 고르게 선다(사령관 2026-09-15). 두 줄은 파트너/기술의
    층으로 읽혔지만 층 라벨이 없는 지금은 그냥 끊긴 명단이었다.
-   칸을 여덟으로 못 박는다 — 로고 폭이 73~186px 로 제각각이라 흐름 배치로 모으면 줄이
-   가운데 뭉치고 좌우가 비었다. 균등한 칸은 지면의 세로줄과 맞아떨어지고, 접힐 일이 없다
-   (배율만 칸 폭 안에 들면 된다). 로고 자체는 칸 가운데에 눕는다. */
+
+   `[고쳐 씀 2026-09-15]` 폭을 여덟로 등분(1fr)하고 로고를 칸 가운데에 두던 배치를 걷는다.
+   등분은 **상자**를 고르게 만들지만 눈이 재는 것은 상자가 아니라 잉크 사이의 거리다 —
+   로고 잉크 폭이 53~134px 로 제각각이라 그 거리가 52·68·68·71·69 로 흔들리고 양 끝만
+   131·120 으로 벌어졌다(실측 1440). 칸을 내용에 붙이고(auto) 남는 폭을 칸 사이로 고르게
+   나누면(space-between) 잉크 간격이 정의상 같아지고 줄의 양 끝도 저절로 지면 선에 앉는다.
+   아래에 있던 첫/끝 손보정이 필요 없어지는 것도 같은 이유다. */
 .logos__wall {
   display: grid;
-  grid-template-columns: repeat(8, minmax(0, 1fr));
+  grid-template-columns: repeat(8, auto);
+  justify-content: space-between;
   justify-items: center;
   align-items: center;
   row-gap: var(--sp-7);
@@ -874,19 +881,11 @@
   }
 }
 
-/* 줄의 양 끝은 칸이 아니라 지면에 맞춘다 — 칸 가운데에 두면 첫 로고가 57px, 마지막이
-   44px 안으로 들어가 히어로 카드의 세로줄과 어긋난다(실측 1440, 2026-09-15).
-   상자는 이미 지면 폭과 같으니, 어긋나는 것은 상자가 아니라 잉크다. */
-.logos__item:first-child {
-  justify-self: start;
-  /* 칸 안에서도 끝에 붙인다 — 항목 폭은 숨은 캡션이 정하므로(로고보다 넓다)
-     가운데 정렬이면 로고만 10px 더 들어간다(실측). */
-  justify-items: start;
-}
-.logos__item:last-child {
-  justify-self: end;
-  justify-items: end;
-}
+/* `[걷어냄 2026-09-15]` 여기 있던 :first-child/:last-child 끝맞춤(justify-self: start/end)은
+   한 줄일 때만 맞는 보정이었다. 줄이 접히는 구간에서는 **전체의** 첫 장과 끝 장에만 걸려,
+   1080 에서 첫 줄 오른끝이 32px 모자라고 둘째 줄이 32px 넘치는 어긋남을 만들고 있었다
+   (실측: 첫 줄 720 에서 끝, 둘째 줄 752 에서 끝). 위의 space-between 이 줄마다 양 끝을
+   맞추므로 보정 자체가 사라진다. */
 /* 로고 위 한 줄 — 제목이 아니라 문장이다. h1 은 64px 잉크, 이 줄은 14.5px 회색이라
    제목이 둘로 읽히지 않는다(§4-3 활자 급수). 이 줄은 히어로 아래로 접혀 첫 화면에
    들어오지도 않는다(실측 1440: 첫 화면 밖).
@@ -926,6 +925,9 @@
   display: grid;
   justify-items: center;
   gap: var(--sp-2);
+  /* 여기서는 색만 걷고 한 겹 눕힌다. 로고마다 다른 **세기** 보정은 아래 img 가 따로 진다 —
+     이 줄에 얹으면 OpenShift·Ansible 의 활자 이름까지 같이 흐려져 여덟 중 둘만 이름이
+     옅어진다. */
   filter: grayscale(1) opacity(0.62);
   transition:
     filter var(--dur-hover) var(--ease),
@@ -954,7 +956,13 @@
   color: var(--text-secondary);
   white-space: nowrap;
 }
+/* 높이는 남기고 폭은 비운다. 이 줄이 로고보다 넓은 자리가 있어(AWS: 잉크 53px · 캡션 72px)
+   항목 상자를 캡션이 정하고 있었다 — 상자가 곧 칸이 된 지금은 그 차이가 그대로 잉크
+   간격을 갉는다. 폭 0 + 가운데 정렬이면 글자는 상자 밖으로 그려지고 줄 높이만 남는다
+   (캡션 자리를 늘 비워 두는 규칙은 그대로다). */
 .logos__tag {
+  width: 0;
+  text-align: center;
   font-size: var(--fs-xs);
   color: var(--text-muted);
   white-space: nowrap;
@@ -979,21 +987,42 @@
 .logos__item img {
   height: calc(var(--logo-h, 40px) * var(--logo-k, 1));
   width: auto;
+  /* 세기 손잡이. 회색조로 걷고 나면 여덟의 잉크가 같은 회색이 되지 않는다 — 원본 색의
+     밝기가 그대로 남기 때문이다(Snowflake 파랑 #29B5E8 은 밝은 회색이 되고 Ansible 검정은
+     그대로 검정이다). 크림 바탕 대비 평균 어둡기를 재 보면 Snowflake 44 · Ansible 126 으로
+     세 배 차이였고, 화면에서는 한쪽이 지워지고 한쪽이 소리쳤다(실측 1440).
+     밝기 한 손잡이로 여덟을 같은 어둡기(≈95)에 맞춘다: 값은 그 실측에서 나온
+     89.4 / 잉크밝기 다. 1 보다 큰 값은 원본이 너무 검어 눌러 주는 쪽이다.
+     짚었을 때는 원색이 서야 하므로 아래에서 이 보정을 함께 푼다. */
+  filter: brightness(var(--logo-b, 1)) opacity(var(--logo-o, 1));
+  transition: filter var(--dur-hover) var(--ease);
 }
+.logos__item:hover img {
+  filter: none;
+}
+/* AWS 는 여덟 중 잉크가 가장 좁았다(53px · 옆들은 96~102px). 워드마크가 본래 촘촘한
+   벌이라 폭을 다 맞출 수는 없지만, 한 단 키워 같은 줄에 선 것으로 읽히게 한다. */
 .logos__item--aws {
-  --logo-h: 44px;
+  --logo-h: 54px;
+  --logo-b: 0.84;
 }
+/* Red Hat 은 반대다 — 잉크 134px 에 솔리드 모자까지 얹혀 시각 질량이 옆들의 2.4 배였다
+   (실측 211 대 88). 폭을 116px 로 내리고 밝기로 한 겹 더 눕힌다. 줄에서 빼는 것이 아니라
+   같은 줄에 세우는 값이다. */
 .logos__item--red-hat {
-  --logo-h: 44px;
+  --logo-h: 36px;
+  --logo-o: 0.78;
 }
 .logos__item--sailpoint {
   --logo-h: 34px;
+  --logo-b: 0.94;
 }
 /* databricks 공식 배포본은 심볼이 워드마크 위에 얹힌 스택형이라 더 키워야 눈높이가 맞는다.
    한 줄로 서고 나니 워드마크만 줄 아래로 처져 보였다 — 글자 높이를 옆과 맞추려면
    상자 가운데가 아니라 글자 가운데를 기준선에 올려야 한다(위로 당긴다). */
 .logos__item--databricks {
   --logo-h: 56px;
+  --logo-o: 0.87;
 }
 .logos__item--databricks img {
   transform: translateY(calc(-11px * var(--logo-k, 1)));
@@ -1001,8 +1030,11 @@
 .logos__item--starburst {
   --logo-h: 25px;
 }
+/* 여덟 중 유일하게 **더 진하게** 가는 쪽이다. 원본 파랑이 회색조에서 밝은 회색(171)이 되어
+   크림 위에서 거의 지워졌다 — 앞 벌에서 "여덟 중 일곱"으로 보이던 원인이다. */
 .logos__item--snowflake {
   --logo-h: 32px;
+  --logo-b: 0.36;
 }
 /* openshift·ansible 은 심볼 단독으로 세우고 활자 이름을 병기한다.
    `[고침 2026-09-15]` 받아 둔 두 배포본은 심볼 단독이 **아니었다** — 심볼 아래
@@ -1018,6 +1050,7 @@
 }
 .logos__item--ansible {
   --logo-h: 30px;
+  --logo-o: 0.76;
 }
 @media (max-width: 1080px) {
   /* 줄을 접는 구간이라고 로고가 커지면 안 된다 — 한 줄 구간(0.72)보다 크면
@@ -1028,12 +1061,21 @@
   .logos__mark {
     height: 46px;
   }
+  /* 넷씩 두 줄. 칸은 여기서도 내용에 붙고 남는 폭이 칸 사이로 간다 — 두 줄의 양 끝이
+     같은 세로선에 선다.
+     `[고침 2026-09-15]` max-width 만 걸고 가운데로 세우지 않아, 720px 짜리 벌이 지면
+     왼쪽에 붙은 채 그 위의 라벨만 지면 한가운데 있었다(실측 1080: 축이 148px 어긋남).
+     라벨과 줄은 같은 축이어야 한 덩이로 읽힌다. */
   .logos__wall {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(4, auto);
     align-items: start;
+    /* width 를 함께 적는다 — justify-self 를 주는 순간 이 상자는 늘어나기를 그만두고
+       내용 폭(max-content)으로 줄어든다. 그러면 space-between 이 나눌 남는 폭이 0 이 되어
+       넷이 서로 붙는다(실측 1080: 네 장이 375px 안에 뭉쳤다). 폭을 되돌리고 상한만 건다. */
+    width: 100%;
     max-width: 720px;
-    column-gap: var(--sp-5);
-    row-gap: var(--sp-6);
+    justify-self: center;
+    row-gap: var(--sp-7);
   }
 }
 
@@ -1047,9 +1089,12 @@
   .logos__name {
     font-size: var(--fs-sm);
   }
-  /* 폰에서는 두 칸 네 줄이다 — 네 칸이면 칸이 90px 아래로 내려가 Red Hat 이 잘린다. */
+  /* 폰에서는 두 칸 네 줄이다 — 네 칸이면 칸이 90px 아래로 내려가 Red Hat 이 잘린다.
+     두 칸에서는 칸을 등분하고 로고를 칸 가운데에 둔다: 내용에 붙이면(auto) 남는 폭이
+     한 군데로 몰려 줄 한가운데에 170px 짜리 구멍이 난다(실측 430). */
   .logos__wall {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-content: normal;
     column-gap: var(--sp-5);
     row-gap: var(--sp-6);
   }

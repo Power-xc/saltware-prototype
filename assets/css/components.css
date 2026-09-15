@@ -812,10 +812,10 @@
   max-width: 42ch;
 }
 .hero--media.hero--m-hub-business {
-  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=14c3deed3b1a");
+  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=205005a7597f");
 }
 .hero--media.hero--m-hub-insights {
-  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=14c3deed3b1a");
+  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=205005a7597f");
 }
 /* 노트북 — 히어로가 한 화면을 통째로 먹어 다음 섹션이 안 비친다(실측: 1280×800 105% ·
    1440×900 101%. 1920×1080 은 89%, 2560×1440 은 77% 라 큰 화면은 그대로 둔다).
@@ -2829,7 +2829,7 @@ a.tile:hover .tile__glyph svg circle:nth-child(9) {
    파일이 아직 없어도 카드가 깨지지 않는다 — CSS 배경이라 깨진 그림 아이콘이 뜨지 않고,
    ::before 가 빈 채로 어두운 면만 남는다. 그래서 클래스를 미리 붙여 둔다. */
 .feat--art {
-  --card-media: url("/saltware-prototype/media/insight/feature.jpg?v=14c3deed3b1a");
+  --card-media: url("/saltware-prototype/media/insight/feature.jpg?v=205005a7597f");
 }
 .feat[class*="feat--"] .feat__lead::before {
   content: "";
@@ -3024,16 +3024,16 @@ a.tile:hover .tile__glyph svg circle:nth-child(9) {
    여기 규칙이 있어도 페이지가 수식 클래스를 붙이지 않으면 켜지지 않는다 —
    자산 반입 여부는 insights.mjs 의 ART 가 안다. */
 .hub-card--industry {
-  --card-media: url("/saltware-prototype/media/insight/card-industry.jpg?v=14c3deed3b1a");
+  --card-media: url("/saltware-prototype/media/insight/card-industry.jpg?v=205005a7597f");
 }
 .hub-card--report {
-  --card-media: url("/saltware-prototype/media/insight/card-report.jpg?v=14c3deed3b1a");
+  --card-media: url("/saltware-prototype/media/insight/card-report.jpg?v=205005a7597f");
 }
 .hub-card--library {
-  --card-media: url("/saltware-prototype/media/insight/card-library.jpg?v=14c3deed3b1a");
+  --card-media: url("/saltware-prototype/media/insight/card-library.jpg?v=205005a7597f");
 }
 .hub-card--news {
-  --card-media: url("/saltware-prototype/media/insight/card-news.jpg?v=14c3deed3b1a");
+  --card-media: url("/saltware-prototype/media/insight/card-news.jpg?v=205005a7597f");
 }
 
 /* AWS 자격 뱃지. 로고월(.logos)과 다르다 — 획득한 자격의 실물이고 이름이 함께 붙는다.
