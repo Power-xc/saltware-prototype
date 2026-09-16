@@ -34,12 +34,16 @@
   padding-top: var(--sp-6);
 }
 
-/* 판의 사진 — 이 판만의 장이다(사령관 2026-09-11). 글("기술을 파는 회사가 아니라…")이
-   그림 왼쪽 위를 덮으므로 피사체는 오른쪽에 서야 한다 — 원본을 좌우로 뒤집어 구웠다
-   (design-resources/19-company-hub-feature/).
+/* 판의 사진 — 이 판만의 장이다(사령관 2026-09-11). 2026-09-15 에 스톡 미리보기를
+   버리고 사령관이 준 유리판 렌더로 갈았다(design-resources/19-company-hub-feature/).
+
+   `[낡음 2026-09-15]` "글이 그림 왼쪽 위를 덮으므로 피사체는 오른쪽에 서야 한다"가
+   이 자리의 오랜 제약이었다. 글이 그림에서 내려오면서(.feat--split) 그 제약이 사라졌다 —
+   이제 사진은 온전한 한 장이라 피사체가 어디 서든 가려지지 않는다. 다음에 그림을 갈 때
+   오른쪽으로 몰아 구울 이유는 없다.
    파일이 없어도 판은 깨지지 않는다(CSS 배경이라 어두운 면만 남는다). */
 .feat--company {
-  --card-media: url("/saltware-prototype/media/company/hub-feature.jpg?v=2ff1e1c89e03");
+  --card-media: url("/saltware-prototype/media/company/hub-feature.jpg?v=6c16e27edbb2");
 }
 
 /* 카드별 배경 사진. 인라인 style 금지(spec 시험)라 히어로(.hero--m-*)·인사이트 카드와
@@ -48,22 +52,40 @@
    실물이 들어올 때마다 한 줄씩 더한다(design-resources/18-company-card/README.md).
    그림이 없는데 CARD_ART 에 먼저 적으면 검은 칸이 된다 — 반입한 뒤에 적는다. */
 .hub-card--company-capabilities {
-  --card-media: url("/saltware-prototype/media/company/card-capabilities.jpg?v=2ff1e1c89e03");
+  --card-media: url("/saltware-prototype/media/company/card-capabilities.jpg?v=6c16e27edbb2");
 }
 .hub-card--company-history {
-  --card-media: url("/saltware-prototype/media/company/card-history.jpg?v=2ff1e1c89e03");
+  --card-media: url("/saltware-prototype/media/company/card-history.jpg?v=6c16e27edbb2");
 }
 .hub-card--company-ir {
-  --card-media: url("/saltware-prototype/media/company/card-ir.jpg?v=2ff1e1c89e03");
+  --card-media: url("/saltware-prototype/media/company/card-ir.jpg?v=6c16e27edbb2");
 }
 .hub-card--company-careers {
-  --card-media: url("/saltware-prototype/media/company/card-careers.jpg?v=2ff1e1c89e03");
+  --card-media: url("/saltware-prototype/media/company/card-careers.jpg?v=6c16e27edbb2");
 }
 .hub-card--company-location {
-  --card-media: url("/saltware-prototype/media/company/card-location.jpg?v=2ff1e1c89e03");
+  --card-media: url("/saltware-prototype/media/company/card-location.jpg?v=6c16e27edbb2");
 }
 .hub-card--company-brand {
-  --card-media: url("/saltware-prototype/media/company/card-brand.jpg?v=2ff1e1c89e03");
+  --card-media: url("/saltware-prototype/media/company/card-brand.jpg?v=6c16e27edbb2");
+}
+
+/* 기술 역량만 어두운 판이다(2026-09-15 에 갈린 네온 렌더). 여섯 중 나머지 다섯은 흰
+   바탕이라 components.css 가 카드 글을 통째로 잉크로 잡아 두었는데(스크림을 걷으면서
+   내린 결정이다 — 사령관 "검정 그냥 걷어줘"), 그 잉크가 이 칸에서는 검정 위 검정이 된다.
+   그래서 이 한 칸만 글을 뒤집는다. 제목은 흰색, 머리 줄과 설명은 한 급 흐린 흰색이다 —
+   나머지 다섯 칸이 --text-primary / 같은 값으로 위계를 색이 아니라 크기로만 가르는 것과
+   달리, 어두운 면에서는 셋을 같은 흰색으로 두면 설명이 제목만큼 튀어나온다.
+
+   선택자가 두 겹인 이유: components.css 의 `.hub-card[class*="hub-card--"]` 가 0,2,0 이라
+   클래스 하나로는 지고, 파일 순서에 기대면 스타일 묶는 차례가 바뀌는 날 조용히 풀린다.
+   사진이 밝은 것으로 되돌아오면 이 덩이를 통째로 지운다 — 덮어쓰지 말고 지운다. */
+.hub-card[class*="hub-card--"].hub-card--company-capabilities {
+  color: var(--text-on-inverse);
+}
+.hub-card[class*="hub-card--"].hub-card--company-capabilities .sol__area,
+.hub-card[class*="hub-card--"].hub-card--company-capabilities .sol__desc {
+  color: var(--text-on-inverse-muted);
 }
 
 /* 카드가 여섯이다 — 인사이트의 넷을 그대로 두면 둘째 줄에 두 장만 남아 줄이 반쯤 빈다.
@@ -865,7 +887,7 @@ html.js-pillars .cpil:not(.is-on) .cpil__desc {
 }
 .cclose--art::before {
   z-index: -2;
-  background-image: url("/saltware-prototype/media/hub/hub-insights.jpg?v=2ff1e1c89e03");
+  background-image: url("/saltware-prototype/media/hub/hub-insights.jpg?v=6c16e27edbb2");
   background-position: center;
   background-size: cover;
   filter: var(--art-tone);
@@ -953,7 +975,8 @@ html.js-reveal [data-reveal]:not(.is-in) > * {
    사업 기둥(.cpil)은 빠졌다. 카드였을 때는 작아졌다 서는 것이 보였지만, 가로로 긴
    줄이 되면서 같은 3% 가 선 하나가 좌우로 늘었다 줄어드는 것으로 보인다. */
 .cstat {
-  transition-property: opacity, translate, scale, border-color, box-shadow, transform;
+  transition-property:
+    opacity, translate, scale, border-color, box-shadow, transform;
 }
 html.js-reveal [data-reveal]:not(.is-in) > .cstat {
   scale: 0.97;
