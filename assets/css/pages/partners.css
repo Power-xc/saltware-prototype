@@ -1,0 +1,163 @@
+/* 파트너 타일 — /company/partners 와 /company/esg 두 장이 쓰는 시트(2026-09-16).
+ *
+ * 조판의 결은 megazone.com/partner 의 파트너 구역이다(partials/partner-tiles.mjs 주석).
+ * components.css 에 두지 않은 이유는 이것이 두 지면의 조판이기 때문이다 — 공용 어휘
+ * (.chip · .section__head · .btn · .eyebrow)는 쓰기만 하고 다시 정의하지 않는다
+ * (pages/cases.css 와 같은 규약).
+ *
+ * 반경은 토큰만 쓴다(§8). 브레이크포인트는 이미 쓰는 넷 안에서만 고른다(§28) —
+ * 여기서는 1080 과 640 이다.
+ */
+
+/* 그림 판의 비율. 원본은 3:2 인데 그 안에서 로고가 실제로 쓰는 세로는 가운데 절반쯤이라
+   (22장을 재 보니 가장 큰 장이 높이의 51.8% · 전부 가운데 정렬) 3:2 로 두면 타일마다
+   흰 여백이 200px 씩 붙어 지면이 10,000px 로 늘어졌다. 5:2 로 자르면 세로의 60% 가
+   남는데(0.20~0.80 구간) 가장 큰 로고가 0.241~0.702 라 잘릴 것이 없다.
+   원본을 갈면 이 값을 다시 재야 한다 — 로고가 세로로 더 큰 장이 오면 잘린다. */
+:root {
+  --ptile-art: 5 / 2;
+}
+
+/* ── 타일 격자 ─────────────────────────────────────────── */
+
+/* 두 열이 기본이다. 타일 하나에 한 문단이 들어가므로 넷으로 두면 글이 한 줄에 열 자씩
+   끊긴다(레퍼런스도 두 열이다). ESG 세 축은 글이 짧아 3열을 청한다. */
+.ptiles {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--gap-grid);
+}
+.ptiles--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+@media (max-width: 1080px) {
+  .ptiles,
+  .ptiles--3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 640px) {
+  .ptiles,
+  .ptiles--3 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* 타일 한 장. 링크가 아니라 판이다 — 호버로 뜨지 않고 그림자도 없다(누를 수 있는
+   것처럼 보이면 §30 의 dead card 다). 칸을 가르는 것은 선이 아니라 면이다:
+   이 저장소는 --border-hair 가 transparent 다. */
+.ptile {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  border-radius: var(--radius-lg);
+  background: var(--bg-card);
+  overflow: hidden;
+}
+/* 작성자 display 가 UA 의 [hidden]{display:none} 을 이긴다 — 걸러 낸 타일이 그대로
+   보인다(.ccase · .rail__card 가 같은 함정을 밟았다). 명시해서 끈다. */
+.ptile[hidden] {
+  display: none;
+}
+
+/* 그림 판. 벤더 배너는 흰 바탕에 로고와 글자가 얹힌 3:2 판이다 — 잘라 채우면 로고가
+   끊기므로 비율을 그대로 두고 칸을 그 비율에 맞춘다. 판 색은 크림이다: 배너 바탕이
+   흰색이라 흰 타일 위에 두면 그림의 끝이 어디인지 보이지 않는다. */
+.ptile__art {
+  background: var(--bg-band);
+}
+.ptile__art img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--ptile-art);
+  object-fit: cover;
+}
+
+/* 글 칸. 여백을 타일이 아니라 글 칸이 갖는다 — 타일이 padding 을 가지면 그림이 사방으로
+   물러나 액자 안의 액자가 된다(.ccase 가 같은 판단을 했다). */
+/* 칸 수가 타일마다 다르다 — 벤더 타일은 머리 줄·이름·한 줄·설명·태그 다섯이고, ESG
+   타일은 머리 줄·이름·설명·항목 넷이다. grid-template-rows 로 칸을 못박으면 그 수가
+   맞지 않는 타일에서 빈 줄이 생긴다(실측: 벤더 타일에 빈 칸이 하나 떴다).
+   세로 플렉스는 세지 않는다 — 태그 줄만 바닥에 붙인다. */
+.ptile__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: var(--sp-6);
+}
+.ptile__kick {
+  margin: 0;
+  font-size: var(--fs-label);
+  font-weight: 700;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-accent);
+}
+.ptile__name {
+  margin: 0;
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  line-height: 1.32;
+  letter-spacing: var(--tracking-heading);
+  color: var(--text-primary);
+}
+/* 이름 아래 한 줄. 벤더 이름이 이름 칸을 쓰고, 그 제품이 무엇인지는 이 줄이 말한다
+   (예: Confluent → "실시간 데이터 스트리밍 플랫폼"). */
+.ptile__line {
+  margin: 0;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+.ptile__desc {
+  margin: 0;
+  font-size: var(--fs-xs);
+  line-height: 1.75;
+  color: var(--text-muted);
+}
+
+/* 실천 항목 — ESG 세 축이 쓰는 자리다. 문장이라 해시태그로 내지 않는다.
+   점은 쓰지 않는다: 이 집의 목록(.list)이 그렇고, 두 줄짜리 항목에서 점이 첫 줄에만
+   붙어 어긋난다. 대신 왼쪽에 가는 선 한 줄로 항목임을 말한다. */
+.ptile__list {
+  display: grid;
+  gap: var(--sp-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ptile__list li {
+  padding-left: var(--sp-4);
+  box-shadow: inset 2px 0 0 var(--border-accent);
+  font-size: var(--fs-xs);
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+/* 해시태그 줄. 타일 맨 아래에 붙는다 — 설명이 두 줄인 타일과 다섯 줄인 타일이 한 줄에
+   서도 태그의 밑선이 어긋나지 않는다(.ptile__body 의 1fr 이 그 앞 칸을 늘린다). */
+.ptile__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  /* 바닥에 붙인다 — 설명이 두 줄인 타일과 다섯 줄인 타일이 한 줄에 서도 밑선이 맞는다. */
+  margin: auto 0 0;
+  padding-top: var(--sp-2);
+  padding: 0;
+  list-style: none;
+}
+/* `#` 은 여기서 붙는다 — 마크업에 적으면 `#EDB` 가 hex 색상으로 잡힌다
+   (partials/partner-tiles.mjs 의 TAG_MAX 주석). 장식이라 낭독기에서는 감춘다. */
+.ptile__tag::before {
+  content: "#";
+  opacity: 0.55;
+}
+.ptile__tag {
+  padding: var(--sp-1) var(--sp-3);
+  border-radius: var(--radius-sm);
+  background: var(--bg-panel);
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-label);
+  color: var(--text-secondary);
+}

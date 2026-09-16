@@ -571,16 +571,6 @@
     <path d="M0 -20 L9 8 L0 1 L-9 8 Z" fill="#6e6e73" transform="scale(0.8)" />
     <text class="t" x="0" y="22.1" text-anchor="middle" font-size="16" font-weight="700" fill="#6e6e73">N</text>
   </g>
-
-  <!-- 축척 막대. 좁은 판에는 정보 카드가 없어 자가 여기 선다. -->
-  <g transform="translate(372 754)">
-    <rect x="0" y="0" width="100" height="9" fill="#6e6e73" />
-    <rect x="100" y="0" width="100" height="9" fill="#ffffff" />
-    <rect x="0" y="0" width="200" height="9" fill="none" stroke="#6e6e73" stroke-width="1.5" />
-    <text class="t ctick" x="0" y="26">0</text>
-    <text class="t ctick" x="200" y="26" text-anchor="end">400m</text>
-    <text class="t ctick" x="200" y="48" text-anchor="end">격자 한 칸 100m</text>
-  </g>
   <!-- 출처. ODbL 이 요구하는 표기다 — 지우지 말 것.
        오른쪽 아래가 아니라 왼쪽 아래다: 액자 오른쪽 아래에는 지면이 "네이버 지도에서
        열기" 배지를 띄워서(.lomap__go) 그 자리에 두면 표기가 가린다. -->

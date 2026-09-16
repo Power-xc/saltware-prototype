@@ -676,7 +676,6 @@
     <path d="M0 -20 L9 8 L0 1 L-9 8 Z" fill="#6e6e73" transform="scale(1)" />
     <text class="t" x="0" y="26.9" text-anchor="middle" font-size="16" font-weight="700" fill="#6e6e73">N</text>
   </g>
-
   <!-- 출처. ODbL 이 요구하는 표기다 — 지우지 말 것.
        오른쪽 아래가 아니라 왼쪽 아래다: 액자 오른쪽 아래에는 지면이 "네이버 지도에서
        열기" 배지를 띄워서(.lomap__go) 그 자리에 두면 표기가 가린다. -->
@@ -686,7 +685,7 @@
        그림만 떼어 봐도(저장·인쇄·공유) 어디인지 읽히도록 그림 안에서 한 번 더 말한다.
        좁은 판에는 이 카드가 없다 — 자리가 없고, 지면 바로 아래 표가 같은 값을 말한다. -->
   <g>
-    <rect x="48" y="48" width="400" height="664" rx="20" fill="#ffffff" stroke="#e3e6ea" stroke-width="1.5" />
+    <rect x="48" y="48" width="400" height="520" rx="20" fill="#ffffff" stroke="#e3e6ea" stroke-width="1.5" />
     <text class="t ctitle" x="84" y="108">솔트웨어 본사</text>
     <text class="t clatin" x="84" y="134">SALTWARE HEADQUARTERS</text>
     <path d="M84 160 H412" stroke="#ececf0" stroke-width="1.5" />
@@ -708,23 +707,10 @@
     <circle cx="98" cy="487" r="13" fill="#ffffff" stroke="#b9c1cc" stroke-width="2.5" />
     <circle cx="98" cy="487" r="4" fill="#6e6e73" />
     <text class="t cleg" x="124" y="493">찬우물 버스 정류장</text>
-    <g transform="translate(98 520) scale(0.42)">
+    <g transform="translate(98 535.4) scale(0.4)">
       <path d="M0 22 C-26 -8 -34 -20 -34 -32 A34 34 0 0 1 34 -32 C34 -20 26 -8 0 22 Z" fill="#f49f20" stroke="#e8811a" stroke-width="3" />
       <circle cy="-32" r="12" fill="#ffffff" />
     </g>
-    <text class="t cleg" x="124" y="529">솔트웨어 본사</text>
-    <path d="M84 562 H412" stroke="#ececf0" stroke-width="1.5" />
-
-    <text class="t clabel" x="84" y="596">축척</text>
-    <g>
-      <rect x="84" y="610" width="120" height="10" fill="#6e6e73" />
-      <rect x="204" y="610" width="120" height="10" fill="#ffffff" />
-      <rect x="84" y="610" width="240" height="10" fill="none" stroke="#6e6e73" stroke-width="1.5" />
-      <text class="t ctick" x="84" y="638">0</text>
-      <text class="t ctick" x="204" y="638" text-anchor="middle">250m</text>
-      <text class="t ctick" x="324" y="638" text-anchor="end">500m</text>
-    </g>
-    <text class="t clabel" x="84" y="664">격자 한 칸 100m</text>
-    <text class="t clabel" x="84" y="688">길 · 경로는 실측 형상</text>
+    <text class="t cleg" x="124" y="537">솔트웨어 본사</text>
   </g>
 </svg>
