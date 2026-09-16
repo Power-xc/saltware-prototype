@@ -498,11 +498,19 @@
 .section--card {
   background: var(--bg-card);
 }
+/* 주황 띠 — 중성 띠(--bg-band)와 같은 자리에 서지만 색으로 구분한다. 지면에서 딱 한
+   덩이만 받는다(2026-09-16, 인재채용 "채용 공고"). 둘 이상이 받으면 주황이 강조가
+   아니라 바탕이 되고, 그 지면은 다시 색 하나로 평평해진다. */
+.section--warm {
+  background: var(--bg-accent-band);
+}
 .section--band > .container,
 .section--card > .container,
+.section--warm > .container,
 .section--inverse > .container,
 .section--band + .section > .container,
 .section--card + .section > .container,
+.section--warm + .section > .container,
 .section--inverse + .section > .container {
   border-top: 0;
   margin-top: 0;
@@ -812,10 +820,10 @@
   max-width: 42ch;
 }
 .hero--media.hero--m-hub-business {
-  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=6c16e27edbb2");
+  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=2e58930071b0");
 }
 .hero--media.hero--m-hub-insights {
-  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=6c16e27edbb2");
+  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=2e58930071b0");
 }
 /* 노트북 — 히어로가 한 화면을 통째로 먹어 다음 섹션이 안 비친다(실측: 1280×800 105% ·
    1440×900 101%. 1920×1080 은 89%, 2560×1440 은 77% 라 큰 화면은 그대로 둔다).
@@ -2802,7 +2810,7 @@ a.tile:hover .tile__glyph svg circle:nth-child(9) {
    파일이 아직 없어도 카드가 깨지지 않는다 — CSS 배경이라 깨진 그림 아이콘이 뜨지 않고,
    ::before 가 빈 채로 어두운 면만 남는다. 그래서 클래스를 미리 붙여 둔다. */
 .feat--art {
-  --card-media: url("/saltware-prototype/media/insight/feature.jpg?v=6c16e27edbb2");
+  --card-media: url("/saltware-prototype/media/insight/feature.jpg?v=2e58930071b0");
 }
 .feat[class*="feat--"] .feat__lead::before {
   content: "";
@@ -2830,19 +2838,11 @@ a.tile:hover .tile__glyph svg circle:nth-child(9) {
   color: var(--text-primary);
 }
 
-/* [비움 2026-09-15] 갈래 카드와 같은 지시다("검정 박스로 만들어놔줘") — 사진이 다시 올
-   때까지 검정 면이다. 위 --card-media 지도(.feat--art)는 한 줄도 지우지 않았으므로,
-   그림이 오면 이 블록만 지우면 되살아난다.
-   바로 위 규칙이 0,3,0 이라 `.feat--art`(0,1,0) 한 겹으로는 밝은 면을 못 이긴다 —
-   같은 겹을 쌓아 0,4,0 으로 올린다. 글은 검정 위라 흰색으로 뒤집는다.
-   .feat--company(회사소개 허브)는 건드리지 않는다 — 비우라는 지면이 아니었다. */
-.feat--art {
-  --card-media: none;
-}
-.feat[class*="feat--"].feat--art .feat__lead {
-  background: #000;
-  color: var(--text-on-inverse);
-}
+/* `[되살림 2026-09-16]` 앞서 이 칸은 검정 면이었다("검정 박스로 만들어놓으줌",
+   2026-09-15). 걸릴 사진이 없는 동안 비워 둔 것이지 이 자리를 검게 쓰기로 한 것이 아니었다.
+   사령관이 그림을 붙였으므로(흰 면 위 클라우드 3D 일러스트) 비움 블록을 걷는다.
+   위의 `--card-media` 지도(.feat--art)는 그때 한 줄도 안 지워 둔 덕에 이 블록만
+   걷어내면 그림이 다시 붙는다 — 다음에 또 비우라면 같은 자리에 같은 두 규칙을 쌓는다. */
 
 /* 오른쪽 — 그 글의 본문이다. 다른 글도 날짜도 두지 않는다(사령관 2026-09-09):
    이 판은 고르게 하는 자리가 아니라 하나로 들여보내는 자리라, 곁에 다른 갈 곳을 두면
@@ -3179,35 +3179,22 @@ a.tile:hover .tile__glyph svg circle:nth-child(9) {
 /* 고객 사례만 갈래(insights)가 아니라 카드 정의에 직접 media 가 적힌다 — 이 카드는
    인사이트 갈래가 아니라 사례 지면으로 가는 문이라 ART 맵을 타지 않는다(insights.mjs). */
 .hub-card--cases {
-  --card-media: url("/saltware-prototype/media/insight/card-cases.jpg?v=6c16e27edbb2");
+  --card-media: url("/saltware-prototype/media/insight/card-cases.jpg?v=2e58930071b0");
 }
-/* 다섯 중 이 한 장만 어두운 실사다(2026-09-15 사령관이 건넨 사진 — 검은 책상 위
-   노트북과 떠오르는 인물 카드). 위 규칙이 사진 카드의 글을 잉크로 잡는 것은 나머지
-   넷이 흰 바탕 렌더이기 때문인데, 그 잉크가 이 판 위에서는 한 글자도 읽히지 않는다
-   (실측: 제목이 깔린 좌상단이 rgb(20,33,39)). 글 색은 규칙이 아니라 **밑에 깔린 판의
-   밝기**를 따라야 한다 — 그래서 이 갈래에서만 뒤집는다.
-   덮개(.hub-card__veil)가 오른 상태는 이미 흰 글이라 손대지 않는다: 이 카드는
-   평소와 호버가 같은 색이고, 바뀌는 것은 검은 막이 깔리며 설명이 올라오는 것뿐이다.
-   사진을 밝은 것으로 갈면 이 블록을 지운다. */
-.hub-card--cases,
-.hub-card--cases .sol__area,
-.hub-card--cases .sol__desc,
-.hub-card[class*="hub-card--"].hub-card--cases,
-.hub-card[class*="hub-card--"].hub-card--cases .sol__area,
-.hub-card[class*="hub-card--"].hub-card--cases .sol__desc {
-  color: var(--text-on-inverse);
-}
+/* `[걷어냄 2026-09-16]` card-cases 의 흰 글 블록 — 어두운 실사(검은 책상 위 노트북)
+   시절의 것이다. 그 블록 자신이 적어 둔 대로 "사진을 밝은 것으로 갈면 지운다": 그날
+   들어온 그림은 옅은 바탕의 아이소메트릭 렌더라 잉크 글이 그대로 읽힌다. */
 .hub-card--industry {
-  --card-media: url("/saltware-prototype/media/insight/card-industry.jpg?v=6c16e27edbb2");
+  --card-media: url("/saltware-prototype/media/insight/card-industry.jpg?v=2e58930071b0");
 }
 .hub-card--report {
-  --card-media: url("/saltware-prototype/media/insight/card-report.jpg?v=6c16e27edbb2");
+  --card-media: url("/saltware-prototype/media/insight/card-report.jpg?v=2e58930071b0");
 }
 .hub-card--library {
-  --card-media: url("/saltware-prototype/media/insight/card-library.jpg?v=6c16e27edbb2");
+  --card-media: url("/saltware-prototype/media/insight/card-library.jpg?v=2e58930071b0");
 }
 .hub-card--news {
-  --card-media: url("/saltware-prototype/media/insight/card-news.jpg?v=6c16e27edbb2");
+  --card-media: url("/saltware-prototype/media/insight/card-news.jpg?v=2e58930071b0");
 }
 
 /* ── 인사이트 허브의 갈래 열 (2026-09-15, 첨부 시안) ──────────────────
@@ -3246,6 +3233,13 @@ a.tile:hover .tile__glyph svg circle:nth-child(9) {
      사이가 8 이라 폭 대비 6.7% 다. 우리 열이 310px 이므로 21px 이 같은 비율이고
      가장 가까운 눈금이 --sp-5(22) 다. --sp-6(32) 이던 앞 벌은 열이 그만큼 좁아졌다. */
   gap: var(--sp-7) var(--sp-5);
+}
+/* 여섯 장이 서는 줄은 세 열이다(회사소개 허브, 2026-09-16). 넷으로 두면 둘째 줄에
+   두 장만 남아 줄이 반쯤 빈다 — 카드 격자(.hub-grid--3)가 같은 수에서 하던 그 판단이다.
+   1080 아래의 2열·1열 접기는 아래 미디어 쿼리가 맡는다 — 특정도가 같아 뒤에 선 그쪽이
+   이긴다. 그래서 이 줄은 반드시 그 앞에 서야 한다. */
+.hubcol__grid--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 /* 열 하나가 통째로 링크다. 세로 플렉스라 칸 수를 세지 않는다 — 설명이나 사진이
    빠진 갈래가 들어와도 나머지가 위로 붙을 뿐 격자가 어긋나지 않는다.
@@ -3360,51 +3354,31 @@ a.tile:hover .tile__glyph svg circle:nth-child(9) {
    비우라는 지시가 이 지면 것이었다.
 
    글은 흰색으로 뒤집는다. 사진 카드의 글은 잉크인데(위) 검정 면 위에서는 안 보인다. */
-.hub-card--cases,
-.hub-card--industry,
-.hub-card--report,
-.hub-card--library,
-.hub-card--news {
+/* `[2026-09-16]` 산업 인사이트·고객 사례·자료실·소식 네 장이 왔다(사령관이 건넨
+   렌더 넷). 남은 것은 **리포트 한 장**뿐이다 — 그 한 장이 오는 날 이 블록을 통째로
+   지운다(지도는 위에 그대로 있으므로 그것만으로 되살아난다). */
+.hub-card--report {
   --card-media: none;
 }
-.hub-card--cases::before,
-.hub-card--industry::before,
-.hub-card--report::before,
-.hub-card--library::before,
-.hub-card--news::before {
+.hub-card--report::before {
   background-color: #000;
 }
 /* 갈래 열(.hubcol__art)은 ::before 를 쓰지 않고 제 몸에 그림을 깐다 — 위 줄이
    닿지 않아 그대로 두면 투명한 빈 칸이 된다. 같은 검정을 여기서 한 번 더 깐다.
-   그림이 오는 날 이 블록을 통째로 지우면 이 줄도 같이 사라진다. */
-.hubcol__art[class*="hub-card--"] {
+   그림이 오는 날 이 블록을 통째로 지우면 이 줄도 같이 사라진다.
+   그림이 온 넷은 여기서도 뺀다 — 검정을 깔면 그림 위에 덮이지는 않지만, 그림이 다
+   실리기 전 한 프레임이 검정으로 번쩍인다.
+   `[고침 2026-09-16]` 자료실이 이 줄에만 남아 있었다 — 위에서는 빠졌는데 여기 :is() 에
+   이름이 그대로라, 새 그림을 깔아 두고도 그 열만 검정으로 덮여 있었다. 두 자리가 한
+   짝이라는 것을 이 줄이 증명한다: 갈래를 뺄 때는 **세 목록을 함께** 본다. */
+.hubcol__art.hub-card--report {
   background-color: #000;
 }
 /* 선택자가 두 겹인 이유는 company.css 의 그것과 같다 — 위 `.hub-card[class*="hub-card--"]`
    가 0,2,0 이라 한 겹(0,1,0)으로는 잉크를 못 이긴다. :is() 는 가장 높은 인자 하나로 센다. */
-.hub-card[class*="hub-card--"]:is(
-    .hub-card--cases,
-    .hub-card--industry,
-    .hub-card--report,
-    .hub-card--library,
-    .hub-card--news
-  ),
-.hub-card[class*="hub-card--"]:is(
-    .hub-card--cases,
-    .hub-card--industry,
-    .hub-card--report,
-    .hub-card--library,
-    .hub-card--news
-  )
-  .sol__area,
-.hub-card[class*="hub-card--"]:is(
-    .hub-card--cases,
-    .hub-card--industry,
-    .hub-card--report,
-    .hub-card--library,
-    .hub-card--news
-  )
-  .sol__desc {
+.hub-card[class*="hub-card--"].hub-card--report,
+.hub-card[class*="hub-card--"].hub-card--report .sol__area,
+.hub-card[class*="hub-card--"].hub-card--report .sol__desc {
   color: var(--text-on-inverse);
 }
 
@@ -4288,26 +4262,26 @@ html.js-reveal
     rgba(12, 12, 14, 0) 72%
   );
 }
-/* 밝은 판 — 가림막을 걷는다(primitives.mjs 의 scrim: false). 흰 판 위에 가림막을 걸면
-   왼쪽이 회색으로 물들어 얼룩이 된다. 가림막이 없으니 눈썹은 검은 판용 색을 못 쓴다. */
+/* 그림이 스스로 판인 벌 — 가림막을 걷는다(primitives.mjs 의 scrim: false).
+   가림막은 사진 위에 흰 글을 앉히려고 있다. 이 판에 도는 것은 사진이 아니라
+   조판된 그림 한 장(브랜드 지면의 로고 모션)이라, 위에 막을 한 겹 더 걸면
+   제가 정한 대비가 그대로 탁해진다. 판 색은 자산이 이미 갖고 있다. */
 .pbanner__art--nodim::after {
   content: none;
 }
-/* 받침색도 밝은 쪽으로 돌린다. 기본값은 어두운 사진이 늦게 뜰 때를 위한 것이라,
-   밝은 판에 그대로 두면 자산이 실리기 전 한순간 검은 판이 번쩍인다. */
-.pbanner__art--nodim {
-  background-color: var(--c-white);
-}
-/* 밝은 판의 영상은 잘리지 않고 통째로 들어간다. 사진은 잘려도 그만이지만 이 판에 도는
-   것은 워드마크라, cover 로 두면 좁은 화면에서 판이 16:10 으로 서는 순간 좌우가 잘려
+/* 받침색은 기본값(--bg-inverse) 그대로 둔다 — 그 값이 자산의 바탕색과 같은
+   잉크(#141413)라(27-brand-hero-motion/bake.mjs) 아래의 contain 이 남기는 위아래
+   자리가 판의 연장으로 읽히고, 자산이 실리기 전에도 같은 색 판이 서 있다.
+   흰색으로 돌려 두었던 앞 판은 바탕이 흰 자산을 쓰던 때의 것이다(2026-09-15).
+
+   영상은 잘리지 않고 통째로 들어간다. 사진은 잘려도 그만이지만 이 판에 도는 것은
+   워드마크라, cover 로 두면 좁은 화면에서 판이 16:10 으로 서는 순간 좌우가 잘려
    로고가 토막난다(390px 실측 2026-09-15 — "saltwar" 까지만 남았다).
-   남는 자리는 받침색이 흰색이라 눈에 띄지 않는다. 넓은 화면에서는 판도 영상도 3:1 이라
-   cover 와 결과가 같다. */
+   넓은 화면에서는 판도 영상도 3:1 이라 cover 와 결과가 같다.
+
+   눈썹도 기본값(--text-on-inverse) 그대로다. 판이 어두우므로 검은 판용 색이 맞다. */
 .pbanner__art--nodim video.pbanner__img {
   object-fit: contain;
-}
-.pbanner__art--nodim .pbanner__eyebrow {
-  color: var(--text-primary);
 }
 .pbanner__say {
   position: absolute;
@@ -4612,11 +4586,21 @@ a.brief:hover {
   align-items: center;
   /* 52/591 = 8.80% W. gap 의 % 는 안쪽 상자(W - 좌우 여백 = 85.28% W)를 기준으로 재므로
      8.80 / 0.8528 = 10.32% 로 적어야 시안의 52 가 나온다. */
-  gap: 10.32%;
-  /* % 여백은 높이에도 **너비**를 기준으로 붙는다 — 위아래가 4.74% W 로 잡히는 근거다. */
-  padding: 4.74% 7.36%;
-  border-radius: var(--radius-xl);
-  background: var(--bg-panel);
+  /* 안쪽 상자가 곧 판 전체라(좌우 여백 0, 아래 항) 시안의 52/591 = 8.80% 를 그대로 적는다. */
+  gap: 8.8%;
+  /* % 여백은 높이에도 **너비**를 기준으로 붙는다 — 위아래가 4.74% W 로 잡히는 근거다.
+     `[좌우 0 · 2026-09-16]` 옆 여백 7.36%(1440 지면에서 98px)를 걷는다. 그 값은 이 판이
+     **상자**이던 시절의 안쪽 여백이다 — 상자가 사라지고 흰 띠가 되자, 글과 그림만 위
+     갈래 열(.hubcol__grid)보다 98px 씩 안으로 들어와 섰다. 같은 지면에서 한 줄만 눈금이
+     다르면 그것이 먼저 보인다(사령관 2026-09-16 "이 영역 위에 가로랑 안 맞는 것 같은데").
+     이제 글의 왼끝과 그림의 오른끝이 위 열 넷의 좌우 끝과 같은 자리에 선다. */
+  padding: 4.74% 0;
+  /* 면도 모서리도 갖지 않는다 `[MUST]`. 흰 면은 섹션이 전폭으로 깐다
+     (insights-layouts.mjs 의 eventsBanner 가 variant:"card" 로 부른다).
+     한동안 이 판이 --bg-card + --radius-xl 로 **상자**였는데, 상자로 읽히자 모서리가
+     걸렸다(사령관 2026-09-16 "박스니까 너무 둥글어보여" → "아예 가로를 전체 흰색으로").
+     여기에 배경을 다시 적으면 흰 띠 위에 흰 상자가 겹쳐 서고 모서리만 되살아난다.
+     칸 · 여백 · cqw 글 크기는 그대로 둔다 — 안쪽 규격을 건드리면 높이가 따라 바뀐다. */
   color: var(--text-primary);
 }
 .promo__say {
@@ -4626,8 +4610,12 @@ a.brief:hover {
   justify-content: center;
   min-width: 0;
 }
+/* 글 크기는 시안 비율에서 한 단 내렸다(사령관 2026-09-16 "글씨크기도 너무 크고").
+   앞 값은 591px 짜리 시안을 그대로 확대한 것이라(제목 3.05% W = 3.576cqw) 1200 지면에서
+   제목이 40px 을 넘어 섹션 제목보다 커졌다 — 배너 한 판의 제목이 지면의 머리보다 크면
+   순서가 뒤집힌다. 비율은 0.77 배로 줄이고 clamp 의 위 끝도 33px 로 내린다. */
 .promo__title {
-  font-size: clamp(21px, 3.576cqw, 44px);
+  font-size: clamp(18px, 2.74cqw, 33px);
   font-weight: 700;
   letter-spacing: var(--tracking-snug);
   line-height: 1.25;
@@ -4635,47 +4623,53 @@ a.brief:hover {
 /* 시안에서 제목과 리드는 줄상자가 거의 맞닿아 있다(실측 간격 ≈ 0). 그래도 0 으로 두지
    않는 것은 한글 리드가 두 줄로 접히는 폭이 있어서다 — 그때 제목에 붙어 한 덩이로 읽힌다. */
 .promo__lede {
-  margin-top: 0.586cqw;
-  font-size: clamp(13px, 1.665cqw, 21px);
+  margin-top: 0.7cqw;
+  font-size: clamp(12px, 1.28cqw, 16px);
   line-height: 1.6;
   color: var(--text-muted);
 }
-/* 알약 단추. .btn 을 쓰지 않는 이유는 오른쪽 끝의 검은 동그라미다 — .btn 은 좌우 여백이
+/* 알약 단추. .btn 을 쓰지 않는 이유는 오른쪽 끝의 동그라미다 — .btn 은 좌우 여백이
    대칭이라 그 동그라미를 물리면 오른쪽만 부풀어 보인다. 시안은 오른쪽을 원 지름에 맞춰
-   4px(0.68% W)까지 줄여 두었다. */
+   4px(0.68% W)까지 줄여 두었다.
+   테두리는 --border-control(따뜻한 축의 검정 알파) 대신 주황을 옅게 깐다 — 흰 판 위에
+   흰 알약이라 선이 유일한 경계인데, 이 판의 점은 주황 하나로 통일한다(사령관 2026-09-16
+   "웬만하면 흰색과 주황으로만"). */
 .promo__act {
   display: inline-flex;
   align-items: center;
   gap: 2.228cqw;
-  height: clamp(40px, 4.562cqw, 56px);
+  height: clamp(36px, 3.9cqw, 46px);
   padding: 0 0.797cqw 0 2.779cqw;
-  border: 1px solid var(--border-control);
+  border: 1px solid rgba(244, 159, 32, 0.38);
   border-radius: var(--radius-pill);
   background: var(--bg-card);
   color: var(--text-primary);
-  font-size: clamp(13px, 1.665cqw, 21px);
+  font-size: clamp(12px, 1.28cqw, 16px);
   font-weight: 600;
   text-decoration: none;
   /* 리드 줄상자 아래 23.4px(3.96% W) — 시안에서 이 빈칸이 가장 넓다. */
-  margin-top: 4.644cqw;
+  margin-top: 3.6cqw;
   transition:
     transform var(--dur-hover) var(--ease),
     border-color var(--dur-hover) var(--ease);
 }
 .promo__act:hover {
   transform: translateY(-2px);
-  border-color: var(--border-strong);
+  border-color: var(--c-brand-dot);
 }
 .promo__act-mark {
   display: grid;
   place-items: center;
   flex: none;
-  width: clamp(26px, 2.978cqw, 38px);
-  height: clamp(26px, 2.978cqw, 38px);
+  width: clamp(24px, 2.6cqw, 34px);
+  height: clamp(24px, 2.6cqw, 34px);
   border-radius: var(--radius-circle);
-  background: var(--bg-inverse);
-  color: var(--text-on-inverse);
-  font-size: clamp(12px, 1.583cqw, 18px);
+  /* 시안의 검은 동그라미 자리다. 이 판만 잉크를 쓰지 않는다 — 흰 종이와 주황 둘로만
+     간다는 지시라(2026-09-16) 면을 브랜드 주황으로 칠하고 화살표는 잉크로 남긴다.
+     흰 화살표를 얹지 않는 이유는 대비다: #f49f20 위의 흰색은 2.1:1 로 안 읽힌다. */
+  background: var(--c-brand-dot);
+  color: var(--c-neutral-900);
+  font-size: clamp(11px, 1.25cqw, 15px);
   line-height: 1;
 }
 /* 그림 칸이 판의 높이를 정한다(위 주석) — 여기 비율이 곧 배너의 비율이다.
@@ -4685,20 +4679,20 @@ a.brief:hover {
   border-radius: var(--radius-lg);
   aspect-ratio: 248 / 115;
 }
-/* 표지 원본은 16:9 인데 이 칸은 2.157:1 이라 위아래로 17.6% 를 잘라야 한다.
-   가운데를 기준으로 자르면 아래쪽 8.8% 가 날아가고, 거기에 "Saltware Seminar" 가
-   구워져 있다(media/event/cover-seminar.jpg, 글자 아래끝 ≈ 94.8%). 그래서 자를 몫을
-   위로 몰아 준다 — 아래는 2.6% 만 잘려 글자가 온전히 남는다. */
+/* 자를 몫이 없다. 그림을 이 칸의 비율(248:115)로 직접 구워 두었다
+   (design-resources/31-seminar-promo-art) — 앞의 16:9 마이크 실사는 위아래 17.6% 를
+   잘라야 했고, 그래서 object-position 을 center 82% 로 밀어 구워진 "Saltware Seminar"
+   글자를 살리고 있었다. 그림이 제 비율로 오면서 그 보정도 함께 사라진다. */
 .promo__art img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 82%;
+  object-position: center;
   display: block;
 }
 
 /* 좁은 화면 — 글이 먼저, 그림이 아래다. 시안의 좌우는 넓은 화면의 것이고, 세로로 쌓일 때
-   그림을 위에 두면 판의 첫 줄이 사진의 구워진 글자("Saltware Seminar")가 된다.
+   그림을 위에 두면 판의 첫 줄이 말 없는 그림 한 판이 된다.
    여기서는 cqw 를 놓는다 — 한 단으로 접힌 판에서 글 크기를 판 너비에 매면 제목이
    지면 폭만큼 커진다. */
 @media (max-width: 860px) {
@@ -4708,27 +4702,28 @@ a.brief:hover {
     padding: var(--sp-5) var(--sp-4);
   }
   .promo__title {
-    font-size: var(--fs-h3);
+    font-size: var(--fs-h4);
   }
   .promo__lede {
     margin-top: var(--sp-3);
-    font-size: var(--fs-sm);
+    font-size: var(--fs-xs);
   }
   .promo__act {
-    height: 46px;
-    margin-top: var(--sp-5);
+    height: 40px;
+    margin-top: var(--sp-4);
     gap: var(--sp-3);
-    padding: 0 5px 0 20px;
-    font-size: var(--fs-sm);
+    padding: 0 5px 0 18px;
+    font-size: var(--fs-xs);
   }
   .promo__act-mark {
-    width: 36px;
-    height: 36px;
-    font-size: var(--fs-body);
+    width: 30px;
+    height: 30px;
+    font-size: var(--fs-sm);
   }
   .promo__art {
-    /* 한 단으로 접히면 2.157:1 이 너무 납작하다 — 원본 비율로 되돌려 자르지 않는다. */
-    aspect-ratio: 16 / 9;
+    /* 한 단으로 접히면 2.157:1 이 너무 납작하다 — 조금만 세운다. 16:9 까지 내려가면
+       이제는 그림 쪽이 잘린다(원본이 2.157:1 이라 좌우가 날아간다). */
+    aspect-ratio: 1.85 / 1;
   }
   .promo__art img {
     object-position: center;

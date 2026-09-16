@@ -11,9 +11,11 @@
  */
 
 /* ── 전체보기 허브(/company) ────────────────────────────────
-   인사이트 허브와 같은 문법이라 판(.feat)과 카드(.hub-grid/.hub-card) 본체는
-   components.css 의 것을 그대로 쓴다. 여기서 더하는 것은 셋뿐이다 —
-   이 지면의 세로 리듬, 판의 배경 사진, 카드 여섯이 서는 열 수.
+   인사이트 허브와 같은 문법이라 판(.feat)과 열(.hubcol) 본체는 components.css 의
+   것을 그대로 쓴다 — 열 수까지 저쪽이 맡는다(.hubcol__grid--3, 2026-09-16).
+   여기서 더하는 것은 이 지면의 세로 리듬과 그림 지도다 — 판의 배경 사진,
+   그리고 칸마다의 그림(--card-media). 아래 .hub-grid--3 은 이제 허브가 아니라
+   회사 소개 본문의 "회사의 다른 지면" 여섯 장이 쓰는 규칙이다.
    body 클래스로 건다(company-hub) — 회사 소개 본문은 이 파일을 같이 받지만
    그 지면에는 이 클래스가 없어 리듬이 기본값 그대로다. */
 
@@ -43,7 +45,7 @@
    오른쪽으로 몰아 구울 이유는 없다.
    파일이 없어도 판은 깨지지 않는다(CSS 배경이라 어두운 면만 남는다). */
 .feat--company {
-  --card-media: url("/saltware-prototype/media/company/hub-feature.jpg?v=6c16e27edbb2");
+  --card-media: url("/saltware-prototype/media/company/hub-feature.jpg?v=2e58930071b0");
 }
 
 /* 카드별 배경 사진. 인라인 style 금지(spec 시험)라 히어로(.hero--m-*)·인사이트 카드와
@@ -52,40 +54,22 @@
    실물이 들어올 때마다 한 줄씩 더한다(design-resources/18-company-card/README.md).
    그림이 없는데 CARD_ART 에 먼저 적으면 검은 칸이 된다 — 반입한 뒤에 적는다. */
 .hub-card--company-capabilities {
-  --card-media: url("/saltware-prototype/media/company/card-capabilities.jpg?v=6c16e27edbb2");
+  --card-media: url("/saltware-prototype/media/company/card-capabilities.jpg?v=2e58930071b0");
 }
 .hub-card--company-history {
-  --card-media: url("/saltware-prototype/media/company/card-history.jpg?v=6c16e27edbb2");
+  --card-media: url("/saltware-prototype/media/company/card-history.jpg?v=2e58930071b0");
 }
 .hub-card--company-ir {
-  --card-media: url("/saltware-prototype/media/company/card-ir.jpg?v=6c16e27edbb2");
+  --card-media: url("/saltware-prototype/media/company/card-ir.jpg?v=2e58930071b0");
 }
 .hub-card--company-careers {
-  --card-media: url("/saltware-prototype/media/company/card-careers.jpg?v=6c16e27edbb2");
+  --card-media: url("/saltware-prototype/media/company/card-careers.jpg?v=2e58930071b0");
 }
 .hub-card--company-location {
-  --card-media: url("/saltware-prototype/media/company/card-location.jpg?v=6c16e27edbb2");
+  --card-media: url("/saltware-prototype/media/company/card-location.jpg?v=2e58930071b0");
 }
 .hub-card--company-brand {
-  --card-media: url("/saltware-prototype/media/company/card-brand.jpg?v=6c16e27edbb2");
-}
-
-/* 기술 역량만 어두운 판이다(2026-09-15 에 갈린 네온 렌더). 여섯 중 나머지 다섯은 흰
-   바탕이라 components.css 가 카드 글을 통째로 잉크로 잡아 두었는데(스크림을 걷으면서
-   내린 결정이다 — 사령관 "검정 그냥 걷어줘"), 그 잉크가 이 칸에서는 검정 위 검정이 된다.
-   그래서 이 한 칸만 글을 뒤집는다. 제목은 흰색, 머리 줄과 설명은 한 급 흐린 흰색이다 —
-   나머지 다섯 칸이 --text-primary / 같은 값으로 위계를 색이 아니라 크기로만 가르는 것과
-   달리, 어두운 면에서는 셋을 같은 흰색으로 두면 설명이 제목만큼 튀어나온다.
-
-   선택자가 두 겹인 이유: components.css 의 `.hub-card[class*="hub-card--"]` 가 0,2,0 이라
-   클래스 하나로는 지고, 파일 순서에 기대면 스타일 묶는 차례가 바뀌는 날 조용히 풀린다.
-   사진이 밝은 것으로 되돌아오면 이 덩이를 통째로 지운다 — 덮어쓰지 말고 지운다. */
-.hub-card[class*="hub-card--"].hub-card--company-capabilities {
-  color: var(--text-on-inverse);
-}
-.hub-card[class*="hub-card--"].hub-card--company-capabilities .sol__area,
-.hub-card[class*="hub-card--"].hub-card--company-capabilities .sol__desc {
-  color: var(--text-on-inverse-muted);
+  --card-media: url("/saltware-prototype/media/company/card-brand.jpg?v=2e58930071b0");
 }
 
 /* 카드가 여섯이다 — 인사이트의 넷을 그대로 두면 둘째 줄에 두 장만 남아 줄이 반쯤 빈다.
@@ -887,7 +871,7 @@ html.js-pillars .cpil:not(.is-on) .cpil__desc {
 }
 .cclose--art::before {
   z-index: -2;
-  background-image: url("/saltware-prototype/media/hub/hub-insights.jpg?v=6c16e27edbb2");
+  background-image: url("/saltware-prototype/media/hub/hub-insights.jpg?v=2e58930071b0");
   background-position: center;
   background-size: cover;
   filter: var(--art-tone);
@@ -981,3 +965,41 @@ html.js-reveal [data-reveal]:not(.is-in) > * {
 html.js-reveal [data-reveal]:not(.is-in) > .cstat {
   scale: 0.97;
 }
+
+/* ── 그림을 덜 당긴다 — 회사 소개 본문만 (사령관 2026-09-16) ────────────
+   "이미지 안에 있는 이미지가 너무 큰 느낌인데 이미지만 줄여줘." 액자는 그대로 두고
+   **안의 그림만** 작게 앉힌다는 판정이다 — 조판·글·여백은 한 칸도 움직이지 않는다.
+
+   왜 큰가: 액자가 세로인데 원본은 다 가로라 object-fit: cover 가 폭을 기준으로
+   확대해 좌우를 잘라낸다 `[실측 2026-09-16 · 1440]`.
+     · .cintro__shot  403×538 액자에 600×375 사진 → 861×538 로 늘어나 폭의 53% 가 잘림
+     · .cpils__shot   340×608 액자에 1000×625 일러스트 → 973 폭(2.9배) — 구름이 액자에
+       걸려 잘린 채 서 있었다
+     · .hub-card      431×431 정사각에 3:2 렌더 → 위아래가 잘림
+   그래서 배율을 낮추는 쪽으로 간다. 대신 잘린 자리가 풀리므로 액자 바탕(--bg-band ·
+   --bg-card)이 위아래 띠로 드러난다 — 그 띠가 이 판정의 값이다.
+
+   손대지 않은 것: 표지(.cintro__cover — 화면을 채우는 무대라 잘림이 조판 그 자체다),
+   가로로 흐르는 카드(.cstack — 1200×1000 이 720×648 에 들어가 잘림이 7% 뿐이다),
+   대표 사진(.cceo__frame — 이미 height: auto 라 잘리지 않는다), 맺음 띠. */
+
+/* 사진 줄. 통째로 풀면(contain) 403×252 만 남아 액자 절반이 띠가 된다 — 높이만
+   78% 로 줄여 잘림을 53%→40% 로 낮춘다. 피사체는 1.43배에서 1.12배가 된다. */
+.company-about .cintro__shot {
+  display: grid;
+  align-content: center;
+}
+.company-about .cintro__shot img {
+  height: 78%;
+}
+
+/* 사업 기둥의 일러스트는 통째로 푼다 — 오브젝트 한 덩이가 가운데 놓인 그림이라
+   조금만 잘려도 덩이가 액자에 걸린다. 바탕이 흰 렌더여서 띠와 이어진다. */
+.company-about .cpils__shot {
+  object-fit: contain;
+}
+
+/* "회사의 다른 지면" 여섯은 여기서 손대지 않는다 — 2026-09-16 에 그림 자체를
+   알맹이 82% 로 다시 구웠다(design-resources/18-company-card/bake-photo.mjs 의 FILL).
+   CSS 로 한 번 더 줄이면 두 번 줄어든다. 허브(/company)와 여기가 같은 파일을 쓰므로
+   굽는 자리에서 고친 것이 두 지면에 함께 듣는다. */
