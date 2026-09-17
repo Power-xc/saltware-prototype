@@ -10,31 +10,31 @@
   padding-top: var(--sp-6);
 }
 .feat--company {
-  --card-media: url("/saltware-prototype/media/company/hub-feature.jpg?v=acbe94433416");
+  --card-media: url("/saltware-prototype/media/company/hub-feature.jpg?v=d6d2119a722c");
 }
 .hub-card--company-capabilities {
-  --card-media: url("/saltware-prototype/media/company/card-capabilities.jpg?v=acbe94433416");
+  --card-media: url("/saltware-prototype/media/company/card-capabilities.jpg?v=d6d2119a722c");
 }
 .hub-card--company-esg {
-  --card-media: url("/saltware-prototype/media/company/card-esg.jpg?v=acbe94433416");
+  --card-media: url("/saltware-prototype/media/company/card-esg.jpg?v=d6d2119a722c");
 }
 .hub-card--company-partners {
-  --card-media: url("/saltware-prototype/media/company/card-partners.jpg?v=acbe94433416");
+  --card-media: url("/saltware-prototype/media/company/card-partners.jpg?v=d6d2119a722c");
 }
 .hub-card--company-history {
-  --card-media: url("/saltware-prototype/media/company/card-history.jpg?v=acbe94433416");
+  --card-media: url("/saltware-prototype/media/company/card-history.jpg?v=d6d2119a722c");
 }
 .hub-card--company-ir {
-  --card-media: url("/saltware-prototype/media/company/card-ir.jpg?v=acbe94433416");
+  --card-media: url("/saltware-prototype/media/company/card-ir.jpg?v=d6d2119a722c");
 }
 .hub-card--company-careers {
-  --card-media: url("/saltware-prototype/media/company/card-careers.jpg?v=acbe94433416");
+  --card-media: url("/saltware-prototype/media/company/card-careers.jpg?v=d6d2119a722c");
 }
 .hub-card--company-location {
-  --card-media: url("/saltware-prototype/media/company/card-location.jpg?v=acbe94433416");
+  --card-media: url("/saltware-prototype/media/company/card-location.jpg?v=d6d2119a722c");
 }
 .hub-card--company-brand {
-  --card-media: url("/saltware-prototype/media/company/card-brand.jpg?v=acbe94433416");
+  --card-media: url("/saltware-prototype/media/company/card-brand.jpg?v=d6d2119a722c");
 }
 @media (min-width: 1080px) {
   .hub-grid--3 {
@@ -634,7 +634,7 @@ html.js-pillars .cpil:not(.is-on) .cpil__desc {
 }
 .cclose--art::before {
   z-index: -2;
-  background-image: url("/saltware-prototype/media/hub/hub-insights.jpg?v=acbe94433416");
+  background-image: url("/saltware-prototype/media/hub/hub-insights.jpg?v=d6d2119a722c");
   background-position: center;
   background-size: cover;
   filter: var(--art-tone);
