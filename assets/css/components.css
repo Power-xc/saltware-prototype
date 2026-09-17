@@ -812,10 +812,10 @@
   max-width: 42ch;
 }
 .hero--media.hero--m-hub-business {
-  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=82513205dde5");
+  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=1dedf123e461");
 }
 .hero--media.hero--m-hub-insights {
-  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=82513205dde5");
+  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=1dedf123e461");
 }
 /* 노트북 — 히어로가 한 화면을 통째로 먹어 다음 섹션이 안 비친다(실측: 1280×800 105% ·
    1440×900 101%. 1920×1080 은 89%, 2560×1440 은 77% 라 큰 화면은 그대로 둔다).
@@ -2802,7 +2802,7 @@ a.tile:hover .tile__glyph svg circle:nth-child(9) {
    파일이 아직 없어도 카드가 깨지지 않는다 — CSS 배경이라 깨진 그림 아이콘이 뜨지 않고,
    ::before 가 빈 채로 어두운 면만 남는다. 그래서 클래스를 미리 붙여 둔다. */
 .feat--art {
-  --card-media: url("/saltware-prototype/media/insight/feature.jpg?v=82513205dde5");
+  --card-media: url("/saltware-prototype/media/insight/feature.jpg?v=1dedf123e461");
 }
 .feat[class*="feat--"] .feat__lead::before {
   content: "";
@@ -3189,22 +3189,22 @@ a.tile:hover .tile__glyph svg circle:nth-child(9) {
 /* 고객 사례만 갈래(insights)가 아니라 카드 정의에 직접 media 가 적힌다 — 이 카드는
    인사이트 갈래가 아니라 사례 지면으로 가는 문이라 ART 맵을 타지 않는다(insights.mjs). */
 .hub-card--cases {
-  --card-media: url("/saltware-prototype/media/insight/card-cases.jpg?v=82513205dde5");
+  --card-media: url("/saltware-prototype/media/insight/card-cases.jpg?v=1dedf123e461");
 }
 /* `[걷어냄 2026-09-16]` card-cases 의 흰 글 블록 — 어두운 실사(검은 책상 위 노트북)
    시절의 것이다. 그 블록 자신이 적어 둔 대로 "사진을 밝은 것으로 갈면 지운다": 그날
    들어온 그림은 옅은 바탕의 아이소메트릭 렌더라 잉크 글이 그대로 읽힌다. */
 .hub-card--industry {
-  --card-media: url("/saltware-prototype/media/insight/card-industry.jpg?v=82513205dde5");
+  --card-media: url("/saltware-prototype/media/insight/card-industry.jpg?v=1dedf123e461");
 }
 .hub-card--report {
-  --card-media: url("/saltware-prototype/media/insight/card-report.jpg?v=82513205dde5");
+  --card-media: url("/saltware-prototype/media/insight/card-report.jpg?v=1dedf123e461");
 }
 .hub-card--library {
-  --card-media: url("/saltware-prototype/media/insight/card-library.jpg?v=82513205dde5");
+  --card-media: url("/saltware-prototype/media/insight/card-library.jpg?v=1dedf123e461");
 }
 .hub-card--news {
-  --card-media: url("/saltware-prototype/media/insight/card-news.jpg?v=82513205dde5");
+  --card-media: url("/saltware-prototype/media/insight/card-news.jpg?v=1dedf123e461");
 }
 
 /* ── 인사이트 허브의 갈래 열 (2026-09-15, 첨부 시안) ──────────────────
