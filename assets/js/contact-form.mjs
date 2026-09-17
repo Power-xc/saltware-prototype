@@ -83,12 +83,18 @@ function setupForm(form) {
 
 function setupTopics(form) {
   const chips = [...form.querySelectorAll("[data-topic]")];
+  const press = (chip) => {
+    for (const c of chips) c.setAttribute("aria-pressed", "false");
+    chip.setAttribute("aria-pressed", "true");
+  };
   for (const chip of chips) {
-    chip.addEventListener("click", () => {
-      for (const c of chips) c.setAttribute("aria-pressed", "false");
-      chip.setAttribute("aria-pressed", "true");
-    });
+    chip.addEventListener("click", () => press(chip));
   }
+  // 사업 지면의 CTA 가 ?topic= 으로 무엇을 요청했는지 알려 준다(attribution.mjs).
+  // 모르는 값이면 손대지 않는다 — 첫 칩이 눌린 채로 열린다.
+  const wanted = new URLSearchParams(location.search).get("topic");
+  const target = wanted && chips.find((c) => c.dataset.topic === wanted);
+  if (target) press(target);
   return () =>
     form.querySelector('[data-topic][aria-pressed="true"]')?.dataset.topic ??
     "";

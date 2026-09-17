@@ -119,12 +119,48 @@ function initDrawer() {
   });
 }
 
+// 스크롤 상태 — 첫 화면을 벗어나면 html.is-scrolled(헤더 그늘 · 맨 위로 단추가 뜬다).
+// 좁은 화면에서는 아래로 내리면 헤더를 접고(is-hidden) 올리면 다시 편다 — 폰에서 64px 띠가
+// 늘 화면을 먹고 있을 이유가 없다. 값은 클래스로만 넘기고 움직임은 CSS 가 정한다.
+// 스크립트가 없으면 헤더는 늘 서 있고 맨 위로 단추만 안 뜬다 — 그 단추는 JS 가 없으면
+// 어차피 아무것도 안 한다.
+const SCROLLED_AT = 8;
+const HIDE_AFTER = 120;
+
+function initHeaderScroll(header) {
+  const root = document.documentElement;
+  const bp = getComputedStyle(root).getPropertyValue("--bp-md").trim();
+  const narrow = matchMedia(`(max-width: ${bp})`);
+  let last = scrollY;
+  let ticking = false;
+  const paint = () => {
+    ticking = false;
+    const y = scrollY;
+    root.classList.toggle("is-scrolled", y > SCROLLED_AT);
+    const down = y > last && y > HIDE_AFTER;
+    const open = header.querySelector('[aria-expanded="true"]');
+    header.classList.toggle("is-hidden", narrow.matches && down && !open);
+    last = y;
+  };
+  const schedule = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(paint);
+  };
+  addEventListener("scroll", schedule, { passive: true });
+  narrow.addEventListener("change", paint);
+  // 키보드로 헤더에 들어오면 접힌 헤더를 편다 — 초점이 화면 밖에 있으면 안 된다.
+  header.addEventListener("focusin", () => header.classList.remove("is-hidden"));
+  paint();
+}
+
 export function initNav() {
   const header = document.querySelector("[data-header]");
   if (!header) return;
 
   initMegamenu(header);
   initDrawer();
+  initHeaderScroll(header);
 
   document.querySelector("[data-to-top]")?.addEventListener("click", () => {
     window.scrollTo({ top: 0, behavior: "smooth" });

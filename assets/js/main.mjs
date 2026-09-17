@@ -1,8 +1,8 @@
-import { initAnalytics } from "./analytics.mjs?v=8e0e410cb077";
-import { initNav } from "./nav.mjs?v=8e0e410cb077";
-import { initReveal } from "./reveal.mjs?v=8e0e410cb077";
-import { initFaq, initCaseFilter, initFooterGroups } from "./disclosure.mjs?v=8e0e410cb077";
-import { initAttribution } from "./attribution.mjs?v=8e0e410cb077";
+import { initAnalytics } from "./analytics.mjs?v=b196f100b21f";
+import { initNav } from "./nav.mjs?v=b196f100b21f";
+import { initReveal } from "./reveal.mjs?v=b196f100b21f";
+import { initFaq, initCaseFilter, initFooterGroups } from "./disclosure.mjs?v=b196f100b21f";
+import { initAttribution } from "./attribution.mjs?v=b196f100b21f";
 
 // 초기화 하나가 던져도 나머지는 산다 — 첫 화면 스크립트는 서로 독립이다.
 const run = (name, init) => {
@@ -27,26 +27,27 @@ const when = (sel, load) => {
   load().catch((e) => console.warn(`${sel} init failed:`, e));
 };
 when("[data-contact-form]", () =>
-  import("./contact-form.mjs?v=8e0e410cb077").then(({ initContactForm }) => initContactForm()),
+  import("./contact-form.mjs?v=b196f100b21f").then(({ initContactForm }) => initContactForm()),
 );
 when("[data-hcards]", () =>
-  import("./hero-object.mjs?v=8e0e410cb077").then(({ initHeroObject }) => initHeroObject()),
+  import("./hero-object.mjs?v=b196f100b21f").then(({ initHeroObject }) => initHeroObject()),
 );
 when("[data-newsletter-form]", () =>
-  import("./newsletter.mjs?v=8e0e410cb077").then(({ initNewsletter }) => initNewsletter()),
+  import("./newsletter.mjs?v=b196f100b21f").then(({ initNewsletter }) => initNewsletter()),
 );
-when("[data-rail]", () => import("./rail.mjs?v=8e0e410cb077").then(({ initRails }) => initRails()));
-when("[data-filter]", () => import("./filters.mjs?v=8e0e410cb077").then(({ initFilters }) => initFilters()));
-when("[data-count]", () => import("./counter.mjs?v=8e0e410cb077").then(({ initCounters }) => initCounters()));
-when("[data-paged]", () => import("./pager.mjs?v=8e0e410cb077").then(({ initPagers }) => initPagers()));
+when("[data-rail]", () => import("./rail.mjs?v=b196f100b21f").then(({ initRails }) => initRails()));
+when("[data-filter]", () => import("./filters.mjs?v=b196f100b21f").then(({ initFilters }) => initFilters()));
+when("[data-count]", () => import("./counter.mjs?v=b196f100b21f").then(({ initCounters }) => initCounters()));
+when("[data-paged]", () => import("./pager.mjs?v=b196f100b21f").then(({ initPagers }) => initPagers()));
 when("[data-year-stage]", () =>
-  import("./year-stage.mjs?v=8e0e410cb077").then(({ initYearStage }) => initYearStage()),
+  import("./year-stage.mjs?v=b196f100b21f").then(({ initYearStage }) => initYearStage()),
 );
 when("[data-pillars]", () =>
-  import("./pillars.mjs?v=8e0e410cb077").then(({ initPillars }) => initPillars()),
+  import("./pillars.mjs?v=b196f100b21f").then(({ initPillars }) => initPillars()),
 );
-when("[data-stage]", () => import("./stage.mjs?v=8e0e410cb077").then(({ initStage }) => initStage()));
-when("[data-parallax]", () => import("./parallax.mjs?v=8e0e410cb077").then(({ initParallax }) => initParallax()));
+when("[data-stage]", () => import("./stage.mjs?v=b196f100b21f").then(({ initStage }) => initStage()));
+when("[data-parallax]", () => import("./parallax.mjs?v=b196f100b21f").then(({ initParallax }) => initParallax()));
 when("video[data-ambient]", () =>
-  import("./ambient-video.mjs?v=8e0e410cb077").then(({ initAmbientVideo }) => initAmbientVideo()),
+  import("./ambient-video.mjs?v=b196f100b21f").then(({ initAmbientVideo }) => initAmbientVideo()),
 );
+when("[data-spot]", () => import("./spot.mjs?v=b196f100b21f").then(({ initSpot }) => initSpot()));

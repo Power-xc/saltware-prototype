@@ -23,6 +23,12 @@ export function initAttribution() {
       if (event && !url.searchParams.has("source")) {
         url.searchParams.set("source", event);
       }
+      // 버튼이 약속한 것(진단·자료·상담)을 폼에 그대로 넘긴다. 없으면 안 붙인다 —
+      // 폼은 첫 칩(도입 문의)으로 열린다.
+      const topic = a.dataset.topic;
+      if (topic && !url.searchParams.has("topic")) {
+        url.searchParams.set("topic", topic);
+      }
       if (!url.searchParams.has("from")) {
         url.searchParams.set("from", location.pathname);
       }

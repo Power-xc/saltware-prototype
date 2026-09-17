@@ -137,9 +137,12 @@
   --art-tone-illus: contrast(1.03);
   --shadow-mega: 0 12px 28px rgba(41, 37, 28, 0.1);
   --shadow-lift: 0 10px 24px rgba(41, 37, 28, 0.09);
+  --shadow-header: 0 6px 20px rgba(41, 37, 28, 0.07);
+  --spot-glow: rgba(242, 239, 232, 0.08);
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
   --dur-hover: 180ms;
   --dur-content: 420ms;
+  --dur-page: 260ms;
   --bp-sm: 640px;
   --bp-md: 860px;
   --bp-lg: 1080px;

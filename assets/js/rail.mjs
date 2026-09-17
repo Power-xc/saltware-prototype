@@ -74,8 +74,59 @@ function wire(wrap) {
     sync();
   });
 
+  enableDrag(track);
   wrap.classList.add("is-ready");
   sync();
+}
+
+// 마우스로 끌어 넘긴다 — 손가락·트랙패드는 브라우저가 이미 하므로 정밀 포인터에서만.
+// 끄는 동안은 스냅을 끈다(is-dragging, CSS) — 켜 두면 손을 따라오다 되감긴다. 놓으면 스냅이
+// 돌아와 가까운 장에 맞춘다. 5px 넘게 끌었으면 놓을 때의 click 은 삼킨다 — 카드가 링크라
+// 끌었다 놓는 순간 이동해 버린다.
+const DRAG_SLOP = 5;
+
+function enableDrag(track) {
+  if (!matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+  let id = null;
+  let x0 = 0;
+  let left0 = 0;
+  let moved = false;
+
+  track.addEventListener("pointerdown", (e) => {
+    if (e.button !== 0) return;
+    id = e.pointerId;
+    x0 = e.clientX;
+    left0 = track.scrollLeft;
+    moved = false;
+  });
+  track.addEventListener("pointermove", (e) => {
+    if (e.pointerId !== id) return;
+    const dx = e.clientX - x0;
+    if (!moved) {
+      if (Math.abs(dx) < DRAG_SLOP) return;
+      moved = true;
+      track.setPointerCapture(id);
+      track.classList.add("is-dragging");
+    }
+    track.scrollLeft = left0 - dx;
+  });
+  const end = (e) => {
+    if (e.pointerId !== id) return;
+    id = null;
+    track.classList.remove("is-dragging");
+  };
+  track.addEventListener("pointerup", end);
+  track.addEventListener("pointercancel", end);
+  track.addEventListener(
+    "click",
+    (e) => {
+      if (!moved) return;
+      e.preventDefault();
+      e.stopPropagation();
+      moved = false;
+    },
+    true,
+  );
 }
 
 export function initRails() {
