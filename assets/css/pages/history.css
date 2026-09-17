@@ -1,12 +1,4 @@
-/* 연혁 — /company/history 한 라우트에서만 쓴다.
-   components.css 에 있던 212줄을 옮겼다(2026-09-13) — 그 파일은 29개 라우트가 전부
-   받아 가는데 이 조판은 한 곳에서만 산다. 인재채용·기술역량·오시는길이 같은 방식이다.
-   §8 반경 계약은 pages/*.css 도 함께 읽으므로 규칙은 그대로 걸린다.
-   내용은 components.css 쪽 최신본을 그대로 옮긴 것이다(영경님 2026-09-13 갱신 포함). */
 
-/* 연혁 — 왼쪽 붙박이 사진, 오른쪽 연혁(참고: saltlux 연혁).
-   사진은 화면 높이만큼 서서 오른쪽이 다 흐를 때까지 남고, 그 위의 연도가 바뀐다
-   (scripts/year-stage.mjs). 반반으로 가른다 — 사진이 더 크면 연혁이 곁다리로 읽힌다. */
 .hyr {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -16,7 +8,6 @@
 .hyr__stage {
   position: sticky;
   top: calc(var(--header-h, 64px) + var(--sp-5));
-  /* 화면에서 헤더와 위아래 숨 쉴 자리를 뺀 높이. 꽉 채우면 붙는 순간 갑갑하다. */
   height: min(72vh, 640px);
   display: flex;
   flex-direction: column;
@@ -25,34 +16,11 @@
   gap: var(--sp-4);
   padding: var(--sp-7);
   border-radius: var(--radius-lg);
-  /* 그림을 판 가장자리에서 띄우는 거리. 안쪽 반경이 이 값을 따라간다(::before).
-     바깥 반경(18px)보다 작아야 뺄셈이 양수가 되어 둥글림이 생긴다 — 22px 로 뒀더니
-     18 − 22 이 음수라 각진 채였다(2026-09-11). 12px 이면 안쪽 6px 이 나오고,
-     바깥 곡이 실제로 차지하는 대각선 5.3px 도 피한다. */
   --stage-pad: var(--sp-3);
   overflow: hidden;
   isolation: isolate;
-  /* 판의 바탕은 그림이 정한다 — 그림 자체의 바닥색을 깔아야 contain 으로 남는
-     위아래 여백이 액자가 아니라 그림의 연장으로 보인다. */
   background: var(--stage-ground, var(--bg-band));
 }
-/* 그림은 잘리지 않는다(contain). 판이 거의 정사각인데 그림은 16:9 라 cover 로 채우면
-   좌우가 절반 가까이 날아간다 — 실사 사진이면 감수할 만하지만 이건 일러스트라
-   무엇을 그린 것인지가 사라진다. 위에 그림, 아래에 연도로 나눠 쓴다.
-   사진 키가 없으면 ::before 가 비고 판은 바닥색만 남는다 — 빈 액자를 만들지 않는다. */
-/* 판 가장자리에서 한 뼘 들여 앉힌다. inset: 0 으로 두면 둥근 모서리(radius-lg)가
-   그림의 위 두 귀를 깎는다 — 잘리지 않게 해 놓고 모서리에서 잘리는 셈이었다.
-
-   상자를 그림 비율(--stage-ratio)에 맞춘다. 높이를 %로 주면 상자가 그림보다 커서
-   아래쪽에 빈 띠가 남고, 그 띠 때문에 아래 두 귀의 둥글림이 그림에 닿지 않는다.
-   상자와 그림이 같은 꼴이면 cover 도 자르지 않으므로 네 귀가 고르게 둥글린다.
-
-   안쪽 반경은 바깥 반경에서 띄운 갭만큼 뺀다(사령관 2026-09-11). 두 곡이 같은
-   중심을 갖는 유일한 값이라, 이래야 안쪽 곡이 바깥과 나란히 돈다.
-   갭이 바깥 반경보다 크면 음수가 되고 그때는 각지는 것이 맞다 — 음수 반경은
-   브라우저가 통째로 무시해서 저절로 0 이 된다(0px 을 적으면 리터럴 반경 금지에
-   걸린다 · spec 테스트 §8). 지금 값은 18 − 22 라 각져 있다. 둥글림을 보려면
-   --stage-pad 를 바깥 반경보다 작게 준다. 지금은 12px 이라 안쪽이 6px 이다. */
 .hyr__stage::before {
   content: "";
   position: absolute;
@@ -65,19 +33,11 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
-/* 밝은 일러스트라 흰 숫자를 얹을 수 없다 — 바닥색 위에서 흰 글씨는 2:1 로
-   묻힌다(실측). 어둠 덮개를 걷고 숫자를 진한 쪽으로 뒤집었다. */
 .hyr__stage--company {
-  --stage-media: url("/saltware-prototype/media/company/history.jpg?v=1dedf123e461");
-  /* 실물 그대로다(1600×898). 그림을 갈면 이 값도 같이 간다 — 어긋나면 잘린다. */
+  --stage-media: url("/saltware-prototype/media/company/history.jpg?v=acbe94433416");
   --stage-ratio: 1600 / 898;
-  /* 그림이 브랜드 주황으로 갈렸는데 바닥만 파랑 계열(#a1b0cf)로 남아 판이 보라로
-     읽혔다(2026-09-13). 같은 색면 묶음의 따뜻한 쪽으로 옮긴다 — 채도가 낮아
-     그림과 싸우지 않고, 짙은 숫자가 그대로 얹힌다. */
   --stage-ground: var(--c-field-sand);
 }
-/* 숫자가 이 지면의 주인이다. 자릿수가 넷으로 고정이라 tabular-nums 로 폭을 묶지
-   않으면 해가 바뀔 때마다 글자가 좌우로 흔들린다. */
 .hyr__num {
   color: var(--text-primary);
   font-size: clamp(64px, 9vw, 148px);
@@ -86,8 +46,6 @@
   line-height: 1;
   font-variant-numeric: tabular-nums;
 }
-/* 어디까지 있는 연혁인지 — 양 끝 연도와 그 사이 눈금. 점이 지금 읽는 해의 자리다.
-   숫자 하나만 크게 두면 "몇 년치를 훑고 있는지"와 "얼마나 남았는지"가 안 보인다. */
 .hyr__span {
   display: flex;
   align-items: center;
@@ -106,12 +64,8 @@
   flex: 1;
   height: 2px;
   border-radius: var(--radius-pill);
-  /* 순수 검정은 알파를 낮춰도 잉크(#141413)보다 진하다 — 지면의 스크림을 전부
-     --c-neutral-900-rgb 로 옮긴 날(2026-09-13) 이 시트만 빠져 있었다. */
   background: rgb(var(--c-neutral-900-rgb) / 0.22);
 }
-/* 점은 칸 수로 움직인다(year-stage.mjs 가 --at 을 준다). 연도 값의 크기로 재면
-   2003 과 2011 사이 빈 구간에서 점이 한참 멈춰 있는다. */
 .hyr__dot {
   position: absolute;
   top: 50%;
@@ -123,8 +77,6 @@
   translate: -50% -50%;
   transition: left 0.42s var(--ease);
 }
-
-/* 해가 바뀔 때 한 번 깜빡인다 — 툭 갈리면 바뀐 줄 모르고 지나간다. */
 .hyr__num.is-turn {
   animation: yearTurn 0.42s var(--ease);
 }
@@ -138,8 +90,6 @@
     translate: 0 0;
   }
 }
-/* 한 해가 한 화면쯤을 차지해야 숫자가 읽을 만한 속도로 바뀐다. 항목이 하나뿐인 해도
-   같은 자리를 갖는다 — 높이를 내용에 맡기면 2011 은 눈 깜짝할 새 지나간다. */
 .hyr__step {
   display: flex;
   flex-direction: column;
@@ -151,8 +101,6 @@
 .hyr__step + .hyr__step {
   border-top: 1px solid var(--border-hair);
 }
-/* 오른쪽 연도는 좌표다 — 왼쪽 큰 숫자와 경쟁하지 않게 물러나 있다가,
-   지금 읽는 해가 되면 제 색을 찾는다. */
 .hyr__mark {
   font-size: var(--fs-h2);
   font-weight: 700;
@@ -170,8 +118,6 @@
   gap: var(--sp-4);
   list-style: none;
 }
-/* 월이 없는 항목은 그 칸째 빠지고 글이 왼쪽부터 찬다 — 빈 칸을 남기면
-   달을 아직 못 적었다는 말을 한 해에 여섯 번 하게 된다. */
 .hist__row {
   display: flex;
   align-items: baseline;
@@ -185,22 +131,17 @@
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
-/* 이 지면에서 항목은 곁다리가 아니라 본문이다 — 리드 크기(17px)로는 왼쪽 큰 숫자에
-   눌려 각주처럼 읽힌다(사령관 2026-09-11). 폭에 따라 한 급 더 올린다. */
 .hist__text {
   font-size: clamp(18px, 1.45vw, 23px);
   line-height: 1.5;
   color: var(--text-primary);
 }
 @media (max-width: 860px) {
-  /* 한 단이 되면 사진이 위에 얇게 붙고 연혁이 그 아래로 흐른다 — 숫자는 계속 바뀐다.
-     여기서 사진을 정적으로 두면 이 지면의 유일한 장치가 사라진다. */
   .hyr {
     grid-template-columns: minmax(0, 1fr);
     gap: var(--sp-5);
   }
   .hyr__stage {
-    /* 그림(16:9)이 다 들어가고 그 아래 숫자가 설 만큼. 30vh 로 두면 둘이 겹쳤다. */
     height: 38vh;
     top: var(--header-h, 64px);
     padding: var(--sp-6);
@@ -213,7 +154,6 @@
     padding-block: var(--sp-6);
     gap: var(--sp-4);
   }
-  /* 한 단이 되면 글 폭이 화면 폭이다 — 데스크톱 크기를 그대로 쓰면 한 줄에 열 자가 된다. */
   .hist__text {
     font-size: var(--fs-lede);
   }

@@ -1,16 +1,4 @@
-/* 메인 전용 시트 — components.css 에서 갈라 냈다(2026-09-13).
- *
- * 공용 시트 하나에 모든 구성이 있으면 나머지 29개 라우트가 쓰지도 않는 27KB 를 같이 받는다.
- * 여기 있는 구성(히어로 밴드 · 대표 솔루션 레일 · 파트너 벨트 · 이야기 · 브리프 · 벤토)은
- * 실측상 메인에만 선다. 여러 지면이 나눠 쓰는 규칙은 옮기지 않았다 —
- * .sol · .tile 과 같은 줄에 선 카드 호버 규약이 그렇다(components.css 에 그대로 있다).
- *
- * 이 시트는 components.css 다음에 실린다. 같은 특이도끼리는 여기가 이기므로,
- * 공용 규칙을 덮어 쓰는 메인 전용 예외(.home .section ...)도 여기에 산다.
- * 페이지 배선은 pages/home.mjs 의 styles 다. */
 
-/* 대표 솔루션 줄은 첫 장만 찬다 — 여덟이 모두 유리면 어디서 읽기 시작할지가 없다
-   (레퍼런스 PROCESS 4칸이 같은 규칙이다). */
 .section--inverse .rail--sols .sol:first-child,
 .section--stone .rail--sols .sol:first-child {
   background: var(--c-neutral-150);
@@ -18,42 +6,25 @@
   --text-on-inverse: var(--c-neutral-900);
   --text-on-inverse-muted: var(--c-neutral-700);
   --text-accent-on-inverse: var(--c-accent-600);
-  /* 색면 안의 밝은 카드다 — 면이 뒤집혔으니 지면 글자 토큰도 같이 되돌린다. */
   --text-primary: var(--c-neutral-900);
   --text-secondary: var(--c-neutral-700);
   --text-muted: var(--c-neutral-700);
 }
-
 .hero--home {
   position: relative;
   overflow: hidden;
   background: var(--hero-bg);
   color: var(--hero-ink);
   display: grid;
-  /* 열 하나를 minmax(0, 1fr) 로 못 박는다 — auto 열은 제목의 가장 긴 낱말(min-content)만큼
-     자라서, 폰 폭에서 "ARCHITECTURE" 가 컨테이너를 407px 로 밀어 카드 오른쪽 여백이 사라졌다
-     (실측 375·390, 2026-09-14). 낱말이 넘치더라도 컨테이너는 화면 폭에 선다. */
   grid-template-columns: minmax(0, 1fr);
-  /* 히어로는 화면을 채우지 않는다 — 자기 내용 높이만 쓴다(사령관 판정 2026-09-07
-     "무조건 한 화면에 다 들어오게 하지 말고"). 100svh 로 늘이던 시절엔 남는 높이가
-     전부 리드와 카드 사이로 몰려 구멍이 됐다(실측 2560×1440 에서 549px, 3440 에서 549px).
-     크기는 폭이 정하고(.hcards), 남는 높이는 다음 섹션이 비쳐 드는 데 쓴다 —
-     아래가 보이는 편이 스크롤을 부른다. */
   grid-template-rows: auto auto;
-  /* 세로 리듬 — 헤더 아래 숨 → 제목 16 리드 → 44 → 띠 22 카드. 글 덩어리와 [띠 + 카드]
-     덩어리 사이가 가장 넓고, 띠는 카드의 탭이라 카드에 붙는다(11차 판정 2026-09-04).
-     사령관 관리자 모드 실측(2026-09-06): 제목 캡 상단이 헤더 아래 143px(1588·1776),
-     129px(1435), 79px(494). 제목이 64px 로 줄면서 위 숨을 크게 둔다. */
   padding-top: clamp(80px, 9vw, 132px);
   padding-bottom: var(--sp-7);
-  /* 왼쪽 정렬 — 디자이너 예시의 제목 문법(5차 판정 2026-09-04). 가운데 정렬은 오브젝트와 함께 갔다. */
   text-align: left;
 }
 .hero__center {
   position: relative;
   z-index: 1;
-  /* .container 의 auto 마진이 그리드 항목의 stretch 를 끄고 내용 폭(제목 폭)으로
-     줄인다 — 왼쪽 정렬이 되자 제목 블록이 858px 로 가운데 몰렸다(실측 1440). 폭을 채운다. */
   width: 100%;
   display: grid;
   align-content: start;
@@ -61,23 +32,6 @@
   justify-items: start;
 }
 .hero--home h1 {
-  /* 예시의 크기로 — 첫 화면에서 제목이 먼저 들어온다(10차 판정 "더 확 들어오게").
-     폭뿐 아니라 높이도 본다 — 낮은 노트북 화면(1440×800)에서 제목이 카드 자리를 먹지 않게.
-     --fs-hero 토큰을 안 쓰는 이유: 벤토 대표 숫자가 같이 쓴다. */
-  /* 사령관 관리자 모드 실측(2026-09-06): 폭과 무관하게 64px 고정 — 494·781·1435·1588·1776 전부
-     캡 높이 46px. 폭 360 에서만 "AI-NATIVE." 한 단어가 넘쳐 16vw 로 받친다.
-     단어 사이는 좁히되 붙지는 않게 둔다. -0.2em 은 64px 에서 간격을 2.1px 로 만들어
-     "FULLSTACKFOR" 로 붙어버렸다(실측 1440) — 스페이스 17.8px 에서 word-spacing 12.8px 와
-     letter-spacing 2.9px 가 함께 깎이기 때문이다. 753px 역산은 성립하지 않는다:
-     스페이스 3개로 94px 를 빼려면 스페이스당 31.2px 가 필요해 실폭 17.8px 를 넘는다. */
-  /* 1795 아래는 그 실측대로 64px 고정이다. 그 위로는 컨테이너와 같은 배율로 따라간다
-     (2026-09-07) — 컨테이너만 1336→1736 으로 늘리자 제목이 콘텐츠 폭의 59%→45% 로 쪼그라들어
-     "큰 종이에 같은 그림"이 됐다. 83 은 64 × (1736 / 1336) 이다. */
-  /* 좁은 폭의 상한은 가장 긴 낱말이 정한다. v6 는 "AI-NATIVE."(10자)라 16vw 였고,
-     v7 은 "ARCHITECTURE"(12자)다. 실폭은 자간(-0.045em)까지 7.04em(실측 48.75px 에서 343px) —
-     12.5vw 는 390 에서 49px 라 낱말이 326px 자리에 343px 로 넘쳐 오른쪽 여백을 먹었다(2026-09-14).
-     양쪽 여백(--sp-6 × 2)을 뺀 폭을 7.1 로 나누면 낱말이 여백 안에 딱 선다 — 390 에서 46px,
-     360 에서 42px, 518 부터 64px 고정. 실측: 16vw 그대로면 390·360 에서 컨테이너가 503·470px 로 밀려 넘쳤다(2026-09-10). */
   font-size: min(
     clamp(64px, 3.58vw, 83px),
     calc((100vw - var(--sp-6) * 2) / 7.1)
@@ -88,18 +42,12 @@
   font-weight: 700;
 }
 .hero--home .hero__lede {
-  /* 76ch — 데스크톱에서 두 줄로 떨어진다(사령관 관리자 모드 실측 2026-09-06).
-     ch 라 글자가 커지면 블록도 같이 넓어져 두 줄이 유지된다. */
   max-width: 76ch;
   margin-top: var(--sp-2);
-  /* 제목과 같은 규칙 — 1795 아래는 17px 그대로, 위로만 컨테이너 배율(×1.30)을 따른다. */
   font-size: clamp(var(--fs-lede), 0.95vw, 22px);
   line-height: 1.6;
   color: var(--hero-ink-soft);
 }
-/* 리드 안 부분 강조 — 색만 잉크로 올린다(사령관 2026-09-07 "블랙처리").
-   굵기까지 올리면 회색 문단이 키워드 나열로 읽혀 강조가 안 남는다. 회색 연결어 위에
-   #6e6e73 → #1d1d1f 한 단이면 스캔이 강조만 짚고 지나간다. */
 .hero--home .hero__lede strong {
   color: var(--hero-ink);
   font-weight: inherit;
@@ -110,11 +58,8 @@
 .hero__feature {
   position: relative;
   z-index: 1;
-  /* .container 의 auto 마진이 그리드 항목의 stretch 를 끈다 — 카드 여섯이 내용 폭으로
-     오그라들어 가운데 몰렸다(실측 1440). 제목 블록과 같이 폭을 채운다. */
   width: 100%;
   margin-top: var(--sp-7);
-  /* 띠 + 카드 덩어리. 카드 높이는 컨테이너 폭이 정하므로(cqw) 여기서 폭을 잰다. */
   display: flex;
   flex-direction: column;
   container-type: inline-size;
@@ -124,19 +69,11 @@
     padding-top: clamp(60px, 6.5vh, 92px);
   }
 }
-
 .hero--home .hero__center,
 .hero--home .hero__feature {
   position: relative;
   z-index: 1;
 }
-
-/* 히어로 층 아코디언 — 여섯 칸이 한 줄에 서고 하나가 제자리에서 펼쳐진다.
-   2026-09-13 에 패닝 밴드 한 장으로 바꿨다가 사령관 판정으로 되돌렸다("메인 기존이 나은 것 같아").
-   components.css 에 있던 규칙을 그대로 옮긴 것이다 — 메인에서만 서므로 이 시트가 제자리다. */
-/* 리드 아래 층 띠 — 스택의 여섯 층을 한 줄로 적는다(2026-09-02).
-   여섯 층이 선으로 이어지고 맨 끝 AI 만 액센트를 받는다. 통째로 스택 섹션 앵커다.
-   왼쪽 정렬 제목 블록의 마지막 줄이다(5차 판정). */
 .hero__layers {
   justify-self: start;
   display: flex;
@@ -144,10 +81,8 @@
   justify-content: flex-start;
   align-items: center;
   row-gap: var(--sp-2);
-  /* 띠와 카드 사이 22px — 사령관 관리자 모드 실측(2026-09-06: 띠 밑 404 → 카드 432). */
   margin-bottom: var(--sp-5);
   padding: 0;
-  /* 카드의 탭이라 카드와 같이 자란다 — 1795 아래는 11px 그대로. */
   font-size: clamp(var(--fs-label-caps), 0.62vw, 14px);
   font-weight: 600;
   letter-spacing: var(--tracking-label);
@@ -178,19 +113,10 @@
   background: currentColor;
   opacity: 0.35;
 }
-/* 히어로 카드 — 여섯 층이 번호 순서대로 한 줄. 01 · 02 는 디자이너 예시 비율(888×1292)의
-   세로 카드로 고정, 03 ~ 06 중 하나가 가로(2.34) 나머지가 작은 카드(0.36)다(9차 판정
-   2026-09-04). 줄 높이는 세로 카드의 비율이 정한다. 작은 카드를 누르면 제자리에서
-   flex-grow 전환으로 펼쳐지고 있던 가로 카드가 접힌다 — 번호와 내용은 자리를 지킨다.
-   호버는 살짝 벌어지는 예고만(펼침은 클릭 — 사령관 "누르면"). */
 .hcards {
   display: flex;
   align-items: stretch;
   gap: var(--sp-4);
-  /* 높이는 폭이 정한다 — 예시 비율(세로 카드 888 : 1292)의 1.5배. 세로 카드 폭 =
-     (컨테이너 − 간격 5) / 5.42 단위다. 화면 높이를 따라 늘이지 않는다(2026-09-07):
-     남는 높이를 카드에 먹이면 폭이 그대로라 카드만 길쭉해지고, 안 먹이면 구멍이 됐다.
-     1336 컨테이너에서 506px — 사령관 실측(975px 창에서 카드 500px)과 같은 자리다. */
   flex: none;
   --hcard-scale: 1.5;
   height: max(
@@ -203,7 +129,6 @@
     --hcard-scale: 1.2;
   }
 }
-
 .hcard {
   position: relative;
   isolation: isolate;
@@ -214,14 +139,8 @@
   padding: var(--sp-5);
   border-radius: var(--radius-xl);
   overflow: hidden;
-  /* 잉크 바탕 위 밝은 스튜디오 그림(2026-09-10). 그림이 위쪽을 채우고 아래로 갈수록 비네트에
-     잠겨 흰 카피가 앉는다. 면을 흰색으로 뒤집은 것(페이지와 녹음)과 잉크 띠로 받친 것(흙빛
-     안개) 둘 다 이보다 나빴다 — 사령관이 "나쁘지 않았다"고 한 조합이다. 번호만 그림 위
-     잉크 활자다(.hcard__n). */
   background: var(--bg-inverse);
   color: var(--text-on-inverse);
-  /* 카드가 어두운 면이니 글자 토큰도 같이 뒤집는다 — color 만 뒤집으면 --text-primary 를
-     읽는 규칙(공용 '자세히 보기')이 크림 지면의 잉크를 그대로 가져와 그림 위에서 사라진다. */
   --text-primary: var(--text-on-inverse);
   transition: flex-grow var(--dur-content) var(--ease);
 }
@@ -237,7 +156,6 @@
     flex-grow: 0.6;
   }
 }
-
 .hcard__art {
   position: absolute;
   inset: 0;
@@ -245,11 +163,8 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* 시차로 밀려도 모서리가 드러나지 않게 미리 키워 둔다 — 미는 폭(12·9px)보다 여유가 커야 한다.
-     transform 이 아니라 scale·translate 를 따로 쓴다: 둘이 겹쳐도 서로를 지우지 않는다. */
   scale: 1.07;
   translate: calc(var(--px, 0) * 12px) calc(var(--py, 0) * 9px);
-  /* 쉴 때는 지면의 등급으로 보이고 짚으면 제 색이 난다 — 근거는 tokens.css 의 --art-rest 주석. */
   filter: var(--art-rest);
   transition:
     scale var(--dur-content) var(--ease),
@@ -257,14 +172,10 @@
     filter var(--dur-content) var(--ease),
     opacity var(--dur-content) var(--ease);
 }
-/* 커서가 닿으면 커지고 색이 살아난다 — 값의 근거는 tokens.css 의 --art-lift 주석에 있다. */
 .hcard:hover .hcard__art {
   scale: 1.11;
   filter: var(--art-lift);
 }
-/* 작은 카드도 제 그림을 보인다 — 층마다 그림이 하나씩이라 반복이 없다(2026-09-10).
-   잉크 면 위의 기척이라 0.3 — 그림이 완전한 흰색이어도 합성 휘도 97 이라 흰 번호·세로 이름이
-   5.0:1 을 지킨다. 더 올리면 좁은 칸을 지나는 은색 오브젝트가 글자를 삼킨다. */
 .hcard--mini .hcard__art {
   opacity: 0.3;
 }
@@ -273,23 +184,12 @@
   position: absolute;
   inset: 18% 0 0;
   z-index: -1;
-  /* 텍스트 블록이 시작되는 높이(카드의 약 63%)까지 스크림이 다 올라와 있어야 한다 —
-     램프가 바닥에서야 끝나면 본문 첫 줄이 맨 이미지 위에 놓인다. 길게 내려오는 비네트다:
-     30%→60% 로 조이면 밝은 그림 위에서 띠처럼 보인다(사령관 2026-09-10). */
   background: linear-gradient(to bottom, transparent, var(--scrim-card) 60%);
   pointer-events: none;
 }
 .hcard--mini::after {
   content: none;
 }
-/* 번호는 유리 알약이었다 — 카드마다 회색 상자가 하나씩 떠 그림을 가리고 누를 것처럼 읽혔다
-   (사령관 2026-09-10 "숫자 1~6 이상한 것 같은데"). 테두리·바탕·블러를 걷고 활자만 남긴다.
-   가로폭이 고정이라야 01→06 이 같은 자리에 선다 — tabular-nums.
-
-   `[정정 2026-09-13]` 밝은 스튜디오 그림 위 잉크 활자였다(흰 글자면 1.3:1 이던 자리).
-   층 영상을 어두운 기판·서버 계열로 갈면서 그 전제가 뒤집혔다 — 여섯 장 좌상단 실측이
-   잉크 대비 1.02~2.99:1 이다. 흰 글자로 돌리면 6.17~18.04:1 이다. 그림을 다시 밝은 벌로
-   갈면 이 한 줄도 같이 봐야 한다. */
 .hcard__n {
   position: absolute;
   top: var(--sp-5);
@@ -305,7 +205,6 @@
   left: 50%;
   transform: translateX(-50%);
 }
-/* 작은 카드의 이름 — 아래에서 위로 읽는 세로 활자. 펼치면 카피에 자리를 내준다. */
 .hcard__side {
   position: absolute;
   left: 50%;
@@ -322,15 +221,10 @@
 }
 .hcard--mini .hcard__side {
   opacity: 1;
-  /* 접힌 카드의 세로 이름은 카드 가운데에 세운다. 바닥(--sp-5)에 붙이면 마지막 카드가
-     우하단 플로팅 문의 CTA(.floating — 같은 --sp-5 바닥 앵커, z-index 45) 뒤로 들어가
-     라벨이 잘린다. 라벨 길이에 따라 잘리는 정도만 달라질 뿐 항상 겹친다
-     ("AI" 는 "A" 만, "HARDWARE" 는 "ARE" 만 남았다 — 실측 1440·1280 2026-09-06). */
   top: 50%;
   bottom: auto;
   transform: translate(-50%, -50%) rotate(180deg);
 }
-/* 카피는 흐름 밖에 둔다 — 접힌 폭에서 카드를 밀어 넓히지 않게. */
 .hcard__text {
   position: absolute;
   left: var(--sp-5);
@@ -345,7 +239,6 @@
   opacity: 0;
   pointer-events: none;
 }
-/* 제자리에서 펼쳐진 카피는 아래에서 떠오른다. */
 .hcard__text.is-in {
   animation: hcard-in var(--dur-content) var(--ease) 120ms backwards;
 }
@@ -377,15 +270,9 @@
   font-size: clamp(24px, 2.4vw, 36px);
   max-width: 18ch;
 }
-/* 카드 안 텍스트 구조는 전부 같다 — 킥커 · 제목 · 설명 · 행동
-   (사령관 2026-09-06 "카드 안에 있는 텍스트 구조는 통일"). 예전에는 설명을
-   가로 카드에만 두어 같은 줄의 카드가 서로 다른 단수로 갈라져 읽혔다.
-   기술·제품군 줄은 같은 날 걷었다 — 히어로에 제품명까지 오면 내용이 너무 많다.
-   접힌 카드만 블록을 통째로 감춘다(.hcard--mini .hcard__text). */
 .hcard__desc {
   color: var(--text-on-inverse-muted);
 }
-/* 설명은 두 줄로 자른다 — 층마다 문장 길이가 달라 블록 높이가 들쭉날쭉해진다. */
 .hcard__desc {
   font-size: var(--fs-sm);
   line-height: 1.55;
@@ -416,7 +303,6 @@
   .hcard__text {
     transition: none;
   }
-  /* 스크립트가 시차를 안 걸지만 CSS 도 제 몫을 한다 — 스타일만 남고 JS 가 죽어도 안 움직인다. */
   .hcard__art {
     translate: none;
   }
@@ -424,15 +310,12 @@
     animation: none;
   }
 }
-
 @media (max-width: 1279px) {
   .hcards {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 2.34fr);
     grid-template-rows: minmax(0, 1fr) auto;
     align-items: stretch;
-    /* 두 줄이라 아랫줄 막대(56)와 간격을 윗줄 높이에 더한다. 상한이 아니라 값이다 —
-       히어로가 화면을 안 채우므로(2026-09-07) 늘어날 높이가 없다. */
     height: max(
       calc(260px + 56px + var(--sp-4)),
       (100cqw - 2 * var(--sp-4)) / 4.34 * 1.455 * 1.25 + 56px + var(--sp-4)
@@ -467,12 +350,7 @@
     white-space: normal;
   }
 }
-
 @media (max-width: 860px) {
-  /* 층 띠는 두 줄로 접히며 연결선이 줄 머리에 매달렸다(실측) — 선을 접는다.
-     3열 격자는 열 폭이 가장 긴 이름(Orchestration)에 맞춰져 AI 옆이 뻥 비었다(사령관 지적
-     2026-09-06 "글자 수가 달라서 깨져 보여") — 이름 폭대로 흐르는 flex-wrap 으로 둔다.
-     리드와는 한 단 띄운다 — 붙이면 리드의 마지막 줄로 읽힌다(실측 390). */
   .hero__layers {
     display: flex;
     flex-wrap: wrap;
@@ -484,13 +362,10 @@
   .hero__layer + .hero__layer::before {
     content: none;
   }
-  /* 히어로 카드 — 세로 아코디언. 큰 카드(01 · 02 · 펼친 것)는 태블릿 2:1(셋을 3:2 로 쌓으면
-     1400px 을 넘긴다 — 실측 768), 폰은 3:2. 작은 카드는 번호 + 가로 이름 한 줄. */
   .hcards {
     display: flex;
     flex-direction: column;
     gap: var(--sp-2);
-    /* 세로로 쌓으므로 높이는 카드들이 정한다 — 폭에서 뽑은 값을 걷는다. */
     height: auto;
   }
   .hcard,
@@ -523,37 +398,21 @@
     right: var(--sp-4);
     bottom: var(--sp-4);
   }
-  /* 이 폭의 큰 카드는 2:1(태블릿) · 3:2(폰)라 5단을 담지 못한다 — 설명·기술을 두면
-     텍스트 블록 상단이 번호 배지까지 올라와 킥커와 겹친다(실측 390 2026-09-06).
-     데스크톱과 달리 여기서는 카드 전부를 킥커·제목·행동 3단으로 맞춘다. */
   .hcard__desc {
     display: none;
   }
 }
-
 @media (max-width: 640px) {
-  /* 폰은 큰 카드를 3:2 로 — 2:1 은 두 줄 제목이 칩에 닿는다.
-     :not(--mini) 가 필요하다 — 이 블록이 860 블록보다 뒤라 작은 카드까지 3:2 가 되어
-     번호 한 줄이어야 할 것이 270px 로 두꺼워졌다(사령관 실측 2026-09-04). */
   .hcard:not(.hcard--mini),
   .hcard--wide {
     aspect-ratio: 3 / 2;
   }
 }
-
 @media (max-width: 860px) {
-  /* 모바일 상단 여백은 데스크톱 clamp 의 하한(80px)을 그대로 쓴다 — 사령관 관리자 모드 실측(494: 79px).
-     예전엔 리드 5줄 수납용으로 32px 까지 줄였다. */
   .hero__center {
     gap: var(--sp-3);
   }
 }
-
-/* 문제 기준 탐색(§11.5) — 과제 줄 여덟(사령관 2026-09-14, 레퍼런스 안트로픽).
-   사진 카드 가로 레일이던 자리다. 두 열 × 네 줄이라 여덟이 한 화면에 다 선다 —
-   레일은 넉 장만 보여 제 과제가 화면 밖에 있었다.
-   선은 긋지 않는다(--border-hair 는 transparent 다) — 줄을 가르는 건 여백과,
-   커서가 얹혔을 때만 떠오르는 유리 면이다. */
 .goals {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -605,9 +464,6 @@
   line-height: 1.55;
   color: var(--text-muted);
 }
-/* 화살표는 질문 줄 끝에 붙어 있다가 커서가 얹히면 한 칸 나간다 — 줄이 링크임을 색이 아니라
-   움직임이 말한다(라벨과 같은 결: 주황은 글자색에서 물러났다). 칸 오른쪽 끝으로 밀어 두면
-   1440 에서 글과 600px 떨어져 따로 논다(실측). */
 .goal__go {
   display: inline-block;
   margin-left: var(--sp-2);
@@ -621,8 +477,6 @@
   opacity: 1;
   translate: 4px 0;
 }
-/* 문양은 판이 들어올 때 한 번 그어진다 — 대표 솔루션 카드와 같은 장치(components.css).
-   기본값은 '다 그린 상태'라 모션을 끄거나 스크립트가 죽어도 문양은 완성형이다. */
 .goal__mark svg > * {
   stroke-dasharray: 1;
 }
@@ -648,9 +502,6 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
-
-/* 트랙과 눈금이 한 격자를 쓴다. 잘린 카드를 흐리는 덮개(::before·::after)가 트랙과
-   같은 칸에 얹히므로 격자가 필요하다 — 화살표는 이 격자 밖, 제목 줄 오른쪽에 선다. */
 .rail-wrap {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
@@ -659,11 +510,6 @@
 .rail-wrap > .rail {
   grid-area: 1 / 1;
 }
-/* 레일은 컨테이너 선에서 시작해 컨테이너 선에서 끝난다(사령관 2026-09-08 "깔끔하게 떨어지게끔").
-   예전엔 오른쪽을 화면 끝까지 흘려 "더 있다"를 보였는데, 페이지의 다른 섹션과 오른쪽 선이
-   어긋났다. 대신 다음 장의 앞부분만 컨테이너 선 안에서 걸치게 둔다(같은 날 "옆에 살짝 보이게
-   해서 컨텐츠 더 있는건 살짝 보여줘야할 듯") — 선은 지키고 신호는 남는다.
-   --rail-peek 은 [간격 + 보일 조각] 이다. 조각만 따로 재려면 여기서 --gap-tile 을 빼면 된다. */
 .rail {
   display: flex;
   gap: var(--gap-tile);
@@ -675,28 +521,15 @@
 .rail::-webkit-scrollbar {
   display: none;
 }
-/* 넉 장 + 다섯째 장의 앞 조각(--sp-8 - 간격 = 48px)이 컨테이너 폭에 들어간다.
-   clamp 폭이던 시절엔 마지막 장이 아무 데서나 잘려 조각 크기가 폭마다 달랐다. */
 .rail__card {
   flex: none;
   --rail-peek: var(--sp-8);
   width: calc((100% - 3 * var(--gap-tile) - var(--rail-peek)) / 4);
   scroll-snap-align: start;
 }
-/* ‹ › 는 트랙 아래·옆이 아니라 제목 줄 오른쪽에 고정한다(사령관 2026-09-08 "화살표 우측으로
-   통일 하자 위에다가" · "기존꺼 써라 옆으로 넘어가는 거 애플꺼"). 레일마다 자리가 다르면 같은
-   동작을 매번 다시 찾아야 한다. 앵커는 섹션 컨테이너다 — 제목 줄 오른쪽 끝에 붙는다.
-   "전체 보기"도 같은 줄에 온다 — 트랙 눈금 밑에 홀로 두면 무엇에 걸린 버튼인지 애매하다. */
 .sec-side {
   position: absolute;
-  /* 절대배치의 기준상자는 컨테이너의 padding box 다 — top:0 이면 홈 세로 리듬(--home-gap)만큼
-     제목 위로 떠서 붙박이 헤더 자리까지 올라갔다(실측 1440: 60px). 같은 값을 되돌려 제목 줄에 세운다.
-     되돌림값은 하위 페이지의 같은 값(--section-py)이다 — 0px 이면 하위 페이지에서 제목 위
-     hairline 자리로 올라간다. 어느 쪽이든 "컨테이너의 위 패딩만큼" 이라는 규칙은 하나다. */
   top: var(--home-gap, var(--section-py));
-  /* 절대배치는 컨테이너의 padding box 를 기준으로 잡는다 — right:0 이면 컨테이너의 좌우
-     여백(padding-inline: --sp-6)을 지나쳐 화면 끝에 붙는다. 데스크톱은 여백이 auto 마진이라
-     안 보였지만 430 에서 링크가 화면 선에 딱 붙었다(실측). 같은 값을 되돌린다. */
   right: var(--sp-6);
   display: flex;
   align-items: center;
@@ -712,15 +545,12 @@
   display: none;
   gap: var(--sp-2);
 }
-/* 버튼 두 개 + 전체 보기 — 제목이 그 아래로 흘러 들어가지 않게 머리에 자리를 비운다. */
 .section:has(.sec-side) > .container {
   position: relative;
 }
 .section:has(.rail-wrap) > .container > .section__head {
   padding-right: calc(var(--sp-9) + var(--sp-3));
 }
-/* 곁줄이 링크만일 때와 링크 + 화살표일 때가 다르다 — 화살표가 없는 섹션(인사이트)에
-   버튼 두 개 자리까지 비우면 리드가 억지로 두 줄로 접힌다(실측 1440). */
 .section:has(.sec-side__all) > .container > .section__head {
   padding-right: calc(var(--sp-9) + var(--sp-6));
 }
@@ -730,8 +560,6 @@
 .rail-wrap.is-ready:not(.is-static) .rail__nav {
   display: flex;
 }
-/* 잘린 카드는 흐리게 — 반쯤 읽히는 글이 다음 장을 재촉하는 것보다 산만했다(같은 시안
-   "잘리는 카드는 블러 효과로 처리"). 끝에 닿으면 걷힌다. */
 .rail-wrap::before,
 .rail-wrap::after {
   content: "";
@@ -756,7 +584,6 @@
 .rail-wrap.is-static::after {
   opacity: 0;
 }
-/* 눈금 줄 — 왼쪽에 장 수만큼 짧은 막대, 오른쪽에 01 / 08(같은 시안 "번호 체크"). */
 .rail__meter {
   display: flex;
   align-items: center;
@@ -786,8 +613,6 @@
   font-variant-numeric: tabular-nums;
   color: var(--text-muted);
 }
-/* 아이콘만 있는 원형 버튼 — 맨 위로(.floating__top)와 같은 부류. 면은 밴드색, 누르면 잉크. */
-/* 아이콘만 있는 원형 버튼 — 맨 위로(.floating__top)와 같은 부류. 면은 밴드색, 누르면 잉크. */
 .rail__btn {
   width: 40px;
   height: 40px;
@@ -811,10 +636,6 @@
   opacity: 0.3;
   cursor: default;
 }
-
-/* 솔루션 레일 — 다크 카드에 글 위 · 글리프 아래(애플 "알면 알수록" 카드 문법, 사령관 2026-09-06).
-   여덟 장이라 격자 대신 레일(‹ ›)로 흐른다. 그림은 소금 결정 글리프 — 사진·렌더 없이 한 벌이 된다.
-   사진 세트에 솔루션 컷은 셋뿐이라 여덟에 셋만 사진이면 세트가 깨진다. */
 .rail--sols .rail__card {
   width: calc((100% - 3 * var(--gap-tile) - var(--rail-peek)) / 4);
 }
@@ -824,71 +645,28 @@
     width: calc((100% - 2 * var(--gap-tile) - var(--rail-peek)) / 3);
   }
 }
-
 @media (max-width: 640px) {
-  /* 한 장짜리에서는 조각을 줄인다 — 390 에서 sp-8 을 빼면 카드가 278px 로 좁아진다. */
   .rail__card,
   .rail--sols .rail__card {
     --rail-peek: var(--sp-7);
     width: calc(100% - var(--rail-peek));
   }
 }
-
-/* 파트너·기술 로고 벽 — 여덟이 한 번에 다 선다(사령관 2026-09-15 "흘러가듯이 보여주는
-   형식이 아닌, 전체 리스트를 한 번에"). 위에 라벨 한 줄을 세운다 — 로고만 있으면 이게
-   무엇의 목록인지 말해 주는 것이 없어 지면이 거기서 멈췄다.
-   기본은 무채색 한 결이다: 원색이 여덟 개 섞이면 줄 전체가 소음이 된다(2단 시절 실측).
-   커서를 얹으면 그 로고만 원색으로 서면서 아래에 "이름 · 파트너/기술"이 뜬다 —
-   층 라벨을 없앤 자리를 이 캡션이 받는다. 캡션 자리는 늘 비워 둔다(뜰 때 줄이 안 흔들리게). */
 .logos {
   display: grid;
-  /* 라벨과 줄 사이. sp-6(32px) 이었는데, 로고 칸이 56px 짜리 눈높이 상자라 잉크끼리는
-     50px 넘게 벌었다 — 묶음 바깥(섹션 여백)과 안쪽이 같은 크기면 둘은 한 덩이로 안
-     읽힌다. 실측하고 한 단 줄였다(사령관 2026-09-15 "존나 어색함"). */
   gap: var(--sp-5);
-  /* 로고는 지면 폭에 맞춰 눕고, 크기는 한 단 낮춘다(사령관 2026-09-15 "좀 더 작고
-     전체적인 넓이에 맞춰서"). 배율의 상한을 정하는 것은 칸 하나가 아니라 **여덟의 잉크 폭
-     합**이다(칸이 내용에 붙은 뒤로 그렇다): 합이 지면 폭에 가까워질수록 사이가 좁아진다.
-     1080~1279 에서 0.72 를 그대로 두면 잉크 합 753px 에 사이가 38px 까지 좁아져 여덟이
-     서로 붙는다 — 그래서 이 구간만 한 단 더 내린다(0.6 에서 사이 56px).
-     vw 로 연속 배율을 만들 수는 없다 — 길이를 수로 나눈 값은 길이라 --logo-k 가 px 이 되고
-     `calc(40px * 0.9px)` 이 무효가 된다(실측). 그래서 구간마다 상수다. */
   --logo-k: 0.72;
-  /* 한 바퀴. 52s 였다 — 사령관 "좀 더 느리게"(2026-09-17). 스물하나가 흐르니 한 장이
-     눈앞을 지나는 시간이 그만큼 짧아졌다: 같은 52s 에 줄이 길어지면 속도만 붙는다.
-     74s 에서 초당 11px 로, 로고 한 장(약 100px)이 9초 머문다. 아랫줄의 87s 와는
-     서로소다(74 = 2·37, 87 = 3·29) — 배수 관계면 두 줄의 이음매가 주기적으로 겹친다. */
   --logo-roll: 74s;
 }
-/* 여덟이 한 줄로 흐른다(사령관 2026-09-15 "히어로 밑 파트너들 롤링도 안되고").
-
-   흐르는 줄이 "전체 리스트를 한 번에"와 부딪히지 않는 이유는 로고가 작아졌기 때문이다:
-   여덟의 잉크 합 746px + 간격 일곱(--sp-8) = 1194px 이 1440 지면의 1336px 안에 들어간다.
-   흐르는 동안에도 여덟이 늘 화면에 있고, 남는 142px 으로 다음 벌의 앞머리가 걸친다 —
-   "더 있다"를 말하는 자리다. 앞서 마키를 걷었던 근거("한 순간에 두어 장")는 로고가
-   컸던 시절의 실측이다.
-
-   간격은 토큰 한 값(--sp-8)으로 못 박는다. 앞 벌은 폭을 여덟으로 등분하고 로고를 칸
-   가운데에 뒀는데, 등분은 **상자**만 고르게 만든다 — 잉크 폭이 53~134px 로 제각각이라
-   눈이 재는 거리가 52·68·68·71·69 로 흔들리고 양 끝만 131·120 으로 벌어졌다(실측 1440).
-   고정 간격이면 정의상 같고, 흐르는 띠에서는 이어 붙는 자리까지 같은 간격이 된다. */
 .logos__wall {
   display: flex;
   align-items: center;
   gap: var(--sp-8);
 }
-/* 두 줄로 흐른다(사령관 2026-09-17 "두줄로할까?? 차라리 좀 더 방대해 보이도록").
-   여덟을 두 줄로 쪼개면 줄당 넷이라 오히려 적어 보이므로 장수를 스물둘로 늘렸다 —
-   근거와 출처는 data/content/home.mjs 의 techs 주석에 있다.
-
-   줄 사이는 라벨과 줄 사이(--sp-5)보다 좁다. 같으면 두 줄이 두 묶음으로 갈리고,
-   좁으면 한 덩이(로고 벽)로 읽힌다 — 묶음을 만드는 것은 테두리가 아니라 간격 차다. */
 .logos__belts {
   display: grid;
   gap: var(--sp-3);
 }
-/* 띠의 창. 양 끝을 흐려 끊는다 — 흐르는 줄은 어느 폭에서든 가장자리에 로고가 반쯤 걸리는데,
-   자른 자국을 남기지 않으려면 잘리는 자리를 흐려야 한다(레일의 블러 덮개와 같은 뜻). */
 .logos__belt {
   overflow: hidden;
   mask-image: linear-gradient(
@@ -899,9 +677,6 @@
     transparent 100%
   );
 }
-/* 같은 벌 두 장을 잇고 한 벌 폭 + 간격 하나만큼 민다. 띠 전체가 2W + G 이므로 그 값은
-   50% + G/2 다 — 그 자리에서 둘째 벌의 첫 장이 첫 벌의 첫 장 자리에 정확히 겹쳐,
-   되돌아가는 순간이 보이지 않는다. */
 .logos__track {
   display: flex;
   width: max-content;
@@ -913,17 +688,10 @@
     transform: translateX(calc(-50% - var(--sp-8) / 2));
   }
 }
-/* 아랫줄은 거꾸로, 그리고 조금 느리게 흐른다. 같은 쪽으로 같은 속도면 두 줄이 한 판으로
-   붙어 움직임이 안 보이고, 이음매가 늘 같은 순간에 함께 지나간다. 엇갈리면 줄마다 다른
-   로고가 늘 눈에 들어와 "많다"가 선다.
-   이 규칙은 위 .logos__track **뒤**에 있어야 한다 — 같은 특이도라 앞에 두면 그쪽의
-   `animation` 단축이 방향을 normal 로 되돌린다(1080 구간의 --dup 이 밟은 함정과 같다). */
 .logos__track--back {
   animation-direction: reverse;
   --logo-roll: 87s;
 }
-/* 짚으면 멈춘다 — 꼬리표("AWS · 파트너")를 읽을 시간을 준다. 겨눈 로고가 손 밑에서
-   빠져나가면 그 꼬리표는 없는 것과 같다. */
 .logos:hover .logos__track {
   animation-play-state: paused;
 }
@@ -932,66 +700,21 @@
     animation: none;
   }
 }
-/* 지면이 화면에 눌리는 구간 — 칸이 좁아지니 로고도 같이 내려간다. 분기값은 위 히어로
-   카드와 같은 1279 다(§28: 분기 4종). 이 블록은 .logos 기본값 **뒤**에 있어야 한다 —
-   앞에 두면 같은 특이도라 뒤의 기본값이 이긴다(실측 2026-09-15). 1080 아래는 줄을 접는다. */
 @media (max-width: 1279px) {
   .logos {
     --logo-k: 0.6;
   }
 }
-
-/* `[걷어냄 2026-09-15]` 여기 있던 :first-child/:last-child 끝맞춤(justify-self: start/end)은
-   한 줄일 때만 맞는 보정이었다. 줄이 접히는 구간에서는 **전체의** 첫 장과 끝 장에만 걸려,
-   1080 에서 첫 줄 오른끝이 32px 모자라고 둘째 줄이 32px 넘치는 어긋남을 만들고 있었다
-   (실측: 첫 줄 720 에서 끝, 둘째 줄 752 에서 끝). 위의 space-between 이 줄마다 양 끝을
-   맞추므로 보정 자체가 사라진다. */
-/* 로고 위 한 줄 — 제목이 아니라 문장이다. h1 은 64px 잉크, 이 줄은 14.5px 회색이라
-   제목이 둘로 읽히지 않는다(§4-3 활자 급수). 이 줄은 히어로 아래로 접혀 첫 화면에
-   들어오지도 않는다(실측 1440: 첫 화면 밖).
-
-   `[고쳐 씀 2026-09-15]` 12.5px · 굵기 600 · 자간 0.06em · faint 였다. 그 세 벌은 이
-   저장소에서 눈썹(START WITH YOUR GOAL 류)의 조판이다 — 문장에 씌우니 사내 필드
-   이름처럼 읽혔다(사령관 "존나 어색함"). 자간과 굵기를 걷고 한 급 올려 산문으로 되돌린다.
-
-   가운데로 세운다. 줄의 첫 로고는 지면 왼끝, 마지막은 오른끝에 붙어 폭을 다 쓰는데
-   (.logos__wall 의 space-between 이 그렇게 만든다) 그 위에 왼쪽 정렬로 한 줄만 두면
-   오른쪽 3분의 2 가 빈 채 혼잣말이 된다. 레퍼런스(claude.com 의 "Trusted by …")도 줄 한가운데다. 이 섹션이
-   이미 .section--center 라 축도 어긋나지 않는다. */
 .logos__label {
   margin: 0;
   text-align: center;
   font-size: var(--fs-sm);
   color: var(--text-secondary);
 }
-/* 회색조 + 반투명은 로고 줄의 관례다(브랜드색 여덟이 첫 화면 밑에서 다투지 않게).
-   다만 0.5 는 여기 크림 바탕(#fbfbfd) 위에서 눌린 버튼처럼 보였다 — 짚어야 살아나는
-   줄은 "이렇게 많은 곳과 일한다"를 오히려 깎는다(사령관 2026-09-15). 손댈 수 없는
-   화면에서는 이미 온전한 색이다(아래 @media (hover: none)).
-
-   속성을 등장과 손짓으로 갈라 둔다. 줄이 등장 장치를 타면서(wall 의 data-reveal)
-   opacity 와 translate 는 등장의 것이 됐다 — 같은 속성에 둘이 겹치면 늦춤(--d, 끝 장이
-   490ms)이 손짓까지 늦춘다(components.css 모션 구획의 경고 그대로다).
-     · 등장 = opacity + translate (0.6s, 순번만큼 늦춰서)
-     · 손짓 = filter + transform (--dur-hover, 늦춤 없이)
-   흐리기를 opacity 가 아니라 filter 안의 opacity() 로 옮긴 것과, 올라서기를 translate 가
-   아니라 transform 으로 적은 것이 그 갈라치기다. translate 와 transform 은 서로 다른
-   속성이라 겹쳐 쓰면 합성된다 — 20px 에서 올라오는 중에 짚어도 2px 가 따로 얹힌다.
-
-   transition 은 넷을 한 줄에 적는다. 이 파일이 components.css 뒤에 실려 같은 특이도의
-   [data-reveal] > * 를 통째로 덮기 때문이다 — 거기 있던 등장 두 줄을 여기 다시 적지
-   않으면 로고만 등장 없이 툭 나타난다(--d 는 그 규칙이 준 값을 그대로 쓴다). */
 .logos__item {
   display: grid;
   justify-items: center;
   gap: var(--sp-2);
-  /* 여기서는 색만 걷고 한 겹 눕힌다. 로고마다 다른 **세기** 보정은 아래 img 가 따로 진다 —
-     이 줄에 얹으면 OpenShift·Ansible 의 활자 이름까지 같이 흐려져 여덟 중 둘만 이름이
-     옅어진다. */
-  /* `[한 급 올림 2026-09-15]` 0.62 였다. 여덟을 같은 어둡기로 모으고 나니 이번엔 줄
-     전체가 옅어 보였다(사령관 "뭔가 약한데") — 고르게 만드는 것과 세게 만드는 것은
-     다른 일이다. 아래 로고별 손잡이는 서로의 **비율**이라 이 한 값만 올리면 여덟이
-     균형을 지킨 채 같이 진해진다(크림 바탕 대비 평균 어둡기 95 → 134). */
   filter: grayscale(1) opacity(0.88);
   transition:
     filter var(--dur-hover) var(--ease),
@@ -999,20 +722,16 @@
     opacity 0.6s var(--ease) var(--d, 0ms),
     translate 0.6s var(--ease) var(--d, 0ms);
 }
-/* 짚으면 색이 돌아오고 한 칸 올라선다 — 여덟 중 어느 것을 겨눴는지 손이 알아야 꼬리표가
-   산다. 올라서는 값은 2px 다: 줄의 눈높이(56px 상자)가 흔들리지 않는 한도다. */
 .logos__item:hover {
   filter: none;
   transform: translateY(-2px);
 }
-/* 로고마다 높이가 다르니 눈높이는 이 상자가 맞춘다. */
 .logos__mark {
   display: flex;
   align-items: center;
   gap: var(--sp-2);
   height: 56px;
 }
-/* 심볼-단독 브랜드의 활자 이름 — 로고 흉내(전용 서체·색)를 내지 않는다. */
 .logos__name {
   font-size: var(--fs-body);
   font-weight: 600;
@@ -1020,16 +739,6 @@
   color: var(--text-secondary);
   white-space: nowrap;
 }
-/* 높이는 남기고 폭은 비운다. 이 줄이 로고보다 넓은 자리가 있어(AWS: 잉크 53px · 캡션 72px)
-   항목 상자를 캡션이 정하고 있었다 — 상자가 곧 칸이 된 지금은 그 차이가 그대로 잉크
-   간격을 갉는다. 폭 0 이면 글자는 상자 밖으로 그려지고 줄 높이만 남는다
-   (캡션 자리를 늘 비워 두는 규칙은 그대로다).
-
-   `[고쳐 씀 2026-09-17]` 그 가운데 정렬을 text-align 으로 걸고 있었다. 인라인 줄이 제
-   상자보다 넓으면 정렬은 무시되고 시작 모서리부터 그려진다 — 여덟 장 모두 캡션이 로고
-   중심에서 **오른쪽으로 제 폭의 절반**(36~54px)만큼 밀려 있었다(사령관 2026-09-17
-   "호버 시 아래 텍스트가 옆으로 밀려서 보여짐"). 격자의 트랙 정렬은 넘쳐도 유지되므로
-   좌우로 고르게 흘러넘긴다 — 상자는 여전히 폭 0 이라 칸을 넓히지 않는다. */
 .logos__tag {
   width: 0;
   display: grid;
@@ -1051,35 +760,19 @@
     opacity: 1;
   }
 }
-
-/* 로고별 광학 보정 — 원본 비율이 달라 같은 height 면 크기가 널뛴다(실측).
-   워드마크 캡하이트가 비슷해 보이는 값으로 하나씩 맞추고, 좁은 화면에서는 --logo-k 하나로
-   벌 전체를 같은 비율로 줄인다(430 에서 40px 그대로면 두 장 반만 들어가고 잘린다). */
 .logos__item img {
   height: calc(var(--logo-h, 40px) * var(--logo-k, 1));
   width: auto;
-  /* 세기 손잡이. 회색조로 걷고 나면 여덟의 잉크가 같은 회색이 되지 않는다 — 원본 색의
-     밝기가 그대로 남기 때문이다(Snowflake 파랑 #29B5E8 은 밝은 회색이 되고 Ansible 검정은
-     그대로 검정이다). 크림 바탕 대비 평균 어둡기를 재 보면 Snowflake 44 · Ansible 126 으로
-     세 배 차이였고, 화면에서는 한쪽이 지워지고 한쪽이 소리쳤다(실측 1440).
-     밝기 한 손잡이로 여덟을 같은 어둡기(≈95)에 맞춘다: 값은 그 실측에서 나온
-     89.4 / 잉크밝기 다. 1 보다 큰 값은 원본이 너무 검어 눌러 주는 쪽이다.
-     짚었을 때는 원색이 서야 하므로 아래에서 이 보정을 함께 푼다. */
   filter: brightness(var(--logo-b, 1)) opacity(var(--logo-o, 1));
   transition: filter var(--dur-hover) var(--ease);
 }
 .logos__item:hover img {
   filter: none;
 }
-/* AWS 는 여덟 중 잉크가 가장 좁았다(53px · 옆들은 96~102px). 워드마크가 본래 촘촘한
-   벌이라 폭을 다 맞출 수는 없지만, 한 단 키워 같은 줄에 선 것으로 읽히게 한다. */
 .logos__item--aws {
   --logo-h: 54px;
   --logo-b: 0.84;
 }
-/* Red Hat 은 반대다 — 잉크 134px 에 솔리드 모자까지 얹혀 시각 질량이 옆들의 2.4 배였다
-   (실측 211 대 88). 폭을 116px 로 내리고 밝기로 한 겹 더 눕힌다. 줄에서 빼는 것이 아니라
-   같은 줄에 세우는 값이다. */
 .logos__item--red-hat {
   --logo-h: 36px;
   --logo-o: 0.78;
@@ -1088,9 +781,6 @@
   --logo-h: 34px;
   --logo-b: 0.94;
 }
-/* databricks 공식 배포본은 심볼이 워드마크 위에 얹힌 스택형이라 더 키워야 눈높이가 맞는다.
-   한 줄로 서고 나니 워드마크만 줄 아래로 처져 보였다 — 글자 높이를 옆과 맞추려면
-   상자 가운데가 아니라 글자 가운데를 기준선에 올려야 한다(위로 당긴다). */
 .logos__item--databricks {
   --logo-h: 56px;
   --logo-o: 0.87;
@@ -1101,21 +791,10 @@
 .logos__item--starburst {
   --logo-h: 25px;
 }
-/* 여덟 중 유일하게 **더 진하게** 가는 쪽이다. 원본 파랑이 회색조에서 밝은 회색(171)이 되어
-   크림 위에서 거의 지워졌다 — 앞 벌에서 "여덟 중 일곱"으로 보이던 원인이다. */
 .logos__item--snowflake {
   --logo-h: 32px;
   --logo-b: 0.36;
 }
-/* openshift·ansible 은 심볼 단독으로 세우고 활자 이름을 병기한다.
-   `[고침 2026-09-15]` 받아 둔 두 배포본은 심볼 단독이 **아니었다** — 심볼 아래
-   워드마크가 붙은 세로 조합이라, 56px 상자에 넣으면 그 워드마크가 6px 짜리 얼룩이
-   되고 그 옆에 우리가 찍은 이름이 또 서서 같은 낱말이 두 번 났다(실측 캡처).
-   원본 path 의 바운딩박스를 재서 워드마크만 걷고 뷰박스를 심볼에 맞췄다
-   (openshift: 워드마크 path 하나 제거 · viewBox 를 3.07 0 50.12 46.99 로,
-    ansible: translate(0 281.86) 묶음 제거 · viewBox 를 0 0 256 256 으로).
-   높이는 34 → 30 이다. 상자 높이의 72~81% 를 먹던 워드마크가 빠지면서 같은 34px 이
-   심볼만 4~6px 키우게 됐다 — 옆 활자(15px)의 두 배가 되는 값으로 되돌린다. */
 .logos__item--openshift {
   --logo-h: 30px;
 }
@@ -1123,19 +802,6 @@
   --logo-h: 30px;
   --logo-o: 0.76;
 }
-
-/* `[열넷 2026-09-17]` 파트너사 지면의 벤더 배너에서 로고만 떼어 온 벌이다. 값은 눈대중이
-   아니라 위 여덟과 같은 두 잣대로 뽑았다 — 높이는 **잉크 면적**을 SailPoint(면적 1404)에
-   맞춰 역산했고(면적은 높이의 제곱에 비례한다), 밝기는 알파 가중 평균 잉크 밝기를 89.4 로
-   normalize 한 값이다(위 --logo-b 주석의 그 식). 원본이 순검정에 가까운 장(Acronis ·
-   Couchbase · GitLab)은 1 보다 큰 값으로 **눌러** 여덟 쪽과 같은 어둡기에 세운다.
-   폭 상한 200(=--logo-h 단위)을 함께 걸었다: 면적만 맞추면 가로로 긴 워드마크가 줄
-   하나를 혼자 먹는다(Confluent 273 · WISEiTECH 267).
-
-   그 식이 맞힌 뒤에도 획이 **가는** 장(Confluent · EDB · Cato · Strategy · WISEiTECH ·
-   Xabyss)은 화면에서 혼자 옅었다 — 평균 밝기가 같아도 잉크가 얇으면 인상이 그만큼
-   묽어진다. 그 여섯만 렌더를 보고 한 단 더 눌렀다(Snowflake 가 0.36 까지 내려간 것도
-   같은 이유다). 식은 출발점이고 판정은 눈이다. */
 .logos__item--acronis {
   --logo-h: 32px;
   --logo-b: 1.6;
@@ -1176,7 +842,6 @@
   --logo-h: 32px;
   --logo-b: 0.5;
 }
-/* 심볼 단독이라 openshift · ansible 과 같은 결이다 — 활자 이름을 옆에 병기한다. */
 .logos__item--trend-micro {
   --logo-h: 30px;
 }
@@ -1189,67 +854,40 @@
   --logo-b: 0.55;
 }
 @media (max-width: 1080px) {
-  /* 줄을 접는 구간이라고 로고가 커지면 안 된다 — 한 줄 구간(0.72)보다 크면
-     좁은 화면에서 벌이 더 크게 보인다(실측 145 > 134). 한 결로 맞춘다. */
   .logos {
     --logo-k: 0.7;
   }
   .logos__mark {
     height: 46px;
   }
-  /* 여기서부터는 흐르지 않는다. 폰·태블릿 폭에서 흐르면 한 번에 셋만 보여
-     "전체 리스트를 한 번에"가 깨진다 — 흐름은 한 줄이 다 들어가는 폭에서만 뜻이 있다.
-     둘째 벌을 감추고 넷씩 격자로 되돌아간다. */
   .logos__belt {
     overflow: visible;
     mask-image: none;
   }
   .logos__track {
-    display: block;
     width: auto;
     animation: none;
   }
-  /* 접히면 두 줄이 **한 격자로 합쳐진다**(2026-09-17). 벨트마다 따로 접으면 열한 장이
-     4·4·3 으로 끊겨 윗덩이의 끝 행만 셋이 되고, 그 아래 둘째 벨트가 다시 넷으로 시작해
-     격자 한가운데에 층이 생긴다(실측 1080). 줄을 나누는 것은 흐름을 만들기 위한 것이지
-     묶음이 아니므로, 흐르지 않는 구간에서는 나눌 이유도 없다.
-     belt·track·wall 을 상자에서 지우면(display: contents) 스물둘이 .logos__belts 한
-     격자의 칸이 된다 — 마키 골격은 그대로 두고 조판만 바꾸는 길이다. */
   .logos__belt,
   .logos__track,
   .logos__wall {
     display: contents;
   }
-  /* 칸은 내용에 붙고 남는 폭이 칸 사이로 간다 — 줄마다 양 끝이 같은 세로선에 선다.
-     max-width 만 걸고 가운데로 세우지 않으면 720px 짜리 벌이 지면 왼쪽에 붙은 채
-     그 위의 라벨만 지면 한가운데 선다(실측 1080: 축이 148px 어긋남). */
   .logos__belts {
     display: grid;
-    /* 세 칸이다 — 스물하나는 3 의 배수라 일곱 줄이 모두 꽉 찬다(2026-09-17, 사령관이
-       Xabyss 를 빼 스물둘에서 하나 줄었다). 넷이면 21 = 4×5 + 1 이라 끝 줄에 한 장만
-       남아 왼쪽 끝에 혼자 선다 — 산업 격자에서 "1개 빠져서 어색해짐" 이 나온 그 모양이다.
-       장수가 바뀌면 이 값을 다시 고른다: 열 수는 장수의 약수여야 한다. */
     grid-template-columns: repeat(3, auto);
     justify-content: space-between;
     justify-items: center;
     align-items: start;
-    /* width 를 함께 적는다 — margin-inline: auto 를 주는 순간 이 상자는 늘어나기를
-       그만두고 내용 폭(max-content)으로 줄어든다. 그러면 space-between 이 나눌 남는 폭이
-       0 이 되어 넷이 서로 붙는다(실측 1080: 네 장이 375px 안에 뭉쳤다). */
     width: 100%;
-    /* 넷에서 셋이 되며 720 은 넓어졌다 — 같은 폭에 세 장만 서면 칸 사이가 200px 을
-       넘어 줄이 흩어진다(실측). 잉크 셋 + 눈이 재는 거리로 되짚은 값이다. */
     max-width: 560px;
     margin-inline: auto;
     row-gap: var(--sp-7);
   }
-  /* 이 줄은 위 display: contents 보다 **뒤**에 있어야 한다 — 같은 특이도라 앞에 두면
-     그쪽이 이겨 복제 벌까지 격자에 선다(실측: 1080 에서 스물둘이 마흔넷으로 섰다). */
   .logos__wall--dup {
     display: none;
   }
 }
-
 @media (max-width: 640px) {
   .logos {
     --logo-k: 0.6;
@@ -1260,10 +898,6 @@
   .logos__name {
     font-size: var(--fs-sm);
   }
-  /* 폰에서도 세 칸이다(위와 같은 이유 — 스물하나는 3 의 배수다). 다만 여기서는 칸을
-     등분한다: 내용에 붙이면(auto) 남는 폭이 한 군데로 몰려 줄 한가운데에 170px 짜리
-     구멍이 난다(실측 430). 칸은 118px 라 가장 넓은 장(Confluent 107px)도 잘리지 않는다.
-     줄 사이는 한 단 좁힌다 — 일곱 줄이라 그만큼이 그대로 길이가 된다. */
   .logos__belts {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     justify-content: normal;
@@ -1271,31 +905,18 @@
     row-gap: var(--sp-5);
   }
 }
-
-/* 표지 · 분류 · 제목 · 링크. 글 목록의 생김새 — 데이터브릭스 스포트라이트의
-   문법(사령관 요청 2026-09-04): 상자 없이 표지가 위, 작은 분류, 제목, 화살표 링크.
-   제목은 섹션 머리가 가운데(section--center)라 격자만 전폭이다. */
-/* 대표 하나 + 줄 카드 — 프로젝트 뉴스와 인사이트가 같이 쓴다(사령관 시안 2026-09-08).
-   왼쪽 대표가 오른쪽 줄 전체와 같은 높이로 선다: 대표는 세로로 늘고 남는 높이는 표지가 먹는다.
-   그래서 줄 수가 둘이든 넷이든 두 열의 바닥이 어긋나지 않는다.
-   카드 마크업은 대표와 줄이 같다 — 거를 때 클래스만 바꿔 첫 장을 대표로 올린다(filters.mjs). */
 .stories {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
   gap: var(--gap-tile);
   align-items: stretch;
 }
-/* 줄 카드는 따로 담는다 — 한 격자에 평평하게 두고 대표에 grid-row:1/-1 을 주면
-   암시 행에서 -1 이 첫 행을 가리켜 첫 줄 카드가 대표 높이만큼 늘어난다(실측). */
 .stories__side {
   display: grid;
   align-content: start;
   gap: var(--gap-tile);
   min-width: 0;
 }
-/* 남은 줄이 둘 이상일 때만 남는 높이를 나눠 갖는다 — 위로 몰아 두면 오른쪽 바닥이 대표보다
-   186px 먼저 끝나고(인사이트, 실측 1440), 한 장만 남았을 때 늘리면 그 한 장이 700px 로
-   길어져 글 밑이 통째로 빈다(칩으로 거른 뒤). 줄이 넷이면 반대로 대표 표지가 늘어난다. */
 .stories__side:has(.story:not([hidden]) ~ .story:not([hidden])) {
   align-content: stretch;
 }
@@ -1328,8 +949,6 @@ a.story:hover {
 .story--lead .story__cover {
   flex: 1 1 auto;
   min-height: 200px;
-  /* 남는 높이를 표지가 먹되 카드의 78% 를 넘지 않는다 — 비율로 고정하면 글 칸 밑이 통째로
-     비었고(실측 1440, 줄 넷), 상한이 없으면 사진만 660px 로 길어졌다. */
   max-height: 78%;
 }
 .story--row .story__cover {
@@ -1354,8 +973,6 @@ a.story:hover {
 .story--row .story__body {
   padding: var(--sp-4) var(--sp-5);
 }
-/* 대표는 글 칸을 안 늘린다 — 표지와 글 칸이 남는 높이를 반씩 나눠 먹어서
-   글 밑에 빈 칸이 70px 남았다(실측 1440). 남는 높이는 표지 몫이다. */
 .story--lead .story__body {
   flex: 0 0 auto;
 }
@@ -1374,13 +991,11 @@ a.story:hover {
   font-size: var(--fs-sm);
   line-height: 1.55;
   color: var(--text-muted);
-  /* 두 줄로 자른다 — 글 길이가 제각각이라 그대로 두면 줄 카드 높이가 들쭉날쭉해진다. */
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-/* 날짜는 왼쪽, 행동은 오른쪽 끝 — 카드 바닥에 붙는다. */
 .story__foot {
   margin-top: auto;
   padding-top: var(--sp-2);
@@ -1419,7 +1034,6 @@ a.story:hover .story__more {
     aspect-ratio: var(--cover-ratio);
   }
 }
-
 @media (max-width: 640px) {
   .story--row {
     flex-direction: column;
@@ -1432,8 +1046,6 @@ a.story:hover .story__more {
     font-size: var(--fs-body);
   }
 }
-
-/* 칸마다 크기가 다른 격자. 대표 숫자가 두 칸을 먹는다. */
 .bento {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1452,17 +1064,12 @@ a.story:hover .story__more {
   gap: var(--sp-4);
   align-content: start;
 }
-/* lead 만 2행이라 start 로 두면 아래 절반이 빈 채로 남는다(실측 1440) — 수는 위, 글은 바닥.
-   나머지 칸은 start 그대로다. 한 줄짜리 칸까지 벌리면 수와 이름 사이가 도리어 벌어졌다. */
 .bento__cell--0 {
   align-content: space-between;
 }
-/* 가장 큰 수 하나만 검은 면을 받는다(사령관 벤치마킹 2026-09-07 — 애플은 한 장만 어둡다).
-   여섯 칸이 다 같은 회색이면 격자만 보이고 수가 안 보인다. */
 .bento__cell--0 {
   background: var(--bg-inverse);
   color: var(--text-on-inverse);
-  /* 크림 지면 위의 어두운 섬이다 — .hcard 와 같은 이유로 글자 토큰도 함께 뒤집는다. */
   --text-primary: var(--text-on-inverse);
 }
 .bento__cell--0 .bento__unit {
@@ -1494,7 +1101,6 @@ a.story:hover .story__more {
   font-weight: 700;
   letter-spacing: var(--tracking-tight);
   line-height: 1;
-  /* 2003 · 2022 · 200 이 같은 자릿폭으로 서야 여섯 칸이 한 표로 읽힌다. */
   font-variant-numeric: tabular-nums;
 }
 .bento__foot {
@@ -1504,7 +1110,6 @@ a.story:hover .story__more {
 .bento__cell--0 .bento__num {
   font-size: var(--fs-hero);
 }
-/* 카카오 임팩트 실측 — 큰 수 옆의 작은 단위 첨자. */
 .bento__unit {
   font-size: 0.35em;
   font-weight: 600;
@@ -1520,7 +1125,6 @@ a.story:hover .story__more {
   color: var(--text-muted);
 }
 @media (max-width: 1080px) {
-  /* 세로 리듬 · 섹션 머리 · 큰 컷은 폰·태블릿에서만 조인다(17차 판정 — 데스크톱은 그대로). */
   .home {
     --home-gap: clamp(36px, 3.8vw, 52px);
   }
@@ -1528,19 +1132,12 @@ a.story:hover .story__more {
     margin-bottom: var(--sp-5);
   }
 }
-
 @media (max-width: 640px) {
   .bento {
     grid-template-columns: minmax(0, 1fr);
     grid-template-areas: "lead" "a" "b" "c" "d" "e";
   }
 }
-
-/* 레퍼런스는 섹션을 선으로 자르지 않는다. 배경과 여백이 구분을 맡는다.
-   메인에만 적용한다 — 하위 페이지는 지금의 hairline 구분을 유지한다. */
-/* 홈 세로 리듬 — 값 하나(--home-gap)로 통일한다(사령관 "전체 간격 최적화" 2026-09-04).
-   위·아래가 같은 값이라 섹션 사이는 그 두 배(데스크톱 120)다. 이전엔 72+72 에
-   밴드가 컨테이너 패딩까지 겹쳐 248px 로 벌어졌다(실측 1440). */
 .home {
   --home-gap: clamp(40px, 4.6vw, 60px);
 }
@@ -1551,22 +1148,16 @@ a.story:hover .story__more {
 .home .section {
   padding-bottom: var(--home-gap);
 }
-/* 색면은 제 padding-block 으로 숨을 쉰다 — 위 규칙의 --home-gap 이 그 위에 또 쌓이면
-   제목 위가 한 뼘 비어 색면이 반으로 접힌 것처럼 보인다(실측 1440). */
 .home .section--inverse > .container,
 .home .section--stone > .container {
   padding-top: 0;
 }
-/* 밴드는 자기 안쪽 여백만 갖는다 — 바깥 패딩은 앞 섹션의 아래 여백이 맡는다. */
 .home .section--band {
   padding-block: clamp(56px, 6vw, 80px);
 }
 .home .section--band > .container {
   padding-top: 0;
 }
-
-/* 메인의 대표 사례 자리도 같은 색면으로 둔다. 회색 빈 액자 하나만 다른 언어로
-   남으면 페이지가 두 벌로 보인다. 하위 페이지의 media 는 그대로다. */
 .home .media {
   background: linear-gradient(
     140deg,
@@ -1583,20 +1174,9 @@ a.story:hover .story__more {
 :is(.story, .brief):hover :is(.story__cover img, .brief__cover img) {
   scale: 1.04;
 }
-/* 제목은 잉크 한 색이다(사령관 2026-09-13 "메인 옐로우 말고 #141413 블랙 · 안트로픽처럼").
-   주황 램프를 제목 폭만큼 흘리던 자리다 — 지면이 크림으로 옮겨 온 뒤로 큰 주황 활자가
-   바탕과 같은 계열이라 제목이 흐려졌고, 밝은 끝은 대비 1.83:1 이었다.
-   제목은 두 단이다 — 강조할 낱말만 진한 잉크로 서고 나머지는 회색으로 눕는다
-   (사령관 2026-09-13). 노란색으로 물들여 보고 되돌린 자리다: 색을 더하는 대신 빼서
-   강조하면 팔레트가 잉크·그레이 그대로다. 주황은 마침표 한 점, 로고의 그 점뿐이다. */
 .hero--home h1 {
   color: var(--hero-ink-muted);
 }
-/* 강조가 생기는 방식을 등장으로 보여준다 — 두 낱말은 나머지와 같은 회색으로 왔다가
-   왼쪽에서 오른쪽으로 잉크가 든다. 색을 더하지 않고 앉히는 것이라, 지면에 새 색이
-   생기지 않는다(팔레트는 잉크·그레이·주황 그대로). 가중치(wght)를 움직이는 안은
-   버렸다 — Pretendard Variable 이 없는 기기에서는 아무 일도 안 일어나고, 있는 기기에서는
-   64px 제목의 글자폭이 변해 줄이 흔들린다. 칠은 폭을 건드리지 않는다. */
 .hero__mark {
   color: transparent;
   background-image: linear-gradient(
@@ -1605,7 +1185,6 @@ a.story:hover .story__more {
     var(--hero-ink-muted) 58%
   );
   background-size: 220% 100%;
-  /* 기본값이 '다 든 상태'다 — 애니메이션이 꺼져도(reduced-motion·스크립트 실패) 제목은 완성형이다. */
   background-position: 0 0;
   -webkit-background-clip: text;
   background-clip: text;
@@ -1619,7 +1198,6 @@ a.story:hover .story__more {
     background-position: 100% 0;
   }
 }
-/* 마침표는 로고의 그 점이다 — 구절이 다 선 뒤 마지막에 한 번 놓인다. */
 .hero__dot {
   display: inline-block;
   color: var(--c-accent-500);
@@ -1631,8 +1209,6 @@ a.story:hover .story__more {
     scale: 0.3;
   }
 }
-
-/* 히어로 제목은 구절 단위로, 리드가 그 뒤를 잇는다. 카드(hcard)는 제 규칙대로 온다. */
 .hero__w {
   display: inline-block;
   animation: hero-in 0.7s var(--ease) both;

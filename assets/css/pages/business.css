@@ -1,28 +1,7 @@
-/* 사업 상세 일곱 지면의 머리 표지 — /business/{슬러그} 전부가 받는다(pages/business.mjs).
- *
- * 결은 회사 소개 본문(/company/about)의 표지와 같다(사령관 2026-09-14 "메인이랑 회사
- * 소개 디자인 스타일 참고해서 전체 변경, 인터랙션도 마찬가지"). 앞서 이 자리는 파란·초록
- * 네온 3D 렌더를 전폭으로 깐 사각 띠였다 — 크림·주황·잉크 팔레트(§4-3)와 한 지면에서
- * 부딪혔고, 화면 높이의 절반을 그림에 주면서 글은 그 위에 얹혀 읽기 어려웠다.
- *
- * 지금은 두 판이다.
- *   (1) 표지  화면을 꽉 채운 채 붙박였다가 스크롤을 따라 **안으로 좁아지고** 모서리가
- *             둥글어진다. 사업 이름과 제목만 왼쪽 아래에 얹힌다 — 회사 소개와 같은 절제다.
- *   (2) 읽을 판  좁아진 표지 아래에서 리드가 큰 활자로 서고, 오른쪽에 행동과 근거가 붙는다.
- *
- * 두 판을 합쳐도 9블록의 **블록 1** 하나다. 블록을 늘리지 않는다(§4-5).
- *
- * 여기 적힌 **기본값이 곧 대비책**이다: 표지는 좁아진 모습 그대로 제자리에 서고 읽을 판이
- * 그 아래 놓인다. 스크롤에 반응하는 규칙은 전부 `html.js-stage` + `min-width: 1080px`
- * 안에만 있다 — stage.mjs 가 죽거나 모션 최소화면 그 클래스가 안 붙어 기본값이 남는다.
- * 영상도 마찬가지다: poster 가 있어 재생이 막혀도 빈 면이 되지 않는다.
- */
 
 .bhero {
   position: relative;
 }
-
-/* 표지. 기본값은 스크롤이 다 끝난 모습 — 안으로 들어와 앉은 둥근 판이다. */
 .bhero__cover {
   position: relative;
   margin: var(--sp-6) auto 0;
@@ -32,15 +11,12 @@
   border-radius: var(--radius-lg);
   background: var(--bg-inverse);
 }
-/* 표지 영상(partials/blocks-hero.mjs 의 businessCover) — 포스터가 같은 자리를 먼저 채운다. */
 .bhero__film {
   width: 100%;
   height: 100%;
   object-fit: cover;
   filter: var(--art-tone);
 }
-/* 사진 위 흰 글은 가림막 없이는 못 읽는다. 글이 아래쪽에 있으므로 아래가 가장 짙다 —
-   전체를 고르게 덮으면 그림이 죽는다. 값은 토큰이다(리터럴 색을 적지 않는다). */
 .bhero__cover::after {
   content: "";
   position: absolute;
@@ -74,11 +50,6 @@
   max-width: 20ch;
   color: var(--text-on-inverse);
 }
-
-/* 표지의 글은 **첫 화면**이라 keyframes 로 온다. data-reveal 을 걸면 닫힌 상태가 한 번도
-   그려지지 않아 전이가 출발할 자리가 없다 — 이 저장소의 첫 화면 모션이 전부 keyframes 인
-   이유가 그것이다(components.css 모션 구획). 홈 히어로(hero-in)와 같은 값·같은 순서다:
-   사업 이름이 먼저, 제목이 뒤. */
 .bhero__unit {
   animation: bhero-in 0.7s var(--ease) 80ms both;
 }
@@ -97,8 +68,6 @@
     animation: none;
   }
 }
-
-/* 읽을 판. 왼쪽 리드가 주인이고 오른쪽이 행동이다. */
 .bhero__read {
   display: grid;
   grid-template-columns: minmax(0, 1fr) clamp(260px, 26vw, 360px);
@@ -106,7 +75,6 @@
   align-items: start;
   padding-block: var(--sp-8);
 }
-/* 리드가 이 판의 주인이다 — 본문 크기로 두면 큰 표지 다음에 아무것도 아닌 줄이 된다. */
 .bhero__lede {
   margin: 0;
   max-width: 30ch;
@@ -120,7 +88,6 @@
   gap: var(--sp-5);
   justify-items: start;
 }
-/* 근거 한 줄은 행동 아래 가는 선을 두고 놓인다 — 버튼에 바로 붙으면 버튼의 설명으로 읽힌다. */
 .bhero__meta {
   margin: 0;
   padding-top: var(--sp-4);
@@ -129,8 +96,6 @@
   font-size: var(--fs-xs);
   color: var(--text-muted);
 }
-
-/* 좁은 화면 — 리드 폭 제한을 풀고 행동을 아래로 내린다. */
 @media (max-width: 1080px) {
   .bhero__read {
     grid-template-columns: minmax(0, 1fr);
@@ -140,8 +105,6 @@
     max-width: 34ch;
   }
 }
-/* 제목이 표지 안에 얹히므로 좁은 화면에서 가로로 긴 액자를 쓸 수 없다 — 375px 에서
-   1.92 는 높이가 173px 이라 두 줄짜리 제목이 그림을 다 덮는다. 세로로 눕힌다. */
 @media (max-width: 860px) {
   .bhero__cover {
     aspect-ratio: 4 / 3;
@@ -155,29 +118,14 @@
     max-width: none;
   }
 }
-
-/* 여기서부터가 스크롤 무대다. 진행률 --p 는 stage.mjs 가 [data-stage] 에 넘긴다.
-   --p 가 없으면 var(--p, 0) 으로 0 이 되어 위의 기본값이 그대로 선다. */
 @media (min-width: 1080px) {
-  /* 표지가 화면을 꽉 채운 채 붙박였다가 안으로 좁아진다. 판을 화면보다 길게 잡아야
-     좁아지는 동안 아래 덩이가 밀려 올라오지 않는다.
-     회사 소개는 165vh 인데 여기는 150vh 다 — 그쪽은 표지 다음이 또 붙박이 판이라
-     길이가 필요했고, 사업 지면은 표지 바로 아래가 읽을 판이라 더 끌면 첫 블록까지
-     스크롤이 길어진다(B2B 지면이라 본문에 빨리 닿아야 한다). */
   html.js-stage .bhero__top {
     position: relative;
     height: 150vh;
   }
-  /* 헤더 아래에 붙는다. top: 0 이면 표지가 헤더 뒤로 들어가 위 모서리가 잘리고,
-     높이 100vh 가 헤더만큼 밀려 제목이 첫 화면에서 접힌다(회사 소개에서 실측). */
   html.js-stage .bhero__cover {
     position: sticky;
     top: var(--header-h);
-    /* 꽉 찬 사각(q=0)에서 안으로 들어온 둥근 판(q=1)으로 간다. 세 값이 같은 --q 를
-       보므로 폭·높이·모서리가 한 몸으로 움직인다.
-       붙박이가 풀리는 지점은 (150vh - 100vh) / 150vh = 0.333 이다 — --p 를 그대로
-       쓰면 표지가 3분의 1 만 좁아진 채 화면 밖으로 지나간다. 0.29 로 나눠 그 앞에서
-       다 끝내고, 남는 0.04 가 다 좁아진 모습을 보고 지나가는 틈이다. */
     --q: clamp(0, var(--p, 0) / 0.29, 1);
     margin-block: 0;
     margin-inline: calc(var(--q) * 4vw);
@@ -187,8 +135,6 @@
     border-radius: calc(var(--q) * var(--radius-lg));
     will-change: margin, height;
   }
-  /* 표지가 꽉 찬 동안에는 글이 화면 왼쪽 아래 끝에 너무 붙는다 — 좁아지면서 안으로
-     따라 들어오게 같은 --q 를 본다. */
   html.js-stage .bhero__say {
     padding-inline: calc(clamp(24px, 4vw, 72px) + (1 - var(--q)) * 4vw);
   }

@@ -1,31 +1,7 @@
-/* 오시는 길 지면 전용 — /company/location 하나만 받는다(pages/company.mjs 의 styles).
- *
- * 결은 kbanknow.com/web/about/kbank/info?tab=location 을 참고했다(사령관 2026-09-13
- * "이 링크 레이아웃 참고해서 오시는 길 똑같은 와이어프레임"). 그쪽에서 가져온 것은
- * 형태뿐이다:
- *   · 전부 왼쪽 정렬이고 글 기둥 하나다(가운데 정렬도 2단도 없다).
- *   · 판을 흰/회색으로 번갈아 깔지 않는다 — 덩이를 가르는 것은 여백뿐이다.
- *   · 상자 격자가 없다. 정보는 "라벨│값" 한 줄로 선다.
- *   · 지도만 전폭이고, 그 아래 얇은 막대에 지도 서비스로 나가는 링크가 붙는다.
- *
- * KB 의 본문 기둥은 1080px 이다. 이 사이트의 --container 는 1400~1800px 이라 그대로
- * 쓰면 라벨과 값이 양끝으로 벌어진다 — 기둥 폭을 따로 접는다(--lo-col).
- *
- * 색은 semantic 토큰만 쓴다(primitive 직접 참조 금지 — design-system 규약 2026-09-12,
- * 반경은 tokens.css 의 단만 쓴다 — spec 시험이 잡는다).
- */
 
 .lo {
   --lo-col: 1080px;
 }
-
-/* 머리는 이 파일에 없다. 회사 하위 넉 장(기술 역량 · IR · 인재채용 · 찾아오시는 길)이
-   같은 머리 띠(.pbanner)를 쓰기로 하면서 규칙이 components.css 로 옮겨 갔다
-   (사령관 2026-09-13 "히어로 쪽 레이아웃 공통화"). */
-
-/* ── 덩이 ──────────────────────────────────────────────────
-   세 덩이가 한 면 위에 여백으로만 갈린다(KB 그대로). 덩이 제목은 본문보다 한 단
-   크고, 그 아래 줄 목록이나 지도가 붙는다. */
 .lo {
   padding-top: 0;
 }
@@ -38,8 +14,6 @@
   max-width: var(--lo-col);
   width: 100%;
 }
-/* 지도 판만 기둥을 벗어난다 — KB 도 지도 한 판만 본문보다 넓게 편다. 약도는 벡터라
-   1800px 까지 늘려도 글자가 뭉개지지 않는다(사령관 2026-09-14 "가로 100%로"). */
 .lo__block--map {
   max-width: none;
 }
@@ -49,11 +23,6 @@
   letter-spacing: var(--tracking-tight);
   margin: 0 0 var(--sp-5);
 }
-
-/* ── 라벨│값 줄 ───────────────────────────────────────────
-   KB 는 라벨과 값을 flex 로 나란히 둔다. 여기서는 라벨 칸을 고정해 값의 왼쪽 끝을
-   맞춘다 — 줄이 셋 이상이면 값이 들쑥날쑥해 표로 읽히지 않는다(IR 지면에서 같은
-   판정을 받았다). 라벨은 회색, 값은 먹색이고, 누를 수 있는 값만 브랜드 색이다. */
 .lorows {
   margin: 0;
   display: flex;
@@ -87,21 +56,12 @@
 .lorow__link:focus-visible {
   text-decoration: underline;
 }
-
 @media (max-width: 640px) {
-  /* 좁은 화면에서 라벨 칸을 고집하면 값이 두세 글자씩 꺾인다. 줄을 위아래로 접는다. */
   .lorow {
     grid-template-columns: 1fr;
     gap: var(--sp-1);
   }
 }
-
-/* ── 지도 판 ───────────────────────────────────────────────
-   액자 안은 회사가 쓰던 약도 그림이고, 누르면 네이버 지도의 장소 항목으로 간다
-   (데이터의 map.href — place id 12122811). 살아 있는 지도는 NCP 키가 있어야 붙는다
-   (locked). 그날이 오면 .lomap__frame 안만 바뀌고 판의 형태는 그대로다.
-
-   막대는 KB 의 지도 아래 줄(로드뷰 · 길찾기 · 크게 보기)과 같은 자리다. */
 .lomap {
   margin: 0;
   border-radius: var(--radius-lg);
@@ -114,9 +74,6 @@
   background: var(--bg-band);
   text-align: center;
 }
-/* 약도는 액자를 가로로 꽉 채운다. 앞 장은 700×800 세로 그림이라 가운데 455px 만
-   차지했다(사령관 2026-09-13 "왜 100%가 아니냐") — 1600×760 가로 SVG 로 다시 그렸고,
-   벡터라 1336px 로 늘려도 글자가 뭉개지지 않는다. 비율은 그림이 제 viewBox 로 정한다. */
 .lomap__img {
   display: block;
   width: 100%;
@@ -130,8 +87,6 @@ a.lomap__frame:hover .lomap__img,
 a.lomap__frame:focus-visible .lomap__img {
   opacity: 0.92;
 }
-/* 나가는 표시. 액자 오른쪽 아래에 떠 있고, 어디로 가는지 글로 적는다(§30).
-   그림 위가 아니라 액자 모서리에 앉으므로 약도의 글자를 가리지 않는다. */
 .lomap__go {
   position: absolute;
   right: var(--sp-4);
@@ -150,19 +105,10 @@ a.lomap__frame:hover .lomap__go,
 a.lomap__frame:focus-visible .lomap__go {
   color: var(--text-accent);
 }
-/* 좁은 화면에서는 배지를 걷는다. 액자가 326px 로 줄면 이 배지가 지도의 삼분의 일을
-   덮는다(실측 2026-09-14, 사령관 "깨지는 부분들 잡아줘"). 나가는 링크가 사라지는
-   것은 아니다 — 바로 아래 막대의 "네이버 지도에서 보기 ↗"가 같은 곳으로 가고,
-   액자 링크의 이름은 그림의 alt 가 계속 대 준다.
-   분기 폭은 파샬의 <picture> media 와 같아야 한다 — 어긋나면 좁은 판 위에 배지가
-   그대로 앉는다. */
 @media (max-width: 860px) {
   .lomap__go {
     display: none;
   }
-  /* 이 폭에서는 세로 판(600×840)이 선다. 폭을 100% 로 두면 태블릿에서 액자가
-     1,100px 넘게 길어져 한 화면에 안 들어온다 — 높이를 먼저 물리고 폭은 따라오게
-     한다. 휴대폰에서는 폭이 먼저 걸리므로 예전과 같이 꽉 찬다. */
   .lomap__img {
     width: auto;
     max-width: 100%;
@@ -170,7 +116,6 @@ a.lomap__frame:focus-visible .lomap__go {
     margin-inline: auto;
   }
 }
-/* 그림이 빠졌을 때의 물러설 자리. 이때만 액자가 제 높이를 갖는다. */
 .lomap__addr {
   padding: var(--sp-6);
   min-height: clamp(220px, 26vw, 400px);

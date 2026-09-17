@@ -1,20 +1,8 @@
-/* Databricks · Starburst 와 데이터 플랫폼(Sapie-Lake) 두 지면 전용.
-   :is(.bu--databricks, .bu--data-platform) · .bu--data-platform 아래로만 건다 — 메인이나 다른 사업 페이지로 새어
-   나가지 않는다. 두 지면이 같은 조판(두 환경 · 번호 행 · 기능 · 흐름)을 쓴다(2026-09-14).
-   리듬은 blocks.mjs 가 지면 전체를 보고 칠한다(§3-4 색면) — 여기서는 짙은 기술 면
-   (.section--deep)의 색과 그 위 조판만 맡는다. */
+
 :is(.bu--databricks, .bu--data-platform) {
-  /* 이 페이지의 짙은 면. */
-  /* 파트너 남색(#0a1f3d)과 하늘색(#7cc0ff)을 걷었다(2026-09-13). 사업 상세 일곱 장의
-     색면이 잉크·스톤 둘로 정리되면서 이 지면만 세 번째 어두운 톤에 파란 글자가 남아
-     같은 사이트로 읽히지 않았다 — 파트너 색은 그림(다이어그램 SVG)에만 남긴다.
-     이름은 그대로 둔다: 아래 열다섯 자리가 이 둘을 가리키고, --deep 은 §3-4 가
-     색면(잉크·스톤)과 구분해 부르는 이름이다. */
   --deep-bg: var(--bg-inverse);
   --deep-accent: var(--text-accent-on-inverse);
 }
-
-/* ── 문제 — 왼쪽 메시지 + 번호 행 ──────────────────── */
 :is(.bu--databricks, .bu--data-platform) .prs {
   display: grid;
   gap: 0;
@@ -47,8 +35,6 @@
   margin-top: var(--sp-2);
   line-height: 1.7;
 }
-
-/* ── 두 환경 — 경쟁이 아니라 자리가 다르다 ─────────── */
 :is(.bu--databricks, .bu--data-platform) .envs {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -64,20 +50,6 @@
   border: 1px solid var(--border-hair);
   background: var(--bg-card);
 }
-/* 두 환경은 **면으로 갈린다**(사령관 2026-09-14 "데이터는 퍼블릭이고 스타버스트는
-   프라이빗이니까 구분해서 다르게"). 앞서는 흰 카드와 한 톤 옅은 카드였다 — 값 차이가
-   너무 작아 의도가 아니라 렌더링 사고로 읽혔다.
-
-   퍼블릭은 **열린 면**이라 크림 지면 위 흰 카드 그대로 두고, 온프레미스는 **닫힌 면**이라
-   뒤집는다. 밖으로 내보낼 수 없는 데이터가 놓인 자리라는 것을 색이 먼저 말한다.
-
-   잉크가 아니라 스톤인 이유는 둘 사이에 앉는 잇는 자리(.envs__hub)가 잉크라서다 —
-   같은 값이면 카드와 허브가 겹치는 지점에서 한 덩이로 뭉친다.
-
-   면 안에서는 시맨틱 토큰을 다시 가리킨다(§3-4) — 자식마다 어두운 규칙을 새로 쓰지 않는다.
-   흐린 글자만 --c-neutral-300 으로 한 단 밝힌다: 스톤은 잉크보다 밝아 같은 토큰으로는
-   4.5:1 을 못 넘는다(components.css 의 .section--stone 이 같은 이유로 같은 값을 쓴다).
-   color 를 함께 적는 것은, 상속된 색은 var() 를 다시 풀지 않기 때문이다. */
 :is(.bu--databricks, .bu--data-platform) .env--onprem {
   background: var(--c-neutral-700);
   border-color: transparent;
@@ -88,9 +60,6 @@
   --text-faint: var(--c-neutral-300);
   --text-accent: var(--c-brand-dot);
 }
-/* 두 칸의 그림. 카드 머리에 띠로 눕는다 — 정사각이면 글보다 먼저 읽히고,
-   판 하나에 큰 사진 둘이 나란히 서면 비교판이 아니라 갤러리가 된다.
-   패딩 밖으로 밀어 카드 모서리에 붙인다(카드가 --radius-lg 라 위 두 모서리만 둥글다). */
 :is(.bu--databricks, .bu--data-platform) .env__cover {
   display: block;
   overflow: hidden;
@@ -132,7 +101,6 @@
   content: "· ";
   color: var(--text-faint);
 }
-/* 두 환경을 잇는 자리. 솔트웨어가 주체라는 것을 가운데에 둔다. */
 :is(.bu--databricks, .bu--data-platform) .envs__hub {
   grid-column: 1 / -1;
   justify-self: center;
@@ -152,8 +120,6 @@
   color: var(--text-on-inverse-muted);
   margin-top: 2px;
 }
-
-/* ── 플랫폼 기능 — 짙은 면 ─────────────────────────── */
 :is(.bu--databricks, .bu--data-platform) .caps {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -181,8 +147,6 @@
   color: var(--deep-accent);
   font-weight: 600;
 }
-
-/* ── 흐름 — 아키텍처와 확장이 함께 쓴다 ────────────── */
 :is(.bu--databricks, .bu--data-platform) .fw {
   display: grid;
   grid-auto-flow: column;
@@ -202,15 +166,12 @@
     background-color var(--dur-hover) var(--ease),
     color var(--dur-hover) var(--ease);
 }
-/* 한 단에 손을 대면 그 단만 잉크로 선다 — 아키텍처는 훑는 그림이 아니라 짚는 그림이다.
-   산업 격자와 같은 뒤집기다(components.css a.tile:hover). */
 :is(.bu--databricks, .bu--data-platform) .fw__node:hover {
   background: var(--bg-inverse);
   color: var(--text-on-inverse);
   --text-primary: var(--text-on-inverse);
   --text-muted: var(--text-on-inverse-muted);
 }
-/* 단 번호 — 히어로 카드·수행 단계가 쓰는 것과 같은 활자(tabular, 자간 넓은 라벨). */
 :is(.bu--databricks, .bu--data-platform) .fw__no {
   font-size: var(--fs-2xs);
   font-weight: 700;
@@ -218,9 +179,6 @@
   letter-spacing: var(--tracking-label);
   color: var(--text-muted);
 }
-/* 진행 방향. 장식이라 스크린리더가 읽지 않고, 순서는 ol 과 번호가 전한다.
-   판이 화면에 들어오면 왼쪽에서 오른쪽으로 차례로 그어진다 — 아키텍처는 이어지는 그림이라
-   선이 그어지는 것 자체가 뜻이다. 칸이 앉은 뒤(--i × 70ms)에 40ms 늦게 출발한다. */
 :is(.bu--databricks, .bu--data-platform) .fw__node:not(:last-child)::after {
   content: "";
   position: absolute;
@@ -252,7 +210,6 @@
     transition: none;
   }
 }
-
 @media (max-width: 1080px) {
   :is(.bu--databricks, .bu--data-platform) .caps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   :is(.bu--databricks, .bu--data-platform) .fw { grid-auto-flow: row; }
@@ -269,7 +226,6 @@
   }
 }
 @media (max-width: 860px) {
-  /* 모바일에서는 두 환경이 위아래로 서고 솔트웨어가 그 사이를 잇는다. */
   :is(.bu--databricks, .bu--data-platform) .envs { grid-template-columns: minmax(0, 1fr); }
   :is(.bu--databricks, .bu--data-platform) .envs__hub {
     order: 1;

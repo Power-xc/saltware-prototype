@@ -1,30 +1,4 @@
-/* 회사 지면 전용 — /company(전체보기 허브)와 /company/about(회사 소개 본문) 둘만
- * 받는다(pages/company.mjs 의 styles). 아래 구획 대부분은 본문 쪽 것이고, 맨 앞
- * 한 덩이만 허브 것이다.
- *
- * 결은 saltlux.com/ko/company/index 를 참고했다(사령관 2026-09-11): 수치 띠, 글과 사진이
- * 좌우로 교차하는 행, 표지 얹은 사업 기둥, 사진 위 맺음. 색·문구·사진은 이 저장소 것이다.
- *
- * 색은 토큰만 쓴다(리터럴 hex 금지 — 시험이 잡는다). 반경도 단을 늘리지 않는다.
- * 등장 모션은 새로 만들지 않았다 — 묶음에 data-reveal 만 달면 components.css 의
- * 모션 구획이 자식을 순서대로 올린다. 숫자는 counter.mjs 가 센다.
- */
 
-/* ── 전체보기 허브(/company) ────────────────────────────────
-   인사이트 허브와 같은 문법이라 판(.feat)과 열(.hubcol) 본체는 components.css 의
-   것을 그대로 쓴다 — 열 수까지 저쪽이 맡는다(.hubcol__grid--3, 2026-09-16).
-   여기서 더하는 것은 이 지면의 세로 리듬과 그림 지도다 — 판의 배경 사진,
-   그리고 칸마다의 그림(--card-media). 아래 .hub-grid--3 은 이제 허브가 아니라
-   회사 소개 본문의 "회사의 다른 지면" 여섯 장이 쓰는 규칙이다.
-   body 클래스로 건다(company-hub) — 회사 소개 본문은 이 파일을 같이 받지만
-   그 지면에는 이 클래스가 없어 리듬이 기본값 그대로다. */
-
-/* 덩이가 둘(판 · 카드)뿐이라 기본 세로 리듬은 사이가 통째로 빈 칸으로 읽힌다.
-   인사이트 허브에서 실측으로 정해진 값을 그대로 쓴다(components.css 의 .insights-hub
-   주석에 근거가 있다). 구획선도 같이 걷는다 — 위에 아무것도 없는데 그어진 선은
-   지면이 잘려 보이게 한다. */
-/* 맺음 띠는 이 리듬에서 뺀다 — 인사이트 허브와 같은 이유다(components.css 의
-   .insights-hub 주석). 그 띠는 어느 지면에서나 같은 크기여야 한다. */
 .company-hub .section:not(.section--inverse) > .container {
   padding-top: var(--sp-5);
   border-top: 0;
@@ -35,74 +9,43 @@
 .company-hub .section:first-of-type > .container {
   padding-top: var(--sp-6);
 }
-
-/* 판의 사진 — 이 판만의 장이다(사령관 2026-09-11). 2026-09-15 에 스톡 미리보기를
-   버리고 사령관이 준 유리판 렌더로 갈았다(design-resources/19-company-hub-feature/).
-
-   `[낡음 2026-09-15]` "글이 그림 왼쪽 위를 덮으므로 피사체는 오른쪽에 서야 한다"가
-   이 자리의 오랜 제약이었다. 글이 그림에서 내려오면서(.feat--split) 그 제약이 사라졌다 —
-   이제 사진은 온전한 한 장이라 피사체가 어디 서든 가려지지 않는다. 다음에 그림을 갈 때
-   오른쪽으로 몰아 구울 이유는 없다.
-   파일이 없어도 판은 깨지지 않는다(CSS 배경이라 어두운 면만 남는다). */
 .feat--company {
-  --card-media: url("/saltware-prototype/media/company/hub-feature.jpg?v=1dedf123e461");
+  --card-media: url("/saltware-prototype/media/company/hub-feature.jpg?v=acbe94433416");
 }
-
-/* 카드별 배경 사진. 인라인 style 금지(spec 시험)라 히어로(.hero--m-*)·인사이트 카드와
-   같이 클래스 맵이다. 여기 규칙이 있어도 pages/company.mjs 의 CARD_ART 가 슬러그를 적지
-   않으면 켜지지 않는다 — 자산 반입 여부는 그쪽이 안다.
-   실물이 들어올 때마다 한 줄씩 더한다(design-resources/18-company-card/README.md).
-   그림이 없는데 CARD_ART 에 먼저 적으면 검은 칸이 된다 — 반입한 뒤에 적는다. */
 .hub-card--company-capabilities {
-  --card-media: url("/saltware-prototype/media/company/card-capabilities.jpg?v=1dedf123e461");
+  --card-media: url("/saltware-prototype/media/company/card-capabilities.jpg?v=acbe94433416");
 }
-/* `[더함 2026-09-16]` ESG 와 파트너사. 둘 다 현행 사이트의 그 지면 머리 그림에서 왔다 —
-   ESG 는 어두운 데이터 판 위의 초록 새싹, 파트너사는 라일락 추상을 브랜드 주황으로 옮긴
-   판이다(design-resources/recolor-warm.mjs). 굽는 절차는 18-company-card/README.md. */
 .hub-card--company-esg {
-  --card-media: url("/saltware-prototype/media/company/card-esg.jpg?v=1dedf123e461");
+  --card-media: url("/saltware-prototype/media/company/card-esg.jpg?v=acbe94433416");
 }
 .hub-card--company-partners {
-  --card-media: url("/saltware-prototype/media/company/card-partners.jpg?v=1dedf123e461");
+  --card-media: url("/saltware-prototype/media/company/card-partners.jpg?v=acbe94433416");
 }
 .hub-card--company-history {
-  --card-media: url("/saltware-prototype/media/company/card-history.jpg?v=1dedf123e461");
+  --card-media: url("/saltware-prototype/media/company/card-history.jpg?v=acbe94433416");
 }
 .hub-card--company-ir {
-  --card-media: url("/saltware-prototype/media/company/card-ir.jpg?v=1dedf123e461");
+  --card-media: url("/saltware-prototype/media/company/card-ir.jpg?v=acbe94433416");
 }
 .hub-card--company-careers {
-  --card-media: url("/saltware-prototype/media/company/card-careers.jpg?v=1dedf123e461");
+  --card-media: url("/saltware-prototype/media/company/card-careers.jpg?v=acbe94433416");
 }
 .hub-card--company-location {
-  --card-media: url("/saltware-prototype/media/company/card-location.jpg?v=1dedf123e461");
+  --card-media: url("/saltware-prototype/media/company/card-location.jpg?v=acbe94433416");
 }
 .hub-card--company-brand {
-  --card-media: url("/saltware-prototype/media/company/card-brand.jpg?v=1dedf123e461");
+  --card-media: url("/saltware-prototype/media/company/card-brand.jpg?v=acbe94433416");
 }
-
-/* 카드가 여섯이다 — 인사이트의 넷을 그대로 두면 둘째 줄에 두 장만 남아 줄이 반쯤 빈다.
-   셋씩 두 줄로 맞아떨어진다. 1080 아래는 components.css 의 2열·1열 접기가 그대로
-   맡는다 — 그쪽이 미디어 쿼리라 특정도로 지지 않게 이 규칙도 폭을 못박는다. */
 @media (min-width: 1080px) {
   .hub-grid--3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
-
-/* ── 수치 ───────────────────────────────────────────────────
-   앞 판은 머리 안에 여섯을 한 줄로 눌러 넣었다(레퍼런스의 수치 띠). 제 구획으로
-   내보내면서 제목이 왼쪽에 서는 비대칭 판(.section__aside)이 되었으므로, 오른쪽
-   열에서 3열 두 줄로 선다 — 폭이 절반이라 여섯을 한 줄에 두면 칸이 100px 대가 된다.
-   칸을 실선으로 가르지 않는다. 두 줄이 되면 세로 실선이 격자 표처럼 읽힌다 —
-   아래 가로 실선 한 줄만 두 줄 사이를 나눈다. */
 .cstats {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--sp-6) var(--sp-5);
 }
-/* 오른쪽 열이 왼쪽 제목과 머리를 맞춘다 — aside 판에서 두 열의 첫 줄이 어긋나면
-   비대칭이 아니라 잘못 붙은 것으로 읽힌다. */
 .section__aside .cstats {
   margin-top: var(--sp-1);
 }
@@ -115,7 +58,6 @@
   color: var(--text-primary);
   font-variant-numeric: tabular-nums;
 }
-/* 단위는 숫자에 붙는 첨자다 — 같은 크기로 두면 수가 두 개로 읽힌다. */
 .cstat__unit {
   margin-left: 2px;
   font-size: 0.42em;
@@ -135,26 +77,9 @@
     gap: var(--sp-5) var(--sp-4);
   }
 }
-
-/* ── 레이아웃 1. 펼쳐지는 표지 + 붙박이 2단 ────────────────
-   왜 이 모양이 되었는지는 pages/company.mjs 의 같은 이름 주석에 있다. 요약하면
-   앞 판이 레퍼런스(saltlux .section-intro)의 동작을 형태까지 옮겨 두어 지면 자체가
-   닮아 보였다(사령관 2026-09-13). 결은 두고 배치만 뒤집었다.
-     (1) 표지가 화면에 꽉 찬 채로 시작해 스크롤을 따라 **안으로 좁아지고** 모서리가
-         둥글어진다 — 앞 판의 "줄어들며 내려간다"와 방향이 반대다.
-         제목은 가운데가 아니라 표지의 왼쪽 아래에 얹힌다.
-     (2) 그 아래 붙박이 판은 좌우 2단이다 — 왼쪽 리드는 가만히 서 있고,
-         오른쪽 사진 **한 줄**만 위로 흘러 지나간다(엇갈리는 두 기둥을 걷었다).
-
-   여기 적힌 **기본값이 곧 대비책**이다: 표지는 좁아진 모습 그대로 제자리에 서고,
-   글은 그 아래에 놓이고, 사진 줄은 아예 서지 않는다. 스크롤에 반응하는 규칙은 전부
-   아래 `html.js-stage` + `min-width: 1080px` 안에만 있다 — 스크립트가 죽거나 모션
-   최소화면 stage.mjs 가 그 클래스를 붙이지 않으므로 이 기본값이 그대로 남는다. */
 .cintro {
   position: relative;
 }
-
-/* 표지. 기본값은 스크롤이 다 끝난 모습 — 안으로 들어와 앉은 둥근 판이다. */
 .cintro__cover {
   position: relative;
   margin: var(--sp-6) auto 0;
@@ -164,9 +89,6 @@
   border-radius: var(--radius-lg);
   background: var(--bg-band);
 }
-/* 표지는 사진 한 장이거나 영상 한 편이다(pages/company.mjs 의 introStage).
-   둘이 같은 자리에 같은 방식으로 앉는다 — 판이 1.92:1 이고 원본은 16:9 라
-   object-fit: cover 가 위아래를 조금 자른다. */
 .cintro__cover img,
 .cintro__cover video {
   width: 100%;
@@ -174,8 +96,6 @@
   object-fit: cover;
   filter: var(--art-tone);
 }
-/* 사진 위 흰 글은 가림막 없이는 못 읽는다. 글이 아래쪽에 있으므로 아래가 가장 짙다 —
-   사진 전체를 고르게 덮으면 사진이 죽는다. */
 .cintro__cover::after {
   content: "";
   position: absolute;
@@ -209,8 +129,6 @@
   max-width: 18ch;
   color: var(--text-on-inverse);
 }
-
-/* 붙박일 2단. 기본은 왼쪽 글 한 덩이만 서고 사진 줄은 없다. */
 .cintro__main {
   position: relative;
 }
@@ -224,7 +142,6 @@
   letter-spacing: var(--tracking-label);
   color: var(--text-accent);
 }
-/* 리드가 이 판의 주인이다 — 본문 크기로 두면 큰 표지 다음에 아무것도 아닌 줄이 된다. */
 .cintro__lede {
   margin: 0;
   max-width: 26ch;
@@ -253,15 +170,11 @@
   object-fit: cover;
   filter: var(--art-tone);
 }
-/* 좁은 화면에서도 리드는 큰 활자로 두되 폭 제한은 푼다 — 26ch 가 모바일에서 두세
-   낱말씩 끊어 읽힌다. */
 @media (max-width: 1080px) {
   .cintro__lede {
     max-width: 34ch;
   }
 }
-/* 제목이 표지 안에 얹히므로 좁은 화면에서 가로로 긴 액자를 쓸 수 없다 — 375px 에서
-   1.92 는 높이가 173px 이라 두 줄짜리 제목이 사진을 다 덮는다. 세로로 눕힌다. */
 @media (max-width: 860px) {
   .cintro__cover {
     aspect-ratio: 4 / 3;
@@ -275,30 +188,14 @@
     max-width: none;
   }
 }
-
-/* 여기서부터가 스크롤 무대다. 진행률 --p 는 stage.mjs 가 [data-stage] 에 넘긴다.
-   --p 가 없으면(스크립트 실패) 아래 값은 var(--p, 0) 으로 0 이 되어 제자리에 선다. */
 @media (min-width: 1080px) {
-  /* (1) 표지가 화면을 꽉 채운 채 붙박였다가 안으로 좁아진다. 판을 화면보다 길게 잡아야
-     좁아지는 동안 아래 덩이가 밀려 올라오지 않는다. */
   html.js-stage .cintro__top {
     position: relative;
     height: 165vh;
   }
-  /* 헤더 아래에 붙는다. top: 0 으로 두면 표지가 헤더 뒤로 들어가 위쪽 모서리가 잘리고,
-     높이 100vh 가 헤더 높이만큼 아래로 밀려 **첫 화면에서 제목이 접힌다**(실측
-     1440×900 — "일하는 방식을 바꾸는 회사"가 화면 밖이었다). 제목이 표지 아래쪽에
-     얹히는 조판이라 높이에서도 헤더를 빼야 한다. */
   html.js-stage .cintro__cover {
     position: sticky;
     top: var(--header-h);
-    /* 꽉 찬 사각(q=0)에서 안으로 들어온 둥근 판(q=1)으로 간다. 세 값이 같은 --q 를
-       보므로 폭·높이·모서리가 한 몸으로 움직인다.
-
-       --p 를 그대로 쓰지 않는다. 표지가 붙박여 있는 동안만 움직일 수 있는데, 붙박이가
-       풀리는 지점은 (165vh - 100vh) / 165vh = 0.394 다 — --p 를 그대로 쓰면 표지가
-       39% 만 좁아진 채 화면 밖으로 지나간다. 0.34 로 나눠 그 앞에서 다 끝내고,
-       남는 0.05 가 다 좁아진 모습을 보고 지나가는 틈이다(아래 두 판도 같은 셈이다). */
     --q: clamp(0, var(--p, 0) / 0.34, 1);
     margin-block: 0;
     margin-inline: calc(var(--q) * 4vw);
@@ -308,9 +205,6 @@
     border-radius: calc(var(--q) * var(--radius-lg));
     will-change: margin, height;
   }
-
-  /* (2) 왼쪽 글이 붙박이고 오른쪽 사진 한 줄이 지나간다. 판(190vh)에서 화면 한
-     판(100vh)을 뺀 90vh 동안 글이 화면에 머문다. */
   html.js-stage .cintro__main {
     height: 190vh;
   }
@@ -320,15 +214,8 @@
     height: calc(100vh - var(--header-h));
     display: grid;
     align-content: center;
-    /* 사진 줄의 높이. 여기 한 곳에서만 정한다 — 아래 .cintro__reel 의 높이와
-       .cintro__track 이 밀 거리가 같은 수를 봐야 줄 끝이 딱 맞는다. */
     --reel-h: calc((100vh - var(--header-h)) * 0.86);
   }
-  /* .container 는 margin-inline: auto 를 갖는다. 그리드 항목에 auto 마진이 있으면
-     칸을 채우지 않고 **내용 폭으로 줄어든다**(components.css 의 같은 함정 주석).
-     그대로 두면 이 판의 좌우 선만 다른 구획보다 안쪽으로 들어간다 — 실측 1440 에서
-     본문은 x=232 부터인데 아래 수치 구획은 x=52 부터였다. 폭을 못박아 auto 마진이
-     가운데 정렬로만 일하게 한다(max-width 는 그대로 듣는다). */
   html.js-stage .cintro__grid {
     display: grid;
     width: 100%;
@@ -337,7 +224,6 @@
     align-items: center;
     padding-block: 0;
   }
-  /* 줄의 위아래 끝을 흐린다 — 잘린 사진의 직선이 보이면 액자가 두 개로 읽힌다. */
   html.js-stage .cintro__reel {
     display: block;
     height: var(--reel-h);
@@ -350,23 +236,12 @@
       rgb(0 0 0 / 0) 100%
     );
   }
-  /* 미는 거리는 줄의 제 높이에서 보이는 창 높이를 뺀 만큼이다 — 사진 장수가 늘어도
-     이 값을 다시 재지 않는다(100% 가 줄의 높이다).
-     붙박이가 풀리는 지점은 (190 - 100) / 190 = 0.474 라 그 앞에서 다 흘러야 한다. */
   html.js-stage .cintro__track {
     --q: clamp(0, var(--p, 0) / 0.42, 1);
     translate: 0 calc(var(--q) * (var(--reel-h) - 100%));
     will-change: translate;
   }
 }
-/* ── 레이아웃 2. 가로로 지나가는 판 ────────────────────────
-   앞 판은 레퍼런스(saltlux .section-design)처럼 카드가 겹쳐 쌓였다. 겹쳐 쌓기도
-   그쪽 지면의 얼굴이라 같이 걷었다(사령관 2026-09-13). 대신 붙박인 판 안에서
-   카드가 **가로로** 흘러 지나간다 — 세로 스크롤이 가로 이동이 되는 것이라
-   겹치기와 인상이 확실히 다르다.
-
-   레이아웃 1 과 같은 약속이다 — 여기 적힌 기본값(세로로 늘어선 카드 셋)이 대비책이고,
-   가로로 도는 규칙은 전부 html.js-stage 안에 있다. */
 .cstack__list {
   list-style: none;
   margin: 0;
@@ -391,7 +266,6 @@
   object-fit: cover;
   filter: var(--art-tone);
 }
-/* 글이 놓이는 왼쪽이 가장 어둡다 — 사진 전체를 고르게 덮으면 사진이 죽는다. */
 .cstack__item::after {
   content: "";
   position: absolute;
@@ -432,26 +306,10 @@
   line-height: var(--lh-lede);
   color: var(--text-on-inverse-muted);
 }
-
 @media (min-width: 1080px) {
-  /* 판 길이(200vh)에서 화면 한 판을 뺀 100vh 동안 붙박여 있고, 붙박이가 풀리는 지점은
-     (200 - 100) / 200 = 0.5 다. --t 는 그 앞 0.46 에 1 이 되고, 남는 0.04(약 8vh)가
-     마지막 칸을 보고 지나가는 틈이다.
-
-     앞 판은 260vh 였다. 세로로 1600px 넘게 굴려야 가로로 800px 가 가는 셈이라
-     "스크롤이 안 먹는다"로 읽혔다(사령관 2026-09-13). 판을 줄여 세로와 가로가
-     대략 1:1 로 가게 했다 — 손가락과 화면이 같이 움직여야 무대로 읽힌다. */
   html.js-stage .cstack {
     height: 200vh;
   }
-  /* 트랙을 밀 거리는 `트랙 폭 - 보이는 창 폭`이고, 그 창이 곧 이 판이다.
-     100vw 로 재면 안 된다 — 이 구획은 .container 안에 있어 창이 화면보다 좁다
-     (1920 에서 컨테이너 1440). 앞 판이 100vw 로 재는 바람에 실제로 밀리는 거리가
-     52px 뿐이었다. 판을 크기 컨테이너로 선언해 제 폭을 100cqw 로 직접 읽는다 —
-     컨테이너 폭이 바뀌어도, 칸 수가 바뀌어도 이 값을 다시 재지 않는다.
-
-     레일을 화면 끝까지 흘리지 않는 것은 이 저장소의 기존 결정이다(components.css
-     .rail 주석, 사령관 2026-09-08 "깔끔하게 떨어지게끔") — 여기서도 컨테이너 선을 지킨다. */
   html.js-stage .cstack__pin {
     position: sticky;
     top: var(--header-h);
@@ -462,20 +320,13 @@
     container-type: inline-size;
   }
   html.js-stage .cstack__list {
-    /* 한 칸이 판의 절반을 넘게 잡는다 — 서너 칸이 동시에 보이면 가로로 흐르는 것이
-       아니라 그냥 좁은 카드 줄로 읽힌다. */
     --cw: clamp(360px, 50vw, 720px);
     --cg: var(--sp-5);
     --t: clamp(0, var(--p, 0) / 0.46, 1);
     display: flex;
     gap: var(--cg);
     width: max-content;
-    /* 판을 채우는 높이다. 62vh 로 두었더니 붙박이기 전 — 제목 바로 아래에서 —
-       카드가 판 가운데에 떠서 제목과 175px 가 비었다(실측 1440×900).
-       판(100vh - 헤더)을 거의 채우면 그 틈이 절반으로 준다. */
     height: clamp(420px, 72vh, 680px);
-    /* 100% 는 트랙 제 폭이고 100cqw 는 판의 폭이다. 트랙이 판보다 좁으면 값이
-       양수가 되므로 min() 으로 0 에 묶는다 — 오른쪽으로 밀려나지 않는다. */
     translate: calc(var(--t) * min(0px, 100cqw - 100%)) 0;
     will-change: translate;
   }
@@ -485,30 +336,12 @@
     min-height: 0;
   }
 }
-
-/* ── 사업 기둥 ─────────────────────────────
-   1판 3열 카드 격자 → 2판 한 줄씩(줄마다 작은 표지) → 지금은 **왼쪽 붙박이 액자 + 오른쪽 목록**
-   이다(사령관 2026-09-15 — toss.im/company 의 문화 목록 판).
-
-   줄은 번호 · 이름 · 설명 세 열이고, 읽는 줄 하나만 검은 글씨로 선다. 선은 여전히
-   긋지 않는다 — 이 사이트는 --border-hair 가 transparent 다(tokens.css, 사령관 2026-09-11
-   "행과 행 사이의 선, 글을 감싸는 액자는 긋지 않는다"). 줄을 가르는 것은 여백과 색의 단이다.
-
-   흐리기를 opacity 로 하지 않는다. 등장 전이([data-reveal] > *)가 같은 속성을 0.6s 로 잡고
-   있어, 여기서 다시 0.3 같은 값을 주면 줄이 반투명인 채 떠올라 등장이 깨진다. 색으로만 가른다 —
-   쉼는 줄도 --text-muted(5.6:1)이라 그대로 읽힌다. 회색 단을 더 내리면(neutral-500) 3.3:1 이 된다.
-
-   액자는 한 장이 아니라 다섯 장을 겹쳐 두고 활성 장만 드러난다 — src 를 바꾸면 새 장을
-   내려받는 동안 액자가 빈다. 스크립트가 없으면 html.js-pillars 가 안 붙어 첫 장이 걸리고
-   모든 줄이 검은 글씨로 선다. */
 .cpils {
   display: grid;
   grid-template-columns: clamp(240px, 26vw, 340px) minmax(0, 1fr);
   gap: var(--sp-8);
-  /* 두 열이 같은 높이로 선다 — 액자가 목록 높이를 그대로 받는다(아래 .cpils__frame 주석). */
   align-items: stretch;
 }
-/* 표지가 한 장도 없는 날에는 목록이 폭을 다 쓴다 — 빈 액자를 남기지 않는다(§29). */
 .cpils--noart {
   grid-template-columns: minmax(0, 1fr);
 }
@@ -516,16 +349,6 @@
   position: sticky;
   top: calc(var(--header-h, 64px) + var(--sp-7));
 }
-/* 액자의 높이는 비율이 아니라 **오른쪽 목록**이 정한다 `[실측 2026-09-15]`.
-   정사각(1:1)으로 두었더니 1440 에서 340×340 인데 목록은 492px 였다 — 액자가 04 줄
-   언저리에서 끝나고 그 아래로 150px 가 비었다(사령관 "세로가 너무 짧아"). 반대로 66vh
-   같은 화면 값으로 늘리면 이번엔 목록보다 168px 가 길어져 액자만 아래로 삐져나온다.
-   어느 쪽이든 두 열의 바닥이 어긋난다.
-
-   그래서 격자를 stretch 로 두고 액자가 줄 높이를 그대로 받게 한다 — 줄이 늘거나 설명이
-   두 줄이 되어 목록이 길어지면 액자도 같이 길어진다. 다만 화면보다 키가 커지면 붙박이가
-   따라 붙지 못하고 그냥 흘러가므로 78vh 에서 멈춘다. 그림은 cover 라 어느 높이에서든
-   판을 채운다. */
 .cpils__frame {
   position: relative;
   display: block;
@@ -542,13 +365,10 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* --art-tone(채도 30%)을 걸지 않는다. 허브 카드와 같은 흰 바탕 3D 일러스트라
-     30% 로 누르면 색이 죽고 회색 뭉치만 남는다(components.css 의 .hub-card::before 와 같은 값). */
   filter: saturate(0.82) contrast(1.02);
   opacity: 0;
   transition: opacity var(--dur-content) var(--ease);
 }
-/* 스크립트 없을 때의 기본화: 첫 장이 걸린다. 있을 때는 is-on 이 정한다. */
 .cpils__shot:first-child {
   opacity: 1;
 }
@@ -558,11 +378,6 @@ html.js-pillars .cpils__shot {
 html.js-pillars .cpils__shot.is-on {
   opacity: 1;
 }
-/* 줄에 안여백을 주면 번호가 그만큼 안으로 들어가 열 선에서 밀린다. 목록을 같은
-   크기만큼 밖으로 당겨 글은 열 선에 맞추고, hover 때 깔리는 면만 글 밖으로 퍼지게 한다. */
-/* 줄 사이를 sp-1(4px)에서 sp-2(8px)로 벌리고 줄 안여백도 한 단 올렸다(아래 .cpil)
-   `[2026-09-15]` — 다섯 줄이 492px 밖에 안 돼 구획 전체가 납작했다(사령관 "세로가
-   너무 짧아"). 눈금을 새로 만들지 않고 있는 간격 단에서 한 칸씩만 올린 것이다. */
 .cpils__list {
   display: grid;
   gap: var(--sp-2);
@@ -570,7 +385,6 @@ html.js-pillars .cpils__shot.is-on {
 }
 .cpil {
   display: grid;
-  /* 번호 · 이름 · 설명 · 가는 곳. */
   grid-template-columns: auto minmax(0, 1fr) minmax(0, 1.1fr) auto;
   align-items: start;
   gap: var(--sp-5);
@@ -578,9 +392,6 @@ html.js-pillars .cpils__shot.is-on {
   border-radius: var(--radius-lg);
   color: inherit;
   text-decoration: none;
-  /* 등장(opacity·translate)을 여기서 함께 선언해야 한다 — 이 파일은 components.css 뒤에
-     로드되므로 hover 용 transition 만 적으면 [data-reveal] > * 의 등장 전이를 덮어
-     줄이 페이드 없이 튀어 들어온다. 늦춤 --d 는 reveal.mjs 가 자식마다 매기는 --i 에서 온다. */
   transition:
     opacity 0.6s var(--ease) var(--d, 0s),
     translate 0.6s var(--ease) var(--d, 0s),
@@ -589,7 +400,6 @@ html.js-pillars .cpils__shot.is-on {
 a.cpil:hover {
   background: var(--bg-band);
 }
-/* 줄 전체가 과념이라 테두리를 안으로 그린다 — 밖으로 그으면 옆 줄과 겹친다. */
 a.cpil:focus-visible {
   outline: 2px solid var(--c-accent);
   outline-offset: -2px;
@@ -599,8 +409,6 @@ a.cpil:focus-visible {
   font-weight: 700;
   color: var(--text-muted);
   font-variant-numeric: tabular-nums;
-  /* 이름 첫 줄과 눈금을 맞춴 놓는다 — 줄 가운데가 아니라 위쪽 정렬이라 설명이
-     길어져도 번호가 따라 내려가지 않는다. */
   padding-top: 0.35em;
   transition: color var(--dur-content) var(--ease);
 }
@@ -636,17 +444,14 @@ a.cpil:focus-visible {
   opacity: 0;
   transition: opacity var(--dur-hover) var(--ease);
 }
-/* 갈 곳 없는 줄에는 "자세히 보기"도 없다(§30). 마지막 칸까지 글이 쓴다. */
 .cpil--flat .cpil__desc {
   grid-column: 3 / -1;
 }
-/* 읽는 줄에만 길이 보인다 — 다만 링크는 다섯 줄 전부 살아 있고 hover·탭이 그것을 드러낸다. */
 a.cpil:hover .cpil__go,
 a.cpil:focus-visible .cpil__go,
 .cpil.is-on .cpil__go {
   opacity: 1;
 }
-/* 활성이 아닌 줄은 한 단 가라앉는다. 스크립트가 있을 때만 건다 — 없으면 다 검게 선다. */
 html.js-pillars .cpil:not(.is-on) .cpil__title,
 html.js-pillars .cpil:not(.is-on) .cpil__desc {
   color: var(--text-muted);
@@ -660,22 +465,13 @@ html.js-pillars .cpil:not(.is-on) .cpil__desc {
     transition-duration: 0.01ms;
   }
 }
-/* 눈금 둘로 줄인다. §28 이 브레이크포인트를 네 종(640 · 860 · 1080 · 1279)으로 묶어 두고
-   있어 새 수를 놓지 않는다 — 있는 눈금을 쓴다.
-
-   1080: 액자는 살려 두고 줄을 접는다. 네 열은 이때 이미 좁아서 제목이 두 줄로 꺾인다.
-   860: 액자도 걷는다. 이 폭에서 붙박이 그림을 세우면 읽을 자리가 반으로 준다. */
 @media (max-width: 1080px) {
-  /* 액자를 걷는다 `[실측 2026-09-15]`. 좀히기만 하면 막대가 된다 — 높이는 오른쪽
-     목록이 정하는데(위 .cpils__frame 주석) 1024 에서 열은 225px 이고 목록은 640px 라
-     1:3 짜리 띄가 선다. 그 폭을 목록에 넘기면 네 열이 그대로 살아 줄이 더 잘 읽힌다. */
   .cpils {
     grid-template-columns: minmax(0, 1fr);
   }
   .cpils__art {
     display: none;
   }
-  /* 액자가 없으면 "활성 줄"이라는 개념도 없다 — 다 검게 읽히고 길도 다 보인다. */
   html.js-pillars .cpil:not(.is-on) .cpil__title {
     color: var(--text-primary);
   }
@@ -687,7 +483,6 @@ html.js-pillars .cpil:not(.is-on) .cpil__desc {
   }
 }
 @media (max-width: 860px) {
-  /* 여기서는 네 열도 좁다. 번호만 옆에 남기고 나머지를 세로로 쌓는다. */
   .cpil {
     grid-template-columns: auto minmax(0, 1fr);
     gap: var(--sp-2) var(--sp-4);
@@ -699,26 +494,6 @@ html.js-pillars .cpil:not(.is-on) .cpil__desc {
     grid-column: 2;
   }
 }
-
-/* ── CEO 인사말 ────────────────────────────────────────────
-   조판은 toss.im/company 의 "토스 팀을 이끌어 가는 사람들" 구획이다(사령관 2026-09-15).
-   제목이 전폭으로 서고, 가는 줄 하나가 제목과 알맹이를 가르고, 그 아래가 두 열로 갈린다 —
-   왼쪽은 점 하나 붙은 작은 이름표, 오른쪽은 인물 카드.
-
-   줄 하나에 대하여. 이 저장소는 2026-09-11 에 얇은 실선을 전부 걷었고(--border-section
-   은 그래서 transparent 다) 구획을 가르는 일은 여백과 면이 맡는다. 여기 긋는 줄은 그
-   규약을 되돌리는 것이 아니라 레퍼런스가 가진 눈금 하나를 옮겨 온 것이라, 선 색이 아니라
-   --rule-track(연혁 축·진행 눈금이 쓰는 그래픽 값, 알파 0.07)을 쓴다. 이 구획 한 곳뿐이다.
-
-   레퍼런스의 카드는 셋이고 여기는 하나다. 오른쪽 열을 다시 카드와 글로 나누는 이유는
-   partials/company-about-ceo.mjs 의 주석에 적었다.
-
-   원본이 505×499 고 아래가 잘려 있다. 340px 로 묶은 것은 그래서다 — 더 키우면 흐려진다.
-   판에 세로 비율을 강제하지 않는다 `[실측 2026-09-15]`: 레퍼런스의 낱장은 3:4 인데 이 그림은
-   거의 정사각이라, 4:5 틀에 넣으면 머리 위로 빈 칸이 4분의 1 남아 인물이 판 아래로 가라앉는다.
-   판은 그림 높이를 그대로 쓰고 네 모서리만 둥글린다 — 레퍼런스의 낱장과 같은 모양이다.
-   바탕을 흰 면으로 두는 것도 같은 이유다: 받아 온 그림 자체가 흰 판 위의 인물이라,
-   회색을 깔면 그림 가장자리에서 두 면이 갈라져 보인다. */
 .cceo {
   display: grid;
   grid-template-columns: minmax(0, 180px) minmax(0, 1fr);
@@ -727,11 +502,9 @@ html.js-pillars .cpil:not(.is-on) .cpil__desc {
   padding-top: var(--sp-6);
   border-top: 1px solid var(--rule-track);
 }
-/* 이름표가 없는 날에는 알맹이가 폭을 다 쓴다 — 빈 열을 남기지 않는다(§29). */
 .cceo--notag {
   grid-template-columns: minmax(0, 1fr);
 }
-/* 왼쪽 이름표 — 제목 위에 서던 눈썹이 내려온 자리다. */
 .cceo__tag {
   display: flex;
   align-items: center;
@@ -749,14 +522,12 @@ html.js-pillars .cpil:not(.is-on) .cpil__desc {
   border-radius: var(--radius-circle);
   background: var(--text-primary);
 }
-/* 오른쪽 열 — 카드와 글. */
 .cceo__set {
   display: grid;
   grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
   gap: var(--sp-8);
   align-items: start;
 }
-/* 사진이 없는 날에는 글이 오른쪽 열을 다 쓴다 — 빈 액자를 남기지 않는다(§29). */
 .cceo--nophoto .cceo__set {
   grid-template-columns: minmax(0, 1fr);
 }
@@ -777,7 +548,6 @@ html.js-pillars .cpil:not(.is-on) .cpil__desc {
   height: auto;
   filter: var(--art-tone);
 }
-/* 판 아래 이름표 — 레퍼런스가 "이승건 | CEO" 로 두는 줄이다. */
 .cceo__sign {
   display: flex;
   align-items: baseline;
@@ -796,14 +566,10 @@ html.js-pillars .cpil:not(.is-on) .cpil__desc {
 .cceo__sign span {
   color: var(--text-faint);
 }
-/* 사진이 빠진 날의 서명은 글 끝에 한 줄로 눕는다 — 카드가 없으니 이름표도 아니다. */
 .cceo__sign--inline {
   margin-top: var(--sp-6);
   font-size: var(--fs-sm);
 }
-/* 리드 한 문단만 크다 — 본문 넷과 같은 크기로 두면 다섯 문단이 한 덩이로 눌린다.
-   표지 리드(.cintro__lede)보다는 한 단 작다. 저쪽은 지면의 첫 문장이고 이쪽은
-   본문을 여는 문장이라, 같은 크기로 두면 지면 안에 큰 활자가 두 번 선다. */
 .cceo__lede {
   margin: 0 0 var(--sp-6);
   max-width: 34ch;
@@ -818,15 +584,12 @@ html.js-pillars .cpil:not(.is-on) .cpil__desc {
   line-height: 1.8;
   color: var(--text-secondary);
 }
-/* "감사합니다." 는 한 낱말이라 앞 문단과 같은 간격으로 두면 문단 넷에 붙어 버린다. */
 .cceo__outro {
   margin-top: var(--sp-6);
   margin-bottom: 0;
   color: var(--text-primary);
 }
 @media (max-width: 1080px) {
-  /* 카드와 글을 먼저 떨어뜨린다. 340px 짜리 판 옆에 남는 글 칸이 40 자 아래로 내려가면
-     문단이 계단처럼 끊긴다 — 왼쪽 이름표 열은 아직 그대로 둔다. */
   .cceo__set {
     grid-template-columns: minmax(0, 1fr);
     gap: var(--sp-6);
@@ -844,8 +607,6 @@ html.js-pillars .cpil:not(.is-on) .cpil__desc {
   filter: var(--art-tone);
 }
 @media (max-width: 860px) {
-  /* 이름표를 글 위로 올리고 초상도 220px 로 줄인다. 180px 짜리 열이 좁은 화면에서
-     폭을 먹으면 글이 반만 남고, 320px 짜리 초상은 얼굴만 나오고 글이 한참 밀린다. */
   .cceo {
     grid-template-columns: minmax(0, 1fr);
     gap: var(--sp-6);
@@ -859,13 +620,6 @@ html.js-pillars .cpil:not(.is-on) .cpil__desc {
     font-size: var(--fs-sm);
   }
 }
-
-/* ── 맺음 ──────────────────────────────────────────────────
-   레퍼런스는 큰 사진 위에 한 줄과 버튼을 둔다. 여기서는 어두운 면으로 대신한다 —
-   이 저장소에 그 자리에 쓸 전면 사진 자산이 없고, 없는 사진을 회색 액자로 두지 않는다.
-   푸터 바로 위라 어두운 면이 두 겹으로 겹치지 않게 라운드 판으로 띄운다. */
-/* 레퍼런스는 큰 사진 위에 비전 한 줄과 버튼을 얹는다. 사진은 배경으로 깔고 그 위에
-   가림막을 둬서 흰 글이 읽히게 한다 — 밝은 사진 위 흰 글은 가림막 없이는 못 읽는다. */
 .cclose--art {
   position: relative;
   isolation: isolate;
@@ -880,14 +634,13 @@ html.js-pillars .cpil:not(.is-on) .cpil__desc {
 }
 .cclose--art::before {
   z-index: -2;
-  background-image: url("/saltware-prototype/media/hub/hub-insights.jpg?v=1dedf123e461");
+  background-image: url("/saltware-prototype/media/hub/hub-insights.jpg?v=acbe94433416");
   background-position: center;
   background-size: cover;
   filter: var(--art-tone);
 }
 .cclose--art::after {
   z-index: -1;
-  /* 아래로 갈수록 짙어진다 — 버튼이 놓이는 자리가 가장 어둡다. */
   background: linear-gradient(
     to bottom,
     rgb(0 0 0 / 0.62) 0%,
@@ -895,10 +648,6 @@ html.js-pillars .cpil:not(.is-on) .cpil__desc {
     rgb(0 0 0 / 0.82) 100%
   );
 }
-/* 이 지면의 맺음만 가운데 정렬이고 폭도 제한이 없어, 나머지 회사·사업 지면의 닫는
-   띠(.section--inverse)와 글의 눈금이 달랐다(실측 1440 — 여기 h2 는 x=383, 다른
-   지면은 x=52). 사진은 그대로 두고 글만 같은 자리에 세운다: 컨테이너와 같은 폭,
-   같은 안여백, 같은 왼쪽 정렬. 세로 여백도 --section-py 로 맞춘다(앞: 130px). */
 .cclose .cclose__in {
   color: var(--text-on-inverse);
   max-width: var(--container);
@@ -916,18 +665,8 @@ html.js-pillars .cpil:not(.is-on) .cpil__desc {
   max-width: 60ch;
   font-size: var(--fs-lede);
   line-height: var(--lh-lede);
-  /* 어두운 면 위 보조 글 — 옅은 회색은 이 면에서 대비가 죽는다. */
   color: var(--text-on-inverse-muted);
 }
-/* 푸터와 붙인다(사령관 2026-09-14 "애매하게 띄워져 있다"). 앞서 64px 틈을 뒀던 것은
-   다른 지면의 닫는 띠와 결을 맞추려던 것인데, 정작 그쪽(.section--inverse)은 틈 없이
-   푸터에 닿는다 — 이 한 장에만 어두운 사진과 검은 푸터 사이에 크림 띠가 하나 끼어
-   있었다(실측 1440: 띠 아래 9002 · 푸터 위 9066). 그래서 아래 여백 규칙을 걷었다 —
-   되살리려면 여기에 margin-bottom 을 다시 준다. */
-/* 버튼을 어두운 면 위에서 뒤집는다. 이 띠는 .section--inverse 가 아니라서
-   components.css 의 그 규칙이 닿지 않았고, 채운 버튼이 잉크 바탕 그대로 나와
-   **어두운 사진 위에 어두운 버튼**이 되어 있었다(실측 2026-09-13 — 바탕 rgb(29,29,31),
-   아래 가림막도 같은 계열이라 테두리가 안 보였다). 그쪽과 같은 값으로 맞춘다. */
 .cclose .btn {
   color: var(--text-accent-on-inverse);
   border-color: var(--border-inverse);
@@ -945,28 +684,14 @@ html.js-pillars .cpil:not(.is-on) .cpil__desc {
   background: var(--c-neutral-200);
   border-color: var(--c-neutral-200);
 }
-
-/* ── 스크롤 움직임 한 단 더 ────────────────────────────────
-   패럴랙스: 맺음 띠의 사진이 지면보다 느리게 흐른다. 값(--py)은 scripts/parallax.mjs 가
-   넘기고, 움직이는 방법은 여기서 정한다. 스크립트가 없으면 --py 가 0 이라 제자리에 선다.
-   사진을 판보다 키워 두는 것이 핵심이다 — 같은 높이면 흐르는 동안 위아래 끝이 드러난다.
-
-   한때 본문 중간에도 가로 꽉 찬 사진 띠(.cband)가 하나 있었다. 걷었다 —
-   사진 한 장만 달랑 놓여 아무 말도 하지 않았다(사령관 2026-09-11). */
 .cclose--art::before {
   translate: 0 calc(var(--py, 0) * 100%);
   inset: -20% 0;
   will-change: translate;
 }
-
-/* 등장 폭을 이 지면에서만 키운다 — 20px 는 큰 판에서 거의 안 보인다(사령관 2026-09-11).
-   같은 늦춤(--d)을 그대로 쓰므로 순서는 변하지 않고 이동량만 커진다. */
 html.js-reveal [data-reveal]:not(.is-in) > * {
   translate: 0 40px;
 }
-/* 카드는 살짝 작게 왔다가 제 크기로 선다 — 판이 큰 구획에서 등장이 눈에 들어온다.
-   사업 기둥(.cpil)은 빠졌다. 카드였을 때는 작아졌다 서는 것이 보였지만, 가로로 긴
-   줄이 되면서 같은 3% 가 선 하나가 좌우로 늘었다 줄어드는 것으로 보인다. */
 .cstat {
   transition-property:
     opacity, translate, scale, border-color, box-shadow, transform;
@@ -974,26 +699,6 @@ html.js-reveal [data-reveal]:not(.is-in) > * {
 html.js-reveal [data-reveal]:not(.is-in) > .cstat {
   scale: 0.97;
 }
-
-/* ── 그림을 덜 당긴다 — 회사 소개 본문만 (사령관 2026-09-16) ────────────
-   "이미지 안에 있는 이미지가 너무 큰 느낌인데 이미지만 줄여줘." 액자는 그대로 두고
-   **안의 그림만** 작게 앉힌다는 판정이다 — 조판·글·여백은 한 칸도 움직이지 않는다.
-
-   왜 큰가: 액자가 세로인데 원본은 다 가로라 object-fit: cover 가 폭을 기준으로
-   확대해 좌우를 잘라낸다 `[실측 2026-09-16 · 1440]`.
-     · .cintro__shot  403×538 액자에 600×375 사진 → 861×538 로 늘어나 폭의 53% 가 잘림
-     · .cpils__shot   340×608 액자에 1000×625 일러스트 → 973 폭(2.9배) — 구름이 액자에
-       걸려 잘린 채 서 있었다
-     · .hub-card      431×431 정사각에 3:2 렌더 → 위아래가 잘림
-   그래서 배율을 낮추는 쪽으로 간다. 대신 잘린 자리가 풀리므로 액자 바탕(--bg-band ·
-   --bg-card)이 위아래 띠로 드러난다 — 그 띠가 이 판정의 값이다.
-
-   손대지 않은 것: 표지(.cintro__cover — 화면을 채우는 무대라 잘림이 조판 그 자체다),
-   가로로 흐르는 카드(.cstack — 1200×1000 이 720×648 에 들어가 잘림이 7% 뿐이다),
-   대표 사진(.cceo__frame — 이미 height: auto 라 잘리지 않는다), 맺음 띠. */
-
-/* 사진 줄. 통째로 풀면(contain) 403×252 만 남아 액자 절반이 띠가 된다 — 높이만
-   78% 로 줄여 잘림을 53%→40% 로 낮춘다. 피사체는 1.43배에서 1.12배가 된다. */
 .company-about .cintro__shot {
   display: grid;
   align-content: center;
@@ -1001,14 +706,6 @@ html.js-reveal [data-reveal]:not(.is-in) > .cstat {
 .company-about .cintro__shot img {
   height: 78%;
 }
-
-/* 사업 기둥의 일러스트는 통째로 푼다 — 오브젝트 한 덩이가 가운데 놓인 그림이라
-   조금만 잘려도 덩이가 액자에 걸린다. 바탕이 흰 렌더여서 띠와 이어진다. */
 .company-about .cpils__shot {
   object-fit: contain;
 }
-
-/* "회사의 다른 지면" 여섯은 여기서 손대지 않는다 — 2026-09-16 에 그림 자체를
-   알맹이 82% 로 다시 구웠다(design-resources/18-company-card/bake-photo.mjs 의 FILL).
-   CSS 로 한 번 더 줄이면 두 번 줄어든다. 허브(/company)와 여기가 같은 파일을 쓰므로
-   굽는 자리에서 고친 것이 두 지면에 함께 듣는다. */

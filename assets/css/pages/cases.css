@@ -1,19 +1,4 @@
-/* 고객 사례 — /insights/cases 한 장만 쓰는 시트(2026-09-16).
- *
- * 지면이 2단 목록에서 거르는 격자로 바뀌면서 들어온 규칙들이다. components.css 에 두지
- * 않은 이유는 여기 있는 것이 한 지면의 조판이기 때문이다 — `.chip` · `.footnote` ·
- * `.section__head` 처럼 여러 지면이 나눠 쓰는 것은 여전히 저쪽에 있고, 이 파일은
- * 그것들을 **쓰기만** 한다(같은 이름을 다시 정의하지 않는다).
- *
- * 머리 띠는 이 시트가 손대지 않는다 — .pbanner--bare 그대로다(기술 역량 · IR · 인재채용과
- * 같은 틀). 지면마다 머리 모양을 따로 그리기 시작하면 그 넷이 다시 갈린다.
- */
 
-/* ── 거르는 판 ─────────────────────────────────────────── */
-
-/* 칩 줄 둘이 위에, 격자가 아래에. 축이 둘이라 줄마다 이름표가 붙는다 —
-   "전체 · 제조 · 금융 …" 과 "전체 · 클라우드 · 데이터 …" 가 이름 없이 세로로 겹치면
-   둘째 줄이 첫 줄의 이어짐으로 읽힌다(참고 지면이 같은 자리에서 라벨을 단 이유다). */
 .cbd__filters {
   display: grid;
   gap: var(--sp-3);
@@ -33,31 +18,17 @@
   letter-spacing: var(--tracking-label);
   color: var(--text-faint);
 }
-/* 칩 줄은 판의 마지막 요소가 아니다 — 아래 칩 줄과 붙어 서므로 제 아래 여백을 지운다.
-   .chips 기본값(--sp-5)은 줄 하나가 목록 바로 위에 설 때의 간격이다. */
 .cbd__axis .chips {
   margin-bottom: 0;
 }
-
-/* ── 사례 격자 ─────────────────────────────────────────── */
-
-/* 넉 장이 한 줄. 컨테이너가 넓어(최대 1800px) 석 장으로 두면 카드 하나가 590px 가 되는데,
-   그 안에 드는 글은 제목 한 줄과 설명 한 줄뿐이라 카드가 글보다 훨씬 커진다. */
 .cbd__grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--gap-grid);
 }
-/* 작성자 display 가 UA 의 [hidden]{display:none} 을 이긴다 — 걸러 낸 카드가 그대로
-   보인다(.rail__card 가 같은 함정을 밟았다). 명시해서 끈다. */
 .ccase[hidden] {
   display: none;
 }
-
-/* 카드 한 장. 흰 지면 위에 크림 면으로 선다 — 이 저장소는 선을 걷어 왔으므로(--border-hair
-   가 transparent 다) 칸을 가르는 것은 테두리가 아니라 면이다.
-   위가 그림 한 판이고 아래가 글이다. 여백을 카드가 아니라 글 칸이 갖는 이유가 그것이다 —
-   카드가 padding 을 가지면 그림이 사방으로 한 칸 물러나 액자 안의 액자가 된다. */
 .ccase {
   display: grid;
   grid-template-rows: auto 1fr;
@@ -65,8 +36,6 @@
   background: var(--bg-band);
   overflow: hidden;
 }
-/* 머리 그림. 사례의 사진이 아니라 카드를 구별해 주는 무늬다(32-case-card-art).
-   SVG 라 어느 폭에서도 무너지지 않는다 — 비율만 잡아 주면 된다. */
 .ccase__art {
   display: block;
   width: 100%;
@@ -74,8 +43,6 @@
   aspect-ratio: 16 / 10;
   object-fit: cover;
 }
-/* 글 넉 줄 — 분류 · 제목 · 한 줄 · 사업. 사업 줄은 언제나 바닥에 붙는다:
-   설명이 없는 카드(여섯 장)에서도 밑줄의 높이가 옆 카드와 어긋나지 않는다. */
 .ccase__say {
   display: grid;
   grid-template-rows: auto auto 1fr auto;
@@ -89,16 +56,12 @@
   gap: var(--sp-2);
   margin: 0;
 }
-/* 사업부가 적어 둔 분류다 — "커머스 · 성장기", "반도체 제조 · 국가 과제".
-   카드에서 가장 먼저 읽히는 손잡이라 조용한 회색으로 두지 않는다. */
 .ccase__tag {
   font-size: var(--fs-xs);
   font-weight: 700;
   letter-spacing: var(--tracking-label);
   color: var(--text-primary);
 }
-/* 산업 이름. 위 분류와 같은 줄에 서지만 다른 물건이다 — 이쪽은 칩 줄이 거르는 그 키라
-   면을 깔아 이름표로 세운다. 알약이 아니라 --radius-sm 이다: 누르는 것이 아니다(§8). */
 .ccase__ind {
   padding: var(--sp-1) var(--sp-2);
   border-radius: var(--radius-sm);
@@ -121,9 +84,6 @@
   line-height: 1.62;
   color: var(--text-muted);
 }
-/* 어느 사업이 한 일인지. 카드 전체를 링크로 만들지 않는다 — 사례마다 제 상세 지면이
-   있는 것이 아니라 전부 같은 사업 지면으로 가므로, 카드를 통째로 누를 수 있게 하면
-   "이 사례를 더 읽는다"는 약속을 하고 사업 소개를 여는 셈이 된다. 밑줄만 문이다. */
 .ccase__unit {
   display: flex;
   align-items: center;
@@ -146,18 +106,14 @@
 .ccase__unit:hover .ccase__go {
   transform: translateX(var(--sp-1));
 }
-
-/* 아무것도 안 남는 조합이 있다(제조 × 포털). 빈 격자만 남기면 고장으로 읽힌다. */
 .cbd__empty {
   margin: var(--sp-7) 0 0;
   font-size: var(--fs-sm);
   color: var(--text-faint);
 }
-/* 사업이 달아 둔 고지는 격자와 한 칸 띄운다 — 카드의 일부로 읽히면 안 된다. */
 .cbd .footnote {
   margin-top: var(--sp-6);
 }
-
 @media (max-width: 1279px) {
   .cbd__grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -169,8 +125,6 @@
   }
 }
 @media (max-width: 640px) {
-  /* 이름표를 칩 줄 위로 올린다 — 5rem 을 왼쪽에 떼어 주면 칩이 설 폭이 없다.
-     좁은 화면의 .chips 는 한 줄로 두고 옆으로 미는 벌이라(components.css) 더 그렇다. */
   .cbd__axis {
     grid-template-columns: minmax(0, 1fr);
     gap: var(--sp-2);

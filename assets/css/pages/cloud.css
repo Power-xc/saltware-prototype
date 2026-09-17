@@ -1,9 +1,4 @@
-/* Cloud · AWS MSP 전용.
-   .bu--cloud 아래로만 건다 — 여기서 만든 것이 메인이나 다른 사업 페이지에
-   새어 나가지 않게 하기 위해서다. 공용 컴포넌트를 고쳐야 할 일이 생기면
-   components.css 로 올리되, 그때는 다른 페이지를 함께 확인한다. */
 
-/* 인사이트 — 분류·날짜·제목만. 없는 썸네일과 발췌를 만들지 않는다. */
 .bu--cloud .ils {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -36,7 +31,6 @@
 .bu--cloud a.il:hover .il__title {
   color: var(--text-accent);
 }
-
 @media (max-width: 1080px) {
   .bu--cloud .ils {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -47,9 +41,3 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
-
-/* AWS 자격 뱃지(.bgs)는 여기 없다 — components.css 로 옮겼다(2026-09-11).
-   클라우드 지면만 쓰던 것을 기술 역량 지면(/company/capabilities)이 같은 마크업으로
-   함께 쓰기 시작했는데, 규칙이 `.bu--cloud` 안에 갇혀 있어 그쪽에서는 아무것도 걸리지
-   않았다 — 뱃지가 글머리표 달린 한 줄 목록으로 쏟아졌다. 쓰는 지면이 둘이면 지면 파일이
-   아니라 컴포넌트 파일이 그 자리다. */
