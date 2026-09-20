@@ -1236,3 +1236,64 @@ a.story:hover .story__more {
     animation: none;
   }
 }
+.intro {
+  display: none;
+}
+html.js-intro .intro {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  background: var(--c-neutral-800);
+  animation: intro-veil 1.92s var(--ease) forwards;
+}
+.intro__stage {
+  display: grid;
+  justify-items: center;
+  gap: var(--sp-5);
+}
+.intro__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-circle);
+  background: var(--c-accent-500);
+  animation: intro-dot 0.52s var(--ease) both;
+}
+.intro__mask {
+  display: block;
+  overflow: hidden;
+}
+.intro__mask .wordmark {
+  width: clamp(132px, 22vw, 200px);
+  height: auto;
+  animation: intro-rise 0.72s var(--ease) 180ms both;
+}
+@keyframes intro-veil {
+  0%,
+  68% {
+    opacity: 1;
+    translate: 0 0;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    translate: 0 -2%;
+    visibility: hidden;
+  }
+}
+@keyframes intro-dot {
+  from {
+    opacity: 0;
+    scale: 0.2;
+  }
+}
+@keyframes intro-rise {
+  from {
+    translate: 0 105%;
+  }
+}
+html.js-intro:not(.intro-done)
+  :is(.hero__w, .hero--home .hero__lede, .hero__mark, .hero__dot) {
+  animation: none;
+}
