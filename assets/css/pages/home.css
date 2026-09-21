@@ -1286,6 +1286,32 @@ html.js-intro .intro {
 .intro__mask > .wordmark {
   display: block;
 }
+.intro__wordmark {
+  position: relative;
+  display: block;
+}
+.intro__wordmark::before {
+  content: "";
+  position: absolute;
+  inset: -105% -18%;
+  background:
+    radial-gradient(
+      44% 46% at 38% 50%,
+      rgb(255 243 226 / 0.95) 0%,
+      rgb(247 178 74 / 0.62) 42%,
+      rgb(232 129 26 / 0) 76%
+    ),
+    radial-gradient(
+      36% 38% at 67% 54%,
+      rgb(255 243 226 / 0.68) 0%,
+      rgb(244 159 32 / 0.5) 44%,
+      rgb(232 129 26 / 0) 78%
+    );
+  filter: blur(20px);
+  animation:
+    intro-bloom 0.9s var(--ease) 0.06s both,
+    intro-bloom-out 0.34s var(--ease) 2.62s forwards;
+}
 .intro__wordmark .wordmark {
   width: clamp(112px, 16vw, 158px);
   height: auto;
@@ -1326,6 +1352,15 @@ html.js-intro .intro {
 .intro__verb {
   color: var(--text-on-inverse);
 }
+.intro__beat:nth-of-type(1) .intro__verb {
+  animation: intro-flare 1s var(--ease) 0.62s both;
+}
+.intro__beat:nth-of-type(2) .intro__verb {
+  animation: intro-flare 1s var(--ease) 0.9s both;
+}
+.intro__beat:nth-of-type(3) .intro__verb {
+  animation: intro-flare 1s var(--ease) 1.18s both;
+}
 .intro__beat:nth-of-type(1) .intro__mask > span {
   animation:
     intro-rise 0.5s var(--ease) 0.62s both,
@@ -1347,7 +1382,9 @@ html.js-intro .intro {
   height: 9px;
   border-radius: var(--radius-circle);
   background: var(--c-accent-500);
-  animation: intro-dot 0.4s var(--ease) 1.9s both;
+  animation:
+    intro-dot 0.4s var(--ease) 1.9s both,
+    intro-dot-glow 0.98s var(--ease) 1.9s both;
 }
 .intro__skip {
   display: none;
@@ -1438,6 +1475,62 @@ html.js-intro .intro {
   100% {
     opacity: 1;
     scale: 1;
+  }
+}
+@keyframes intro-bloom {
+  0% {
+    opacity: 0;
+    scale: 0.42 0.7;
+  }
+  38% {
+    opacity: 1;
+    scale: 1.1 1.06;
+  }
+  100% {
+    opacity: 0.72;
+    scale: 1;
+  }
+}
+@keyframes intro-bloom-out {
+  from {
+    opacity: 0.72;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes intro-flare {
+  0% {
+    text-shadow:
+      0 0 0 rgb(255 243 226 / 0),
+      0 0 0 rgb(244 159 32 / 0);
+  }
+  26% {
+    text-shadow:
+      0 0 18px rgb(255 243 226 / 0.7),
+      0 0 44px rgb(244 159 32 / 0.45);
+  }
+  100% {
+    text-shadow:
+      0 0 0 rgb(255 243 226 / 0),
+      0 0 0 rgb(244 159 32 / 0);
+  }
+}
+@keyframes intro-dot-glow {
+  0% {
+    box-shadow:
+      0 0 0 0 rgb(255 243 226 / 0),
+      0 0 0 0 rgb(244 159 32 / 0);
+  }
+  30% {
+    box-shadow:
+      0 0 10px 2px rgb(255 243 226 / 0.75),
+      0 0 30px 9px rgb(244 159 32 / 0.5);
+  }
+  100% {
+    box-shadow:
+      0 0 0 0 rgb(255 243 226 / 0),
+      0 0 0 0 rgb(244 159 32 / 0);
   }
 }
 @keyframes intro-hint {
