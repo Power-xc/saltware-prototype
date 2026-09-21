@@ -1253,6 +1253,14 @@ html.js-intro .intro {
   background: var(--c-black);
   animation: intro-wipe 0.66s var(--ease) 3.22s both;
 }
+.intro__surface::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='turbulence' baseFrequency='1.1' numOctaves='1' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23g)'/%3E%3C/svg%3E");
+  opacity: 0.16;
+  animation: intro-grain 0.64s steps(1, end) infinite;
+}
 .intro__surface::after {
   content: "";
   position: absolute;
@@ -1390,6 +1398,23 @@ html.js-intro .intro {
   }
   to {
     clip-path: inset(100% 0 0 0);
+  }
+}
+@keyframes intro-grain {
+  0% {
+    translate: 0 0;
+  }
+  20% {
+    translate: -6% 3%;
+  }
+  40% {
+    translate: 4% -5%;
+  }
+  60% {
+    translate: -3% -2%;
+  }
+  80% {
+    translate: 5% 4%;
   }
 }
 @keyframes intro-edge {
