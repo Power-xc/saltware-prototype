@@ -476,14 +476,14 @@
   position: relative;
   z-index: 1;
 }
-.section--inverse .btn--solid,
-.section--stone .btn--solid {
+.section--inverse .btn.btn--solid,
+.section--stone .btn.btn--solid {
   background: var(--c-white);
   color: var(--c-neutral-900);
   border-color: var(--c-white);
 }
-.section--inverse .btn--solid:hover,
-.section--stone .btn--solid:hover {
+.section--inverse .btn.btn--solid:hover,
+.section--stone .btn.btn--solid:hover {
   background: var(--c-neutral-150);
   border-color: var(--c-neutral-150);
 }
@@ -1786,6 +1786,10 @@ a.bg__asset:hover {
   color: inherit;
   opacity: 0.6;
 }
+.btn .ext-mark {
+  color: inherit;
+  opacity: 0.6;
+}
 .footer__top {
   display: grid;
   gap: var(--sp-4);
@@ -2549,7 +2553,7 @@ a.tile:hover .tile__glyph svg circle:nth-child(9) {
 }
 .feat--split .feat__eyebrow {
   margin: 0 0 var(--sp-3);
-  color: var(--text-muted);
+  color: var(--text-secondary);
 }
 .feat--split .feat__title {
   display: block;
@@ -3404,6 +3408,8 @@ a.cs:hover .cs__go {
   color: var(--text-on-inverse);
 }
 .section--deep .lede,
+.section--deep p:not(.eyebrow),
+.section--deep .card__desc,
 .section--deep .footnote {
   color: var(--text-on-inverse-muted);
 }
@@ -3674,7 +3680,17 @@ a.brief:hover {
   height: 100%;
   object-fit: cover;
   display: block;
-  filter: var(--art-tone);
+  filter: var(--art-rest);
+  transition: filter var(--dur-content) var(--ease);
+}
+.brief:hover .brief__cover img,
+.brief:focus-visible .brief__cover img {
+  filter: var(--art-lift);
+}
+@media (prefers-reduced-motion: reduce) {
+  .brief__cover img {
+    transition: none;
+  }
 }
 .brief__body {
   display: flex;
