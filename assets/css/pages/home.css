@@ -1250,14 +1250,17 @@ html.js-intro .intro {
 .intro__surface {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(
-      58% 44% at 50% 46%,
-      rgb(var(--c-accent-500-rgb) / 0.12) 0%,
-      transparent 70%
-    ),
-    var(--c-neutral-800);
+  background: var(--c-black);
   animation: intro-wipe 0.66s var(--ease) 3.22s both;
+}
+.intro__surface::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: rgb(255 255 255 / 0.16);
+  opacity: 0;
+  animation: intro-edge 0.66s var(--ease) 3.22s forwards;
 }
 .intro__stage {
   display: grid;
@@ -1318,25 +1321,25 @@ html.js-intro .intro {
   line-height: 1.25;
   letter-spacing: -0.015em;
   color: var(--text-on-inverse-muted);
-  animation: intro-gather 0.54s var(--ease) 1.86s both;
+  animation: intro-gather 0.54s var(--ease) 1.88s both;
 }
 .intro__step:nth-of-type(1) .intro__mask > span {
-  animation: intro-rise 0.38s var(--ease) 0.54s both;
+  animation: intro-rise 0.36s var(--ease) 0.54s both;
 }
 .intro__step:nth-of-type(2) .intro__mask > span {
-  animation: intro-rise 0.38s var(--ease) 0.67s both;
+  animation: intro-rise 0.36s var(--ease) 0.71s both;
 }
 .intro__step:nth-of-type(3) .intro__mask > span {
-  animation: intro-rise 0.38s var(--ease) 0.8s both;
+  animation: intro-rise 0.36s var(--ease) 0.87s both;
 }
 .intro__step:nth-of-type(4) .intro__mask > span {
-  animation: intro-rise 0.38s var(--ease) 0.93s both;
+  animation: intro-rise 0.36s var(--ease) 1.02s both;
 }
 .intro__step:nth-of-type(5) .intro__mask > span {
-  animation: intro-rise 0.38s var(--ease) 1.06s both;
+  animation: intro-rise 0.36s var(--ease) 1.16s both;
 }
 .intro__step:nth-of-type(6) .intro__mask > span {
-  animation: intro-rise 0.38s var(--ease) 1.19s both;
+  animation: intro-rise 0.36s var(--ease) 1.29s both;
 }
 .intro__lead {
   margin: 0;
@@ -1348,7 +1351,7 @@ html.js-intro .intro {
 }
 .intro__lead .intro__mask > span {
   animation:
-    intro-rise 0.5s var(--ease) 1.94s both,
+    intro-rise 0.5s var(--ease) 1.96s both,
     intro-sink 0.32s var(--ease) 3.04s both;
 }
 .intro__close {
@@ -1357,7 +1360,7 @@ html.js-intro .intro {
   justify-content: center;
   gap: 0.16em;
   margin: 0;
-  font-size: clamp(23px, 3.3vw, 42px);
+  font-size: clamp(24px, 3.4vw, 44px);
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: -0.025em;
@@ -1365,7 +1368,7 @@ html.js-intro .intro {
 }
 .intro__close .intro__mask > span {
   animation:
-    intro-rise 0.62s var(--ease) 2.24s both,
+    intro-rise 0.62s var(--ease) 2.26s both,
     intro-sink 0.32s var(--ease) 3.08s both;
 }
 .intro__dot {
@@ -1374,7 +1377,7 @@ html.js-intro .intro {
   height: 9px;
   border-radius: var(--radius-circle);
   background: var(--c-accent-500);
-  animation: intro-dot 0.4s var(--ease) 2.74s both;
+  animation: intro-dot 0.4s var(--ease) 2.76s both;
 }
 @keyframes intro-gone {
   to {
@@ -1389,9 +1392,20 @@ html.js-intro .intro {
     clip-path: inset(100% 0 0 0);
   }
 }
+@keyframes intro-edge {
+  from {
+    top: 0;
+    opacity: 1;
+  }
+  to {
+    top: 100%;
+    opacity: 1;
+  }
+}
 @keyframes intro-rise {
   from {
     translate: 0 105%;
+    letter-spacing: 0.06em;
   }
 }
 @keyframes intro-sink {
@@ -1407,7 +1421,8 @@ html.js-intro .intro {
 @keyframes intro-gather {
   to {
     opacity: 0;
-    scale: 0.72;
+    scale: 0.6;
+    letter-spacing: -0.06em;
     filter: blur(3px);
   }
 }
@@ -1436,4 +1451,25 @@ html.js-intro.intro-done .hero--home {
   from {
     scale: 1.03;
   }
+}
+html.js-intro.intro-done .hcards > .hcard {
+  animation: hero-in 0.6s var(--ease) backwards;
+}
+html.js-intro.intro-done .hcards > .hcard:nth-child(1) {
+  animation-delay: 0.42s;
+}
+html.js-intro.intro-done .hcards > .hcard:nth-child(2) {
+  animation-delay: 0.49s;
+}
+html.js-intro.intro-done .hcards > .hcard:nth-child(3) {
+  animation-delay: 0.56s;
+}
+html.js-intro.intro-done .hcards > .hcard:nth-child(4) {
+  animation-delay: 0.63s;
+}
+html.js-intro.intro-done .hcards > .hcard:nth-child(5) {
+  animation-delay: 0.7s;
+}
+html.js-intro.intro-done .hcards > .hcard:nth-child(6) {
+  animation-delay: 0.77s;
 }
