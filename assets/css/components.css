@@ -753,10 +753,10 @@
   max-width: 42ch;
 }
 .hero--media.hero--m-hub-business {
-  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=e67236b54864");
+  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=7c76d6f49a99");
 }
 .hero--media.hero--m-hub-insights {
-  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=e67236b54864");
+  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=7c76d6f49a99");
 }
 .nb {
   white-space: nowrap;
@@ -1416,11 +1416,15 @@
   height: 100%;
   object-fit: cover;
   display: block;
-  filter: var(--art-tone);
-  transition: scale var(--dur-hover) var(--ease);
+  filter: var(--art-rest);
+  transition:
+    scale var(--dur-hover) var(--ease),
+    filter var(--dur-content) var(--ease);
 }
-a.press:hover .press__cover img {
+a.press:hover .press__cover img,
+a.press:focus-visible .press__cover img {
   scale: 1.04;
+  filter: var(--art-lift);
 }
 .press__body {
   display: flex;
@@ -2484,7 +2488,7 @@ a.tile:hover .tile__glyph svg circle:nth-child(9) {
   line-height: 1.4;
 }
 .feat--art {
-  --card-media: url("/saltware-prototype/media/insight/feature.jpg?v=e67236b54864");
+  --card-media: url("/saltware-prototype/media/insight/feature.jpg?v=7c76d6f49a99");
 }
 .feat[class*="feat--"] .feat__lead::before {
   content: "";
@@ -2706,19 +2710,19 @@ a.tile:hover .tile__glyph svg circle:nth-child(9) {
   }
 }
 .hub-card--cases {
-  --card-media: url("/saltware-prototype/media/insight/card-cases.jpg?v=e67236b54864");
+  --card-media: url("/saltware-prototype/media/insight/card-cases.jpg?v=7c76d6f49a99");
 }
 .hub-card--industry {
-  --card-media: url("/saltware-prototype/media/insight/card-industry.jpg?v=e67236b54864");
+  --card-media: url("/saltware-prototype/media/insight/card-industry.jpg?v=7c76d6f49a99");
 }
 .hub-card--report {
-  --card-media: url("/saltware-prototype/media/insight/card-report.jpg?v=e67236b54864");
+  --card-media: url("/saltware-prototype/media/insight/card-report.jpg?v=7c76d6f49a99");
 }
 .hub-card--library {
-  --card-media: url("/saltware-prototype/media/insight/card-library.jpg?v=e67236b54864");
+  --card-media: url("/saltware-prototype/media/insight/card-library.jpg?v=7c76d6f49a99");
 }
 .hub-card--news {
-  --card-media: url("/saltware-prototype/media/insight/card-news.jpg?v=e67236b54864");
+  --card-media: url("/saltware-prototype/media/insight/card-news.jpg?v=7c76d6f49a99");
 }
 .hubcol {
   display: flex;
