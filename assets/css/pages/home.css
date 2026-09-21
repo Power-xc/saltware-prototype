@@ -1387,6 +1387,37 @@ html.js-intro .intro {
   background: var(--c-accent-500);
   animation: intro-dot 0.4s var(--ease) 2.76s both;
 }
+.intro__skip {
+  display: none;
+}
+.intro--skippable {
+  cursor: pointer;
+}
+.intro--skippable .intro__skip {
+  display: block;
+  position: absolute;
+  left: 50%;
+  bottom: var(--sp-7);
+  translate: -50% 0;
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: -0.01em;
+  color: var(--text-on-inverse-muted);
+  opacity: 0;
+  animation:
+    intro-hint 0.6s var(--ease) 1.4s both,
+    intro-hint-out 0.3s var(--ease) 2.86s forwards;
+}
+@keyframes intro-hint {
+  to {
+    opacity: 0.5;
+  }
+}
+@keyframes intro-hint-out {
+  to {
+    opacity: 0;
+  }
+}
 @keyframes intro-gone {
   to {
     visibility: hidden;
