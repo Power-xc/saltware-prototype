@@ -3279,6 +3279,12 @@ a.cs:hover .cs__go {
     grid-column: 1;
   }
 }
+video[aria-hidden="true"]::-webkit-media-controls,
+video[aria-hidden="true"]::-webkit-media-controls-start-playback-button,
+video[aria-hidden="true"]::-webkit-media-controls-play-button {
+  display: none !important;
+  -webkit-appearance: none;
+}
 .reveal,
 [data-reveal] > * {
   --d: calc(var(--i, 0) * 70ms);

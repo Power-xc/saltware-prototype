@@ -129,11 +129,6 @@
     --hcard-scale: 1.2;
   }
 }
-@media (max-height: 850px) {
-  .hcards {
-    --hcard-scale: 1;
-  }
-}
 .hcard {
   position: relative;
   isolation: isolate;
@@ -1533,40 +1528,4 @@ html.js-intro.intro-done .hcards > .hcard:nth-child(5) {
 }
 html.js-intro.intro-done .hcards > .hcard:nth-child(6) {
   animation-delay: 0.77s;
-}
-@media (min-width: 1080px) {
-  html.js-stage .proof-stage {
-    position: relative;
-    height: 240vh;
-    --p: 0;
-  }
-  html.js-stage .proof-stage__pin {
-    position: sticky;
-    top: var(--header-h);
-    height: calc(100vh - var(--header-h));
-    display: grid;
-    align-content: center;
-  }
-  html.js-stage .proof-stage .bento__cell {
-    transition: none;
-    --q: calc(var(--p) / 0.52);
-    --o: clamp(0, calc((var(--q) - var(--k, 0)) / 0.1), 1);
-    opacity: var(--o);
-    translate: 0 calc((1 - var(--o)) * 18px);
-  }
-  html.js-stage .proof-stage .bento__cell:nth-child(2) {
-    --k: 0.16;
-  }
-  html.js-stage .proof-stage .bento__cell:nth-child(3) {
-    --k: 0.32;
-  }
-  html.js-stage .proof-stage .bento__cell:nth-child(4) {
-    --k: 0.48;
-  }
-  html.js-stage .proof-stage .bento__cell:nth-child(5) {
-    --k: 0.64;
-  }
-  html.js-stage .proof-stage .bento__cell:nth-child(6) {
-    --k: 0.8;
-  }
 }
