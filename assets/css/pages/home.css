@@ -1245,47 +1245,109 @@ html.js-intro .intro {
   z-index: 200;
   display: grid;
   place-items: center;
-  background: var(--c-neutral-800);
-  animation: intro-veil 1.92s var(--ease) forwards;
+  animation: intro-gone 2.85s steps(1, end) forwards;
+}
+.intro__surface {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(
+      58% 44% at 50% 46%,
+      rgb(var(--c-accent-500-rgb) / 0.12) 0%,
+      transparent 70%
+    ),
+    var(--c-neutral-800);
+  animation: intro-wipe 0.7s var(--ease) 2s both;
 }
 .intro__stage {
   display: grid;
   justify-items: center;
-  gap: var(--sp-5);
-}
-.intro__dot {
-  width: 10px;
-  height: 10px;
-  border-radius: var(--radius-circle);
-  background: var(--c-accent-500);
-  animation: intro-dot 0.52s var(--ease) both;
+  gap: var(--sp-7);
+  padding-inline: var(--sp-6);
+  text-align: center;
 }
 .intro__mask {
+  position: relative;
   display: block;
   overflow: hidden;
 }
-.intro__mask .wordmark {
-  width: clamp(132px, 22vw, 200px);
-  height: auto;
-  animation: intro-rise 0.72s var(--ease) 180ms both;
+.intro__mask > span,
+.intro__mask > .wordmark {
+  display: block;
 }
-@keyframes intro-veil {
-  0%,
-  68% {
-    opacity: 1;
-    translate: 0 0;
-    visibility: visible;
-  }
-  100% {
-    opacity: 0;
-    translate: 0 -2%;
+.intro__wordmark .wordmark {
+  width: clamp(118px, 17vw, 168px);
+  height: auto;
+  animation:
+    intro-rise 0.64s var(--ease) 0.12s both,
+    intro-sink 0.36s var(--ease) 1.92s both;
+}
+.intro__wordmark .intro__mask::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 36%,
+    rgb(255 255 255 / 0.45) 50%,
+    transparent 64%
+  );
+  translate: -150% 0;
+  animation: intro-sweep 0.68s var(--ease) 0.42s both;
+}
+.intro__lines {
+  display: grid;
+  justify-items: center;
+  gap: var(--sp-2);
+  margin: 0;
+  font-size: clamp(21px, 2.9vw, 36px);
+  font-weight: 700;
+  line-height: 1.22;
+  letter-spacing: -0.02em;
+  color: var(--text-on-inverse-muted);
+}
+.intro__line {
+  display: flex;
+  align-items: baseline;
+  gap: 0.18em;
+}
+.intro__line--last {
+  color: var(--text-on-inverse);
+}
+.intro__line:nth-of-type(1) .intro__mask > span {
+  animation:
+    intro-rise 0.66s var(--ease) 0.56s both,
+    intro-sink 0.36s var(--ease) 1.92s both;
+}
+.intro__line:nth-of-type(2) .intro__mask > span {
+  animation:
+    intro-rise 0.66s var(--ease) 0.7s both,
+    intro-sink 0.36s var(--ease) 1.98s both;
+}
+.intro__line:nth-of-type(3) .intro__mask > span {
+  animation:
+    intro-rise 0.66s var(--ease) 0.84s both,
+    intro-sink 0.36s var(--ease) 2.04s both;
+}
+.intro__dot {
+  align-self: center;
+  width: 9px;
+  height: 9px;
+  border-radius: var(--radius-circle);
+  background: var(--c-accent-500);
+  animation: intro-dot 0.42s var(--ease) 1.5s both;
+}
+@keyframes intro-gone {
+  to {
     visibility: hidden;
   }
 }
-@keyframes intro-dot {
+@keyframes intro-wipe {
   from {
-    opacity: 0;
-    scale: 0.2;
+    clip-path: inset(0 0 0 0);
+  }
+  to {
+    clip-path: inset(100% 0 0 0);
   }
 }
 @keyframes intro-rise {
@@ -1293,7 +1355,39 @@ html.js-intro .intro {
     translate: 0 105%;
   }
 }
+@keyframes intro-sink {
+  to {
+    translate: 0 -105%;
+  }
+}
+@keyframes intro-sweep {
+  to {
+    translate: 150% 0;
+  }
+}
+@keyframes intro-dot {
+  0% {
+    opacity: 0;
+    scale: 0.2;
+  }
+  64% {
+    opacity: 1;
+    scale: 1.34;
+  }
+  100% {
+    opacity: 1;
+    scale: 1;
+  }
+}
 html.js-intro:not(.intro-done)
   :is(.hero__w, .hero--home .hero__lede, .hero__mark, .hero__dot) {
   animation: none;
+}
+html.js-intro.intro-done .hero--home {
+  animation: intro-settle 0.7s var(--ease) both;
+}
+@keyframes intro-settle {
+  from {
+    scale: 1.03;
+  }
 }
