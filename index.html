@@ -20,12 +20,10 @@
       (function () {
         try {
           var force = location.search.indexOf("intro") > -1;
-          // 배경 탭에서는 브라우저가 애니메이션을 돌리지 않는다. 여기서 걸러내지 않으면
-          // 아무것도 안 보여준 채로 "봤음" 표시만 찍히고 세션이 끝난다(2026-09-21 실측).
+          // 배경 탭에서는 브라우저가 애니메이션을 돌리지 않는다 — 그려지지도 않은 가림막이
+          // 타이머만 흘려보내고 사라진다(2026-09-21 실측). 그럴 바엔 틀지 않는다.
           if (!force && document.visibilityState === "hidden") return;
           if (!force && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-          if (!force && sessionStorage.getItem("sw_intro_seen") === "1") return;
-          sessionStorage.setItem("sw_intro_seen", "1");
           document.documentElement.classList.add("js-intro");
         } catch (e) {}
       })();
