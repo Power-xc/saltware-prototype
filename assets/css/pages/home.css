@@ -129,6 +129,11 @@
     --hcard-scale: 1.2;
   }
 }
+@media (max-height: 850px) {
+  .hcards {
+    --hcard-scale: 1;
+  }
+}
 .hcard {
   position: relative;
   isolation: isolate;
