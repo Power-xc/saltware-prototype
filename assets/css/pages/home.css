@@ -1245,7 +1245,7 @@ html.js-intro .intro {
   z-index: 200;
   display: grid;
   place-items: center;
-  animation: intro-gone 2.85s steps(1, end) forwards;
+  animation: intro-gone 4.06s steps(1, end) forwards;
 }
 .intro__surface {
   position: absolute;
@@ -1257,14 +1257,25 @@ html.js-intro .intro {
       transparent 70%
     ),
     var(--c-neutral-800);
-  animation: intro-wipe 0.7s var(--ease) 2s both;
+  animation: intro-wipe 0.66s var(--ease) 3.22s both;
 }
 .intro__stage {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   justify-items: center;
-  gap: var(--sp-7);
+  gap: var(--sp-6);
   padding-inline: var(--sp-6);
   text-align: center;
+}
+.intro__wordmark {
+  grid-area: 1 / 1;
+}
+.intro__path,
+.intro__lead {
+  grid-area: 2 / 1;
+}
+.intro__close {
+  grid-area: 3 / 1;
 }
 .intro__mask {
   position: relative;
@@ -1276,11 +1287,11 @@ html.js-intro .intro {
   display: block;
 }
 .intro__wordmark .wordmark {
-  width: clamp(118px, 17vw, 168px);
+  width: clamp(112px, 16vw, 158px);
   height: auto;
   animation:
-    intro-rise 0.64s var(--ease) 0.12s both,
-    intro-sink 0.36s var(--ease) 1.92s both;
+    intro-rise 0.6s var(--ease) 0.1s both,
+    intro-sink 0.32s var(--ease) 3s both;
 }
 .intro__wordmark .intro__mask::after {
   content: "";
@@ -1293,41 +1304,69 @@ html.js-intro .intro {
     transparent 64%
   );
   translate: -150% 0;
-  animation: intro-sweep 0.68s var(--ease) 0.42s both;
+  animation: intro-sweep 0.66s var(--ease) 0.36s both;
 }
-.intro__lines {
-  display: grid;
-  justify-items: center;
-  gap: var(--sp-2);
+.intro__path {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--sp-2) var(--sp-4);
+  max-width: 22em;
   margin: 0;
-  font-size: clamp(21px, 2.9vw, 36px);
+  font-size: clamp(17px, 1.9vw, 25px);
   font-weight: 700;
-  line-height: 1.22;
-  letter-spacing: -0.02em;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--text-on-inverse-muted);
+  animation: intro-gather 0.54s var(--ease) 1.86s both;
+}
+.intro__step:nth-of-type(1) .intro__mask > span {
+  animation: intro-rise 0.38s var(--ease) 0.54s both;
+}
+.intro__step:nth-of-type(2) .intro__mask > span {
+  animation: intro-rise 0.38s var(--ease) 0.67s both;
+}
+.intro__step:nth-of-type(3) .intro__mask > span {
+  animation: intro-rise 0.38s var(--ease) 0.8s both;
+}
+.intro__step:nth-of-type(4) .intro__mask > span {
+  animation: intro-rise 0.38s var(--ease) 0.93s both;
+}
+.intro__step:nth-of-type(5) .intro__mask > span {
+  animation: intro-rise 0.38s var(--ease) 1.06s both;
+}
+.intro__step:nth-of-type(6) .intro__mask > span {
+  animation: intro-rise 0.38s var(--ease) 1.19s both;
+}
+.intro__lead {
+  margin: 0;
+  font-size: clamp(15px, 1.5vw, 19px);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
   color: var(--text-on-inverse-muted);
 }
-.intro__line {
+.intro__lead .intro__mask > span {
+  animation:
+    intro-rise 0.5s var(--ease) 1.94s both,
+    intro-sink 0.32s var(--ease) 3.04s both;
+}
+.intro__close {
   display: flex;
   align-items: baseline;
-  gap: 0.18em;
-}
-.intro__line--last {
+  justify-content: center;
+  gap: 0.16em;
+  margin: 0;
+  font-size: clamp(23px, 3.3vw, 42px);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
   color: var(--text-on-inverse);
 }
-.intro__line:nth-of-type(1) .intro__mask > span {
+.intro__close .intro__mask > span {
   animation:
-    intro-rise 0.66s var(--ease) 0.56s both,
-    intro-sink 0.36s var(--ease) 1.92s both;
-}
-.intro__line:nth-of-type(2) .intro__mask > span {
-  animation:
-    intro-rise 0.66s var(--ease) 0.7s both,
-    intro-sink 0.36s var(--ease) 1.98s both;
-}
-.intro__line:nth-of-type(3) .intro__mask > span {
-  animation:
-    intro-rise 0.66s var(--ease) 0.84s both,
-    intro-sink 0.36s var(--ease) 2.04s both;
+    intro-rise 0.62s var(--ease) 2.24s both,
+    intro-sink 0.32s var(--ease) 3.08s both;
 }
 .intro__dot {
   align-self: center;
@@ -1335,7 +1374,7 @@ html.js-intro .intro {
   height: 9px;
   border-radius: var(--radius-circle);
   background: var(--c-accent-500);
-  animation: intro-dot 0.42s var(--ease) 1.5s both;
+  animation: intro-dot 0.4s var(--ease) 2.74s both;
 }
 @keyframes intro-gone {
   to {
@@ -1363,6 +1402,13 @@ html.js-intro .intro {
 @keyframes intro-sweep {
   to {
     translate: 150% 0;
+  }
+}
+@keyframes intro-gather {
+  to {
+    opacity: 0;
+    scale: 0.72;
+    filter: blur(3px);
   }
 }
 @keyframes intro-dot {
