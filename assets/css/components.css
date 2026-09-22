@@ -628,6 +628,15 @@
   aspect-ratio: 16 / 10;
   object-fit: cover;
   margin: calc(var(--sp-6) * -1) calc(var(--sp-6) * -1) 0;
+  transition: scale var(--dur-content) var(--ease);
+}
+.card--art:has(.card__more):hover .card__art {
+  scale: 1.035;
+}
+@media (prefers-reduced-motion: reduce) {
+  .card--art:has(.card__more):hover .card__art {
+    scale: 1;
+  }
 }
 .grid--1 > .card--art {
   max-width: 46em;
@@ -721,7 +730,10 @@
   font-size: var(--fs-lede);
   line-height: var(--lh-lede);
   color: var(--text-secondary);
-  max-width: 46ch;
+  max-width: var(--measure-lede);
+}
+.hero__body > .lede {
+  max-width: var(--measure-lede);
 }
 .hero.hero--media {
   position: relative;
@@ -1006,6 +1018,7 @@
   font-size: var(--fs-xs);
   color: var(--text-faint);
   margin-top: var(--sp-4);
+  max-width: var(--measure);
 }
 .faq {
   border: 1px solid var(--border-hair);
@@ -1197,9 +1210,10 @@
 .doc__body h2 {
   margin-top: var(--sp-8);
   margin-bottom: var(--sp-4);
-  font-size: var(--fs-h4);
+  font-size: var(--fs-h3);
+  letter-spacing: var(--tracking-heading);
 }
-.doc__body h2:first-child {
+.doc__body > .doc__part:first-child > h2:first-child {
   margin-top: 0;
 }
 .doc__body p + p {

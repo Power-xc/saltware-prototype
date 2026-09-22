@@ -99,6 +99,7 @@
   font-size: var(--fs-xs);
   line-height: 1.75;
   color: var(--text-muted);
+  max-width: var(--measure);
 }
 .ptile__list {
   display: grid;

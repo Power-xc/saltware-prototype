@@ -239,7 +239,7 @@
   font-size: var(--fs-sm);
   line-height: 1.62;
   color: var(--text-secondary);
-  max-width: 88ch;
+  max-width: var(--measure);
 }
 @media (max-width: 860px) {
   .caps-part {

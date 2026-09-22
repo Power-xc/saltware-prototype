@@ -110,6 +110,8 @@
   --cover-ratio: 16 / 9;
   --lh-display: 1.24;
   --lh-lede: 1.68;
+  --measure: 68ch;
+  --measure-lede: 46ch;
   --container: clamp(1400px, 78vw, 1800px);
   --row-lead: clamp(180px, 17vw, 15rem);
   --header-h: 64px;
@@ -134,7 +136,7 @@
   --floating-clear: 104px;
   --floating-line: var(--bg-page);
   --art-tone: none;
-  --art-rest: grayscale(1) sepia(1) saturate(0.7);
+  --art-rest: saturate(0.3) brightness(1.15);
   --art-lift: none;
   --art-tone-illus: contrast(1.03);
   --shadow-mega: 0 12px 28px rgba(41, 37, 28, 0.1);
