@@ -136,3 +136,39 @@
   letter-spacing: var(--tracking-label);
   color: var(--text-secondary);
 }
+.ptiles--rows {
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--sp-4);
+}
+.ptiles--rows .ptile {
+  grid-template-rows: auto;
+  grid-template-columns: 264px minmax(0, 1fr);
+  align-items: stretch;
+}
+.ptiles--rows .ptile__art {
+  background: var(--bg-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-5);
+}
+.ptiles--rows .ptile__art img {
+  max-width: 100%;
+}
+.ptiles--rows .ptile__tags {
+  margin: 0;
+}
+@media (max-width: 640px) {
+  .ptiles--rows .ptile {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+  }
+  .ptiles--rows .ptile__art {
+    padding: 0;
+  }
+  .ptiles--rows .ptile__art img {
+    aspect-ratio: var(--ptile-art);
+    max-height: none;
+    object-fit: cover;
+  }
+}
