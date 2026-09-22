@@ -728,13 +728,21 @@
   isolation: isolate;
   background-color: var(--bg-inverse);
   color: var(--text-on-inverse);
+  padding-block: var(--hero-band-py);
 }
 .hero.hero--media::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
-  background-image: var(--hero-media);
+  background-image:
+    linear-gradient(
+      to right,
+      var(--scrim-ink-90) 0%,
+      var(--scrim-ink-65) 52%,
+      var(--scrim-ink-40) 100%
+    ),
+    var(--hero-media);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -752,11 +760,11 @@
 .hero--media .hero__lede {
   max-width: 42ch;
 }
-.hero--media.hero--m-hub-business {
-  --hero-media: url("/saltware-prototype/media/hub/hub-business.jpg?v=1bd38d98773c");
+.hero--media h1 {
+  max-width: 62%;
 }
-.hero--media.hero--m-hub-insights {
-  --hero-media: url("/saltware-prototype/media/hub/hub-insights.jpg?v=1bd38d98773c");
+.hero--media.hero--m-hub-business {
+  --hero-media: url("/saltware-prototype/media/business/cover-data-ai.jpg?v=f1ec00841df3");
 }
 .nb {
   white-space: nowrap;
@@ -2013,6 +2021,14 @@ a.bg__asset:hover {
   .mega {
     display: none !important;
   }
+  .hero--media h1 {
+    max-width: none;
+  }
+  .hero.hero--media::before {
+    background-image:
+      linear-gradient(to right, var(--scrim-ink-90) 0%, var(--scrim-ink-80) 100%),
+      var(--hero-media);
+  }
   .grid--3,
   .grid--4 {
     grid-template-columns: 1fr;
@@ -2455,7 +2471,7 @@ a.tile:hover .tile__glyph svg circle:nth-child(9) {
   line-height: 1.4;
 }
 .feat--art {
-  --card-media: url("/saltware-prototype/media/insight/feature.jpg?v=1bd38d98773c");
+  --card-media: url("/saltware-prototype/media/insight/feature.jpg?v=f1ec00841df3");
 }
 .feat[class*="feat--"] .feat__lead::before {
   content: "";
@@ -2677,19 +2693,19 @@ a.tile:hover .tile__glyph svg circle:nth-child(9) {
   }
 }
 .hub-card--cases {
-  --card-media: url("/saltware-prototype/media/insight/card-cases.jpg?v=1bd38d98773c");
+  --card-media: url("/saltware-prototype/media/insight/card-cases.jpg?v=f1ec00841df3");
 }
 .hub-card--industry {
-  --card-media: url("/saltware-prototype/media/insight/card-industry.jpg?v=1bd38d98773c");
+  --card-media: url("/saltware-prototype/media/insight/card-industry.jpg?v=f1ec00841df3");
 }
 .hub-card--report {
-  --card-media: url("/saltware-prototype/media/insight/card-report.jpg?v=1bd38d98773c");
+  --card-media: url("/saltware-prototype/media/insight/card-report.jpg?v=f1ec00841df3");
 }
 .hub-card--library {
-  --card-media: url("/saltware-prototype/media/insight/card-library.jpg?v=1bd38d98773c");
+  --card-media: url("/saltware-prototype/media/insight/card-library.jpg?v=f1ec00841df3");
 }
 .hub-card--news {
-  --card-media: url("/saltware-prototype/media/insight/card-news.jpg?v=1bd38d98773c");
+  --card-media: url("/saltware-prototype/media/insight/card-news.jpg?v=f1ec00841df3");
 }
 .hubcol {
   display: flex;

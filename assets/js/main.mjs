@@ -1,8 +1,8 @@
-import { initAnalytics } from "./analytics.mjs?v=3b3d8050b7f2";
-import { initNav } from "./nav.mjs?v=3b3d8050b7f2";
-import { initReveal } from "./reveal.mjs?v=3b3d8050b7f2";
-import { initFaq, initCaseFilter, initFooterGroups } from "./disclosure.mjs?v=3b3d8050b7f2";
-import { initAttribution } from "./attribution.mjs?v=3b3d8050b7f2";
+import { initAnalytics } from "./analytics.mjs?v=6375bf38acab";
+import { initNav } from "./nav.mjs?v=6375bf38acab";
+import { initReveal } from "./reveal.mjs?v=6375bf38acab";
+import { initFaq, initCaseFilter, initFooterGroups } from "./disclosure.mjs?v=6375bf38acab";
+import { initAttribution } from "./attribution.mjs?v=6375bf38acab";
 
 // 초기화 하나가 던져도 나머지는 산다 — 첫 화면 스크립트는 서로 독립이다.
 const run = (name, init) => {
@@ -27,30 +27,30 @@ const when = (sel, load) => {
   load().catch((e) => console.warn(`${sel} init failed:`, e));
 };
 when("[data-contact-form]", () =>
-  import("./contact-form.mjs?v=3b3d8050b7f2").then(({ initContactForm }) => initContactForm()),
+  import("./contact-form.mjs?v=6375bf38acab").then(({ initContactForm }) => initContactForm()),
 );
 when("[data-hcards]", () =>
-  import("./hero-object.mjs?v=3b3d8050b7f2").then(({ initHeroObject }) => initHeroObject()),
+  import("./hero-object.mjs?v=6375bf38acab").then(({ initHeroObject }) => initHeroObject()),
 );
 when("[data-newsletter-form]", () =>
-  import("./newsletter.mjs?v=3b3d8050b7f2").then(({ initNewsletter }) => initNewsletter()),
+  import("./newsletter.mjs?v=6375bf38acab").then(({ initNewsletter }) => initNewsletter()),
 );
-when("[data-bunav]", () => import("./bunav.mjs?v=3b3d8050b7f2").then(({ initBunav }) => initBunav()));
-when("[data-rail]", () => import("./rail.mjs?v=3b3d8050b7f2").then(({ initRails }) => initRails()));
-when("[data-filter]", () => import("./filters.mjs?v=3b3d8050b7f2").then(({ initFilters }) => initFilters()));
-when("[data-count]", () => import("./counter.mjs?v=3b3d8050b7f2").then(({ initCounters }) => initCounters()));
-when("[data-paged]", () => import("./pager.mjs?v=3b3d8050b7f2").then(({ initPagers }) => initPagers()));
+when("[data-bunav]", () => import("./bunav.mjs?v=6375bf38acab").then(({ initBunav }) => initBunav()));
+when("[data-rail]", () => import("./rail.mjs?v=6375bf38acab").then(({ initRails }) => initRails()));
+when("[data-filter]", () => import("./filters.mjs?v=6375bf38acab").then(({ initFilters }) => initFilters()));
+when("[data-count]", () => import("./counter.mjs?v=6375bf38acab").then(({ initCounters }) => initCounters()));
+when("[data-paged]", () => import("./pager.mjs?v=6375bf38acab").then(({ initPagers }) => initPagers()));
 when("[data-year-stage]", () =>
-  import("./year-stage.mjs?v=3b3d8050b7f2").then(({ initYearStage }) => initYearStage()),
+  import("./year-stage.mjs?v=6375bf38acab").then(({ initYearStage }) => initYearStage()),
 );
 when("[data-pillars]", () =>
-  import("./pillars.mjs?v=3b3d8050b7f2").then(({ initPillars }) => initPillars()),
+  import("./pillars.mjs?v=6375bf38acab").then(({ initPillars }) => initPillars()),
 );
-when("[data-stage]", () => import("./stage.mjs?v=3b3d8050b7f2").then(({ initStage }) => initStage()));
-when("[data-parallax]", () => import("./parallax.mjs?v=3b3d8050b7f2").then(({ initParallax }) => initParallax()));
+when("[data-stage]", () => import("./stage.mjs?v=6375bf38acab").then(({ initStage }) => initStage()));
+when("[data-parallax]", () => import("./parallax.mjs?v=6375bf38acab").then(({ initParallax }) => initParallax()));
 when("video[data-ambient]", () =>
-  import("./ambient-video.mjs?v=3b3d8050b7f2").then(({ initAmbientVideo }) => initAmbientVideo()),
+  import("./ambient-video.mjs?v=6375bf38acab").then(({ initAmbientVideo }) => initAmbientVideo()),
 );
-when("[data-spot]", () => import("./spot.mjs?v=3b3d8050b7f2").then(({ initSpot }) => initSpot()));
-when("[data-intro]", () => import("./intro.mjs?v=3b3d8050b7f2").then(({ initIntro }) => initIntro()));
+when("[data-spot]", () => import("./spot.mjs?v=6375bf38acab").then(({ initSpot }) => initSpot()));
+when("[data-intro]", () => import("./intro.mjs?v=6375bf38acab").then(({ initIntro }) => initIntro()));
 

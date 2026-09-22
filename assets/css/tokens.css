@@ -103,6 +103,7 @@
   --section-py-sm: 58px;
   --hero-pt: 72px;
   --hero-pb: 64px;
+  --hero-band-py: clamp(56px, 5.5vw, 88px);
   --gap-grid: 14px;
   --gap-tile: 16px;
   --tile-ratio: 1 / 1.05;
