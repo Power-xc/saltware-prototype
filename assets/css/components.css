@@ -2540,15 +2540,29 @@ a.tile:hover .tile__glyph svg circle:nth-child(9) {
     mask-image: none;
   }
   .feat--split .feat__read {
+    --read-fade: linear-gradient(to bottom, #000 82%, transparent 100%);
     flex: 0 1 auto;
     max-height: 320px;
     overflow: hidden;
-    mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
+    mask-image: var(--read-fade);
     padding-bottom: 0;
+  }
+  @supports (animation-timeline: scroll()) {
+    .feat--split .feat__read {
+      mask-image: none;
+      animation: feat-read-cut linear both;
+      animation-timeline: scroll(self);
+    }
   }
   .feat--split .feat__acts {
     position: static;
     margin-top: var(--sp-4);
+  }
+}
+@keyframes feat-read-cut {
+  from,
+  to {
+    mask-image: var(--read-fade);
   }
 }
 .hub-grid {
@@ -3958,7 +3972,8 @@ html.is-scrolled .floating__top {
 .hcard__more,
 .mega__all,
 .footer__careers-link {
-  background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 0 1px;
+  background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 0
+    1px;
   transition: background-size var(--dur-hover) var(--ease);
 }
 .card__more:hover,
@@ -4070,7 +4085,14 @@ li,
   .site-header.is-hidden {
     translate: 0;
   }
-  :is(.btn, .chip, .pager__step, .pager__num, .floating__ask, .rail__btn):active {
+  :is(
+    .btn,
+    .chip,
+    .pager__step,
+    .pager__num,
+    .floating__ask,
+    .rail__btn
+  ):active {
     scale: 1;
   }
   :is(.story:hover .story__cover, .brief:hover .brief__cover) img {
