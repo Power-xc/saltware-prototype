@@ -2380,17 +2380,17 @@ a.tile:hover .tile__glyph svg circle:nth-child(9) {
     aspect-ratio: 0.76;
   }
 }
-:is(.insights-hub, .company-hub, .business-hub, .industries-hub)
+:is(.insights-hub, .company-hub, .business-hub)
   .section:not(.section--inverse, .section--stone)
   > .container {
   padding-top: var(--sp-5);
   border-top: 0;
 }
-:is(.insights-hub, .company-hub, .business-hub, .industries-hub)
+:is(.insights-hub, .company-hub, .business-hub)
   .section:not(.section--inverse, .section--stone) {
   padding-bottom: 45px;
 }
-:is(.insights-hub, .company-hub, .business-hub, .industries-hub)
+:is(.insights-hub, .company-hub, .business-hub)
   .section:first-of-type
   > .container {
   padding-top: var(--sp-6);
