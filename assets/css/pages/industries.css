@@ -1,0 +1,182 @@
+
+.crystal {
+  position: absolute;
+  inset: var(--crystal-inset, 14%);
+  width: calc(100% - 2 * var(--crystal-inset, 14%));
+  height: calc(100% - 2 * var(--crystal-inset, 14%));
+  overflow: visible;
+}
+.crystal circle {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.crystal__off {
+  fill: currentColor;
+  opacity: 0.32;
+  transition: opacity var(--dur-content) var(--ease);
+}
+.crystal__on {
+  fill: var(--crystal-on, currentColor);
+  transition: fill var(--dur-hover) var(--ease) calc(var(--n, 0) * 40ms);
+}
+.crystal__on:nth-child(2) {
+  --n: 1;
+}
+.crystal__on:nth-child(3) {
+  --n: 2;
+}
+.crystal__on:nth-child(4) {
+  --n: 3;
+}
+.crystal__on:nth-child(5) {
+  --n: 4;
+}
+.crystal__on:nth-child(6) {
+  --n: 5;
+}
+.crystal__on:nth-child(7) {
+  --n: 6;
+}
+.crystal__on:nth-child(8) {
+  --n: 7;
+}
+.crystal__on:nth-child(9) {
+  --n: 8;
+}
+.crystal__on:nth-child(10) {
+  --n: 9;
+}
+.crystal__on:nth-child(11) {
+  --n: 10;
+}
+.crystal__on:nth-child(12) {
+  --n: 11;
+}
+.crystal__on:nth-child(13) {
+  --n: 12;
+}
+:is(.ihero__art, .feat--industries .feat__lead) .crystal__off {
+  animation: crystal-fade 0.9s var(--ease-out) 240ms backwards;
+}
+:is(.ihero__art, .feat--industries .feat__lead) .crystal__on {
+  animation: crystal-in 0.7s var(--ease-out) backwards;
+  animation-delay: calc(520ms + var(--n, 0) * 70ms);
+}
+@keyframes crystal-fade {
+  from {
+    fill-opacity: 0;
+  }
+}
+@keyframes crystal-in {
+  from {
+    opacity: 0;
+    scale: 0;
+  }
+}
+.ihero {
+  padding-block: var(--sp-7) var(--section-py);
+}
+.ihero__in {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  align-items: center;
+  gap: var(--sp-8);
+}
+.ihero__say {
+  display: grid;
+  justify-items: start;
+  gap: var(--sp-4);
+}
+.ihero__lede {
+  font-size: var(--fs-lede);
+  line-height: var(--lh-lede);
+  color: var(--text-secondary);
+  max-width: var(--measure-lede);
+}
+.ihero__say .cta-row {
+  margin-top: var(--sp-3);
+}
+.ihero__art {
+  position: relative;
+  isolation: isolate;
+  aspect-ratio: 5 / 4;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: var(--bg-inverse);
+  color: var(--text-on-inverse);
+  --crystal-on: var(--text-accent-on-inverse);
+}
+.ihero__art:hover .crystal__off {
+  opacity: 0.6;
+}
+.ihero__say > * {
+  animation: ihero-rise 0.8s var(--ease-out) backwards;
+}
+.ihero__say > :nth-child(2) {
+  animation-name: ihero-focus;
+  animation-delay: 90ms;
+}
+.ihero__say > :nth-child(3) {
+  animation-delay: 180ms;
+}
+.ihero__say > :nth-child(4) {
+  animation-delay: 270ms;
+}
+.ihero__art {
+  animation: ihero-art 1s var(--ease-out) 60ms backwards;
+}
+@keyframes ihero-rise {
+  from {
+    opacity: 0;
+    translate: 0 18px;
+  }
+}
+@keyframes ihero-focus {
+  from {
+    opacity: 0;
+    translate: 0 18px;
+    filter: blur(8px);
+  }
+}
+@keyframes ihero-art {
+  from {
+    opacity: 0;
+    scale: 0.97;
+  }
+}
+.feat.feat--industries .feat__lead {
+  background: var(--bg-inverse);
+  color: var(--text-on-inverse);
+  --crystal-on: var(--text-accent-on-inverse);
+}
+.feat--industries .feat__lead:hover .crystal__off {
+  opacity: 0.6;
+}
+.hubcol__art--figure {
+  position: relative;
+  --crystal-inset: 16%;
+  background: var(--bg-inverse);
+  color: var(--text-on-inverse);
+  filter: none;
+  --crystal-on: var(--text-on-inverse);
+}
+.hubcol__item:is(:hover, :focus-visible) .hubcol__art--figure {
+  --crystal-on: var(--text-accent-on-inverse);
+}
+@media (max-width: 860px) {
+  .ihero__in {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--sp-6);
+  }
+  .ihero__art {
+    aspect-ratio: 16 / 10;
+    --crystal-inset: 12%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ihero__say > *,
+  .ihero__art,
+  .crystal circle {
+    animation: none;
+  }
+}
