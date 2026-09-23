@@ -1,40 +1,30 @@
 
-.company-hub .section:not(.section--inverse) > .container {
-  padding-top: var(--sp-5);
-  border-top: 0;
-}
-.company-hub .section:not(.section--inverse) {
-  padding-bottom: 45px;
-}
-.company-hub .section:first-of-type > .container {
-  padding-top: var(--sp-6);
-}
 .feat--company {
-  --card-media: url("/saltware-prototype/media/company/hub-feature.jpg?v=f1ec00841df3");
+  --card-media: url("/saltware-prototype/media/company/hub-feature.jpg?v=aa7f66adc0b9");
 }
 .hub-card--company-capabilities {
-  --card-media: url("/saltware-prototype/media/company/card-capabilities.jpg?v=f1ec00841df3");
+  --card-media: url("/saltware-prototype/media/company/card-capabilities.jpg?v=aa7f66adc0b9");
 }
 .hub-card--company-esg {
-  --card-media: url("/saltware-prototype/media/company/card-esg.jpg?v=f1ec00841df3");
+  --card-media: url("/saltware-prototype/media/company/card-esg.jpg?v=aa7f66adc0b9");
 }
 .hub-card--company-partners {
-  --card-media: url("/saltware-prototype/media/company/card-partners.jpg?v=f1ec00841df3");
+  --card-media: url("/saltware-prototype/media/company/card-partners.jpg?v=aa7f66adc0b9");
 }
 .hub-card--company-history {
-  --card-media: url("/saltware-prototype/media/company/card-history.jpg?v=f1ec00841df3");
+  --card-media: url("/saltware-prototype/media/company/card-history.jpg?v=aa7f66adc0b9");
 }
 .hub-card--company-ir {
-  --card-media: url("/saltware-prototype/media/company/card-ir.jpg?v=f1ec00841df3");
+  --card-media: url("/saltware-prototype/media/company/card-ir.jpg?v=aa7f66adc0b9");
 }
 .hub-card--company-careers {
-  --card-media: url("/saltware-prototype/media/company/card-careers.jpg?v=f1ec00841df3");
+  --card-media: url("/saltware-prototype/media/company/card-careers.jpg?v=aa7f66adc0b9");
 }
 .hub-card--company-location {
-  --card-media: url("/saltware-prototype/media/company/card-location.jpg?v=f1ec00841df3");
+  --card-media: url("/saltware-prototype/media/company/card-location.jpg?v=aa7f66adc0b9");
 }
 .hub-card--company-brand {
-  --card-media: url("/saltware-prototype/media/company/card-brand.jpg?v=f1ec00841df3");
+  --card-media: url("/saltware-prototype/media/company/card-brand.jpg?v=aa7f66adc0b9");
 }
 @media (min-width: 1080px) {
   .hub-grid--3 {
@@ -634,7 +624,7 @@ html.js-pillars .cpil:not(.is-on) .cpil__desc {
 }
 .cclose--art::before {
   z-index: -2;
-  background-image: url("/saltware-prototype/media/hub/hub-insights.jpg?v=f1ec00841df3");
+  background-image: url("/saltware-prototype/media/hub/hub-insights.jpg?v=aa7f66adc0b9");
   background-position: center;
   background-size: cover;
   filter: var(--art-tone);
@@ -698,13 +688,6 @@ html.js-reveal [data-reveal]:not(.is-in) > * {
 }
 html.js-reveal [data-reveal]:not(.is-in) > .cstat {
   scale: 0.97;
-}
-.company-about .cintro__shot {
-  display: grid;
-  align-content: center;
-}
-.company-about .cintro__shot img {
-  height: 78%;
 }
 .company-about .cpils__shot {
   object-fit: contain;
