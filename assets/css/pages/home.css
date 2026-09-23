@@ -657,11 +657,12 @@
   gap: var(--sp-5);
   --logo-k: 0.72;
   --logo-roll: 74s;
+  --logo-gap: var(--sp-8);
 }
 .logos__wall {
   display: flex;
   align-items: center;
-  gap: var(--sp-8);
+  gap: var(--logo-gap);
 }
 .logos__belts {
   display: grid;
@@ -680,12 +681,12 @@
 .logos__track {
   display: flex;
   width: max-content;
-  gap: var(--sp-8);
+  gap: var(--logo-gap);
   animation: logos-roll var(--logo-roll, 52s) linear infinite;
 }
 @keyframes logos-roll {
   to {
-    transform: translateX(calc(-50% - var(--sp-8) / 2));
+    transform: translateX(calc(-50% - var(--logo-gap) / 2));
   }
 }
 .logos__track--back {
@@ -757,7 +758,7 @@
     filter: none;
   }
   .logos__tag {
-    opacity: 1;
+    display: none;
   }
 }
 .logos__item img {
@@ -860,33 +861,6 @@
   .logos__mark {
     height: 46px;
   }
-  .logos__belt {
-    overflow: visible;
-    mask-image: none;
-  }
-  .logos__track {
-    width: auto;
-    animation: none;
-  }
-  .logos__belt,
-  .logos__track,
-  .logos__wall {
-    display: contents;
-  }
-  .logos__belts {
-    display: grid;
-    grid-template-columns: repeat(3, auto);
-    justify-content: space-between;
-    justify-items: center;
-    align-items: start;
-    width: 100%;
-    max-width: 560px;
-    margin-inline: auto;
-    row-gap: var(--sp-7);
-  }
-  .logos__wall--dup {
-    display: none;
-  }
 }
 @media (max-width: 640px) {
   .logos {
@@ -898,11 +872,8 @@
   .logos__name {
     font-size: var(--fs-sm);
   }
-  .logos__belts {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    justify-content: normal;
-    column-gap: var(--sp-4);
-    row-gap: var(--sp-5);
+  .logos {
+    --logo-gap: var(--sp-6);
   }
 }
 .stories {
@@ -1299,6 +1270,7 @@ html.js-intro .intro--film {
 }
 .intro__btn {
   padding: var(--sp-2) var(--sp-4);
+  white-space: nowrap;
   border: 1px solid var(--border-inverse);
   border-radius: var(--radius-pill);
   background: color-mix(in srgb, var(--bg-inverse) 55%, transparent);
@@ -1319,8 +1291,9 @@ html.js-intro .intro--film {
 }
 @media (max-width: 640px) {
   .intro__bar {
-    right: 50%;
-    translate: 50% 0;
+    left: var(--sp-4);
+    right: var(--sp-4);
+    justify-content: center;
   }
 }
 @keyframes intro-gone {

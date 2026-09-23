@@ -3472,7 +3472,8 @@ video[aria-hidden="true"]::-webkit-media-controls-play-button {
     translate 0.8s var(--ease-out) var(--d);
 }
 html.js-reveal .reveal:not(.is-in),
-html.js-reveal [data-reveal]:not(.is-in) > * {
+html.js-reveal [data-reveal]:not(.is-in) > *,
+html.js-reveal [data-reveal] > .is-wait {
   opacity: 0;
   translate: 0 20px;
 }
@@ -3486,7 +3487,7 @@ html.js-reveal .section__head[data-reveal]:not(.is-in) > h2 {
   filter: blur(8px);
 }
 html.js-reveal
-  [data-reveal]:not(.is-in)
+  :is([data-reveal]:not(.is-in), [data-reveal] > .is-wait)
   :is(.story__cover img, .brief__cover img) {
   scale: 1.06;
 }

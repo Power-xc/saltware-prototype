@@ -7,9 +7,12 @@
 // 소리: 브라우저는 누르기 전의 소리를 막는다. 소리부터 틀어 보고, 막히면 소리 없이 틀고
 // "소리 켜기"를 세운다. 같은 사이트에서 이미 누른 적이 있으면 처음부터 소리가 난다.
 //
-// 나가는 문: 건너뛰기 · 다시 보지 않기(이 브라우저에서는 다음부터 안 튼다) · 아무 키
-// (사령관 2026-09-24 "다른 키 누르면 넘어가게"). Tab 과 보조키만은 넘기지 않는다 — 키보드로
-// 단추까지 가는 길이고, 단추에 초점이 있을 때의 Enter · Space 는 그 단추의 몫이다.
+// 나가는 문: 건너뛰기 · 다시 보지 않기(이 브라우저에서는 다음부터 안 튼다) · 아무 키 · 화면 아무 데나
+// 누르기(사령관 2026-09-24 "다른 키 누르면 넘어가게", "화면 터치하거나 키보드 쳐도"). Tab 과 보조키만은
+// 넘기지 않는다 — 키보드로 단추까지 가는 길이고, 단추에 초점이 있을 때의 Enter · Space 는 그 단추의
+// 몫이다. 단추 줄 위를 누른 것도 넘기지 않는다 — "소리 켜기"가 필름을 끝내 버리면 안 된다.
+// 누름은 pointerdown 으로 받는다: 폰에서 쓸어 올리는 손짓도 넘긴다. 가림막은 걷히는 동안에도 자리에
+// 있으므로 뒤따르는 click 이 아래 지면의 링크에 떨어지지 않는다.
 //
 // 갇히지 않게: 필름이 FALLBACK_MS 안에 시작하지 못하면(느린 망 · 자동재생 금지) 곧장 넘긴다.
 // 스크립트가 못 내려오면 가림막은 CSS 의 intro-gone 으로 같은 시각에 사라진다.
@@ -84,6 +87,10 @@ export function initIntro() {
     if (e.target.closest?.(".intro__bar") && (e.key === "Enter" || e.key === " ")) return;
     finish();
   };
+  const onPress = (e) => {
+    if (e.button !== 0 || e.target.closest(".intro__bar")) return;
+    finish();
+  };
   function finish() {
     if (root.classList.contains("intro-done")) return;
     root.classList.add("intro-done");
@@ -91,6 +98,7 @@ export function initIntro() {
     film.pause();
     flyDot(veil, film);
     removeEventListener("keydown", onKey);
+    veil.removeEventListener("pointerdown", onPress);
     setTimeout(() => {
       veil.remove();
       root.classList.remove("js-intro");
@@ -111,6 +119,7 @@ export function initIntro() {
     finish();
   });
   addEventListener("keydown", onKey);
+  veil.addEventListener("pointerdown", onPress);
 
   film.muted = false;
   film

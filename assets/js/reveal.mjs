@@ -8,6 +8,11 @@
 //
 // 낱장(.reveal)은 제 몸이, 묶음([data-reveal])은 자식이 순서대로 올라온다 — 순번 --i 를
 // 여기서 주고 늦추는 건 CSS 다(components.css 모션 구획). 토스 메인 실측(2026-09-08).
+//
+// 화면보다 긴 묶음(폰에서 세로로 쌓인 목록)은 한꺼번에 열지 않는다. 묶음 머리가 닿는 순간
+// 전부 열면 아래 항목은 화면 밖에서 이미 서 버려, 내려가 보면 글이 "미리 다 나와 있다"
+// (사령관 2026-09-24, 폰). 그때 화면 밖 자식은 is-wait 로 붙잡아 두고 제 차례가 화면에 닿을 때
+// 연다 — 같이 닿은 것끼리만 순번을 새로 매겨, 늦게 온 한 장이 앞 순번만큼 늦지 않게 한다.
 
 const SAFETY_MS = 2000;
 
@@ -29,11 +34,31 @@ export function initReveal() {
   }
   document.documentElement.classList.add("js-reveal");
 
+  const line = () => innerHeight * 0.92;
+  const waiting = [];
+  // 묶음을 연다. 화면보다 길면 아직 화면 밑에 있는 자식은 붙잡아 두고 따로 지켜본다.
+  const open = (el) => {
+    if (el.classList.contains("is-wait")) {
+      el.classList.remove("is-wait");
+      return;
+    }
+    if (el.hasAttribute("data-reveal") && el.getBoundingClientRect().height > innerHeight * 0.9) {
+      for (const c of el.children) {
+        if (c.getBoundingClientRect().top <= line()) continue;
+        c.classList.add("is-wait");
+        waiting.push(c);
+        io.observe(c);
+      }
+    }
+    el.classList.add("is-in");
+  };
+
   // 관찰이 살아 있는지는 body 로 잰다 — body 는 늘 화면에 걸쳐 있어 첫 알림이 바로 온다.
   // 묶음 중 하나가 발화했는지로 재면 첫 화면이 히어로뿐일 때 아무것도 안 걸려 전부 열린다.
   let alive = false;
   const io = new IntersectionObserver(
     (entries) => {
+      let batch = 0;
       entries.forEach((entry) => {
         if (entry.target === document.body) {
           alive = true;
@@ -41,7 +66,8 @@ export function initReveal() {
           return;
         }
         if (!entry.isIntersecting) return;
-        entry.target.classList.add("is-in");
+        if (entry.target.classList.contains("is-wait")) entry.target.style.setProperty("--i", batch++);
+        open(entry.target);
         io.unobserve(entry.target);
       });
     },
@@ -55,12 +81,14 @@ export function initReveal() {
   // 열린 것은 셈에서 빠지므로 다 열리면 듣기를 그만둔다.
   // rAF 로 미루지 않는다 — 프레임이 안 오는 환경에서는 미룬 청소가 영영 안 돌았다.
   // 스크롤 뒤라 레이아웃은 이미 최신이고, 재는 건 남은 열몇 개뿐이다.
-  let left = items.filter((el) => !el.classList.contains("is-in"));
+  const shut = (el) => el.classList.contains("is-wait") || !el.classList.contains("is-in");
+  let left = items.filter(shut);
   const sweep = () => {
-    const line = innerHeight * 0.92;
-    left = left.filter((el) => {
-      if (el.getBoundingClientRect().top > line) return true;
-      el.classList.add("is-in");
+    left = [...left, ...waiting.splice(0)].filter((el) => {
+      if (!shut(el)) return false;
+      if (el.getBoundingClientRect().top > line()) return true;
+      if (el.classList.contains("is-wait")) el.style.setProperty("--i", 0);
+      open(el);
       io.unobserve(el);
       return false;
     });
@@ -72,6 +100,7 @@ export function initReveal() {
   setTimeout(() => {
     if (alive) return;
     showAll();
+    waiting.forEach((c) => c.classList.remove("is-wait"));
     io.disconnect();
   }, SAFETY_MS);
 }
